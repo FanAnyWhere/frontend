@@ -1,31 +1,57 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, lazy } from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { Link, NavLink } from 'react-router-dom'
+
+import { actions } from '../actions'
+import { walletConnectProvider } from '../web3'
 
 import Logo from '../../public/images/logo.png'
-import SearchIcon from '../Assets/images/search.png';
-import BellIcon from '../Assets/images/bell.png';
-import UserIcon from '../Assets/images/account.png';
+import SearchIcon from '../assets/images/search.png';
+import BellIcon from '../assets/images/bell.png';
+import UserIcon from '../assets/images/account.png';
 
-class Header extends Component {
-  render() {
+
+
+function Header(props) {
+
+  const navTabs = ['Marketplace', 'Celebrities', 'Activity', 'Help Center']
+  const location = useLocation()
+  const [openLogin, setOpenLogin] = useState(false)
+  const [nav, setNav] = useState(location.pathname.replace('/', ''))
+
     return (
       <>
         <HeaderSection>
-          <HeadLeft>
-            <Link to=''><img src={Logo} alt='' /></Link>
-          </HeadLeft>
+          <Link to='/'>
+            <HeadLeft>
+              <img src={Logo} alt='' />
+            </HeadLeft>
+          </Link>
           <HeadRight>
             <NavSearch>
               <input type="text" placeholder="Search for an Art, music..." />
               <img src={SearchIcon} alt='' />
             </NavSearch>
-            <Link to='/' className='active'>Marketplace</Link>
-            <Link to='/'>Creators</Link>
-            <Link to='/'>Activity</Link>
-            <Link to='/'>Help Center</Link>
+
+            <nav className="">
+              {navTabs.map((tab, key) => <NavLink
+                key={key}
+                to={`/${(tab.replace(/ /g, '')).toLowerCase()}`}
+                activeClassName={tab.replace(/ /g, '').toLowerCase() === nav ? 'active' : ''}
+                onClick={() => setNav(tab.replace(/ /g, '').toLowerCase())}
+              >
+                {tab}
+              </NavLink>)}
+            </nav>
             <button type='button' className='blue-gradient-btn'>Create</button>
-            <button type='button' className='white-border-btn ani-1'>Connect</button>
+            {!props.authenticated.isLoggedIn &&
+              <button type='button' className='white-border-btn ani-1'
+                onClick={() => setOpenLogin(true)}>
+                Connect Wallet
+              </button>}
             {/* <AfterLogin>
               <button>
                 <img src={BellIcon} alt='' />
@@ -39,8 +65,8 @@ class Header extends Component {
 
       </>
     );
-  }
 }
+
 const FlexDiv = styled.div`
   display: flex; align-items: center; justify-content:center; flex-wrap:wrap;
 `;
@@ -50,7 +76,6 @@ const HeaderSection = styled(FlexDiv)`
 `;
 
 const HeadLeft = styled.div`
-
 `;
 
 const HeadRight = styled(FlexDiv)`
@@ -80,4 +105,15 @@ const AfterLogin = styled(FlexDiv)`
   }
 `;
 
-export default Header;
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getWeb3: () => dispatch(actions.getWeb3()),
+    web3Logout: () => dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: [] } }),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.isAuthenticated
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Header));

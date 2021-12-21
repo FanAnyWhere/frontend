@@ -1,26 +1,38 @@
-import React, { useState } from 'react'; 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Header from './component/header'
-import Marketplace from './pages/marketplace' 
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Gs from './theme/globalStyles';
 
-import Footer from './component/footer';
+// import components
+import Header from './component/header'
+import Footer from './component/footer'
+import Marketplace from './pages/marketplace'
+import NotFound from './pages/not.found'
+
 
 function App() { 
 
+  const Loading = () => {
+    return (<>Loading</>)
+  }
   
   return (
-    <Router basename={'home'} >
-      <section className='MainBox clearfix'>
-        <Gs.GlobalStyle /> 
-          <Header />  
-          <Switch>
-            <Route path="/" exact> <Marketplace />  </Route>  
-          </Switch>   
-          <Footer />
-        </section>
+    <Router >
+      <Suspense fallback={<Loading />}>
+          <section className='MainBox clearfix'>
+            <Gs.GlobalStyle /> 
+            <Header />
+              <Switch>
+                <Route path="/" exact> <Marketplace />  </Route>
+                <Route path="/marketplace" > <Marketplace /> </Route>
+                <Route component={NotFound} />
+              </Switch>    
+            <Footer />
+          </section>
+        <ToastContainer autoClose={8000} theme={'dark'} pauseOnHover />
+      </Suspense>
     </Router>
-
   );
 }
 

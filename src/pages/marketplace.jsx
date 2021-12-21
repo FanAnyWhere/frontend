@@ -4,13 +4,13 @@ import Gs from '../theme/globalStyles';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import NFT1 from '../Assets/images/nft-1.jpg';
-import NFT2 from '../Assets/images/nft-2.jpg';
-import NFT3 from '../Assets/images/nft-3.jpg';
-import NFT4 from '../Assets/images/nft-4.jpg';
-import NFT5 from '../Assets/images/nft-5.jpg';
-import NFT6 from '../Assets/images/nft-6.jpg';
-import NFT7 from '../Assets/images/nft-7.jpg';
+import NFT1 from '../assets/images/nft-1.jpg';
+import NFT2 from '../assets/images/nft-2.jpg';
+import NFT3 from '../assets/images/nft-3.jpg';
+import NFT4 from '../assets/images/nft-4.jpg';
+import NFT5 from '../assets/images/nft-5.jpg';
+import NFT6 from '../assets/images/nft-6.jpg';
+import NFT7 from '../assets/images/nft-7.jpg';
 
 const responsive = {
   superLargeDesktop: {
@@ -31,9 +31,9 @@ const responsive = {
   }
 };
 
-class Marketplace extends Component {
 
-  render() {
+function Marketplace(props) {
+
     return (
       <>
         <NFTTopSlider>
@@ -146,7 +146,6 @@ class Marketplace extends Component {
         </NFTTopSlider>
       </>
     );
-  }
 }
 // Common Style Div 
 const FlexDiv = styled.div`
