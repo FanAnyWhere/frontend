@@ -9,7 +9,7 @@ Gs.GlobalStyle = createGlobalStyle`
     padding: 0; 
     background-color: #1d1d1d; 
     color: #fff; 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Rubik', sans-serif;
   }
   a{text-decoration:none;}
   .orangeColor{color:#febb00 !important; }
@@ -20,7 +20,7 @@ Gs.GlobalStyle = createGlobalStyle`
   input{ outline:none;}
   img{ max-width:100%; height:auto;}
   button{
-    background:transparent; outline:none; border:0; cursor:pointer;
+    background:transparent; outline:none; border:0; cursor:pointer; font-family: 'Rubik', sans-serif;
   }
  
   .track-vertical{ width:19px !important; height:100%; display:block; background-color:#000; position:absolute; right:0px;}
