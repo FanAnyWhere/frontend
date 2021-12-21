@@ -26,14 +26,14 @@ class Header extends Component {
             <Link to='/'>Help Center</Link>
             <button type='button' className='blue-gradient-btn'>Create</button>
             <button type='button' className='white-border-btn ani-1'>Connect</button>
-            <AfterLogin>
+            {/* <AfterLogin>
               <button>
                 <img src={BellIcon} alt='' />
               </button>
               <button className='acc-btn'>
                 <img src={UserIcon} alt='' />
               </button>
-            </AfterLogin>
+            </AfterLogin> */}
           </HeadRight>
         </HeaderSection>
 
