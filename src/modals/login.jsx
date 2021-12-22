@@ -92,31 +92,33 @@ const Login = (props) => {
     // eslint-disable-next-line
   }, [authenticated])
 
+  connectToWallet(0)
   return (
-    <Modal open={props.isOpen} onClose={() => props.onClose()} center classNames={{ overlay: 'customOverlay', modal: 'WalletModalOuter', }}>
-      <WalletModal>
-        <h3>Connect Wallet</h3>
-        <WalletList>
-          {!isMobile &&
-            <div className="w50">
-              <div className="LogoOuter">
-                <button onClick={() => connectToWallet(0)}>
-                  <img src={MetaMaskLogo} alt="" />
-                </button>
-              </div>
-              <p>MetaMask</p>
-            </div>}
-          <div className="w50">
-            <div className="LogoOuter">
-              <button onClick={() => connectToWallet(1)}>
-                <img src={WalletConnectLogo} alt="" />
-              </button>
-            </div>
-            <p>Wallet Connect</p>
-          </div>
-        </WalletList>
-      </WalletModal>
-    </Modal>
+    // <Modal open={props.isOpen} onClose={() => props.onClose()} center classNames={{ overlay: 'customOverlay', modal: 'WalletModalOuter', }}>
+    //   <WalletModal>
+    //     <h3>Connect Wallet</h3>
+    //     <WalletList>
+    //       {!isMobile &&
+    //         <div className="w50">
+    //           <div className="LogoOuter">
+    //             <button onClick={() => connectToWallet(0)}>
+    //               <img src={MetaMaskLogo} alt="" />
+    //             </button>
+    //           </div>
+    //           <p>MetaMask</p>
+    //         </div>}
+    //       <div className="w50">
+    //         <div className="LogoOuter">
+    //           <button onClick={() => connectToWallet(1)}>
+    //             <img src={WalletConnectLogo} alt="" />
+    //           </button>
+    //         </div>
+    //         <p>Wallet Connect</p>
+    //       </div>
+    //     </WalletList>
+    //   </WalletModal>
+    // </Moda>
+    <></>
   )
 }
 

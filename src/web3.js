@@ -6,7 +6,7 @@ import { chainId, chainIdHex, rpcUrls } from './config'
 let web3 = null;
 let walletConnectProvider = new WalletConnectProvider({
   rpc: {
-    chainIdHex: rpcUrls, // Polygon Mainnet rpc url
+    0x13881: rpcUrls, // Polygon Mainnet rpc url
   },
   chainId: chainId, // Polygon Testnet chainId
   qrcode: false
