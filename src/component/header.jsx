@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components';
 import { connect } from 'react-redux'
@@ -12,6 +12,7 @@ import Logo from '../../public/images/logo.png'
 import SearchIcon from '../assets/images/search.png';
 import BellIcon from '../assets/images/bell.png';
 import UserIcon from '../assets/images/account.png';
+import LoginModal from '../modals/login'
 
 
 
@@ -20,7 +21,45 @@ function Header(props) {
   const navTabs = ['Marketplace', 'Celebrities', 'Activity', 'Help Center']
   const location = useLocation()
   const [openLogin, setOpenLogin] = useState(false)
+  const [address, setAddress] = useState('00000000000')
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
+
+  useEffect(() => {
+    if (!props.authenticated.accounts[0] && Number(localStorage.getItem('isDisconnect')) === 0)
+      props.getWeb3()
+
+    if (window.web3) { // provider events for the desktop
+      // window.ethereum.on('connect', function (accounts) { props.getWeb3() })
+      window.ethereum.on('networkChanged', function (networkId) { props.getWeb3() })
+      window.ethereum.on('accountsChanged', function (accounts) { props.getWeb3() })
+      window.ethereum.on('disconnect', function (code, resaon) {
+        localStorage.setItem('isDisconnect', '1')
+        props.getWeb3()
+      })
+    }
+    // eslint-disable-next-line
+  }, [])
+
+  const disconnect = async () => {
+    localStorage.setItem('isDisconnect', '1')
+    if (walletConnectProvider.connector.connected) {
+      localStorage.removeItem('walletconnect') // to disconnect from wallet connect 
+      await walletConnectProvider.disconnect() // Close provider session
+    }
+    props.web3Logout()
+  }
+
+  useEffect(() => {
+    if (props.authenticated.isLoggedIn) {
+      let userAddress = props.authenticated.accounts[0]
+      let compactAddress = userAddress
+        ? userAddress.substring(0, 5) +
+        '....' +
+        userAddress.substring(userAddress.length - 5, userAddress.length)
+        : '00000000000'
+      setAddress(compactAddress)
+    }
+  }, [props.authenticated])
 
     return (
       <>
@@ -46,23 +85,36 @@ function Header(props) {
                 {tab}
               </NavLink>)}
             </nav>
-            <button type='button' className='blue-gradient-btn'>Create</button>
+
+            {!props.authenticated.isLoggedIn &&
+              <button type='button' className='blue-gradient-btn'>Create</button>}
+
             {!props.authenticated.isLoggedIn &&
               <button type='button' className='white-border-btn ani-1'
                 onClick={() => setOpenLogin(true)}>
                 Connect Wallet
               </button>}
-            {/* <AfterLogin>
+            
+            {props.authenticated.isLoggedIn && address }
+
+            {props.authenticated.isLoggedIn && <button className="blue-gradient-btn" 
+                onClick={() => disconnect()}>Disconnect</button>}
+
+            {props.authenticated.isLoggedIn && <AfterLogin>
               <button>
                 <img src={BellIcon} alt='' />
               </button>
               <button className='acc-btn'>
                 <img src={UserIcon} alt='' />
               </button>
-            </AfterLogin> */}
+            </AfterLogin>}
+
           </HeadRight>
         </HeaderSection>
 
+        {/* login modal */}
+        {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
+        
       </>
     );
 }

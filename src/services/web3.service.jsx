@@ -1,4 +1,5 @@
 import { web3, walletConnectModalInit } from '../web3'
+import { chainId } from '../config'
 
 async function getNetworkId() {
   try {
@@ -16,8 +17,8 @@ const getWeb3 = async () => {
     }
     try {
       const responseData = await web3.eth.getAccounts()
-      const chainId = await web3.eth.net.getId()
-      if (responseData.length && chainId === 940) {
+      const resp = await web3.eth.net.getId()
+      if (responseData.length && resp === chainId) {
         web3Data.accounts = responseData;
         web3Data.isLoggedIn = true;
         return web3Data

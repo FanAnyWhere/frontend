@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-import { isThemeDark, isAuthenticated } from './auth.reducer'
+import { dataRefresh, isAuthenticated } from './auth.reducer'
 
 
 const rootReducer = combineReducers({
+  dataRefresh,
   isAuthenticated,
 })
 
