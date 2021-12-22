@@ -1,13 +1,14 @@
 import Web3 from 'web3'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import WalletConnectQRCodeModal from '@walletconnect/qrcode-modal'
+import { chainId, chainIdHex, rpcUrls } from './config'
 
 let web3 = null;
 let walletConnectProvider = new WalletConnectProvider({
   rpc: {
-    0x13881: 'https://rpc-mumbai.maticvigil.com', // Polygon Mainnet rpc url
+    0x13881: rpcUrls, // Polygon Mainnet rpc url
   },
-  chainId: 80001, // Polygon Testnet chainId
+  chainId: chainId, // Polygon Testnet chainId
   qrcode: false
 })
 
@@ -24,7 +25,7 @@ const metamaskConnectInit = () => {
       // order to use the app.
       web3 = new Web3(
         new Web3.providers.HttpProvider(
-          'https://rpc-mumbai.maticvigil.com'
+          rpcUrls
         )
       )
       reject(false)
