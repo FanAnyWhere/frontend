@@ -135,7 +135,8 @@ const HeadLeft = styled.div`
 const HeadRight = styled(FlexDiv)`
   a{
     font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; margin:0px 12px; padding:0px; border-bottom:2px solid #1D1D1D;
-    &.active,:hover{color:#fff; border-color:#fff;}
+    &.active{color:#fff; border-color:#fff;}
+    :hover{color:#aeaeae; border-color:#aeaeae;}
   }
 `;
 
@@ -146,7 +147,7 @@ const WhiteBorderBtn = styled.button`
 
 const GradientBtn = styled.button`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
-  :hover{background: #0FBFFC;}
+  :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
 `;
 
 const NavSearch = styled.div`

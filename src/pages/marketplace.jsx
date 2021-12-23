@@ -1157,9 +1157,9 @@ const FlexDiv = styled.div`
 
 const NFTTopSlider = styled.div`
   margin-top:117px; margin-bottom:38px; align-items:flex-start;
-  .item{display: flex; justify-content:center;}
+  .item{display: flex; justify-content:center; padding:5px 0px 5px 5px;}
   .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff;}
-  .react-multiple-carousel__arrow--left{left:0px;}
+  .react-multiple-carousel__arrow--left{left:5px;}
   .react-multiple-carousel__arrow--right{right:4px;}
 `;
 
@@ -1173,9 +1173,11 @@ const W60 = styled(FlexDiv)`
 
 const ImgOuter = styled.div`
   position:relative;
-  img{border-radius:2px;}
+  img{border-radius:2px; 
+    :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
+  }
   p{position:absolute; left:16px; top:16px; margin:0px; background-color: #E6E6E6; border-radius: 10px; font-weight: bold; font-size: 12px; line-height: 16px; color: #1D1D1D; padding:2px 10px;}
-  &.light-bg{ margin:0px 3.5px; width: calc(33.33% - 8px);
+  &.light-bg{ margin:0px 3.5px 3px; width: calc(33.33% - 8px);
     p{background: rgba(196, 196, 196, 0.15); color:#F6F6F6;}
   }
 `;
@@ -1195,7 +1197,7 @@ const WhiteBorderBtn = styled.button`
 
 const GradientBtn = styled.button`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
-  :hover{background: #0FBFFC;}
+  :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
 `;
 
 const LiveAuctionSlider = styled.div`
@@ -1203,7 +1205,7 @@ const LiveAuctionSlider = styled.div`
   .item{margin:0px 4px;}
   .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff;}
   .react-multiple-carousel__arrow--left{left:0px;}
-  .react-multiple-carousel__arrow--right{right:4px;}
+  .react-multiple-carousel__arrow--right{right:0px;}
 `;
 
 const LiveBox = styled.div`
@@ -1301,8 +1303,9 @@ const NotableDrops = styled(FlexDiv)`
 
 const Trending = styled(FlexDiv)`
   margin-bottom:130px; justify-content:flex-start;
-  .item{margin:0px 7px 20px 0px; width:calc(20% - 7px);
+  .item{margin:0px 7px 20px 0px; width:calc(20% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :last-child{margin-right:0px;}
+    :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
   }
 `;
 
