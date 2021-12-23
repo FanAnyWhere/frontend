@@ -58,11 +58,13 @@ const responsive = {
 const responsive1 = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
-    items: 4
+    items: 4,
+    partialVisibilityGutter: 12
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 4
+    items: 4,
+    partialVisibilityGutter: 12
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -196,7 +198,7 @@ function Marketplace(props) {
 
       <LiveAuctionSlider>
         <Gs.Container>
-          <Carousel responsive={responsive1}>
+          <Carousel responsive={responsive1} partialVisible={true}>
             <div className='item'>
               <LiveBox>
                 <div className='img-outer'>
@@ -309,6 +311,60 @@ function Marketplace(props) {
               <LiveBox>
                 <div className='img-outer'>
                   <img src={NFT1} alt='' />
+                </div>
+                <div className='box-content'>
+                  <p className='abs'>AbsArtBot</p>
+                  <h3>Abstract Monster from Zorpia</h3>
+                  <PriceLine>
+                    <div>
+                      <p className='grey'>Price</p>
+                      <p>0.0002FAN</p>
+                    </div>
+                    <div className='text-right'>
+                      <p className='grey'>1/1</p>
+                      <div className='timer'>
+                        <p>00:02:10</p>
+                      </div>
+                    </div>
+                  </PriceLine>
+                  <BidLike>
+                    <Link to='/'>Place a Bid</Link>
+                    <p><AiOutlineHeart /> 2</p>
+                  </BidLike>
+                </div>
+              </LiveBox>
+            </div>
+            <div className='item'>
+              <LiveBox>
+                <div className='img-outer'>
+                  <img src={NFT8} alt='' />
+                </div>
+                <div className='box-content'>
+                  <p className='abs'>AbsArtBot</p>
+                  <h3>Abstract Monster from Zorpia</h3>
+                  <PriceLine>
+                    <div>
+                      <p className='grey'>Price</p>
+                      <p>0.0002FAN</p>
+                    </div>
+                    <div className='text-right'>
+                      <p className='grey'>1/1</p>
+                      <div className='timer'>
+                        <p>00:02:10</p>
+                      </div>
+                    </div>
+                  </PriceLine>
+                  <BidLike>
+                    <Link to='/'>Place a Bid</Link>
+                    <p><AiOutlineHeart /> 2</p>
+                  </BidLike>
+                </div>
+              </LiveBox>
+            </div>
+            <div className='item'>
+              <LiveBox>
+                <div className='img-outer'>
+                  <img src={NFT9} alt='' />
                 </div>
                 <div className='box-content'>
                   <p className='abs'>AbsArtBot</p>
@@ -569,7 +625,6 @@ function Marketplace(props) {
           </div>
         </NotableDrops>
       </Gs.Container>
-
 
       <Gs.Container>
         <GradientTitleRow>
@@ -1101,7 +1156,7 @@ const FlexDiv = styled.div`
 `;
 
 const NFTTopSlider = styled.div`
-  margin-top:117px; margin-bottom:38px;
+  margin-top:117px; margin-bottom:38px; align-items:flex-start;
   .item{display: flex; justify-content:center;}
   .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff;}
   .react-multiple-carousel__arrow--left{left:0px;}
@@ -1109,18 +1164,18 @@ const NFTTopSlider = styled.div`
 `;
 
 const W40 = styled.div`
-  width:40%;
+  width:39.5%;
 `;
 
 const W60 = styled(FlexDiv)`
-  width:60%;
+  width:60.5%;
 `;
 
 const ImgOuter = styled.div`
   position:relative;
   img{border-radius:2px;}
   p{position:absolute; left:16px; top:16px; margin:0px; background-color: #E6E6E6; border-radius: 10px; font-weight: bold; font-size: 12px; line-height: 16px; color: #1D1D1D; padding:2px 10px;}
-  &.light-bg{ margin:0px 4px 4px; width: calc(33.33% - 8px);
+  &.light-bg{ margin:0px 3.5px; width: calc(33.33% - 8px);
     p{background: rgba(196, 196, 196, 0.15); color:#F6F6F6;}
   }
 `;
@@ -1130,6 +1185,7 @@ const GradientTitleRow = styled(FlexDiv)`
   h2{margin:0px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 32px; line-height: 48px;}
   &.ver2{justify-content:center; margin-bottom:60px;}
   &.ver3{margin-bottom:20px;}
+  button{margin-right:0px;}
 `;
 
 const WhiteBorderBtn = styled.button`
@@ -1237,7 +1293,7 @@ const TC3 = styled.div`
 `;
 
 const NotableDrops = styled(FlexDiv)`
-  margin-bottom:66px; justify-content:flex-start;
+  margin-bottom:66px; justify-content:space-between;
   .item{margin:0px 17px 20px 0px; width:calc(33.33% - 17px);
     :last-child{margin-right:0px;}
   }

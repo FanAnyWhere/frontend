@@ -126,7 +126,7 @@ const FlexDiv = styled.div`
 
 const HeaderSection = styled(FlexDiv)`
   justify-content:space-between; padding:0px 15px; height:56px; background: #1D1D1D; box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25); 
-  position:fixed; left:0; right:0; top:0;
+  position:fixed; left:0; right:0; top:0; z-index:1;
 `;
 
 const HeadLeft = styled.div`
