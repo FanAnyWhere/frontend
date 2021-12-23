@@ -95,7 +95,8 @@ function Header(props) {
               Connect Wallet
             </WhiteBorderBtn>}
 
-          {props.authenticated.isLoggedIn && address}
+          {props.authenticated.isLoggedIn && <WhiteBorderBtn>{address}</WhiteBorderBtn>}
+
 
           {props.authenticated.isLoggedIn && <GradientBtn
             onClick={() => disconnect()}>Disconnect</GradientBtn>}
@@ -135,12 +136,6 @@ const HeadRight = styled(FlexDiv)`
   a{
     font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; margin:0px 12px; padding:0px; border-bottom:2px solid #1D1D1D;
     &.active,:hover{color:#fff; border-color:#fff;}
-  }
-  .blue-gradient-btn{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
-    :hover{background: #0FBFFC;}
-  }
-  .white-border-btn{background-color:#1d1d1d; border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
-    :hover{border-color:#0FBFFC;}
   }
 `;
 
