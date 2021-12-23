@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link, NavLink } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
+import CountUp from 'react-countup';
 
 import NFT1 from '../assets/images/nft-1.jpg';
 import NFT2 from '../assets/images/nft-2.jpg';
@@ -33,6 +34,7 @@ import FireIcon from '../assets/images/fire.png';
 import VerifiedIcon from '../assets/images/verified.png';
 import SendIcon from '../assets/images/send.png';
 import TimerIcon from '../assets/images/timer.png';
+import FeatureIcon from '../assets/images/feature-icon.png';
 
 const responsive = {
   superLargeDesktop: {
@@ -1021,6 +1023,75 @@ function Marketplace(props) {
         </Trending>
       </Gs.Container>
 
+      <ExploreArt>
+        <Gs.Container>
+          <ArtTitle>Explore the  world of digital art. </ArtTitle>
+          <CustomCounter>
+            <div className='counter-block'>
+              <CountUp start={0} end={999999} duration={4} delay={5} /><span className='INL-text'>FAN</span>
+              <p>Worth of art purchased</p>
+            </div>
+            <div className='counter-block'>
+              <CountUp start={0} end={230} duration={4} delay={5} />
+              <p>Great creators</p>
+            </div>
+            <div className='counter-block'>
+              <CountUp start={0} end={9999} duration={4} delay={5} />
+              <p>NFTs in marketplace</p>
+            </div>
+          </CustomCounter>
+          <WhiteBorderBtn>Explore All</WhiteBorderBtn>
+        </Gs.Container>
+      </ExploreArt>
+
+      <Gs.Container>
+        <WhiteTitle>
+          Featured on the News
+        </WhiteTitle>
+      </Gs.Container>
+
+      <Gs.Container>
+        <News>
+          <W33>
+            <div className='news-box'>
+              <img src={FeatureIcon} alt='' />
+              <FeatureTitle>Features on News</FeatureTitle>
+              <FeatureDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</FeatureDesc>
+            </div>
+          </W33>
+          <W33>
+            <div className='news-box'>
+              <img src={FeatureIcon} alt='' />
+              <FeatureTitle>Features on News</FeatureTitle>
+              <FeatureDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</FeatureDesc>
+            </div>
+          </W33>
+          <W33>
+            <div className='news-box'>
+              <img src={FeatureIcon} alt='' />
+              <FeatureTitle>Features on News</FeatureTitle>
+              <FeatureDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</FeatureDesc>
+            </div>
+          </W33>
+        </News>
+      </Gs.Container>
+
+      <Gs.Container>
+        <NewsLetter>
+          <div className='newsletter-left'>
+            <NewsLetterTitle>Sign up for our newsletter</NewsLetterTitle>
+            <NewsLetterDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint velit officia consequat duis enim velit mollit.</NewsLetterDesc>
+          </div>
+          <div className='newsletter-right'>
+            <NotifyInput>
+              <input type='text' placeholder='Enter email address' />
+              <GradientBtn>Notify me</GradientBtn>
+            </NotifyInput>
+            <p>We care about the protection of your data. read our <Link to='/'>Privacy policy</Link></p>
+          </div>
+        </NewsLetter>
+      </Gs.Container>
+
     </>
   );
 }
@@ -1063,8 +1134,13 @@ const GradientTitleRow = styled(FlexDiv)`
 `;
 
 const WhiteBorderBtn = styled.button`
-  background-color:#1d1d1d; border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
+  border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
   :hover{border-color:#0FBFFC;}
+`;
+
+const GradientBtn = styled.button`
+  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
+  :hover{background: #0FBFFC;}
 `;
 
 const LiveAuctionSlider = styled.div`
@@ -1173,5 +1249,72 @@ const Trending = styled(FlexDiv)`
     :last-child{margin-right:0px;}
   }
 `;
+
+const ExploreArt = styled.div`
+  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:75px 0px 77px; text-align:center; margin-bottom:75px;
+`;
+
+const ArtTitle = styled.div`
+  font-weight: normal; font-size: 48px; line-height: 72px; color: #FFFFFF; margin:0px 0px 50px;
+`;
+
+const CustomCounter = styled(FlexDiv)`
+  margin-bottom:72px;
+  .counter-block{width:calc(33.33% - 30px); margin:0px 15px; position:relative;
+    span{font-weight: bold; font-size: 32px; line-height: 48px; color:#fff; }
+    p{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color:#fff; margin:15px 0px 0px;}
+    :after{content:''; position:absolute; left:calc(50% - 24px); right:0; top:50px; width:48px; height:4px; background-color:#824CF5; border-radius: 2px;}
+  }
+`;
+
+const WhiteTitle = styled.div`
+  font-weight: bold; font-size: 32px; line-height: 48px; color: #FFFFFF; margin:0px 0px 30px;
+`;
+
+const News = styled(FlexDiv)`
+  justify-content:space-between; margin-bottom:130px;
+`;
+
+const W33 = styled.div`
+  width:calc(33.33% - 17px); margin-right:17px;
+  :last-child{margin-right:0px;}
+  img{margin-bottom:30px;}
+  .news-box{padding:56px 24px; background: #2F2F2F; box-shadow: 0px 20px 50px rgba(18, 17, 39, 0.08); border-radius: 2px;}
+`;
+
+const FeatureTitle = styled.div`
+  font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 16px; line-height: 22px; color: #FFFFFF; margin:0px 0px 16px;
+`;
+const FeatureDesc = styled.div`
+  font-family: 'Poppins', sans-serif; font-weight: normal; font-size: 14px; line-height: 25px; color: rgba(255, 255, 255, 0.56);
+`;
+
+const NewsLetter = styled(FlexDiv)`
+  justify-content:space-between; background: #2F2F2F; border-radius: 2px; margin-bottom:80px; padding:142px 104px 143px 145px;
+  .newsletter-left{width:55%;}
+  .newsletter-right{width:45%;
+    p{margin:0px; font-weight: normal; font-size: 12px; line-height: 22px; color: rgba(255, 255, 255, 0.48); font-family: 'Poppins', sans-serif;
+      a{color: #599bf9;}
+    }
+  }
+`;
+
+const NewsLetterTitle = styled.div`
+  font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 32px; line-height: 45px; color: #FFFFFF; margin-bottom:12px;
+`;
+
+const NewsLetterDesc = styled.div`
+  font-family: 'Poppins', sans-serif; font-weight: normal; font-size: 16px; line-height: 29px; color: rgba(255, 255, 255, 0.56); padding-right: 30px;
+`;
+
+const NotifyInput = styled(FlexDiv)`
+  align-items:flex-start; justify-content:flex-start;
+  input{padding:0px 16px; background: #FFFFFF; border-radius: 2px;font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 25px; width:267px; height:52px; border:none; margin:0px 8px 12px 0px;
+    ::placeholder {
+      color: rgba(18, 17, 39, 0.4);
+    }
+  }
+  button{padding:14px 32px; line-height:19px; font-weight:500;}
+ `;
 
 export default Marketplace;
