@@ -1101,7 +1101,7 @@ const FlexDiv = styled.div`
 `;
 
 const NFTTopSlider = styled.div`
-  margin-top:61px; margin-bottom:38px;
+  margin-top:117px; margin-bottom:38px;
   .item{display: flex; justify-content:center;}
   .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff;}
   .react-multiple-carousel__arrow--left{left:0px;}
@@ -1130,7 +1130,6 @@ const GradientTitleRow = styled(FlexDiv)`
   h2{margin:0px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 32px; line-height: 48px;}
   &.ver2{justify-content:center; margin-bottom:60px;}
   &.ver3{margin-bottom:20px;}
-  
 `;
 
 const WhiteBorderBtn = styled.button`
@@ -1202,6 +1201,7 @@ const BidLike = styled(FlexDiv)`
   justify-content:space-between; 
   a{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Rubik', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; margin:0px;
     &.disabled{background:none; color:#AEAEAE; -webkit-text-fill-color:#AEAEAE; pointer-events:none;}
+    :hover{color:#0FBFFC; -webkit-text-fill-color: #0FBFFC;}
   }
   p{font-weight: bold; font-size: 10px; line-height: 16px; color: #5F5F5F; display:flex; align-items:center; margin:0px;
     svg{margin:0px 3px 0px 0px; font-size:14px;}
