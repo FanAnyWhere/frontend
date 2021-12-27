@@ -699,11 +699,11 @@ const FlexDiv = styled.div`
 `;
 
 const NFTListMain = styled(FlexDiv)`
-  align-items:flex-start; justify-content:flex-start; margin-top:90px;
+  align-items:stretch; justify-content:flex-start; margin-top:90px;
 `;
 
 const NFTlistLeft = styled.div`
-  max-width:322px; width:100%;
+  max-width:312px; width:100%; border-right:10px solid #2F2F2F;
 `;
 
 const NFTlistRight = styled.div`
@@ -761,7 +761,7 @@ const FilterBar = styled(FlexDiv)`
 `;
 
 const Trending = styled(FlexDiv)`
-  margin-bottom:130px; justify-content:flex-start;
+  justify-content:flex-start;
   .item{margin:0px 7px 20px 0px; width:calc(16.66% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :last-child{margin-right:0px;}
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
