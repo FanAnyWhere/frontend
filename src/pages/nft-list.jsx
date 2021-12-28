@@ -7,6 +7,8 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { IoCloseSharp } from 'react-icons/io5';
 import Collapsible from 'react-collapsible';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import NFT12 from '../assets/images/nft-12.jpg';
 import NFT13 from '../assets/images/nft-13.jpg';
