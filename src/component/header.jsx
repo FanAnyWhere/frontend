@@ -6,6 +6,8 @@ import { withRouter } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
 import Collapse from '@kunukn/react-collapse'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { actions } from '../actions'
 import { walletConnectProvider } from '../web3'
@@ -141,6 +143,7 @@ function Header(props) {
       </HeaderSection>
 
       {/* login modal */}
+
       {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
 
     </>

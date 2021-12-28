@@ -114,7 +114,10 @@ function NFTList(props) {
           </CustomAccordian>
         </NFTlistLeft>
         <NFTlistRight>
-          <RightTitle>Explore</RightTitle>
+          <RightTitle>
+            {/* <Skeleton width={100} /> */}
+            Explore
+          </RightTitle>
           <ResultBar>
             <p>999999 Results</p>
             <ResultRight>
