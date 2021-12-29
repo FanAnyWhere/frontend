@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
-import { Modal } from 'react-responsive-modal'
-import { isMobile } from 'react-device-detect'
+import { Link } from 'react-router-dom'
+import Collapse from '@kunukn/react-collapse'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import styled from 'styled-components'
+import ReactTooltip from 'react-tooltip'
 import detectEthereumProvider from '@metamask/detect-provider'
-import Media from '../theme/media-breackpoint'
+import { FiInfo } from 'react-icons/fi'
 
-import MetaMaskLogo from './../assets/images/metamask.png'
-import WalletConnectLogo from './../assets/images/wallet-connect.png'
+import MetamaskLogo from '../assets/images/metamask.png';
+import WCLogo from '../assets/images/wallet-connect.png';
 
 import { actions } from '../actions'
 import { Toast } from '../helper/toastify.message'
@@ -92,33 +93,32 @@ const Login = (props) => {
     // eslint-disable-next-line
   }, [authenticated])
 
-  connectToWallet(0)
+
   return (
-    // <Modal open={props.isOpen} onClose={() => props.onClose()} center classNames={{ overlay: 'customOverlay', modal: 'WalletModalOuter', }}>
-    //   <WalletModal>
-    //     <h3>Connect Wallet</h3>
-    //     <WalletList>
-    //       {!isMobile &&
-    //         <div className="w50">
-    //           <div className="LogoOuter">
-    //             <button onClick={() => connectToWallet(0)}>
-    //               <img src={MetaMaskLogo} alt="" />
-    //             </button>
-    //           </div>
-    //           <p>MetaMask</p>
-    //         </div>}
-    //       <div className="w50">
-    //         <div className="LogoOuter">
-    //           <button onClick={() => connectToWallet(1)}>
-    //             <img src={WalletConnectLogo} alt="" />
-    //           </button>
-    //         </div>
-    //         <p>Wallet Connect</p>
-    //       </div>
-    //     </WalletList>
-    //   </WalletModal>
-    // </Moda>
-    <></>
+    <>
+      <ConnectWallet>
+        <Collapse isOpen={props.isOpen} dimension="width">
+          <ConnectTitle>Connect your Wallet</ConnectTitle>
+          <ConnectDesc>Sign in with one of available wallet providers or create a new <br />
+            <Link to=''>
+              wallet.
+              <FiInfo data-place="bottom" data-class="wallettooltip" data-tip="A crypto wallet is an application or <br/>hardware device that allows individuals <br/> to store and retrieve digital items. <br/> <a href='https://www.google.com/'>Learn More.</a>" />
+            </Link>
+          </ConnectDesc>
+          <InfoBar>We do not own your private keys and cannot access your funds without your confirmation.</InfoBar>
+          <WalletRow onClick={() => connectToWallet(0)}>
+            <img src={MetamaskLogo} alt='' />
+            <WalletName>Metamask</WalletName>
+          </WalletRow>
+          <WalletRow onClick={() => connectToWallet(1)}>
+            <img src={WCLogo} alt='' />
+            <WalletName>Wallet Connect</WalletName>
+          </WalletRow>
+          {/* <GradientBorderBtn><div className='inner'><p>Show More</p></div></GradientBorderBtn> */}
+        </Collapse>
+      </ConnectWallet>
+      <ReactTooltip html={true} data-multiline={true} effect="solid" />
+    </>
   )
 }
 
@@ -126,20 +126,49 @@ const FlexDiv = styled.div`
     display: flex; align-items: center; justify-content:center; flex-wrap:wrap;
 `;
 
-const WalletModal = styled.div`
-    background-color: ${props => props.theme.WalletBg}; border:1px solid ${props => props.theme.WalletBorder}; padding:40px; width:100%; border-radius:5px;
-    h3{ text-align:center; margin:0px 0px 40px; color:${props => props.theme.Inputtext}; font-size:28px; }
+const ConnectWallet = styled.div`
+  .collapse-css-transition{
+   height:calc(100vh - 56px); position:absolute; top:56px; right:0px; width:460px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
+  }
 `;
 
-const WalletList = styled(FlexDiv)`
-  .w50{width:calc(50% - 24px); margin:0px 12px; 
-    .LogoOuter{background-color: ${props => props.theme.DarkBox}; cursor:pointer; min-height:148px; border-radius:10px; display:flex; align-items:center; justify-content:center; border:1px solid ${props => props.theme.DarkBorder};
-    :hover{background-color: ${props => props.theme.DarkBoxHover};}
+const ConnectTitle = styled.div`
+  font-weight: bold; font-size: 32px; line-height: 48px; color: #FFFFFF; margin:0px 0px 10px;
+`;
+
+const ConnectDesc = styled.div`
+  font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 16px;
+  a{margin:0px; border-bottom:0px; color:#0FBFFC; font-weight: normal; display:flex; align-items:center;
+    :hover{color:#0FBFFC;}
+    svg{font-size:20px; margin-left:6px;
+      :focus{outline:none; box-shadow:none;}
     }
-    p{font-size:18px; text-align:center; color:${props => props.theme.DarkText}; margin:15px 0px 10px;}
-    ${Media.xs}{
-      width:100%;
-    }
+  }
+`;
+
+const InfoBar = styled.div`
+  background-color:#1f5d95; padding:8px 16px; border-radius: 5px; font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 13px;
+`;
+
+const WalletRow = styled(FlexDiv)`
+  justify-content:flex-start; background: #2F2F2F; padding:8px 16px; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px; cursor:pointer; margin:0px 0px 10px;
+  img{width:38px; height:38px; margin-right:16px; object-fit: contain;}
+`;
+
+const WalletName = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF;
+`;
+
+const GradientBorderBtn = styled.button`
+  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; width:100%;
+  .inner{
+    background-color:#2F2F2F; width:100%; height:40px; display: flex; align-items: center; justify-content: center; 
+    p{margin:0px; font-weight: bold; font-size: 16px; line-height: 24px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+  }
+  :hover{
+    .inner{ background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
+      p{ background: linear-gradient(92.95deg, #fff 0.8%, #fff 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+    }   
   }
 `;
 

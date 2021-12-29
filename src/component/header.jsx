@@ -6,14 +6,13 @@ import { withRouter } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
 import Collapse from '@kunukn/react-collapse'
 import { MdOutlineContentCopy } from 'react-icons/md'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
-import { FiInfo } from 'react-icons/fi'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTooltip from 'react-tooltip'
+import copy from 'copy-to-clipboard';
 
 import { actions } from '../actions'
-import { walletConnectProvider } from '../web3'
+import { web3, walletConnectProvider } from '../web3'
 
 import Logo from '../../public/images/logo.png';
 import SearchIcon from '../assets/images/search.png';
@@ -21,8 +20,6 @@ import BellIcon from '../assets/images/bell.png';
 import UserIcon from '../assets/images/account.png';
 import LoginModal from '../modals/login';
 import UserIconGradient from '../assets/images/account-gradient.png';
-import MetamaskLogo from '../assets/images/metamask.png';
-import WCLogo from '../assets/images/wallet-connect.png';
 
 
 function Header(props) {
@@ -31,6 +28,7 @@ function Header(props) {
   const location = useLocation()
   const [openLogin, setOpenLogin] = useState(false)
   const [address, setAddress] = useState('00000000000')
+  const [accountBalance, setAccountBalance] = useState('000.00')
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
 
   useEffect(() => {
@@ -59,14 +57,26 @@ function Header(props) {
   }
 
   useEffect(() => {
-    if (props.authenticated.isLoggedIn) {
-      let userAddress = props.authenticated.accounts[0]
-      let compactAddress = userAddress
-        ? userAddress.substring(0, 5) +
+
+    const getBalance = async (account) => { 
+      let balance = Number(
+        web3.utils.fromWei(await web3.eth.getBalance(account))
+      ).toLocaleString(undefined, 2);
+      setAccountBalance(balance)
+    }
+
+    const getCompactAddress = (address) => {
+      let compactAddress = address
+        ? address.substring(0, 5) +
         '....' +
-        userAddress.substring(userAddress.length - 5, userAddress.length)
+        address.substring(address.length - 5, address.length)
         : '00000000000'
       setAddress(compactAddress)
+    }
+
+    if (props.authenticated.isLoggedIn) {
+      getCompactAddress(props.authenticated.accounts[0])
+      getBalance(props.authenticated.accounts[0])
     }
   }, [props.authenticated])
 
@@ -77,7 +87,11 @@ function Header(props) {
     setIsOpen1(false);
     setIsOpen2(false);
     setIsOpen3(false);
-  };
+  }
+
+  const copyToClipboard = (address) => {
+    copy(address)
+  }
 
   return (
     <>
@@ -101,75 +115,53 @@ function Header(props) {
               onClick={() => setNav(tab.replace(/ /g, '').toLowerCase())}
             >
               {tab}
-              <HelpDropdown className='active'>
-                <BiChevronDown onClick={() => setIsOpen3(state => !state)} />
-                <Collapse onInit={onInit} isOpen={isOpen3}>
-                  <Link to=''>How to?</Link>
-                  <Link to=''>FAQs</Link>
-                  <Link to=''>Contact Us</Link>
-                  <Link to=''>Chat with Us</Link>
-                  <hr />
-                  <Link to=''>Privacy</Link>
-                  <Link to=''>Terms & Conditions</Link>
-                </Collapse>
-              </HelpDropdown>
+              {tab === 'Help Center' &&
+                <HelpDropdown className='active'>
+                  <BiChevronDown onClick={() => setIsOpen3(state => !state)} />
+                  <Collapse onInit={onInit} isOpen={isOpen3}>
+                    <Link to=''>How to?</Link>
+                    <Link to=''>FAQs</Link>
+                    <Link to=''>Contact Us</Link>
+                    <Link to=''>Chat with Us</Link>
+                    <hr />
+                    <Link to=''>Privacy</Link>
+                    <Link to=''>Terms & Conditions</Link>
+                  </Collapse>
+                </HelpDropdown>}
             </NavLink>)}
           </nav>
 
-          {!props.authenticated.isLoggedIn &&
+          {props.authenticated.isLoggedIn &&
             <GradientBtn>Create</GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
-            <WhiteBorderBtn className='ani-1'
-              onClick={() => setOpenLogin(true)}>
+            <WhiteBorderBtn className='ani-1 active'
+              onClick={() => setOpenLogin(!openLogin)}>
               Connect Wallet
-            </WhiteBorderBtn>}
-
-          <ConnectWallet>
-            <WhiteBorderBtn className='ani-1' onClick={() => setIsOpen2(state => !state)}>
-              Connect Wallet2
             </WhiteBorderBtn>
-            <Collapse onInit={onInit} isOpen={isOpen2} dimension="width">
-              <ConnectTitle>Connect your Wallet</ConnectTitle>
-              <ConnectDesc>Sign in with one of available wallet providers or create a new <br /><Link to=''>wallet.
-                <FiInfo data-place="bottom" data-class="wallettooltip" data-tip="A crypto wallet is an application or <br/>hardware device that allows individuals <br/> to store and retrieve digital items. <br/> <a href='https://www.google.com/'>Learn More.</a>" /></Link>
-              </ConnectDesc>
-              <InfoBar>We do not own your private keys and cannot access your funds without your confirmation.</InfoBar>
-              <WalletRow>
-                <img src={MetamaskLogo} alt='' />
-                <WalletName>Metamask</WalletName>
-              </WalletRow>
-              <WalletRow>
-                <img src={WCLogo} alt='' />
-                <WalletName>Wallet Connect</WalletName>
-              </WalletRow>
-              <GradientBorderBtn><div className='inner'><p>Show More</p></div></GradientBorderBtn>
-            </Collapse>
-          </ConnectWallet>
-
-          {props.authenticated.isLoggedIn && <WhiteBorderBtn>{address}</WhiteBorderBtn>}
-
-
-          {props.authenticated.isLoggedIn && <GradientBtn
-            onClick={() => disconnect()}>Disconnect</GradientBtn>}
+          }{openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
 
           {props.authenticated.isLoggedIn && <AfterLogin>
             <button>
               <img src={BellIcon} alt='' />
             </button>
             <AccountDropdown>
-              <button className='acc-btn active' onClick={() => setIsOpen1(state => !state)}>
+              <button className={`acc-btn ${isOpen1 && 'active'}`} onClick={() => setIsOpen1(state => !state)}>
                 <span><div className='user-img'></div></span>
               </button>
               <Collapse onInit={onInit} isOpen={isOpen1}>
                 <UserBox>
-                  <UserName>UserName</UserName>
-                  <AddressBar><p>0htxas4...09jh938sx</p> <MdOutlineContentCopy /></AddressBar>
+                  <UserName>{'username'}</UserName>
+                  <AddressBar><p>{address}</p> 
+                    <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])}
+                      data-place="bottom" data-class="wallettooltip" data-tip="copied"
+                    />
+                  </AddressBar>
                   <BalanceBox>
                     <BalanceLeft>
                       <p> Balance</p>
-                      <CurrencyAmout>0000 ETH</CurrencyAmout>
-                      <DollerAmout>$0000.00</DollerAmout>
+                      <CurrencyAmout>{accountBalance} MATIC</CurrencyAmout>
+                      <DollerAmout>${'0000.00'}</DollerAmout>
                     </BalanceLeft>
                     <BalanceRight>
                       <GradientBtn>Add Funds</GradientBtn>
@@ -177,7 +169,7 @@ function Header(props) {
                   </BalanceBox>
                 </UserBox>
                 <Link to='/'>Profile</Link>
-                <Link to='/'>Disconnect</Link>
+                <Link to='/' onClick={() => disconnect()}>Disconnect</Link>
               </Collapse>
             </AccountDropdown>
           </AfterLogin>}
@@ -185,10 +177,7 @@ function Header(props) {
         </HeadRight>
       </HeaderSection>
 
-      {/* login modal */}
       <ReactTooltip html={true} data-multiline={true} effect="solid" />
-      {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
-
     </>
   );
 }
@@ -296,52 +285,6 @@ const DollerAmout = styled.div`
 const BalanceRight = styled.div`
   button{
     width:auto; height:auto; border-radius:2px; border:none;
-  }
-`;
-
-const ConnectWallet = styled.div`
-  .collapse-css-transition{
-   height:calc(100vh - 56px); position:absolute; top:56px; right:0px; width:460px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
-  }
-`;
-
-const ConnectTitle = styled.div`
-  font-weight: bold; font-size: 32px; line-height: 48px; color: #FFFFFF; margin:0px 0px 10px;
-`;
-
-const ConnectDesc = styled.div`
-  font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 16px;
-  a{margin:0px; border-bottom:0px; color:#0FBFFC; font-weight: normal; display:flex; align-items:center;
-    :hover{color:#0FBFFC;}
-    svg{font-size:20px; margin-left:6px;
-      :focus{outline:none; box-shadow:none;}
-    }
-  }
-`;
-
-const InfoBar = styled.div`
-  background-color:#1f5d95; padding:8px 16px; border-radius: 5px; font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 13px;
-`;
-
-const WalletRow = styled(FlexDiv)`
-  justify-content:flex-start; background: #2F2F2F; padding:8px 16px; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px; cursor:pointer; margin:0px 0px 10px;
-  img{width:38px; height:38px; margin-right:16px; object-fit: contain;}
-`;
-
-const WalletName = styled.div`
-  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF;
-`;
-
-const GradientBorderBtn = styled.button`
-  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; width:100%;
-  .inner{
-    background-color:#2F2F2F; width:100%; height:40px; display: flex; align-items: center; justify-content: center; 
-    p{margin:0px; font-weight: bold; font-size: 16px; line-height: 24px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-  }
-  :hover{
-    .inner{ background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
-      p{ background: linear-gradient(92.95deg, #fff 0.8%, #fff 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-    }   
   }
 `;
 
