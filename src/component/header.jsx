@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
+import Collapse from '@kunukn/react-collapse'
+import { MdOutlineContentCopy } from 'react-icons/md'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { actions } from '../actions'
 import { walletConnectProvider } from '../web3'
@@ -13,7 +17,7 @@ import SearchIcon from '../assets/images/search.png';
 import BellIcon from '../assets/images/bell.png';
 import UserIcon from '../assets/images/account.png';
 import LoginModal from '../modals/login'
-
+import UserIconGradient from '../assets/images/account-gradient.png';
 
 
 function Header(props) {
@@ -61,6 +65,11 @@ function Header(props) {
     }
   }, [props.authenticated])
 
+  const [isOpen1, setIsOpen1] = useState(false);
+  const onInit = ({ state, style, node }) => {
+    setIsOpen1(false);
+  };
+
   return (
     <>
       <HeaderSection>
@@ -105,15 +114,36 @@ function Header(props) {
             <button>
               <img src={BellIcon} alt='' />
             </button>
-            <button className='acc-btn'>
-              <img src={UserIcon} alt='' />
-            </button>
+            <AccountDropdown>
+              <button className='acc-btn active' onClick={() => setIsOpen1(state => !state)}>
+                <span><div className='user-img'></div></span>
+              </button>
+              <Collapse onInit={onInit} isOpen={isOpen1}>
+                <UserBox>
+                  <UserName>UserName</UserName>
+                  <AddressBar><p>0htxas4...09jh938sx</p> <MdOutlineContentCopy /></AddressBar>
+                  <BalanceBox>
+                    <BalanceLeft>
+                      <p> Balance</p>
+                      <CurrencyAmout>0000 ETH</CurrencyAmout>
+                      <DollerAmout>$0000.00</DollerAmout>
+                    </BalanceLeft>
+                    <BalanceRight>
+                      <GradientBtn>Add Funds</GradientBtn>
+                    </BalanceRight>
+                  </BalanceBox>
+                </UserBox>
+                <Link to='/'>Profile</Link>
+                <Link to='/'>Disconnect</Link>
+              </Collapse>
+            </AccountDropdown>
           </AfterLogin>}
 
         </HeadRight>
       </HeaderSection>
 
       {/* login modal */}
+
       {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
 
     </>
@@ -164,7 +194,64 @@ const AfterLogin = styled(FlexDiv)`
   button{
     width:40px; height:40px; border-radius:50%; background-color:#D5C1FF; border:1px solid #D5C1FF; margin:0px 8px;
     :last-child{margin-right:0px;}
-    &.acc-btn{background-color:#1d1d1d; border:1px solid #FFFFFF;}
+    &.acc-btn {background-color: #FFFFFF; border:none; padding:1px; display:flex; align-items:center; justify-content:center;
+      span{background-color:#1d1d1d; width:100%; height:100%; border-radius:50%; display:flex; align-items:center; justify-content:center;
+        .user-img{background: url(${UserIcon}) no-repeat; width:16px; height:16px; margin:0 auto;}
+      }
+      &.active{ background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
+        span{
+          .user-img{background: url(${UserIconGradient}) no-repeat;}
+        }
+      }
+    }
+  }
+`;
+
+const AccountDropdown = styled.div`
+  position:relative;
+  .collapse-css-transition{
+    position:absolute; top:45px; right:0px; width:350px; transition: height 252ms cubic-bezier(0.4, 0, 0.2, 1); padding:14px 10px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;  
+  }
+  a{
+    display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF; margin:0px;
+    :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+  }
+`;
+
+const UserBox = styled.div`
+  background: #393939; border-radius: 5px; padding:10px; margin-bottom:10px;
+`;
+
+const UserName = styled.div`
+  font-weight: 500; font-size: 16px; line-height: 24px; color: #FFFFFF;
+`;
+
+const AddressBar = styled(FlexDiv)`
+  justify-content:flex-start; margin-bottom:17px;
+  p{
+    margin:0px; font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 10px; line-height: 16px; color: #F6F6F6; background: rgba(196, 196, 196, 0.15); border-radius: 10px; padding:2px 10px;
+  }
+  svg{margin-left:10px; cursor:pointer;}
+`;
+
+const BalanceBox = styled(FlexDiv)`
+  justify-content:space-between;
+  p{font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 10px; line-height: 16px; color: rgba(246, 246, 246, 0.75); margin:0px;}
+`;
+
+const BalanceLeft = styled.div``;
+
+const CurrencyAmout = styled.div`
+  font-weight: bold; font-size: 24px; line-height: 24px; color: #F6F6F6;
+`;
+
+const DollerAmout = styled.div`
+  font-weight: normal; font-size: 12px; line-height: 16px; color: #F6F6F6;
+`;
+
+const BalanceRight = styled.div`
+  button{
+    width:auto; height:auto; border-radius:2px; border:none;
   }
 `;
 

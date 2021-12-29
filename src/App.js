@@ -9,6 +9,7 @@ import Header from './component/header'
 import Footer from './component/footer'
 import Marketplace from './pages/marketplace'
 import NotFound from './pages/not.found'
+import NFTList from './pages/nft-list.jsx'
 
 
 function App() { 
@@ -26,6 +27,7 @@ function App() {
               <Switch>
                 <Route path="/" exact> <Marketplace />  </Route>
                 <Route path="/marketplace" > <Marketplace /> </Route>
+                <Route path="/nft-list"><NFTList /></Route>
                 <Route component={NotFound} />
               </Switch>    
             <Footer />
