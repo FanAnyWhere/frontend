@@ -1158,7 +1158,7 @@ const FlexDiv = styled.div`
 const NFTTopSlider = styled.div`
   margin-top:117px; margin-bottom:38px; align-items:flex-start;
   .item{display: flex; justify-content:center; padding:5px 0px 5px 5px;}
-  .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff;}
+  .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff; z-index:0;}
   .react-multiple-carousel__arrow--left{left:5px;}
   .react-multiple-carousel__arrow--right{right:4px;}
 `;
@@ -1203,7 +1203,7 @@ const GradientBtn = styled.button`
 const LiveAuctionSlider = styled.div`
   margin-bottom:55px;
   .item{margin:0px 4px;}
-  .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff;}
+  .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff; z-index:0;}
   .react-multiple-carousel__arrow--left{left:0px;}
   .react-multiple-carousel__arrow--right{right:0px;}
 `;

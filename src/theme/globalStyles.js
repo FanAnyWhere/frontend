@@ -13,8 +13,8 @@ Gs.GlobalStyle = createGlobalStyle`
   }
   a{text-decoration:none;}
   .orangeColor{color:#febb00 !important; }
-  .myTip{ max-width:300px; font:400 14px/22px !important; color:#fff !important;}
-  .helpIco{ position:relative; right:-5px; top:-5px;}
+  .wallettooltip{font-weight: normal; font-size: 12px !important; line-height: 16px; color: #FFFFFF !important; padding:4px 8px !important; background-color: #2F2F2F !important; opacity:1 !important; border-radius: 4px !important;}
+  .wallettooltip a{font-weight:bold; color:#0FBFFC;}
   
   .ani-1,.ani-1:after,.ani-1:before,.ani-1:hover:after,.ani-1:hover:before, .ani-1 *, .ani-1 :hover, .ani-1 a, .ani-1 a:hover, .ani-1 a:hover span, .ani-1 a:hover ul li, .ani-1 span, .ani-1 ul li {-webkit-transition: all .4s ease-in-out !important;-moz-transition: all .4s ease-in-out !important;-o-transition: all .4s ease-in-out !important;-ms-transition: all .4s ease-in-out !important;transition: all .4s ease-in-out !important;}
   input{ outline:none;}
