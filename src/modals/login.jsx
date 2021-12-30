@@ -97,7 +97,7 @@ const Login = (props) => {
   return (
     <>
       <ConnectWallet>
-        <Collapse isOpen={props.isOpen} dimension="width">
+        <Collapse isOpen={props.isOpen}>
           <ConnectTitle>Connect your Wallet</ConnectTitle>
           <ConnectDesc>Sign in with one of available wallet providers or create a new <br />
             <Link to='' className='wallet-link'>
@@ -127,8 +127,9 @@ const FlexDiv = styled.div`
 `;
 
 const ConnectWallet = styled.div`
+position:relative;
   .collapse-css-transition{
-   height:calc(100vh - 56px); position:absolute; top:56px; right:0px; width:460px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
+   height:calc(100vh - 56px); position:absolute; top:56px; right:0px; width:460px; transition: height 1000ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
   }
 `;
 
