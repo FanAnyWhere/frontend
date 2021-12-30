@@ -116,7 +116,7 @@ function Header(props) {
             >
               {tab}
               {tab === 'Help Center' &&
-                <HelpDropdown className='active'>
+                <HelpDropdown className={`${isOpen3 && 'active'}`}>
                   <BiChevronDown onClick={() => setIsOpen3(state => !state)} />
                   <Collapse onInit={onInit} isOpen={isOpen3}>
                     <Link to=''>How to?</Link>
