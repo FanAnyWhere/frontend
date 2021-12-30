@@ -100,9 +100,9 @@ const Login = (props) => {
         <Collapse isOpen={props.isOpen} dimension="width">
           <ConnectTitle>Connect your Wallet</ConnectTitle>
           <ConnectDesc>Sign in with one of available wallet providers or create a new <br />
-            <Link to=''>
+            <Link to='' className='wallet-link'>
               wallet.
-              <FiInfo data-place="bottom" data-class="wallettooltip" data-tip="A crypto wallet is an application or <br/>hardware device that allows individuals <br/> to store and retrieve digital items. <br/> <a href='https://www.google.com/'>Learn More.</a>" />
+              <FiInfo data-place="bottom" data-class="wallettooltip" data-tip="A crypto wallet is an application or <br/>hardware device that allows individuals <br/> to store and retrieve digital items. <br/> <a class='t-link' href='https://www.google.com/'>Learn More.</a>" />
             </Link>
           </ConnectDesc>
           <InfoBar>We do not own your private keys and cannot access your funds without your confirmation.</InfoBar>
@@ -138,7 +138,7 @@ const ConnectTitle = styled.div`
 
 const ConnectDesc = styled.div`
   font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 16px;
-  a{margin:0px; border-bottom:0px; color:#0FBFFC; font-weight: normal; display:flex; align-items:center;
+  .wallet-link{margin:0px; border-bottom:0px; color:#0FBFFC; font-weight: normal; display:flex; align-items:center;
     :hover{color:#0FBFFC;}
     svg{font-size:20px; margin-left:6px;
       :focus{outline:none; box-shadow:none;}
