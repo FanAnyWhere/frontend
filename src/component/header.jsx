@@ -158,7 +158,7 @@ function Header(props) {
                 </NotifiTitleBar>
                 <Scrollbars style={{ width: 400, height: 266 }}>
                   <NotifiList>
-                    <img src={Logo} alt='' />
+                    <img src={PlusIcon} alt='' />
                     <div>
                       <TTitle>Toast Title</TTitle>
                       <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
