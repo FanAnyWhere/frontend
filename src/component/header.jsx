@@ -10,6 +10,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTooltip from 'react-tooltip'
 import copy from 'copy-to-clipboard';
+import { IoCloseSharp } from 'react-icons/io5';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { actions } from '../actions'
 import { web3, walletConnectProvider } from '../web3'
@@ -20,7 +22,7 @@ import BellIcon from '../assets/images/bell.png';
 import UserIcon from '../assets/images/account.png';
 import LoginModal from '../modals/login';
 import UserIconGradient from '../assets/images/account-gradient.png';
-
+import PlusIcon from '../assets/images/plus.png';
 
 function Header(props) {
 
@@ -58,7 +60,7 @@ function Header(props) {
 
   useEffect(() => {
 
-    const getBalance = async (account) => { 
+    const getBalance = async (account) => {
       let balance = Number(
         web3.utils.fromWei(await web3.eth.getBalance(account))
       ).toLocaleString(undefined, 2);
@@ -83,10 +85,12 @@ function Header(props) {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
+  const [isOpen4, setIsOpen4] = useState(false);
   const onInit = ({ state, style, node }) => {
     setIsOpen1(false);
     setIsOpen2(false);
     setIsOpen3(false);
+    setIsOpen4(false);
   }
 
   const copyToClipboard = (address) => {
@@ -142,9 +146,52 @@ function Header(props) {
           }{openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
 
           {props.authenticated.isLoggedIn && <AfterLogin>
-            <button>
-              <img src={BellIcon} alt='' />
-            </button>
+            <NotificationDropdown>
+              <button onClick={() => setIsOpen4(state => !state)}>
+                <img src={BellIcon} alt='' />
+                <div className='red-dot'></div>
+              </button>
+              <Collapse onInit={onInit} isOpen={isOpen4}>
+                <NotifiTitleBar>
+                  <NTitle>Notification</NTitle>
+                  <Link to=''>See All</Link>
+                </NotifiTitleBar>
+                <Scrollbars style={{ width: 400, height: 266 }}>
+                  <NotifiList>
+                    <img src={Logo} alt='' />
+                    <div>
+                      <TTitle>Toast Title</TTitle>
+                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                    </div>
+                    <IoCloseSharp />
+                  </NotifiList>
+                  <NotifiList>
+                    <img src={PlusIcon} alt='' />
+                    <div>
+                      <TTitle>Toast Title</TTitle>
+                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                    </div>
+                    <IoCloseSharp />
+                  </NotifiList>
+                  <NotifiList>
+                    <img src={PlusIcon} alt='' />
+                    <div>
+                      <TTitle>Toast Title</TTitle>
+                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                    </div>
+                    <IoCloseSharp />
+                  </NotifiList>
+                  <NotifiList>
+                    <img src={PlusIcon} alt='' />
+                    <div>
+                      <TTitle>Toast Title</TTitle>
+                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                    </div>
+                    <IoCloseSharp />
+                  </NotifiList>
+                </Scrollbars>
+              </Collapse>
+            </NotificationDropdown>
             <AccountDropdown>
               <button className={`acc-btn ${isOpen1 && 'active'}`} onClick={() => setIsOpen1(state => !state)}>
                 <span><div className='user-img'></div></span>
@@ -152,7 +199,7 @@ function Header(props) {
               <Collapse onInit={onInit} isOpen={isOpen1}>
                 <UserBox>
                   <UserName>{'username'}</UserName>
-                  <AddressBar><p>{address}</p> 
+                  <AddressBar><p>{address}</p>
                     <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])}
                       data-place="bottom" data-class="wallettooltip" data-tip="copied"
                     />
@@ -302,6 +349,42 @@ const HelpDropdown = styled.div`
   &.active{
     svg{transform:rotate(180deg);}
   }
+`;
+
+const NotificationDropdown = styled.div`
+  position:relative; line-height:11px;
+  .collapse-css-transition{
+    position:absolute; top:56px; right:0px; width:400px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:15px 0px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
+  }
+  .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
+`;
+
+const NotifiTitleBar = styled(FlexDiv)`
+  justify-content:space-between; padding:0px 15px 18px;
+  a{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border-bottom:0px; margin:0px;
+    :hover{color:#824CF5; text-decoration:underline;}
+  }
+`;
+
+const NTitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF;
+`;
+
+const NotifiList = styled(FlexDiv)`
+  justify-content:flex-start; border-bottom:1px solid rgb(255 255 255 / 10%); padding:18px 14px 18px 18px; position:relative;
+  img{margin-right:18px; width:27px; height:27px; border-radius:50%; object-fit:cover;}
+  svg{font-size:25px; color:#767676; position:absolute; top:16px; right:10px; cursor:pointer;
+    :hover{opacity: 0.8;}
+  }
+  :last-child{border-bottom:0px;}
+`;
+
+const TTitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; margin:0px 0px 4px;
+`;
+
+const TDesc = styled.div`
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF;
 `;
 
 const mapDipatchToProps = (dispatch) => {
