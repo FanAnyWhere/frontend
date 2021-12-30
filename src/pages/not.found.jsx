@@ -2,18 +2,25 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Media from '../theme/media-breackpoint';
 
+import SWW from '../assets/images/sww.png';
+import FZF from '../assets/images/fzf.png';
+
 const NotFound = () => {
 
     return (
         <ErrorMain>
             <ErrorInner>
-                <div className="fimage"></div>
-                <div className="error-content">
-                    <SmText>Something Went Wrong</SmText>
-                    <NavLink to="/vault" >
-                        <SmButton>Go to Dashboard</SmButton>
-                    </NavLink>
-                </div>
+                <img src={SWW} alt='' />
+                <SmTitle>Something went Wrong.</SmTitle>
+                <SmDesc>That was on us. We are doing our best to fix the issue. Please Try again</SmDesc>
+                <GradientBtn>Go Back Home</GradientBtn>
+                <GradientBtn>Try Again</GradientBtn>
+
+                {/* 404 page design */}
+                {/* <img src={FZF} alt='' className='mb-0' />
+                <SmTitle>Oops! Page not Found</SmTitle>
+                <SmDesc>The Page you are looking for does not exist.</SmDesc>
+                <GradientBtn>Go Back Home</GradientBtn> */}
             </ErrorInner>
         </ErrorMain>
     )
@@ -23,53 +30,27 @@ const FlexDiv = styled.div`
 `;
 
 const ErrorMain = styled(FlexDiv)`
-    height:calc(100vh - 225px); 
+    height:calc(100vh - 300px); align-content: end;
 `;
 
 const ErrorInner = styled(FlexDiv)`
-    position:relative; text-align:center;
-    .fimage{background-image:url('${props => props.theme.ErrorImg}'); background-repeat:no-repeat; width:401px; height:290px; margin-left:60px;
-        ${Media.xs}{
-            background-size:contain;
-            width:280px;
-            height:203px;
-            margin-left:40px;
-        }
-    }
-    .error-content{position:absolute; top:0; left:0; right:0; bottom:0;}
-`;
-
-const SmText = styled.div`
-    width:100%; text-align:center; font-size:32px; color: ${(props) => props.theme.Inputtext}; margin:170px 0px 30px;
-    ${Media.xs}{
-        font-size:26px;
-        margin:120px 0px 30px;
+    text-align:center; 
+    img{margin:0px 0px 30px;
+        &.mb-0{margin-bottom:0px;}
     }
 `;
 
-const SmButton = styled.button`
-    background-image: linear-gradient(
-        90deg,
-        ${(props) => props.theme.Confirmc1},
-        ${(props) => props.theme.Confirmc2}
-    );
-    color: ${(props) => props.theme.Menuhover};
-    font-size: 22px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius:40px;
-    padding:21px 44px;
-    :hover {
-        background-image: linear-gradient(
-          90deg,
-          ${(props) => props.theme.Confirmc2},
-          ${(props) => props.theme.Confirmc1}
-        );
-    }
-    ${Media.xs}{
-        font-size:18px;
-        padding:14px 34px;
-    }
+const SmTitle = styled.div`
+    width:100%; font-weight: normal; font-size: 48px; line-height: 72px; text-align: center; color:#fff; margin:0px 0px 12px;
+`;
+
+const SmDesc = styled.div`
+    width:100%; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 22px;
+`;
+
+const GradientBtn = styled.button`
+  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
+  :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
 `;
 
 export default NotFound
