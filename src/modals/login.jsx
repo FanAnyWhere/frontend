@@ -33,13 +33,13 @@ const Login = (props) => {
 
   useEffect(() => {
     const sign = async (nonce) => {
-        if(nonce && authenticated.accounts[0]) {
-          const signature = await web3.eth.personal.sign(
-            web3.utils.utf8ToHex(nonce),
-            authenticated.accounts[0]
-          )
-          await authLogin(nonce, signature) // auth login for user via nonce & signature
-        }
+      if (nonce && authenticated.accounts[0]) {
+        const signature = await web3.eth.personal.sign(
+          web3.utils.utf8ToHex(nonce),
+          authenticated.accounts[0]
+        )
+        await authLogin(nonce, signature) // auth login for user via nonce & signature
+      }
     }
     sign(nonce)
     // eslint-disable-next-line
@@ -63,26 +63,26 @@ const Login = (props) => {
     } else {
       let provider = await detectEthereumProvider() // Check MetaMask installed
       if (provider) {
-          // const resp = await web3.eth.net.getId();
-          // if (!authenticated.isLoggedIn && resp !== chainId) {
-          //   try {
-          //     await window.ethereum.request({
-          //       method: 'wallet_switchEthereumChain',
-          //       params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
-          //     })
-          //   } catch (error) {
-          //     // console.log(error)
-          //     if (error.code === 4001) {
-          //       // console.log(error.message)
-          //       Toast.error(error.message)
-          //     }
-          //     if (error.code === 4902) {
-          //       addNetwork() // add network in metamask
-          //     }
-          //   }
-          // }
-          enableMetamask()
-          setClicked(true)
+        // const resp = await web3.eth.net.getId();
+        // if (!authenticated.isLoggedIn && resp !== chainId) {
+        //   try {
+        //     await window.ethereum.request({
+        //       method: 'wallet_switchEthereumChain',
+        //       params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
+        //     })
+        //   } catch (error) {
+        //     // console.log(error)
+        //     if (error.code === 4001) {
+        //       // console.log(error.message)
+        //       Toast.error(error.message)
+        //     }
+        //     if (error.code === 4902) {
+        //       addNetwork() // add network in metamask
+        //     }
+        //   }
+        // }
+        enableMetamask()
+        setClicked(true)
       } else {
         Toast.error('Please install MetaMask.!') // Please install MetaMask!
         props.onClose()
@@ -156,7 +156,7 @@ const FlexDiv = styled.div`
 const ConnectWallet = styled.div`
 position:relative;
   .collapse-css-transition{
-   height:calc(100vh - 56px); position:absolute; top:56px; right:0px; width:460px; transition: height 1000ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
+   height:calc(100vh - 56px); position:absolute; top:26px; right:-15px; width:460px; transition: height 1000ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
   }
 `;
 
