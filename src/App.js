@@ -35,7 +35,10 @@ function App() {
               </Switch>    
             <Footer />
           </section>
-        <ToastContainer autoClose={8000} theme={'dark'} pauseOnHover />
+        <ToastContainer autoClose={8000} 
+          theme={'colored'} 
+          position='bottom-left'
+          pauseOnHover />
       </Suspense>
     </Router>
   );

@@ -41,8 +41,23 @@ const getWeb3 = () => {
     };
 }
 
+const generateNonce = (address) => {
+  return async (dispatch) => {
+    const url = `user/genrateNonce/${address}`;
+    const response = services.get(url);
+    response.then((promise) => {
+      if (promise?.status === 200) {
+        dispatch({ type: 'GENERATE_NONCE', data: promise.data.data.nonce })
+      } else {
+        dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: [] } })
+      }
+    });
+  };
+}
+
 export const web3Actions = {
     enabledWalletConnect,
     enableMetamask,
+    generateNonce,
     getWeb3,
 }

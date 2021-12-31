@@ -9,7 +9,7 @@ async function getNetworkId() {
   }
 }
 
-const getWeb3 = async () => {
+const getWeb3 = async (isAuthenticate) => {
   if (web3) {
     let web3Data = {
       isLoggedIn: false,
@@ -20,7 +20,9 @@ const getWeb3 = async () => {
       const resp = await web3.eth.net.getId()
       if (responseData.length && resp === chainId) {
         web3Data.accounts = responseData;
-        web3Data.isLoggedIn = true;
+        if (isAuthenticate || localStorage.getItem('fawToken')) {
+          web3Data.isLoggedIn = true;
+        }
         return web3Data
       } else {
         return web3Data
