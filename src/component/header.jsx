@@ -371,9 +371,9 @@ const NTitle = styled.div`
 `;
 
 const NotifiList = styled(FlexDiv)`
-  justify-content:flex-start; border-bottom:1px solid rgb(255 255 255 / 10%); padding:18px 14px 18px 18px; position:relative;
+  justify-content:flex-start; border-bottom:1px solid rgb(255 255 255 / 10%); padding:18px 0px; margin:0px 18px; position:relative;
   img{margin-right:18px; width:27px; height:27px; border-radius:50%; object-fit:cover;}
-  svg{font-size:25px; color:#767676; position:absolute; top:16px; right:10px; cursor:pointer;
+  svg{font-size:25px; color:#767676; position:absolute; top:16px; right:0px; cursor:pointer;
     :hover{opacity: 0.8;}
   }
   :last-child{border-bottom:0px;}
