@@ -31,8 +31,6 @@ const Login = (props) => {
     // eslint-disable-next-line
   }, [clicked])
 
-  console.log(nonce) 
-
   useEffect(() => {
     const sign = async (nonce) => {
       if (nonce && authenticated.accounts[0]) {

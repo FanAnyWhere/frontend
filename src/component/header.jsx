@@ -134,8 +134,6 @@ function Header(props) {
     copy(address)
   }
 
-  console.log('- user ? ', props.user)
-
   return (
     <>
       <HeaderSection>
