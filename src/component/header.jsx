@@ -37,8 +37,8 @@ function Header(props) {
 
   useEffect(() => {
     const checkNetwork = async () => {
-      const chainId = await web3.eth.getChainId()
-      if (chainId !== 940 && chainId !== '0x3AC') {
+      const ChainID = await web3.eth.getChainId()
+      if (ChainID !== chainId && ChainID !== chainIdHex) {
         await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [
