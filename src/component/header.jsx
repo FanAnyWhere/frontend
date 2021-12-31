@@ -37,8 +37,8 @@ function Header(props) {
 
   useEffect(() => {
     const checkNetwork = async () => {
-      const chainId = await web3.eth.getChainId()
-      if (chainId !== 940 && chainId !== '0x3AC') {
+      const ChainID = await web3.eth.getChainId()
+      if (ChainID !== chainId && ChainID !== chainIdHex) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
@@ -110,6 +110,7 @@ function Header(props) {
       getCompactAddress(props.authenticated.accounts[0])
       getBalance(props.authenticated.accounts[0])
     }
+    // eslint-disable-next-line
   }, [props.authenticated])
 
   const [isOpen1, setIsOpen1] = useState(false);

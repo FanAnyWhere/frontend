@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { dataRefresh, isAuthenticated,fetchNonce } from './auth.reducer'
-import { fetchNotifications, } from './user.reducer'
+import { fetchNotifications, fetchNotificationFilters } from './user.reducer'
 
 
 const rootReducer = combineReducers({
@@ -8,6 +8,7 @@ const rootReducer = combineReducers({
   dataRefresh,
   isAuthenticated,
   fetchNotifications,
+  fetchNotificationFilters,
 })
 
 export default rootReducer

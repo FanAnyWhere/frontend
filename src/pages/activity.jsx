@@ -1,125 +1,122 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Gs from '../theme/globalStyles';
-import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom';
 import { IoCloseSharp } from 'react-icons/io5';
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import User1 from '../assets/images/user-1.png';
-import User2 from '../assets/images/user-2.png';
-import User3 from '../assets/images/user-3.png';
-import LoaderGIF from '../assets/images/loader.gif';
+import User1 from '../assets/images/user-1.png'
+import User2 from '../assets/images/user-2.png'
+import User3 from '../assets/images/user-3.png'
+import Loader from '../helper/loader'
+import { actions } from '../actions'
 
-function Activity(props) {
+
+const Activity = (props) => {
+
+  const [filters, setFilters] = useState([ 
+    { key: 'Listing' },
+    { key: 'Following' },
+    { key: 'Bids' },
+    { key: 'Favourite' },
+    { key: 'Purchased' },
+    { key: 'Transfered' },
+    { key: 'Sales' },
+  ])
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      await props.getNotifications() // fetch notifications
+      // await props.getNotificationFilters() // fetch notifications filters
+    }
+    getNotifications()
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <>
       <Gs.Container>
-        <ActTitle>Notifications</ActTitle>
-        <ActOuter>
-          <ActLeft>
-            <ActFilterList>
-              <Link to='' className='active'>All</Link>
-              <Link to=''>Following</Link>
-              <Link to=''>Bids</Link>
-              <Link to=''>My Stuffs</Link>
-            </ActFilterList>
-            <NotifiList>
-              <img src={User1} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User1} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum Dolor. <Link to='/'>Link goes Here</Link></TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User2} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                <TBid><Link to='/'>Place a Bid</Link></TBid>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User2} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum Dolor. <Link to='/'>Link goes Here</Link></TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User3} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User3} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User1} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum Dolor. <Link to='/'>Link goes Here</Link></TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User2} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum Dolor. <Link to='/'>Link goes Here</Link></TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-            <NotifiList>
-              <img src={User1} alt='' />
-              <div>
-                <TTitle>Toast Title</TTitle>
-                <TDesc>Toast message goes here. Lorem ipsum Dolor.</TDesc>
-              </div>
-              <IoCloseSharp />
-            </NotifiList>
-          </ActLeft>
-          <ActRight>
-            <NotifiTitleBar>
-              <NTitle>Filters</NTitle>
-              <Link to='/'>Clear All Filters</Link>
-            </NotifiTitleBar>
-            <FilterTags>
-              <Link to='/'>Listings</Link>
-              <Link to='/'>Following</Link>
-              <Link to='/'>BIds</Link>
-              <Link to='/'>Favorites</Link>
-              <Link to='/'>Purchased</Link>
-              <Link to='/'>Transfered</Link>
-              <Link to='/'>Sales</Link>
-            </FilterTags>
-          </ActRight>
-        </ActOuter>
-        <Loader>
-          <img src={LoaderGIF} alt='' />
-        </Loader>
+
+          <ActTitle>Notifications</ActTitle>
+            <ActOuter>
+
+              <ActLeft>
+                
+                <ActFilterList>
+                  <Link to='' className='active'>All</Link>
+                  <Link to=''>Following</Link>
+                  <Link to=''>Bids</Link>
+                  <Link to=''>My Stuffs</Link>
+                </ActFilterList>
+
+                {props.notifications?.map( (notification, key) => {
+                  return <>
+                      <NotifiList>
+                        <img src={User1} alt='' />
+                        <div>
+                          <TTitle>Toast Title</TTitle>
+                          <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                        </div>
+                        <IoCloseSharp />
+                      </NotifiList>
+                    </>
+                })}
+
+                {props.notifications.length === 0 && <>
+                  <NotifiList>
+                    <TDesc>No Notifications Available</TDesc>
+                  </NotifiList>
+                </>}
+
+                {/* <NotifiList>
+                  <img src={User1} alt='' />
+                  <div>
+                    <TTitle>Toast Title</TTitle>
+                    <TDesc>Toast message goes here. Lorem ipsum Dolor. <Link to='/'>Link goes Here</Link></TDesc>
+                  </div>
+                  <IoCloseSharp />
+                </NotifiList>
+                <NotifiList>
+                  <img src={User2} alt='' />
+                  <div>
+                    <TTitle>Toast Title</TTitle>
+                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                    <TBid><Link to='/'>Place a Bid</Link></TBid>
+                  </div>
+                  <IoCloseSharp />
+                </NotifiList>
+                <NotifiList>
+                  <img src={User3} alt='' />
+                  <div>
+                    <TTitle>Toast Title</TTitle>
+                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                  </div>
+                  <IoCloseSharp />
+                </NotifiList> */}
+
+              </ActLeft>
+    
+              <ActRight>
+                <NotifiTitleBar>
+                  <NTitle>Filters</NTitle>
+                  <Link to='/'>Clear All Filters</Link>
+                </NotifiTitleBar>
+    
+                <FilterTags>
+                  {filters?.map((filter, key)=> 
+                    <Link to='#' key={key}>{filter.key}</Link>
+                  )}
+                </FilterTags>
+              </ActRight>
+            </ActOuter>
+
       </Gs.Container>
     </>
   );
 }
+
 // Common Style Div 
 const FlexDiv = styled.div`
   display:flex; align-items: center; justify-content:center; flex-wrap:wrap;
@@ -190,8 +187,17 @@ const FilterTags = styled(FlexDiv)`
   a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; pointer-events:none; padding:8px 16px; margin:0px 10px 10px 0px; border: 1px solid #AEAEAE; box-sizing: border-box; border-radius: 20px;}
 `;
 
-const Loader = styled(FlexDiv)`
-  height:100vh;
-`;
-
-export default Activity;
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getNotifications: () => dispatch(actions.getNotifications()),
+    getNotificationFilters: () => dispatch(actions.getNotificationFilters()),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+      authenticated: state.isAuthenticated,
+      notifications: state.fetchNotifications,
+      filters: state.fetchNotificationFilters,
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Activity));

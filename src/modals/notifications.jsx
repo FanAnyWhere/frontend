@@ -12,18 +12,14 @@ import { actions } from '../actions'
 
 const Notifications = (props) => {
 
-    const [notifications, setNotifications] = useState([])
-    const [fetching, setFetching] = useState(true)
-
-    useEffect(() => {
-      const getNot = async () => {
-        let response = props.getNotifications()
-        setNotifications(response)
-      }
-      getNot() // fetch user notifications
-      // eslint-disable-next-line
-    })
-
+  useEffect(() => {
+    const getNotifications = async () => {
+      await props.getNotifications() // fetch notifications
+    }
+    getNotifications()
+    // eslint-disable-next-line
+  }, [])
+    
     return (
         <Collapse isOpen={props.isOpen}>
             <NotifiTitleBar>
@@ -31,41 +27,20 @@ const Notifications = (props) => {
                 <Link to='/notifications'>See All</Link>
             </NotifiTitleBar>
             <Scrollbars style={{ width: 400, height: 266 }}>
-                {/* {fetching && <NotifiList><div><TTitle></TTitle>
-                    <TDesc>loading...</TDesc></div></NotifiList>} */}
-                
-                <NotifiList>
-                <img src={PlusIcon} alt='' />
-                <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                </div>
-                <IoCloseSharp />
+
+              {props.notifications?.map( (notification, key) => {
+                return <NotifiList>
+                  <img src={PlusIcon} alt='' />
+                  <div>
+                      <TTitle>Toast Title</TTitle>
+                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                  </div>
+                  <IoCloseSharp />
                 </NotifiList>
-                <NotifiList>
-                <img src={PlusIcon} alt='' />
-                <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                </div>
-                <IoCloseSharp />
-                </NotifiList>
-                <NotifiList>
-                <img src={PlusIcon} alt='' />
-                <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                </div>
-                <IoCloseSharp />
-                </NotifiList>
-                <NotifiList>
-                <img src={PlusIcon} alt='' />
-                <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                </div>
-                <IoCloseSharp />
-                </NotifiList>
+              })}
+
+              {props.notifications.length === 0 && <NotifiList>No Notification Available</NotifiList>}
+              
             </Scrollbars>
         </Collapse>
     )
@@ -104,14 +79,14 @@ const TDesc = styled.div`
 `;
 
 const mapDipatchToProps = (dispatch) => {
-    return {
-      getNotifications: () => dispatch(actions.getNotifications()),
-    }
+  return {
+    getNotifications: () => dispatch(actions.getNotifications()),
+  }
 }
 const mapStateToProps = (state) => {
-    return {
-        authenticated: state.isAuthenticated,
-        notifications: state.fetchNotifications,
-    }
+  return {
+      authenticated: state.isAuthenticated,
+      notifications: state.fetchNotifications,
+  }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Notifications));
