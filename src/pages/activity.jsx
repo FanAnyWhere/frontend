@@ -32,6 +32,7 @@ const Activity = (props) => {
       // await props.getNotificationFilters() // fetch notifications filters
     }
     getNotifications()
+    // eslint-disable-next-line
   }, [])
 
   return (

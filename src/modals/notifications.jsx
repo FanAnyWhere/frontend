@@ -17,6 +17,7 @@ const Notifications = (props) => {
       await props.getNotifications() // fetch notifications
     }
     getNotifications()
+    // eslint-disable-next-line
   }, [])
     
     return (

@@ -110,6 +110,7 @@ function Header(props) {
       getCompactAddress(props.authenticated.accounts[0])
       getBalance(props.authenticated.accounts[0])
     }
+    // eslint-disable-next-line
   }, [props.authenticated])
 
   const [isOpen1, setIsOpen1] = useState(false);
