@@ -11,6 +11,7 @@ import Marketplace from './pages/marketplace'
 import NotFound from './pages/not.found'
 import NFTList from './pages/nft-list'
 import Activity from './pages/activity'
+import MyProfile from './pages/my-profile'
 
 function App() { 
 
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/marketplace" > <Marketplace /> </Route>
                 <Route path="/nft-list"><NFTList /></Route>
                 <Route path="/activity"><Activity /></Route>
+                <Route path="/my-profile"><MyProfile /></Route>
                 <Route component={NotFound} />
               </Switch>    
             <Footer />
