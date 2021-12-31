@@ -31,13 +31,18 @@ const Login = (props) => {
     // eslint-disable-next-line
   }, [clicked])
 
+  console.log(nonce) 
+
   useEffect(() => {
     const sign = async (nonce) => {
+      console.log(nonce, authenticated.accounts[0])
         if(nonce && authenticated.accounts[0]) {
+          console.log('sigature request')
           const signature = await web3.eth.personal.sign(
             web3.utils.utf8ToHex(nonce),
             authenticated.accounts[0]
           )
+          console.log('s: ',signature)
           await authLogin(nonce, signature) // auth login for user via nonce & signature
         }
     }

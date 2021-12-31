@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -9,11 +9,12 @@ import LoaderGIF from './assets/images/loader.gif'
 // import components
 import Header from './component/header'
 import Footer from './component/footer'
-import Marketplace from './pages/marketplace'
-import NotFound from './pages/not.found'
-import NFTList from './pages/nft-list'
-import Activity from './pages/activity'
-import MyProfile from './pages/my-profile'
+const Marketplace = React.lazy(() => import('./pages/marketplace'))
+const NotFound = React.lazy(() => import('./pages/not.found'))
+const NFTList = React.lazy(() => import('./pages/nft-list'))
+const Activity = React.lazy(() => import('./pages/activity'))
+const MyProfile = React.lazy(() => import('./pages/my-profile'))
+
 
 function App() { 
 

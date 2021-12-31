@@ -2,6 +2,7 @@ import { services } from '../services';
 
 export const userActions = {
     getNotifications,
+    getUserDetails,
     getNotificationFilters,
 }
 
@@ -25,6 +26,21 @@ function getNotificationFilters() {
     response.then((promise) => {
       if (promise.status === 200) {
         dispatch({type: 'FETCHED_NOTIFICATIONS_FILTERS', data: promise.data.data});
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getUserDetails() {
+  return (dispatch) => {
+    const response = services.get('user/userDetails');
+    response.then(async (promise) => {
+      if (promise.status === 200) {
+        if (promise.data.data) {
+          dispatch({type: 'FETCHED_USER_DETAILS', data: promise.data.data});
+        }
       } else {
         // console.log("error");
       }

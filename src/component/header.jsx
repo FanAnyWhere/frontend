@@ -22,6 +22,7 @@ import UserIconGradient from '../assets/images/account-gradient.png'
 
 import LoginModal from '../modals/login'
 import Notifications from '../modals/notifications'
+import BecomeCelebrity from '../modals/become.celebrity'
 import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../config'
 
 
@@ -106,9 +107,14 @@ function Header(props) {
       setAddress(compactAddress)
     }
 
+    const getUser = async () => {
+      props.getUserDetails() // fetch user details
+    }
+
     if (props.authenticated.isLoggedIn) {
       getCompactAddress(props.authenticated.accounts[0])
       getBalance(props.authenticated.accounts[0])
+      getUser()
     }
     // eslint-disable-next-line
   }, [props.authenticated])
@@ -127,6 +133,8 @@ function Header(props) {
   const copyToClipboard = (address) => {
     copy(address)
   }
+
+  console.log('- user ? ', props.user)
 
   return (
     <>
@@ -167,8 +175,9 @@ function Header(props) {
             </a>
           </nav>
 
-          {props.authenticated.isLoggedIn &&
-            <GradientBtn>Create</GradientBtn>}
+          {props.user?.role?.roleName !== 'COLLECTOR' ?
+            <GradientBtn>Create</GradientBtn> 
+            : <GradientBtn><BecomeCelebrity /></GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
             <WhiteBorderBtn className='ani-1 active'
@@ -205,10 +214,10 @@ function Header(props) {
                     </BalanceLeft>
                     <BalanceRight>
                       <GradientBtn>Add Funds</GradientBtn>
-                    </BalanceRight>
+                    </BalanceRight> 
                   </BalanceBox>
                 </UserBox>
-                <Link to='/'>Profile</Link>
+                <Link to='/my-profile'>Profile</Link>
                 <Link to='/' onClick={() => disconnect()}>Disconnect</Link>
               </Collapse>
             </AccountDropdown>
@@ -356,12 +365,14 @@ const mapDipatchToProps = (dispatch) => {
   return {
     getWeb3: () => dispatch(actions.getWeb3()),
     clearNonce: () => dispatch({ type: 'GENERATE_NONCE', data: null }),
+    getUserDetails: () => dispatch(actions.getUserDetails()),
     web3Logout: (accounts) => dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: accounts } }),
   }
 }
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.isAuthenticated
+    authenticated: state.isAuthenticated,
+    user: state.fetchUserDetails,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Header));

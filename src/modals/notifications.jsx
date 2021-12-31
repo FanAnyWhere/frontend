@@ -24,7 +24,7 @@ const Notifications = (props) => {
         <Collapse isOpen={props.isOpen}>
             <NotifiTitleBar>
                 <NTitle>Notification</NTitle>
-                <Link to='/notifications'>See All</Link>
+                <Link to='/#'>See All</Link>
             </NotifiTitleBar>
             <Scrollbars style={{ width: 400, height: 266 }}>
 
