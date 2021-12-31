@@ -28,11 +28,15 @@ function App() {
                 <Route path="/" exact> <Marketplace />  </Route>
                 <Route path="/marketplace" > <Marketplace /> </Route>
                 <Route path="/nft-list"><NFTList /></Route>
+                {/* <Route path="/notifications"></Route> */}
                 <Route component={NotFound} />
               </Switch>    
             <Footer />
           </section>
-        <ToastContainer autoClose={8000} theme={'dark'} pauseOnHover />
+        <ToastContainer autoClose={8000} 
+          theme={'colored'} 
+          position='bottom-left'
+          pauseOnHover />
       </Suspense>
     </Router>
   );

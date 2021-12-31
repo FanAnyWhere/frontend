@@ -10,56 +10,86 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTooltip from 'react-tooltip'
 import copy from 'copy-to-clipboard';
-import { IoCloseSharp } from 'react-icons/io5';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 import { actions } from '../actions'
 import { web3, walletConnectProvider } from '../web3'
 
-import Logo from '../../public/images/logo.png';
-import SearchIcon from '../assets/images/search.png';
-import BellIcon from '../assets/images/bell.png';
-import UserIcon from '../assets/images/account.png';
-import LoginModal from '../modals/login';
-import UserIconGradient from '../assets/images/account-gradient.png';
-import PlusIcon from '../assets/images/plus.png';
+import Logo from '../../public/images/logo.png'
+import SearchIcon from '../assets/images/search.png'
+import BellIcon from '../assets/images/bell.png'
+import UserIcon from '../assets/images/account.png'
+import UserIconGradient from '../assets/images/account-gradient.png'
+
+import LoginModal from '../modals/login'
+import Notifications from '../modals/notifications'
+import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../config'
+
 
 function Header(props) {
 
   const navTabs = ['Marketplace', 'Celebrities', 'Activity', 'Help Center']
   const location = useLocation()
   const [openLogin, setOpenLogin] = useState(false)
+  const [openNotification, setOpenNotification] = useState(false)
   const [address, setAddress] = useState('00000000000')
   const [accountBalance, setAccountBalance] = useState('000.00')
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
+
+  useEffect(() => {
+    const checkNetwork = async () => {
+      const chainId = await web3.eth.getChainId()
+      if (chainId !== 940 && chainId !== '0x3AC') {
+        await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: chainIdHex,
+                chainName: network_name,
+                nativeCurrency: {
+                  name: 'Polygon Token',
+                  symbol: currency_symbol,
+                  decimals: 18
+                },
+                rpcUrls: [rpcUrls],
+              },
+            ],
+          })
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
+        })
+      }
+    }
+    checkNetwork() // check network is pulsechain or not
+    // eslint-disable-next-line
+  })
 
   useEffect(() => {
     if (!props.authenticated.accounts[0] && Number(localStorage.getItem('isDisconnect')) === 0)
       props.getWeb3()
 
     if (window.web3) { // provider events for the desktop
-      // window.ethereum.on('connect', function (accounts) { props.getWeb3() })
-      window.ethereum.on('networkChanged', function (networkId) { props.getWeb3() })
-      window.ethereum.on('accountsChanged', function (accounts) { props.getWeb3() })
-      window.ethereum.on('disconnect', function (code, resaon) {
-        localStorage.setItem('isDisconnect', '1')
-        props.getWeb3()
-      })
+      window.ethereum.on('networkChanged', function (networkId) { disconnect(); props.getWeb3() })
+      window.ethereum.on('accountsChanged', function (accounts) { disconnect(); props.getWeb3() })
+      window.ethereum.on('disconnect', function (code, resaon) { disconnect(); props.getWeb3() })
     }
     // eslint-disable-next-line
   }, [])
 
   const disconnect = async () => {
-    localStorage.setItem('isDisconnect', '1')
+    window.localStorage.removeItem('WALLETCONNECT_DEEPLINK_CHOICE')
+    localStorage.clear();
     if (walletConnectProvider.connector.connected) {
-      localStorage.removeItem('walletconnect') // to disconnect from wallet connect 
+      localStorage.removeItem('walletconnect') // to disconnect from wallet connect
       await walletConnectProvider.disconnect() // Close provider session
     }
-    props.web3Logout()
+    props.clearNonce()
+    props.web3Logout(props.authenticated.accounts)
+    props.history.push('/') // redirect to the landing page
+    window.location.reload()
   }
 
   useEffect(() => {
-
     const getBalance = async (account) => {
       let balance = Number(
         web3.utils.fromWei(await web3.eth.getBalance(account))
@@ -147,50 +177,11 @@ function Header(props) {
 
           {props.authenticated.isLoggedIn && <AfterLogin>
             <NotificationDropdown>
-              <button onClick={() => setIsOpen4(state => !state)}>
+              <button onClick={() => setOpenNotification(!openNotification)}>
                 <img src={BellIcon} alt='' />
-                <div className='red-dot'></div>
+                {/* <div className='red-dot'></div> */}
               </button>
-              <Collapse onInit={onInit} isOpen={isOpen4}>
-                <NotifiTitleBar>
-                  <NTitle>Notification</NTitle>
-                  <Link to=''>See All</Link>
-                </NotifiTitleBar>
-                <Scrollbars style={{ width: 400, height: 266 }}>
-                  <NotifiList>
-                    <img src={PlusIcon} alt='' />
-                    <div>
-                      <TTitle>Toast Title</TTitle>
-                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                    </div>
-                    <IoCloseSharp />
-                  </NotifiList>
-                  <NotifiList>
-                    <img src={PlusIcon} alt='' />
-                    <div>
-                      <TTitle>Toast Title</TTitle>
-                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                    </div>
-                    <IoCloseSharp />
-                  </NotifiList>
-                  <NotifiList>
-                    <img src={PlusIcon} alt='' />
-                    <div>
-                      <TTitle>Toast Title</TTitle>
-                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                    </div>
-                    <IoCloseSharp />
-                  </NotifiList>
-                  <NotifiList>
-                    <img src={PlusIcon} alt='' />
-                    <div>
-                      <TTitle>Toast Title</TTitle>
-                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                    </div>
-                    <IoCloseSharp />
-                  </NotifiList>
-                </Scrollbars>
-              </Collapse>
+              {openNotification && <Notifications isOpen={openNotification}/> }
             </NotificationDropdown>
             <AccountDropdown>
               <button className={`acc-btn ${isOpen1 && 'active'}`} onClick={() => setIsOpen1(state => !state)}>
@@ -359,38 +350,11 @@ const NotificationDropdown = styled.div`
   .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
 `;
 
-const NotifiTitleBar = styled(FlexDiv)`
-  justify-content:space-between; padding:0px 15px 18px;
-  a{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border-bottom:0px; margin:0px;
-    :hover{color:#824CF5; text-decoration:underline;}
-  }
-`;
-
-const NTitle = styled.div`
-  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF;
-`;
-
-const NotifiList = styled(FlexDiv)`
-  justify-content:flex-start; border-bottom:1px solid rgb(255 255 255 / 10%); padding:18px 14px 18px 18px; position:relative;
-  img{margin-right:18px; width:27px; height:27px; border-radius:50%; object-fit:cover;}
-  svg{font-size:25px; color:#767676; position:absolute; top:16px; right:10px; cursor:pointer;
-    :hover{opacity: 0.8;}
-  }
-  :last-child{border-bottom:0px;}
-`;
-
-const TTitle = styled.div`
-  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; margin:0px 0px 4px;
-`;
-
-const TDesc = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF;
-`;
-
 const mapDipatchToProps = (dispatch) => {
   return {
     getWeb3: () => dispatch(actions.getWeb3()),
-    web3Logout: () => dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: [] } }),
+    clearNonce: () => dispatch({ type: 'GENERATE_NONCE', data: null }),
+    web3Logout: (accounts) => dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: accounts } }),
   }
 }
 const mapStateToProps = (state) => {

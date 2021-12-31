@@ -21,3 +21,13 @@ export const dataRefresh = function (state = false , action) {
             return state
   }
 }
+
+export const fetchNonce = function (state = null, action) {
+    switch (action.type) {
+      case 'GENERATE_NONCE':
+        return action.data
+      default:
+        return state
+    }
+  }
+  

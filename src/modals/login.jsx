@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Collapse from '@kunukn/react-collapse'
 import { connect } from 'react-redux'
@@ -8,8 +8,8 @@ import ReactTooltip from 'react-tooltip'
 import detectEthereumProvider from '@metamask/detect-provider'
 import { FiInfo } from 'react-icons/fi'
 
-import MetamaskLogo from '../assets/images/metamask.png';
-import WCLogo from '../assets/images/wallet-connect.png';
+import MetamaskLogo from '../assets/images/metamask.png'
+import WCLogo from '../assets/images/wallet-connect.png'
 
 import { actions } from '../actions'
 import { Toast } from '../helper/toastify.message'
@@ -19,7 +19,31 @@ import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../
 
 const Login = (props) => {
 
-  const { enableMetamask, enabledWalletConnect, authenticated } = props
+  const { enableMetamask, enabledWalletConnect, authenticated, generateNonce, nonce, authLogin } = props
+  const [clicked, setClicked] = useState(false)
+
+  useEffect(() => {
+    if (clicked) {
+      if (authenticated.accounts[0] && !authenticated.isLoggedIn && !nonce) {
+        generateNonce(authenticated.accounts[0]) // generate nonce for user
+      }
+    }
+    // eslint-disable-next-line
+  }, [clicked])
+
+  useEffect(() => {
+    const sign = async (nonce) => {
+        if(nonce && authenticated.accounts[0]) {
+          const signature = await web3.eth.personal.sign(
+            web3.utils.utf8ToHex(nonce),
+            authenticated.accounts[0]
+          )
+          await authLogin(nonce, signature) // auth login for user via nonce & signature
+        }
+    }
+    sign(nonce)
+    // eslint-disable-next-line
+  }, [nonce])
 
   const connectToWallet = async (isWalletConnect) => {
     if (isWalletConnect) {
@@ -33,29 +57,32 @@ const Login = (props) => {
           localStorage.removeItem('walletconnect') // to disconnect from wallet connect 
           await walletConnectProvider.disconnect() // Close provider session
         }
+      } else {
+        setClicked(true)
       }
     } else {
       let provider = await detectEthereumProvider() // Check MetaMask installed
       if (provider) {
-        const resp = await web3.eth.net.getId();
-        if (!authenticated.isLoggedIn && resp !== chainId) {
-          try {
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
-            })
-          } catch (error) {
-            // console.log(error)
-            if (error.code === 4001) {
-              // console.log(error.message)
-              Toast.error(error.message)
-            }
-            if (error.code === 4902) {
-              addNetwork() // add network in metamask
-            }
-          }
-        }
-        enableMetamask()
+          // const resp = await web3.eth.net.getId();
+          // if (!authenticated.isLoggedIn && resp !== chainId) {
+          //   try {
+          //     await window.ethereum.request({
+          //       method: 'wallet_switchEthereumChain',
+          //       params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
+          //     })
+          //   } catch (error) {
+          //     // console.log(error)
+          //     if (error.code === 4001) {
+          //       // console.log(error.message)
+          //       Toast.error(error.message)
+          //     }
+          //     if (error.code === 4902) {
+          //       addNetwork() // add network in metamask
+          //     }
+          //   }
+          // }
+          enableMetamask()
+          setClicked(true)
       } else {
         Toast.error('Please install MetaMask.!') // Please install MetaMask!
         props.onClose()
@@ -177,6 +204,8 @@ const mapDipatchToProps = (dispatch) => {
   return {
     enableMetamask: () => dispatch(actions.enableMetamask()),
     enabledWalletConnect: () => dispatch(actions.enabledWalletConnect()),
+    generateNonce: (address) => dispatch(actions.generateNonce(address)),
+    authLogin: (nonce, signature) => dispatch(actions.authLogin(nonce, signature)),
     web3Logout: () => dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: [] } }),
   }
 }
@@ -184,6 +213,7 @@ const mapDipatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.isAuthenticated,
+    nonce: state.fetchNonce,
   }
 }
 
