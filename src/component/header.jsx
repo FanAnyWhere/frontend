@@ -40,20 +40,20 @@ function Header(props) {
       const chainId = await web3.eth.getChainId()
       if (chainId !== 940 && chainId !== '0x3AC') {
         await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainId: chainIdHex,
-                chainName: network_name,
-                nativeCurrency: {
-                  name: 'Polygon Token',
-                  symbol: currency_symbol,
-                  decimals: 18
-                },
-                rpcUrls: [rpcUrls],
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: chainIdHex,
+              chainName: network_name,
+              nativeCurrency: {
+                name: 'Polygon Token',
+                symbol: currency_symbol,
+                decimals: 18
               },
-            ],
-          })
+              rpcUrls: [rpcUrls],
+            },
+          ],
+        })
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
@@ -181,7 +181,7 @@ function Header(props) {
                 <img src={BellIcon} alt='' />
                 {/* <div className='red-dot'></div> */}
               </button>
-              {openNotification && <Notifications isOpen={openNotification}/> }
+              {openNotification && <Notifications isOpen={openNotification} />}
             </NotificationDropdown>
             <AccountDropdown>
               <button className={`acc-btn ${isOpen1 && 'active'}`} onClick={() => setIsOpen1(state => !state)}>
