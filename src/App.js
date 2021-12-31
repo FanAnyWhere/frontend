@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Gs from './theme/globalStyles';
+import styled from 'styled-components';
+import Gs from './theme/globalStyles'
+import LoaderGIF from './assets/images/loader.gif'
 
 // import components
 import Header from './component/header'
@@ -16,7 +18,9 @@ import MyProfile from './pages/my-profile'
 function App() { 
 
   const Loading = () => {
-    return (<>Loading</>)
+    return (<Loader>
+      <img src={LoaderGIF} alt='' />
+    </Loader>)
   }
   
   return (
@@ -43,6 +47,14 @@ function App() {
     </Router>
   );
 }
+
+const FlexDiv = styled.div`
+  display: flex; align-items: center; justify-content:center; flex-wrap:wrap;
+`;
+
+const Loader = styled(FlexDiv)`
+  height:100vh;
+`;
 
 
 export default App;
