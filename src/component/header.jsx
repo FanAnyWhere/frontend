@@ -41,20 +41,20 @@ function Header(props) {
       const ChainID = await web3.eth.getChainId()
       if (ChainID !== chainId && ChainID !== chainIdHex) {
         await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainId: chainIdHex,
-                chainName: network_name,
-                nativeCurrency: {
-                  name: 'Polygon Token',
-                  symbol: currency_symbol,
-                  decimals: 18
-                },
-                rpcUrls: [rpcUrls],
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: chainIdHex,
+              chainName: network_name,
+              nativeCurrency: {
+                name: 'Polygon Token',
+                symbol: currency_symbol,
+                decimals: 18
               },
-            ],
-          })
+              rpcUrls: [rpcUrls],
+            },
+          ],
+        })
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
@@ -159,7 +159,7 @@ function Header(props) {
             >
               {tab}
             </NavLink>)}
-            <a onClick={() => setIsOpen3(state => !state)} >Help Center
+            <a href="javascript:void(0)" onClick={() => setIsOpen3(state => !state)} >Help Center
               <HelpDropdown className={`${isOpen3 && 'active'}`}>
                 <BiChevronDown />
                 <Collapse onInit={onInit} isOpen={isOpen3}>
@@ -192,7 +192,7 @@ function Header(props) {
                 <img src={BellIcon} alt='' />
                 {/* <div className='red-dot'></div> */}
               </button>
-              {openNotification && <Notifications isOpen={openNotification}/> }
+              {openNotification && <Notifications isOpen={openNotification} />}
             </NotificationDropdown>
             <AccountDropdown>
               <button className={`acc-btn ${isOpen1 && 'active'}`} onClick={() => setIsOpen1(state => !state)}>
@@ -274,7 +274,6 @@ const NavSearch = styled.div`
 const AfterLogin = styled(FlexDiv)`
   button{
     width:40px; height:40px; border-radius:50%; background-color:#D5C1FF; border:1px solid #D5C1FF; margin:0px 8px;
-    :last-child{margin-right:0px;}
     &.acc-btn {background-color: #FFFFFF; border:none; padding:1px; display:flex; align-items:center; justify-content:center;
       span{background-color:#1d1d1d; width:100%; height:100%; border-radius:50%; display:flex; align-items:center; justify-content:center;
         .user-img{background: url(${UserIcon}) no-repeat; width:16px; height:16px; margin:0 auto;}
@@ -340,7 +339,7 @@ const BalanceRight = styled.div`
 const HelpDropdown = styled.div`
   position:relative; line-height:11px;
   .collapse-css-transition{
-    position:absolute; top:56px; right:0px; width:177px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:10px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
+    position:absolute; top:36px; right:0px; width:177px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:10px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
   }
   a{display:block; border-bottom:0px; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px; padding:10px 0px;
     :last-child{padding-bottom:0px;}
@@ -356,7 +355,7 @@ const HelpDropdown = styled.div`
 const NotificationDropdown = styled.div`
   position:relative; line-height:11px;
   .collapse-css-transition{
-    position:absolute; top:56px; right:0px; width:400px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:15px 0px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
+    position:absolute; top:46px; right:0px; width:400px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:15px 0px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
   }
   .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
 `;

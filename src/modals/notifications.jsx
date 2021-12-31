@@ -19,31 +19,31 @@ const Notifications = (props) => {
     getNotifications()
     // eslint-disable-next-line
   }, [])
-    
-    return (
-        <Collapse isOpen={props.isOpen}>
-            <NotifiTitleBar>
-                <NTitle>Notification</NTitle>
-                <Link to='/#'>See All</Link>
-            </NotifiTitleBar>
-            <Scrollbars style={{ width: 400, height: 266 }}>
 
-              {props.notifications?.map( (notification, key) => {
-                return <NotifiList>
-                  <img src={PlusIcon} alt='' />
-                  <div>
-                      <TTitle>Toast Title</TTitle>
-                      <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                  </div>
-                  <IoCloseSharp />
-                </NotifiList>
-              })}
+  return (
+    <Collapse isOpen={props.isOpen}>
+      <NotifiTitleBar>
+        <NTitle>Notification</NTitle>
+        <Link to='/#' className='see-all'>See All</Link>
+      </NotifiTitleBar>
+      <Scrollbars style={{ width: 400, height: 266 }}>
 
-              {props.notifications.length === 0 && <NotifiList>No Notification Available</NotifiList>}
-              
-            </Scrollbars>
-        </Collapse>
-    )
+        {props.notifications?.map((notification, key) => {
+          return <NotifiList>
+            <img src={PlusIcon} alt='' />
+            <div>
+              <TTitle>Toast Title</TTitle>
+              <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+            </div>
+            <IoCloseSharp />
+          </NotifiList>
+        })}
+
+        {props.notifications.length === 0 && <NotifiList>No Notification Available</NotifiList>}
+
+      </Scrollbars>
+    </Collapse>
+  )
 }
 
 const FlexDiv = styled.div`
@@ -52,7 +52,7 @@ const FlexDiv = styled.div`
 
 const NotifiTitleBar = styled(FlexDiv)`
   justify-content:space-between; padding:0px 15px 18px;
-  a{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border-bottom:0px; margin:0px;
+  a.see-all{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border-bottom:0px; margin:0px;
     :hover{color:#824CF5; text-decoration:underline;}
   }
 `;
@@ -85,8 +85,8 @@ const mapDipatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
   return {
-      authenticated: state.isAuthenticated,
-      notifications: state.fetchNotifications,
+    authenticated: state.isAuthenticated,
+    notifications: state.fetchNotifications,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Notifications));
