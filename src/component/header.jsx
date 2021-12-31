@@ -27,7 +27,7 @@ import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../
 
 function Header(props) {
 
-  const navTabs = ['Marketplace', 'Celebrities', 'Activity', 'Help Center']
+  const navTabs = ['Marketplace', 'Celebrities', 'Activity']
   const location = useLocation()
   const [openLogin, setOpenLogin] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
@@ -149,20 +149,21 @@ function Header(props) {
               onClick={() => setNav(tab.replace(/ /g, '').toLowerCase())}
             >
               {tab}
-              {tab === 'Help Center' &&
-                <HelpDropdown className={`${isOpen3 && 'active'}`}>
-                  <BiChevronDown onClick={() => setIsOpen3(state => !state)} />
-                  <Collapse onInit={onInit} isOpen={isOpen3}>
-                    <Link to=''>How to?</Link>
-                    <Link to=''>FAQs</Link>
-                    <Link to=''>Contact Us</Link>
-                    <Link to=''>Chat with Us</Link>
-                    <hr />
-                    <Link to=''>Privacy</Link>
-                    <Link to=''>Terms & Conditions</Link>
-                  </Collapse>
-                </HelpDropdown>}
             </NavLink>)}
+            <a onClick={() => setIsOpen3(state => !state)} >Help Center
+              <HelpDropdown className={`${isOpen3 && 'active'}`}>
+                <BiChevronDown />
+                <Collapse onInit={onInit} isOpen={isOpen3}>
+                  <Link to=''>How to?</Link>
+                  <Link to=''>FAQs</Link>
+                  <Link to=''>Contact Us</Link>
+                  <Link to=''>Chat with Us</Link>
+                  <hr />
+                  <Link to=''>Privacy</Link>
+                  <Link to=''>Terms & Conditions</Link>
+                </Collapse>
+              </HelpDropdown>
+            </a>
           </nav>
 
           {props.authenticated.isLoggedIn &&
