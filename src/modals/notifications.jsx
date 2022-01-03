@@ -53,7 +53,7 @@ const FlexDiv = styled.div`
 const NotifiTitleBar = styled(FlexDiv)`
   justify-content:space-between; padding:0px 15px 18px;
   a.see-all{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border-bottom:0px; margin:0px;
-    :hover{color:#824CF5; text-decoration:underline;}
+    :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   }
 `;
 

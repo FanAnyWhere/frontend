@@ -16,7 +16,7 @@ import { actions } from '../actions'
 
 const Activity = (props) => {
 
-  const [filters, setFilters] = useState([ 
+  const [filters, setFilters] = useState([
     { key: 'Listing' },
     { key: 'Following' },
     { key: 'Bids' },
@@ -39,38 +39,38 @@ const Activity = (props) => {
     <>
       <Gs.Container>
 
-          <ActTitle>Notifications</ActTitle>
-            <ActOuter>
+        <ActTitle>Notifications</ActTitle>
+        <ActOuter>
 
-              <ActLeft>
-                
-                <ActFilterList>
-                  <Link to='' className='active'>All</Link>
-                  <Link to=''>Following</Link>
-                  <Link to=''>Bids</Link>
-                  <Link to=''>My Stuffs</Link>
-                </ActFilterList>
+          <ActLeft>
 
-                {props.notifications?.map( (notification, key) => {
-                  return <>
-                      <NotifiList>
-                        <img src={User1} alt='' />
-                        <div>
-                          <TTitle>Toast Title</TTitle>
-                          <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                        </div>
-                        <IoCloseSharp />
-                      </NotifiList>
-                    </>
-                })}
+            <ActFilterList>
+              <Link to='' className='active'>All</Link>
+              <Link to=''>Following</Link>
+              <Link to=''>Bids</Link>
+              <Link to=''>My Stuffs</Link>
+            </ActFilterList>
 
-                {props.notifications.length === 0 && <>
-                  <NotifiList>
-                    <TDesc>No Notifications Available</TDesc>
-                  </NotifiList>
-                </>}
+            {props.notifications?.map((notification, key) => {
+              return <>
+                <NotifiList>
+                  <img src={User1} alt='' />
+                  <div>
+                    <TTitle>Toast Title</TTitle>
+                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+                  </div>
+                  <IoCloseSharp />
+                </NotifiList>
+              </>
+            })}
 
-                {/* <NotifiList>
+            {props.notifications.length === 0 && <>
+              <NotifiList>
+                <TDesc>No Notifications Available</TDesc>
+              </NotifiList>
+            </>}
+
+            {/* <NotifiList>
                   <img src={User1} alt='' />
                   <div>
                     <TTitle>Toast Title</TTitle>
@@ -96,21 +96,21 @@ const Activity = (props) => {
                   <IoCloseSharp />
                 </NotifiList> */}
 
-              </ActLeft>
-    
-              <ActRight>
-                <NotifiTitleBar>
-                  <NTitle>Filters</NTitle>
-                  <Link to='/'>Clear All Filters</Link>
-                </NotifiTitleBar>
-    
-                <FilterTags>
-                  {filters?.map((filter, key)=> 
-                    <Link to='#' key={key}>{filter.key}</Link>
-                  )}
-                </FilterTags>
-              </ActRight>
-            </ActOuter>
+          </ActLeft>
+
+          <ActRight>
+            <NotifiTitleBar>
+              <NTitle>Filters</NTitle>
+              <Link to='/'>Clear All Filters</Link>
+            </NotifiTitleBar>
+
+            <FilterTags>
+              {filters?.map((filter, key) =>
+                <Link to='#' key={key}>{filter.key}</Link>
+              )}
+            </FilterTags>
+          </ActRight>
+        </ActOuter>
 
       </Gs.Container>
     </>
@@ -174,7 +174,7 @@ const TBid = styled.div`
 const NotifiTitleBar = styled(FlexDiv)`
   justify-content:space-between; margin-bottom:54px;
   a{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border-bottom:0px; margin:0px;
-    :hover{color:#824CF5; text-decoration:underline;}
+    :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
   }
 `;
 
@@ -195,9 +195,9 @@ const mapDipatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
   return {
-      authenticated: state.isAuthenticated,
-      notifications: state.fetchNotifications,
-      filters: state.fetchNotificationFilters,
+    authenticated: state.isAuthenticated,
+    notifications: state.fetchNotifications,
+    filters: state.fetchNotificationFilters,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Activity));
