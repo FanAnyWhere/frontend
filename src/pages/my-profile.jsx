@@ -124,7 +124,7 @@ function MyProfile(props) {
       </ActFilterList>
       <ProfileMain>
         <PLeftpanel className='active'>
-          <GradientBar>
+          <GradientBar className='active'>
             <LeftTitle>Filters</LeftTitle>
             <BiRightArrowAlt className='active' />
           </GradientBar>
@@ -930,7 +930,8 @@ const ProfilefilterBar = styled(FlexDiv)`
 `;
 
 const GradientBar = styled(FlexDiv)`
-  justify-content:space-between; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 0px 5px 0px 0px;
+  justify-content:space-between; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+  &.active{border-radius: 0px 5px 0px 0px; }
   svg{font-size:28px; margin-right:16px; cursor:pointer; transition:0.3s ease all;
     &.active{transform:rotate(180deg);}
   }
@@ -1005,12 +1006,13 @@ const LiveBox = styled.div`
 `;
 
 const ProfileMain = styled(FlexDiv)`
-  align-items:stretch; position:relative;
+  position:relative;
 `;
 
 const PLeftpanel = styled.div`
-  width:340px; height:100%; background-color: #2F2F2F; position:absolute; left:-270px; top:0; z-index:9; border-radius: 0px 5px 0px 0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px;
-  &.active{left:0px;}
+  width:340px; height:100%; background-color: #2F2F2F; position:absolute; left:-270px; top:0; z-index:9;  
+  border:1px solid #2F2F2F; border-left:0px; border-top:0px;
+  &.active{left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
 `;
 
 const PRightpanel = styled.div`
