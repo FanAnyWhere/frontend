@@ -8,7 +8,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { BiRightArrowAlt } from 'react-icons/bi';
+import { BiRightArrowAlt, BiDotsHorizontalRounded } from 'react-icons/bi';
 import Collapsible from 'react-collapsible';
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -70,8 +70,10 @@ function MyProfile(props) {
               </AddressBar>
             </div>
             <div className='PTT-right'>
+              <GradientBtn>Follow</GradientBtn>
               <Link to='/' className="edit-profile">Edit Profile</Link>
               <UPButton><img src={UpArrow} alt='' /></UPButton>
+              <UPButton><BiDotsHorizontalRounded /></UPButton>
             </div>
           </PRTop>
           <PRBottom>
@@ -825,7 +827,7 @@ const PTitle = styled.div`
 
 const PRTop = styled(FlexDiv)`
   align-items:flex-start; justify-content:space-between; margin-bottom:25px;
-  a.edit-profile{border: 2px solid #000000; box-sizing: border-box; border-radius: 2px; padding:8px 16px; font-weight: bold; 
+  a.edit-profile{border: 2px solid #000000; box-sizing: border-box; border-radius: 2px; padding:7px 16px; font-weight: bold; 
     font-size: 16px; line-height: 24px; color: #FFFFFF; 
     :hover{background-color:#000;}
   }
@@ -833,7 +835,7 @@ const PRTop = styled(FlexDiv)`
 `;
 
 const UPButton = styled.button`
- border: 2px solid #FFFFFF; box-sizing: border-box; border-radius: 2px; height: 40px; width: 40px; margin-left:10px; cursor:pointer;
+ border: 2px solid #FFFFFF; box-sizing: border-box; border-radius: 2px; height: 40px; width: 40px; margin-left:10px; cursor:pointer; color:#fff; font-size:22px; display:flex; align-items:center; justify-content:center;
  :hover{opacity:0.8;}
 `;
 
