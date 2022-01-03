@@ -7,7 +7,6 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { IoCloseSharp } from 'react-icons/io5';
 import Collapsible from 'react-collapsible';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import NFT12 from '../assets/images/nft-12.jpg';
@@ -115,7 +114,6 @@ function NFTList(props) {
         </NFTlistLeft>
         <NFTlistRight>
           <RightTitle>
-            {/* <Skeleton width={100} /> */}
             Explore
           </RightTitle>
           <ResultBar>
