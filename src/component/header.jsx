@@ -174,7 +174,7 @@ function Header(props) {
           </nav>
 
           {props.user?.role?.roleName !== 'COLLECTOR' ?
-            <GradientBtn>Create</GradientBtn> 
+            <GradientBtn>Create</GradientBtn>
             : <GradientBtn><BecomeCelebrity /></GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
@@ -212,7 +212,7 @@ function Header(props) {
                     </BalanceLeft>
                     <BalanceRight>
                       <GradientBtn>Add Funds</GradientBtn>
-                    </BalanceRight> 
+                    </BalanceRight>
                   </BalanceBox>
                 </UserBox>
                 <Link to='/my-profile'>Profile</Link>
@@ -235,7 +235,7 @@ const FlexDiv = styled.div`
 
 const HeaderSection = styled(FlexDiv)`
   justify-content:space-between; padding:0px 15px; height:56px; background: #1D1D1D; box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25); 
-  position:fixed; left:0; right:0; top:0; z-index:1;
+  position:fixed; left:0; right:0; top:0; z-index:99;
 `;
 
 const HeadLeft = styled.div``;
@@ -272,7 +272,7 @@ const NavSearch = styled.div`
 const AfterLogin = styled(FlexDiv)`
   button{
     width:40px; height:40px; border-radius:50%; background-color:#D5C1FF; border:1px solid #D5C1FF; margin:0px 8px;
-    &.acc-btn {background-color: #FFFFFF; border:none; padding:1px; display:flex; align-items:center; justify-content:center;
+    &.acc-btn {background-color: #FFFFFF; border:none; padding:1px; display:flex; align-items:center; justify-content:center; margin-right:0px;
       span{background-color:#1d1d1d; width:100%; height:100%; border-radius:50%; display:flex; align-items:center; justify-content:center;
         .user-img{background: url(${UserIcon}) no-repeat; width:16px; height:16px; margin:0 auto;}
       }
