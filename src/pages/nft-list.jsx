@@ -805,7 +805,7 @@ const BidLike = styled(FlexDiv)`
     :hover{color:#0FBFFC; -webkit-text-fill-color: #0FBFFC;}
   }
   p{font-weight: bold; font-size: 10px; line-height: 16px; color: #5F5F5F; display:flex; align-items:center; margin:0px;
-    svg{margin:0px 3px 0px 0px; font-size:14px;}
+    svg{margin:0px 3px 0px 0px; font-size:14px; cursor:pointer;}
     &.ver2{margin-right:5px;}
   }
 `;
