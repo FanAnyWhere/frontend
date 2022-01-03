@@ -10,17 +10,17 @@ const NotFound = () => {
     return (
         <ErrorMain>
             <ErrorInner>
-                <img src={SWW} alt='' />
+                {/* <img src={SWW} alt='' />
                 <SmTitle>Something went Wrong.</SmTitle>
                 <SmDesc>That was on us. We are doing our best to fix the issue. Please Try again</SmDesc>
                 <GradientBtn>Go Back Home</GradientBtn>
-                <GradientBtn>Try Again</GradientBtn>
+                <GradientBtn>Try Again</GradientBtn> */}
 
                 {/* 404 page design */}
-                {/* <img src={FZF} alt='' className='mb-0' />
+                <img src={FZF} alt='' className='mb-0' />
                 <SmTitle>Oops! Page not Found</SmTitle>
                 <SmDesc>The Page you are looking for does not exist.</SmDesc>
-                <GradientBtn>Go Back Home</GradientBtn> */}
+                <GradientBtn>Go Back Home</GradientBtn>
             </ErrorInner>
         </ErrorMain>
     )
@@ -30,11 +30,11 @@ const FlexDiv = styled.div`
 `;
 
 const ErrorMain = styled(FlexDiv)`
-    height:calc(100vh - 300px); align-content: end;
+  margin-top:56px;
 `;
 
 const ErrorInner = styled(FlexDiv)`
-    text-align:center; 
+    text-align:center; margin:50px 0px;
     img{margin:0px 0px 30px;
         &.mb-0{margin-bottom:0px;}
     }
