@@ -157,7 +157,7 @@ function Header(props) {
             >
               {tab}
             </NavLink>)}
-            <a href="javascript:void(0)" onClick={() => setIsOpen3(state => !state)} >Help Center
+            <a  onClick={() => setIsOpen3(state => !state)} >Help Center
               <HelpDropdown className={`${isOpen3 && 'active'}`}>
                 <BiChevronDown />
                 <Collapse onInit={onInit} isOpen={isOpen3}>

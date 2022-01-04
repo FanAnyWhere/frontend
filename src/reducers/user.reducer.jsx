@@ -24,3 +24,12 @@ export function fetchUserDetails(state = {}, action) {
       return state;
   }
 }
+
+export function updateProfile(state = null, action) {
+  switch (action.type) {
+    case 'PROFILE_UPDATED':
+      return action.data;
+    default:
+      return state;
+  }
+}

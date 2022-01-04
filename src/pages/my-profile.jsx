@@ -1,6 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import Gs from '../theme/globalStyles';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router'
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -12,7 +14,9 @@ import { BiRightArrowAlt, BiDotsHorizontalRounded } from 'react-icons/bi';
 import Collapsible from 'react-collapsible';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Modal } from 'react-responsive-modal';
+import dateFormat from 'dateformat';
 import 'react-responsive-modal/styles.css';
+import copy from 'copy-to-clipboard';
 
 import ProfileCoverImg from '../assets/images/profile-cover.jpg';
 import ProfileImg from '../assets/images/nft-5.jpg';
@@ -43,6 +47,9 @@ import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 import UserIcon from '../assets/images/user-img.png';
 
+import { actions } from '../actions'
+import { compressImage } from '../helper/functions'
+import ipfs from '../config/ipfs'
 
 
 function MyProfile(props) {
@@ -73,46 +80,200 @@ function MyProfile(props) {
     </svg>
   );
 
+
+
+  const [filterOpen, setFilterOpen] = useState(false)
+  const [profile, setProfile] = useState({ file: null, url: null, buffer: null })
+  const [cover, setCover] = useState({ file: null, url: null, buffer: null })
+  const [loading, setLoading] = useState(false)
+  const [address, setAddress] = useState(null)
+  const [copied, setCopied] = useState(false)
+
+  let profileInput = useRef()
+  let profileCoverInput = useRef()
+  let walletAddress = useRef()
+
+  useEffect( () => {
+    const getUser = async () => {
+      props.getUserDetails() // fetch user details
+    }
+    getUser()
+  }, [])
+
+  useEffect(() => {
+    const getCompactAddress = (address) => {
+      let compactAddress = address
+        ? address.substring(0, 5) +
+        '....' +
+        address.substring(address.length - 5, address.length)
+        : '00000000000'
+      setAddress(compactAddress)
+    }
+    if (props.user) {
+      getCompactAddress(props.authenticated.accounts[0])
+    }
+    // eslint-disable-next-line
+  }, [props.user])
+
+  useEffect(() => {
+    const getUser = async () => {
+      console.log('fetch users latest data ')
+      props.getUserDetails() // fetch user details
+    }
+    if (props.updated?.details) getUser()
+    // eslint-disable-next-line
+  }, [props.updated])
+
+  useEffect(() => {
+    const updateCover = async () => {
+      updateCoverFile() // update cover image
+    }
+    if (cover.buffer) updateCover()
+    // eslint-disable-next-line
+  }, [cover])
+
+  useEffect(() => {
+    const updateProfile = async () => {
+      updateProfileFile() // update profile image
+    }
+    if (profile.buffer) updateProfile()
+    // eslint-disable-next-line
+  }, [profile])
+
+  const convertToBuffer = async (reader, operation = false, url=null, file=null) => {
+    //file is converted to a buffer to prepare for uploading to IPFS`
+    const buffer = await Buffer.from(reader.result);
+    //set this buffer -using es6 syntax
+    if (operation)
+      setCover({  buffer: buffer, url: url, file: file })
+    else 
+      setProfile({ buffer: buffer, url: url, file: file })
+  }
+
+  const profileFileChange = async () => {
+    setLoading(true) // start loader
+    let file = profileInput.current.files[0];
+    let url = URL.createObjectURL(file);
+    setProfile({ buffer: null, url : url, file: file })
+    if (file.size > 1572864) {
+      // check file size
+      file = await compressImage(file); // compress image
+    }
+    let reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => convertToBuffer(reader, false, url, file);
+  }
+
+  const coverFileChange = async () => {
+    setLoading(true) // start the loader
+    let file = profileCoverInput.current.files[0]
+    let url = URL.createObjectURL(file)
+    setCover({ buffer: null, url : url, file: file })
+    if (file.size > 1572864) {
+      // check file size
+      file = await compressImage(file); // compress image
+    }
+    let reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => convertToBuffer(reader, true, url, file);
+  }
+
+  const updateCoverFile = async () => {
+    let ipfsHash = await ipfs.add(cover.buffer, { // get buffer IPFS hash
+      pin: true, progress: (bytes) => {
+        console.log('File upload progress ', Math.floor(bytes * 100 / (cover.file.size)))
+      }
+    })
+    let userObj = { cover: ipfsHash.path };
+    props.updateProfile(userObj); // update profile
+  }
+
+  const updateProfileFile = async () => {
+    let ipfsHash = await ipfs.add(profile.buffer, { // get buffer IPFS hash
+      pin: true, progress: (bytes) => {
+        console.log('File upload progress ', Math.floor(bytes * 100 / (profile.file.size)))
+      }
+    })
+    props.updateProfile({ profile: ipfsHash.path }); // update profile
+  }
+
+  const copyToClipboard = (address) => {
+    setCopied(true)
+    copy(address)
+    setTimeout(() => {
+      setCopied(false)
+    }, 3000);
+  }
+
+  console.log('user ? ', props.user?.createdAt)
+
   return (
     <>
       <ProfileCover>
         <div className='img-outer'>
-          {/* <img src={ProfileCoverImg} alt='' /> */}
+          <img src={props.user?.cover} alt='' />
           <div className='overlay'>
-            <GradientBtn>Add Cover Photo</GradientBtn>
+              <input
+                type='file'
+                accept="image/*"
+                ref={profileCoverInput}
+                name='profileCoverInput'
+                id='profileCoverInput'
+                hidden
+                onChange={() => {
+                  coverFileChange()
+                }}
+              />
+            <GradientBtn
+              onClick={() => {
+                profileCoverInput.current.click()
+              }}>
+              Add Cover Photo
+            </GradientBtn>
           </div>
         </div>
       </ProfileCover>
       <ProfileRow>
         <PRLeft>
           <div className='image-outer'>
-            {/* <img src={ProfileImg} alt='' /> */}
+            <img src={props.user?.profile} alt='' />
             <div className='overlay'>
-              <img src={EditIcon} alt='' />
+              <input
+                type='file'
+                accept="image/*"
+                ref={profileInput}
+                name='profile_pic'
+                id='profile_file'
+                hidden
+                onChange={() => {
+                  profileFileChange()
+                }}
+              />
+              <img src={EditIcon} alt='' onClick={() => { profileInput.current.click() }} />
             </div>
           </div>
         </PRLeft>
         <PRRight>
           <PRTop>
             <div>
-              <PTitle>Profile Name Lorem Ipsum</PTitle>
+              <PTitle> {props.user?.name} </PTitle>
               <AddressBar>
-                <p>0htxas4...09jh938sx</p>
-                <MdOutlineContentCopy />
-                <CopyedText>Copied!</CopyedText>
+                <p>{address}</p>
+                {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.user?.walletAddress)} /> }
+                {copied && <CopyedText>Copied!</CopyedText>}
               </AddressBar>
             </div>
             <div className='PTT-right'>
-              <Link to='/' className="edit-profile">Unfollow</Link>
+              <Link to='#' className="edit-profile">Unfollow</Link>
               <GradientBtn>Follow</GradientBtn>
-              <Link to='/' className="edit-profile">Edit Profile</Link>
+              <Link to='/edit-profile' className="edit-profile">Edit Profile</Link>
               <CustomDropdown className='custom-width'>
                 <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                 <Collapse onInit={onInit} isOpen={isOpen5}>
                   <DDTitle>Share Options</DDTitle>
-                  <Link to='/'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
-                  <Link to='/'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
-                  <Link to='/'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                  <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
+                  <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
+                  <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
                 </Collapse>
               </CustomDropdown>
               <CustomDropdown className='report-box'>
@@ -142,36 +303,51 @@ function MyProfile(props) {
           </PRTop>
           <PRBottom>
             <div className='prb-left'>
-              <PDesc>Description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</PDesc>
-              <JMYear>Joined Month Year</JMYear>
+              <PDesc>
+                {props.user?.bio}
+              </PDesc>
+              <JMYear>
+                  {props.user?.createdAt
+                    ? dateFormat(
+                      new Date(props.user?.createdAt).toString(),
+                      'dd mmmm yyyy'
+                    )
+                    : 'user join date'}
+              </JMYear>
             </div>
             <FollowBoxRow>
               <div className='follow-box'>
-                <FNumber>000</FNumber>
+                <FNumber>0</FNumber>
                 <p>Items</p>
               </div>
-              <div className='follow-box'>
+              {/* <div className='follow-box'>
                 <FNumber>000</FNumber>
                 <p>FAW</p>
-              </div>
+              </div> */}
               <div className='follow-box'>
-                <FNumber>000</FNumber>
+                <FNumber>{props.user ? props.user.followingCount : '000'}</FNumber>
                 <p>Following</p>
               </div>
               <div className='follow-box'>
-                <FNumber>000</FNumber>
+                <FNumber>{props.user ? props.user.followersCount : '000'}</FNumber>
                 <p>Followers</p>
               </div>
             </FollowBoxRow>
             <LinkBoxRow>
               <div className='link-box'>
-                <Link to='/'>www.mysite.com</Link>
+                <Link to='#' onClick={() => { window.open(props.user?.profile?.portfolio?.website?.url, '_blank') }}>
+                  {props.user?.profile?.portfolio?.website?.url ? props.user.profile.portfolio.website.url : 'www.faw.com' }
+                </Link>
               </div>
               <div className='link-box'>
-                <Link to='/' className='twitter'>@twitterhandle</Link>
+                <Link to='#' className='twitter' onClick={() => { window.open(props.user?.profile?.portfolio?.twitter?.url, '_blank') }}>
+                  {props.user?.profile?.portfolio?.twitter?.url ? props.user.profile.portfolio.twitter.url : 'www.twitter.com' }
+                </Link>
               </div>
               <div className='link-box'>
-                <Link to='/' className='instagram-handle'>Instagram Handle</Link>
+                <Link to='#' className='instagram-handle' onClick={() => { window.open(props.user?.profile?.portfolio?.instagram?.url, '_blank') }}>
+                  {props.user?.profile?.portfolio?.instagram?.url ? props.user.profile.portfolio.instagram.url : 'www.instagram.com' }
+                </Link>
               </div>
             </LinkBoxRow>
           </PRBottom>
@@ -186,14 +362,18 @@ function MyProfile(props) {
         <Link to=''>Bids Placed<span>00</span></Link>
         <Link to=''>Bids Received<span>00</span></Link>
       </ActFilterList>
+
       <ProfileMain>
-        <PLeftpanel className='active'>
-          <GradientBar className='active'>
+        <PLeftpanel className={filterOpen && 'active'}>
+          <GradientBar className={filterOpen && 'active'}>
             <LeftTitle>Filters</LeftTitle>
-            <BiRightArrowAlt className='active' />
+            <BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
+              console.log('icon clicked ')
+              setFilterOpen(!filterOpen)
+            }}/>
           </GradientBar>
 
-          <NFTlistLeft className='active'>
+          <NFTlistLeft className={filterOpen && 'active'}>
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <WhiteBorderBtn>On Auction</WhiteBorderBtn>
@@ -208,12 +388,12 @@ function MyProfile(props) {
                   <Collapse onInit={onInit} isOpen={isOpen3}>
                     <Scrollbars style={{ height: 244 }}>
                       <div className='priceList'>
-                        <Link to='/' className='active'>USD</Link>
-                        <Link to='/'>INR</Link>
-                        <Link to='/'>WON</Link>
-                        <Link to='/'>JPY</Link>
-                        <Link to='/'>AFN</Link>
-                        <Link to='/'>Euro</Link>
+                        <Link to='#' className='active'>USD</Link>
+                        <Link to='#'>INR</Link>
+                        <Link to='#'>WON</Link>
+                        <Link to='#'>JPY</Link>
+                        <Link to='#'>AFN</Link>
+                        <Link to='#'>Euro</Link>
                       </div>
                     </Scrollbars>
                   </Collapse>
@@ -230,37 +410,37 @@ function MyProfile(props) {
                   <Collapse onInit={onInit} isOpen={isOpen4}>
                     <CustomcheckBox>
                       <Scrollbars style={{ height: 244 }}>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
-                        <label class="container">Placeholder Text
+                        <label className="container">Placeholder Text
                           <input type="checkbox" />
-                          <span class="checkmark"></span>
+                          <span className="checkmark"></span>
                         </label>
                       </Scrollbars>
                     </CustomcheckBox>
@@ -301,16 +481,16 @@ function MyProfile(props) {
             </CustomAccordian>
           </NFTlistLeft>
         </PLeftpanel>
-        <PRightpanel className='active'>
+        <PRightpanel  className={filterOpen && 'active'}>
           <ProfilefilterBar>
-            <FilterBar>
+            {/* <FilterBar>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button className='c-all'>Clear All</button>
-            </FilterBar>
-            <ResultRight>
+            </FilterBar> */}
+            {/* <ResultRight>
               <CustomDropdown className='short'>
                 <label onClick={() => setIsOpen2(state => !state)}>Sort by <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
@@ -322,7 +502,7 @@ function MyProfile(props) {
                 <button><img src={ListIcon} alt='' /></button>
                 <button className='active'><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
-            </ResultRight>
+            </ResultRight> */}
           </ProfilefilterBar>
           <Trending>
             <div className='item active'>
@@ -1313,4 +1493,18 @@ const CustomcheckBox = styled.div`
 }
 `;
 
-export default MyProfile;
+
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getUserDetails: () => dispatch(actions.getUserDetails()),
+    updateProfile: (params) => dispatch(actions.updateUserDetails(params)),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.isAuthenticated,
+    updated: state.updateProfile,
+    user: state.fetchUserDetails,
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(MyProfile));

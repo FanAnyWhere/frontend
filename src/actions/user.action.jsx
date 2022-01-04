@@ -3,6 +3,7 @@ import { services } from '../services';
 export const userActions = {
     getNotifications,
     getUserDetails,
+    updateUserDetails,
     getNotificationFilters,
 }
 
@@ -46,4 +47,19 @@ function getUserDetails() {
       }
     });
   };
+}
+
+function updateUserDetails(params) {
+  return (dispatch) => {
+    const response = services.put('user/update', params);
+    response.then(async (promise) => {
+      if (promise.status === 200) {
+        if (promise.data.data) {
+          dispatch({type: 'PROFILE_UPDATED', data: promise.data.data});
+        }
+      } else {
+        // console.log("error");
+      }
+    })
+  }
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Media from '../theme/media-breackpoint';
 
 import SWW from '../assets/images/sww.png';
@@ -7,14 +7,24 @@ import FZF from '../assets/images/fzf.png';
 
 const NotFound = () => {
 
+    const history = useHistory();
+
+    const routeChange = () => {
+        history.push('/')
+    }
+
+    const routeRefresh = () => {
+        window.location.reload(false)
+    }
+
     return (
         <ErrorMain>
             <ErrorInner>
                 <img src={SWW} alt='' />
                 <SmTitle>Something went Wrong.</SmTitle>
                 <SmDesc>That was on us. We are doing our best to fix the issue. Please Try again</SmDesc>
-                <GradientBtn>Go Back Home</GradientBtn>
-                <GradientBtn>Try Again</GradientBtn>
+                <GradientBtn onClick={() => routeChange()}>Go Back Home</GradientBtn>
+                <GradientBtn onClick={() => routeRefresh() }>Try Again</GradientBtn>
 
                 {/* 404 page design */}
                 {/* <img src={FZF} alt='' className='mb-0' />
