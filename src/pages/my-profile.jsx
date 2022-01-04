@@ -11,6 +11,8 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { BiRightArrowAlt, BiDotsHorizontalRounded } from 'react-icons/bi';
 import Collapsible from 'react-collapsible';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Modal } from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
 
 import ProfileCoverImg from '../assets/images/profile-cover.jpg';
 import ProfileImg from '../assets/images/nft-5.jpg';
@@ -32,7 +34,15 @@ import NFT19 from '../assets/images/nft-19.jpg';
 import NFT20 from '../assets/images/nft-20.jpg';
 import NFT21 from '../assets/images/nft-21.jpg';
 import ArrowUp from '../assets/images/arrow-up.png';
-import SearchIcon from '../assets/images/search.png';
+import SearchWhiteIcon from '../assets/images/search-white.png';
+import EditIcon from '../assets/images/edit-icon.png';
+import CopyIcon from '../assets/images/copy.png';
+import TwitterIcon from '../assets/images/twitter.png';
+import FacebookIcon from '../assets/images/facebook.png';
+import ExclaimIcon from '../assets/images/exclamation.png';
+import GreenIcon from '../assets/images/green-icon.png';
+import UserIcon from '../assets/images/user-img.png';
+
 
 
 function MyProfile(props) {
@@ -41,39 +51,93 @@ function MyProfile(props) {
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
   const [isOpen4, setIsOpen4] = useState(false);
+  const [isOpen5, setIsOpen5] = useState(false);
+  const [isOpen6, setIsOpen6] = useState(false);
+  const [isOpen7, setIsOpen7] = useState(false);
   const onInit = ({ state, style, node }) => {
     setIsOpen1(false);
     setIsOpen2(false);
     setIsOpen3(false);
     setIsOpen4(false);
+    setIsOpen5(false);
+    setIsOpen6(false);
+    setIsOpen7(false);
   };
+
+  const [openFirst, setOpenFirst] = useState(false);
+
+  const closeIcon = (
+    <svg fill="currentColor" viewBox="0 4 16 40" width={50} height={50}>
+      <line x1="15" y1="15" x2="25" y2="25" stroke="#767676" stroke-width="2.6" stroke-linecap="round" stroke-miterlimit="10"></line>
+      <line x1="25" y1="15" x2="15" y2="25" stroke="#767676" stroke-width="2.6" stroke-linecap="round" stroke-miterlimit="10"></line>
+    </svg>
+  );
 
   return (
     <>
       <ProfileCover>
         <div className='img-outer'>
-          <img src={ProfileCoverImg} alt='' />
+          {/* <img src={ProfileCoverImg} alt='' /> */}
+          <div className='overlay'>
+            <GradientBtn>Add Cover Photo</GradientBtn>
+          </div>
         </div>
       </ProfileCover>
       <ProfileRow>
         <PRLeft>
           <div className='image-outer'>
-            <img src={ProfileImg} alt='' />
+            {/* <img src={ProfileImg} alt='' /> */}
+            <div className='overlay'>
+              <img src={EditIcon} alt='' />
+            </div>
           </div>
         </PRLeft>
         <PRRight>
           <PRTop>
             <div>
               <PTitle>Profile Name Lorem Ipsum</PTitle>
-              <AddressBar><p>0htxas4...09jh938sx</p>
+              <AddressBar>
+                <p>0htxas4...09jh938sx</p>
                 <MdOutlineContentCopy />
+                <CopyedText>Copied!</CopyedText>
               </AddressBar>
             </div>
             <div className='PTT-right'>
+              <Link to='/' className="edit-profile">Unfollow</Link>
               <GradientBtn>Follow</GradientBtn>
               <Link to='/' className="edit-profile">Edit Profile</Link>
-              <UPButton><img src={UpArrow} alt='' /></UPButton>
-              <UPButton><BiDotsHorizontalRounded /></UPButton>
+              <CustomDropdown className='custom-width'>
+                <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
+                <Collapse onInit={onInit} isOpen={isOpen5}>
+                  <DDTitle>Share Options</DDTitle>
+                  <Link to='/'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
+                  <Link to='/'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
+                  <Link to='/'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                </Collapse>
+              </CustomDropdown>
+              <CustomDropdown className='report-box'>
+                <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                <Collapse onInit={onInit} isOpen={isOpen6}>
+                  <p onClick={() => setOpenFirst(true)}>Report Profile</p>
+                </Collapse>
+                <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
+                  <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
+                  <MessageOuter>
+                    <label>Message</label>
+                    <textarea>Gives us some details</textarea>
+                    <p>Please provide specific and clear message</p>
+                    <div className='button-list'>
+                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                      <GradientBtn>Report</GradientBtn>
+                    </div>
+                  </MessageOuter>
+                </Modal>
+              </CustomDropdown>
+
             </div>
           </PRTop>
           <PRBottom>
@@ -143,12 +207,14 @@ function MyProfile(props) {
                   <label onClick={() => setIsOpen3(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
                   <Collapse onInit={onInit} isOpen={isOpen3}>
                     <Scrollbars style={{ height: 244 }}>
-                      <Link to='/'>USD</Link>
-                      <Link to='/'>INR</Link>
-                      <Link to='/'>WON</Link>
-                      <Link to='/'>JPY</Link>
-                      <Link to='/'>AFN</Link>
-                      <Link to='/'>Euro</Link>
+                      <div className='priceList'>
+                        <Link to='/' className='active'>USD</Link>
+                        <Link to='/'>INR</Link>
+                        <Link to='/'>WON</Link>
+                        <Link to='/'>JPY</Link>
+                        <Link to='/'>AFN</Link>
+                        <Link to='/'>Euro</Link>
+                      </div>
                     </Scrollbars>
                   </Collapse>
                 </CustomDropdown>
@@ -160,7 +226,7 @@ function MyProfile(props) {
               </Collapsible>
               <Collapsible trigger="Category">
                 <CustomDropdown className='pb-10'>
-                  <label onClick={() => setIsOpen4(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
+                  <label onClick={() => setIsOpen4(state => !state)}>Choose  a Category <HiOutlineChevronDown /></label>
                   <Collapse onInit={onInit} isOpen={isOpen4}>
                     <CustomcheckBox>
                       <Scrollbars style={{ height: 244 }}>
@@ -202,11 +268,28 @@ function MyProfile(props) {
                 </CustomDropdown>
               </Collapsible>
               <Collapsible trigger="Celebrity">
-                <WhiteBorderBtn>Celebrity 1</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 2</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 3</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 4</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 5</WhiteBorderBtn>
+                <CustomDropdown className='pb-10'>
+                  <NavSearch onClick={() => setIsOpen7(state => !state)}>
+                    <input type="text" placeholder="Search for a Celebrity" />
+                    <img src={SearchWhiteIcon} alt='' />
+                  </NavSearch>
+                  <Collapse onInit={onInit} isOpen={isOpen7}>
+                    <Scrollbars style={{ height: 244 }}>
+                      <div className='priceList search-list'>
+                        <Link to='/' className='active'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                      </div>
+                    </Scrollbars>
+                  </Collapse>
+                </CustomDropdown>
               </Collapsible>
               <Collapsible trigger="Collections">
                 <WhiteBorderBtn>Collection 1</WhiteBorderBtn>
@@ -225,6 +308,7 @@ function MyProfile(props) {
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
+              <button className='c-all'>Clear All</button>
             </FilterBar>
             <ResultRight>
               <CustomDropdown className='short'>
@@ -781,8 +865,14 @@ function MyProfile(props) {
               </LiveBox>
             </div>
           </Trending>
+          {/* <NoItemBox>
+            <NITitle>No Item to Display</NITitle>
+            <NIDesc>Oops! There are no items here. You could always browse for something else in our marketplace.</NIDesc>
+            <GradientBtn>Browse Marketplace</GradientBtn>
+          </NoItemBox> */}
         </PRightpanel>
       </ProfileMain>
+
     </>
   );
 }
@@ -793,8 +883,14 @@ const FlexDiv = styled.div`
 
 const ProfileCover = styled.div`
   background: #2F2F2F; border-radius: 5px; margin:56px 20px 15px;
-  .img-outer{width:100%; height:250px; overflow:hidden; border-radius:5px;
+  .img-outer{width:100%; height:250px; overflow:hidden; border-radius:5px; background-color: #2F2F2F;
     img{width:100%; height:100%; object-fit:cover;}
+    .overlay{background-color: #1A1A1A; width:100%; height:250px; opacity:0; position:relative;
+      button{position:absolute; right:20px; bottom:20px; margin:0px;}
+    }
+    :hover{
+      .overlay{opacity:1;}
+    }
   }
 `;
 
@@ -804,8 +900,14 @@ const ProfileRow = styled(FlexDiv)`
 
 const PRLeft = styled.div`
   margin-left:54px; margin-right:42px;
-  .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%;
+  .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%; background-color: #AEAEAE;
     img{width:100%; height:100%; object-fit:cover;}
+    .overlay{width:100%; height:200px; opacity:0; background-color: #767676; display:flex; align-items:center; justify-content:center;
+      img{width:18px; height:18px; cursor:pointer;}
+    }
+    :hover{
+      .overlay{opacity:1;}
+    }
   }
 `;
 
@@ -835,17 +937,17 @@ const PRTop = styled(FlexDiv)`
 `;
 
 const UPButton = styled.button`
- border: 2px solid #FFFFFF; box-sizing: border-box; border-radius: 2px; height: 40px; width: 40px; margin-left:10px; cursor:pointer; color:#fff; font-size:22px; display:flex; align-items:center; justify-content:center;
+ border: 1px solid #767676; box-sizing: border-box; border-radius: 50%; height: 40px; width: 40px; margin-left:10px; cursor:pointer; color:#fff; font-size:22px; display:flex; align-items:center; justify-content:center;
  :hover{opacity:0.8;}
 `;
 
 const PRBottom = styled(FlexDiv)`
-  justify-content:flex-start; align-items:flex-start;
-  .prb-left{margin-right:17px;}
+  justify-content:flex-start; align-items:flex-start; 
+  .prb-left{margin-right:17px; max-width:530px; width:100%;}
 `;
 
 const PDesc = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; margin-bottom:10px; max-width:530px; width:100%;
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; margin-bottom:10px; 
 `;
 
 const JMYear = styled.div`
@@ -890,7 +992,9 @@ const FilterBar = styled(FlexDiv)`
   justify-content:flex-start;
   button{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; box-sizing: border-box; border-radius: 4px; margin-right:15px;
     svg{cursor:pointer; font-size:18px; margin-left:5px;}
-    &.c-all{font-weight: bold; font-family: 'Roboto', sans-serif; font-size: 12px; line-height: 16px; color: #FFFFFF; text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border:none; padding:0px;}
+    &.c-all{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border:none; padding:0px; background:none;
+    :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+    }
     span{display:flex; align-items:center; justify-content:center; background-color:#1d1d1d; border-radius: 4px; padding:3px 2px 3px 3px;}
   }
 `;
@@ -909,9 +1013,33 @@ const CustomDropdown = styled.div`
     label{width:121px;}
   }
   .collapse-css-transition{
-    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F;
-    a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 22px; color: #767676; padding:10px 15px; display:block;
-      :hover{color:#aeaeae;}
+    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; padding:6px 15px; display:block;
+      :hover{opacity:0.8;}
+    }
+  }
+  &.custom-width{ 
+    .collapse-css-transition{width:262px; top:50px; right:0px; left:auto; padding:10px 13px; border-radius: 5px;
+      a{padding:6px 0px; display:flex; align-items:center;
+        span{
+          width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
+        }
+      }
+    }
+  }
+  &.report-box{
+    .collapse-css-transition{width:131px; top:50px; right:0px; left:auto; padding:10px; border-radius: 5px;
+      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;}
+    }
+  }
+  .priceList{
+    a.active{background-color:#1A1A1A; position:relative;
+      :after{content:''; position:absolute; right:13px; top:13px; background: url(${GreenIcon}) no-repeat; width:18px; height:14px;}
+    }
+  }
+  .search-list{
+    a{display:flex; align-items:center; 
+      img{margin-right:10px;}
     }
   }
 `;
@@ -1010,7 +1138,7 @@ const ProfileMain = styled(FlexDiv)`
 `;
 
 const PLeftpanel = styled.div`
-  width:340px; height:100%; background-color: #2F2F2F; position:absolute; left:-270px; top:0; z-index:9;  
+  width:340px; height:100%; background-color: #2F2F2F; position:absolute; left:-270px; top:0; z-index:9; 
   border:1px solid #2F2F2F; border-left:0px; border-top:0px;
   &.active{left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
 `;
@@ -1069,6 +1197,56 @@ const FormGroup = styled(FlexDiv)`
   }
 `;
 
+const NoItemBox = styled.div`
+  background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
+`;
+
+const NITitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; margin:0px 0px 15px;
+`;
+
+const NIDesc = styled.div`
+  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 20px;
+`;
+
+const CopyedText = styled.div`
+  color:#824CF5; font-weight: bold; font-size: 12px; line-height: 16px; margin-left:5px;
+`;
+
+const DDTitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; margin-bottom:5px;
+`;
+
+const ReportTitle = styled(FlexDiv)`
+  justify-content:flex-start; font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 35px;
+  img{margin-right:18px;}
+`;
+
+const ReportDesc = styled.div`
+  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 16px;
+`;
+
+const MessageOuter = styled.div`
+  label{font-weight: bold; font-size: 12px; line-height: 16px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 5px; display:block;}
+  textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:107px; background-color: #2F2F2F; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676; font-family: 'Roboto', sans-serif;
+    :focus{outline:none;}
+  }
+  p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 32px;}
+  .button-list{text-align:right;
+    button:last-child{margin-right:0px;}
+  }
+`;
+
+const NavSearch = styled.div`
+  position:relative; 
+  img{position:absolute; top:11px; left:11px; cursor:pointer;}
+  input{font-family: 'Roboto', sans-serif; border:1px solid #aeaeae; padding:8px 8px 8px 40px; background-color:#1d1d1d; box-sizing: border-box; border-radius:2px; width:100%; color:#fff; font-weight: normal; font-size: 16px; line-height: 24px;
+    ::placeholder {
+      color: #767676;
+    }
+  }
+`;
+
 const CustomcheckBox = styled.div`
 .container {
   display: block;
@@ -1103,26 +1281,31 @@ const CustomcheckBox = styled.div`
   border-radius:2px;
 }
 
-.container input:checked ~ .checkmark {
-  border-color:#10C061;
-}
-
-.checkmark:after {
+.checkmark:after,.checkmark:before {
   content: "";
   position: absolute;
   display: none;
 }
 
-.container input:checked ~ .checkmark:after {
+.container input:checked ~ .checkmark:after,
+.container input:checked ~ .checkmark:before {
   display: block;
 }
-
+.container .checkmark:before {
+  content:'';
+  background-color:#2f2f2f;
+  width:4px;
+  height:8px;
+  position:absolute;
+  right:-2px;
+  top:-2px;
+}
 .container .checkmark:after {
-  left: 4px;
-  top: 0px;
+  left: 6px;
+  top: -4px;
   width: 4px;
-  height: 8px;
-  border: solid #10C061;
+  height: 13px;
+  border: solid #fff;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);

@@ -29,6 +29,9 @@ import ArrowUp from '../assets/images/arrow-up.png';
 import SearchIcon from '../assets/images/search.png';
 import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
+import SearchWhiteIcon from '../assets/images/search-white.png';
+import UserIcon from '../assets/images/user-img.png';
+import GreenIcon from '../assets/images/green-icon.png';
 
 function NFTList(props) {
 
@@ -36,11 +39,13 @@ function NFTList(props) {
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
   const [isOpen4, setIsOpen4] = useState(false);
+  const [isOpen7, setIsOpen7] = useState(false);
   const onInit = ({ state, style, node }) => {
     setIsOpen1(false);
     setIsOpen2(false);
     setIsOpen3(false);
     setIsOpen4(false);
+    setIsOpen7(false);
   };
 
   return (
@@ -66,12 +71,14 @@ function NFTList(props) {
                   <label onClick={() => setIsOpen3(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
                   <Collapse onInit={onInit} isOpen={isOpen3}>
                     <Scrollbars style={{ height: 244 }}>
-                      <Link to='/'>USD</Link>
-                      <Link to='/'>INR</Link>
-                      <Link to='/'>WON</Link>
-                      <Link to='/'>JPY</Link>
-                      <Link to='/'>AFN</Link>
-                      <Link to='/'>Euro</Link>
+                      <div className='priceList'>
+                        <Link className='active' to='/'>USD</Link>
+                        <Link to='/'>INR</Link>
+                        <Link to='/'>WON</Link>
+                        <Link to='/'>JPY</Link>
+                        <Link to='/'>AFN</Link>
+                        <Link to='/'>Euro</Link>
+                      </div>
                     </Scrollbars>
                   </Collapse>
                 </CustomDropdown>
@@ -83,7 +90,7 @@ function NFTList(props) {
               </Collapsible>
               <Collapsible trigger="Category">
                 <CustomDropdown className='pb-10'>
-                  <label onClick={() => setIsOpen4(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
+                  <label onClick={() => setIsOpen4(state => !state)}>Choose  a Category <HiOutlineChevronDown /></label>
                   <Collapse onInit={onInit} isOpen={isOpen4}>
                     <CustomcheckBox>
                       <Scrollbars style={{ height: 244 }}>
@@ -125,11 +132,28 @@ function NFTList(props) {
                 </CustomDropdown>
               </Collapsible>
               <Collapsible trigger="Celebrity">
-                <WhiteBorderBtn>Celebrity 1</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 2</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 3</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 4</WhiteBorderBtn>
-                <WhiteBorderBtn>Celebrity 5</WhiteBorderBtn>
+                <CustomDropdown className='pb-10'>
+                  <NavSearch onClick={() => setIsOpen7(state => !state)}>
+                    <input type="text" placeholder="Search for a Celebrity" />
+                    <img src={SearchWhiteIcon} alt='' />
+                  </NavSearch>
+                  <Collapse onInit={onInit} isOpen={isOpen7}>
+                    <Scrollbars style={{ height: 244 }}>
+                      <div className='priceList search-list'>
+                        <Link to='/' className='active'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                      </div>
+                    </Scrollbars>
+                  </Collapse>
+                </CustomDropdown>
               </Collapsible>
               <Collapsible trigger="Collections">
                 <WhiteBorderBtn>Collection 1</WhiteBorderBtn>
@@ -744,9 +768,33 @@ const CustomDropdown = styled.div`
     label{width:121px;}
   }
   .collapse-css-transition{
-    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F;
-    a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 22px; color: #767676; padding:10px 15px; display:block;
-      :hover{color:#aeaeae;}
+    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; padding:6px 15px; display:block;
+      :hover{opacity:0.8;}
+    }
+  }
+  &.custom-width{ 
+    .collapse-css-transition{width:262px; top:50px; right:0px; left:auto; padding:10px 13px; border-radius: 5px;
+      a{padding:6px 0px; display:flex; align-items:center;
+        span{
+          width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
+        }
+      }
+    }
+  }
+  &.report-box{
+    .collapse-css-transition{width:131px; top:50px; right:0px; left:auto; padding:10px; border-radius: 5px;
+      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;}
+    }
+  }
+  .priceList{
+    a.active{background-color:#1A1A1A; position:relative;
+      :after{content:''; position:absolute; right:13px; top:13px; background: url(${GreenIcon}) no-repeat; width:18px; height:14px;}
+    }
+  }
+  .search-list{
+    a{display:flex; align-items:center; 
+      img{margin-right:10px;}
     }
   }
 `;
@@ -909,6 +957,16 @@ const ResultBar = styled(FlexDiv)`
   p{margin:0px; font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF;}
 `;
 
+const NavSearch = styled.div`
+  position:relative; 
+  img{position:absolute; top:11px; left:11px; cursor:pointer;}
+  input{font-family: 'Roboto', sans-serif; border:1px solid #aeaeae; padding:8px 8px 8px 40px; background-color:#1d1d1d; box-sizing: border-box; border-radius:2px; width:100%; color:#fff; font-weight: normal; font-size: 16px; line-height: 24px;
+    ::placeholder {
+      color: #767676;
+    }
+  }
+`;
+
 const CustomcheckBox = styled.div`
 .container {
   display: block;
@@ -943,26 +1001,31 @@ const CustomcheckBox = styled.div`
   border-radius:2px;
 }
 
-.container input:checked ~ .checkmark {
-  border-color:#10C061;
-}
-
-.checkmark:after {
+.checkmark:after,.checkmark:before {
   content: "";
   position: absolute;
   display: none;
 }
 
-.container input:checked ~ .checkmark:after {
+.container input:checked ~ .checkmark:after,
+.container input:checked ~ .checkmark:before {
   display: block;
 }
-
+.container .checkmark:before {
+  content:'';
+  background-color:#2f2f2f;
+  width:4px;
+  height:8px;
+  position:absolute;
+  right:-2px;
+  top:-2px;
+}
 .container .checkmark:after {
-  left: 4px;
-  top: 0px;
+  left: 6px;
+  top: -4px;
   width: 4px;
-  height: 8px;
-  border: solid #10C061;
+  height: 13px;
+  border: solid #fff;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
