@@ -14,34 +14,35 @@ const NotFound = React.lazy(() => import('./pages/not.found'))
 const NFTList = React.lazy(() => import('./pages/nft-list'))
 const Activity = React.lazy(() => import('./pages/activity'))
 const MyProfile = React.lazy(() => import('./pages/my-profile'))
+const EditProfile = React.lazy(() => import('./pages/edit-profile'))
 
-
-function App() { 
+function App() {
 
   const Loading = () => {
     return (<Loader>
       <img src={LoaderGIF} alt='' />
     </Loader>)
   }
-  
+
   return (
-    <Router >
+    <Router basename={'np/fanAnyWhere'}>
       <Suspense fallback={<Loading />}>
-          <section className='MainBox clearfix'>
-            <Gs.GlobalStyle /> 
-            <Header />
-              <Switch>
-                <Route path="/" exact> <Marketplace />  </Route>
-                <Route path="/marketplace" > <Marketplace /> </Route>
-                <Route path="/nft-list"><NFTList /></Route>
-                <Route path="/activity"><Activity /></Route>
-                <Route path="/my-profile"><MyProfile /></Route>
-                <Route component={NotFound} />
-              </Switch>    
-            <Footer />
-          </section>
-        <ToastContainer autoClose={8000} 
-          theme={'colored'} 
+        <section className='MainBox clearfix'>
+          <Gs.GlobalStyle />
+          <Header />
+          <Switch>
+            <Route path="/" exact> <Marketplace />  </Route>
+            <Route path="/marketplace" > <Marketplace /> </Route>
+            <Route path="/nft-list"><NFTList /></Route>
+            <Route path="/activity"><Activity /></Route>
+            <Route path="/my-profile"><MyProfile /></Route>
+            <Route path="/edit-profile"><EditProfile /></Route>
+            <Route component={NotFound} />
+          </Switch>
+          <Footer />
+        </section>
+        <ToastContainer autoClose={8000}
+          theme={'colored'}
           position='bottom-left'
           pauseOnHover />
       </Suspense>
