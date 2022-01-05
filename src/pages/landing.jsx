@@ -102,6 +102,12 @@ const Landing = (props) => {
     <>
       <NFTTopSlider>
         <Gs.Container>
+          <SiteLoader>
+            <div className='loader-inner'>
+              <div class="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader>
           {!props.TopNFTs ? 'loading..' :
             <Carousel responsive={responsive}>
               <div className='item'>
@@ -1320,6 +1326,21 @@ const NotifyInput = styled(FlexDiv)`
   }
   button{padding:14px 32px; line-height:19px; font-weight:500;}
  `;
+
+const SiteLoader = styled(FlexDiv)`
+  margin:30px 0px;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
+`;
 
 const mapDipatchToProps = (dispatch) => {
   return {
