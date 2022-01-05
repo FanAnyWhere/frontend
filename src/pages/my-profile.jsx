@@ -93,7 +93,7 @@ function MyProfile(props) {
   let profileCoverInput = useRef()
   let walletAddress = useRef()
 
-  useEffect( () => {
+  useEffect(() => {
     const getUser = async () => {
       props.getUserDetails() // fetch user details
     }
@@ -140,13 +140,13 @@ function MyProfile(props) {
     // eslint-disable-next-line
   }, [profile])
 
-  const convertToBuffer = async (reader, operation = false, url=null, file=null) => {
+  const convertToBuffer = async (reader, operation = false, url = null, file = null) => {
     //file is converted to a buffer to prepare for uploading to IPFS`
     const buffer = await Buffer.from(reader.result);
     //set this buffer -using es6 syntax
     if (operation)
-      setCover({  buffer: buffer, url: url, file: file })
-    else 
+      setCover({ buffer: buffer, url: url, file: file })
+    else
       setProfile({ buffer: buffer, url: url, file: file })
   }
 
@@ -154,7 +154,7 @@ function MyProfile(props) {
     setLoading(true) // start loader
     let file = profileInput.current.files[0];
     let url = URL.createObjectURL(file);
-    setProfile({ buffer: null, url : url, file: file })
+    setProfile({ buffer: null, url: url, file: file })
     if (file.size > 1572864) {
       // check file size
       file = await compressImage(file); // compress image
@@ -168,7 +168,7 @@ function MyProfile(props) {
     setLoading(true) // start the loader
     let file = profileCoverInput.current.files[0]
     let url = URL.createObjectURL(file)
-    setCover({ buffer: null, url : url, file: file })
+    setCover({ buffer: null, url: url, file: file })
     if (file.size > 1572864) {
       // check file size
       file = await compressImage(file); // compress image
@@ -213,17 +213,17 @@ function MyProfile(props) {
         <div className='img-outer'>
           <img src={props.user?.cover} alt='' />
           <div className='overlay'>
-              <input
-                type='file'
-                accept="image/*"
-                ref={profileCoverInput}
-                name='profileCoverInput'
-                id='profileCoverInput'
-                hidden
-                onChange={() => {
-                  coverFileChange()
-                }}
-              />
+            <input
+              type='file'
+              accept="image/*"
+              ref={profileCoverInput}
+              name='profileCoverInput'
+              id='profileCoverInput'
+              hidden
+              onChange={() => {
+                coverFileChange()
+              }}
+            />
             <GradientBtn
               onClick={() => {
                 profileCoverInput.current.click()
@@ -259,7 +259,7 @@ function MyProfile(props) {
               <PTitle> {props.user?.name} </PTitle>
               <AddressBar>
                 <p>{address}</p>
-                {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.user?.walletAddress)} /> }
+                {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.user?.walletAddress)} />}
                 {copied && <CopyedText>Copied!</CopyedText>}
               </AddressBar>
             </div>
@@ -307,12 +307,12 @@ function MyProfile(props) {
                 {props.user?.bio}
               </PDesc>
               <JMYear>
-                  {props.user?.createdAt
-                    ? dateFormat(
-                      new Date(props.user?.createdAt).toString(),
-                      'dd mmmm yyyy'
-                    )
-                    : 'user join date'}
+                {props.user?.createdAt
+                  ? dateFormat(
+                    new Date(props.user?.createdAt).toString(),
+                    'dd mmmm yyyy'
+                  )
+                  : 'user join date'}
               </JMYear>
             </div>
             <FollowBoxRow>
@@ -336,17 +336,17 @@ function MyProfile(props) {
             <LinkBoxRow>
               <div className='link-box'>
                 <Link to='#' onClick={() => { window.open(props.user?.profile?.portfolio?.website?.url, '_blank') }}>
-                  {props.user?.profile?.portfolio?.website?.url ? props.user.profile.portfolio.website.url : 'www.faw.com' }
+                  {props.user?.profile?.portfolio?.website?.url ? props.user.profile.portfolio.website.url : 'www.faw.com'}
                 </Link>
               </div>
               <div className='link-box'>
                 <Link to='#' className='twitter' onClick={() => { window.open(props.user?.profile?.portfolio?.twitter?.url, '_blank') }}>
-                  {props.user?.profile?.portfolio?.twitter?.url ? props.user.profile.portfolio.twitter.url : 'www.twitter.com' }
+                  {props.user?.profile?.portfolio?.twitter?.url ? props.user.profile.portfolio.twitter.url : 'www.twitter.com'}
                 </Link>
               </div>
               <div className='link-box'>
                 <Link to='#' className='instagram-handle' onClick={() => { window.open(props.user?.profile?.portfolio?.instagram?.url, '_blank') }}>
-                  {props.user?.profile?.portfolio?.instagram?.url ? props.user.profile.portfolio.instagram.url : 'www.instagram.com' }
+                  {props.user?.profile?.portfolio?.instagram?.url ? props.user.profile.portfolio.instagram.url : 'www.instagram.com'}
                 </Link>
               </div>
             </LinkBoxRow>
@@ -370,7 +370,7 @@ function MyProfile(props) {
             <BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
               console.log('icon clicked ')
               setFilterOpen(!filterOpen)
-            }}/>
+            }} />
           </GradientBar>
 
           <NFTlistLeft className={filterOpen && 'active'}>
@@ -481,7 +481,7 @@ function MyProfile(props) {
             </CustomAccordian>
           </NFTlistLeft>
         </PLeftpanel>
-        <PRightpanel  className={filterOpen && 'active'}>
+        <PRightpanel className={filterOpen && 'active'}>
           <ProfilefilterBar>
             {/* <FilterBar>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
@@ -1137,9 +1137,12 @@ const JMYear = styled.div`
 const FollowBoxRow = styled(FlexDiv)`
   background: #2F2F2F; border-radius: 5px; padding:12px 0px 12px 12px; justify-content:flex-start; margin-right:17px;
   p{font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; color: #767676; margin:0px;}
-  .follow-box{border-right:1px solid #767676; padding:0px 25px;
+  .follow-box{ padding:0px 25px; position:relative;
+    :after{content:''; background-color:rgb(118 118 118 / 25%); position:absolute; right:0px; top:0px; width:1px;  height:37px;}
     :first-child{padding-left:0px;}
-    :last-child{border-right:0px;}
+    :last-child{
+      :after{display:none;}
+    }
   }
 `;
 
@@ -1149,9 +1152,12 @@ const FNumber = styled.div`
 
 const LinkBoxRow = styled(FlexDiv)`
   background: #2F2F2F; border-radius: 5px; padding:12px 12px 25px 12px; justify-content:flex-start;
-  .link-box{border-right:1px solid #767676; padding:0px 33px;
+  .link-box{padding:0px 33px; position:relative;
+    :after{content:''; background-color:rgb(118 118 118 / 25%); position:absolute; right:0px; top:0px; width:1px;  height:37px;}
     :first-child{padding-left:0px;}
-    :last-child{border-right:0px; padding-right:0px;}
+    :last-child{ padding-right:0px;
+      :after{display:none;}
+    }
     a{
       font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px;line-height: 24px; color: #FFFFFF; 
       &.twitter{color: #0FBFFC;}
@@ -1193,7 +1199,7 @@ const CustomDropdown = styled.div`
     label{width:121px;}
   }
   .collapse-css-transition{
-    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); z-index:9;
     a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; padding:6px 15px; display:block;
       :hover{opacity:0.8;}
     }
