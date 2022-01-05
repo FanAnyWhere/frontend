@@ -98,7 +98,7 @@ function getTopNFT() {
 
 function getTopCollections() {
   return (dispatch) => {
-    const response = services.post('nft/listCollection');
+    const response = services.get('admin/popularCollection/topCollections');
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'FETCHED_TOP_COLLECTIONS', data: promise.data.data })

@@ -104,6 +104,7 @@ function MyProfile(props) {
       props.getUserDetails() // fetch user details
     }
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -517,8 +518,8 @@ function MyProfile(props) {
           <Trending>
 
             {!props.NFTs ? 'loading...' : 
-              props.NFTs.map( (nft) => {
-                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} />
+              props.NFTs.map( (nft, key) => {
+                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key}/>
               })
             }
 
