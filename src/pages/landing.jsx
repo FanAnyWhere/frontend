@@ -1122,7 +1122,7 @@ const W60 = styled(FlexDiv)`
 `;
 
 const ImgOuter = styled.div`
-  position:relative; width:100%; height:510px; overflow:hidden;
+  position:relative; width:100%; height:503px; overflow:hidden;
   img{border-radius:2px; width:100%; height:100%; object-fit:cover;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
   }
