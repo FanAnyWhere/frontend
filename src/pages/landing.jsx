@@ -1112,7 +1112,7 @@ const W40 = styled.div`
 `;
 
 const W60 = styled(FlexDiv)`
-  width:60.5%;
+  width:60.5%; justify-content:flex-start;
 `;
 
 const ImgOuter = styled.div`
