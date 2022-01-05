@@ -201,8 +201,8 @@ const Marketplace = (props) => {
           <Trending>
             {!props.NFTs ? 'loading' : props.NFTs.length === 0 && 'No data available'}
 
-            {props.NFTs && props.NFTs.map( (nft, key) => {
-              return  <NFT nft={nft} />
+            {props.NFTs && props.NFTs.map((nft, key) => {
+              return <NFT nft={nft} />
             })}
           </Trending>
         </PRightpanel>

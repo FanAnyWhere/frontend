@@ -583,7 +583,7 @@ const ActFilterList = styled(FlexDiv)`
 `;
 
 const OwnerOuter = styled(FlexDiv)`
-  justify-content:space-between; margin-bottom:35px;
+  justify-content:space-between; margin-bottom:21px;
 `;
 
 const OwnerLeft = styled(FlexDiv)`

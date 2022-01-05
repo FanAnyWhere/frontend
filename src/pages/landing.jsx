@@ -102,37 +102,37 @@ const Landing = (props) => {
     <>
       <NFTTopSlider>
         <Gs.Container>
-            {!props.TopNFTs ? 'loading..' :
-              <Carousel responsive={responsive}>
-                <div className='item'>
-                  {props.TopNFTs.length > 0 && 
-                    <W40>
-                      <ImgOuter>
-                        <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />
-                        <p>{(props.TopNFTs[0]).nftId.title}</p>
-                      </ImgOuter>
-                    </W40>
-                  }
-                  {props.TopNFTs.length > 0 && 
-                    <W60>
-                      {props.TopNFTs.map( (nft, key) => {
-                        return nft.isActive && key !== 0 &&
-                            <ImgOuter className='light-bg' key={key}>
-                              <img src={nft.nftId.image.compressed} alt='' />
-                              <p>{nft.nftId.title}</p>
-                            </ImgOuter>
-                      })} 
-                    </W60>}
-                </div>
-              </Carousel>
-            }
+          {!props.TopNFTs ? 'loading..' :
+            <Carousel responsive={responsive}>
+              <div className='item'>
+                {props.TopNFTs.length > 0 &&
+                  <W40>
+                    <ImgOuter>
+                      <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />
+                      <p>{(props.TopNFTs[0]).nftId.title}</p>
+                    </ImgOuter>
+                  </W40>
+                }
+                {props.TopNFTs.length > 0 &&
+                  <W60>
+                    {props.TopNFTs.map((nft, key) => {
+                      return nft.isActive && key !== 0 &&
+                        <ImgOuter className='light-bg' key={key}>
+                          <img src={nft.nftId.image.compressed} alt='' />
+                          <p>{nft.nftId.title}</p>
+                        </ImgOuter>
+                    })}
+                  </W60>}
+              </div>
+            </Carousel>
+          }
         </Gs.Container>
       </NFTTopSlider>
 
       <Gs.Container>
         <GradientTitleRow>
           <h2>Live Auction</h2>
-          <WhiteBorderBtn onClick={()=> props.history.push('/marketplace')}>See all</WhiteBorderBtn>
+          <WhiteBorderBtn onClick={() => props.history.push('/marketplace')}>See all</WhiteBorderBtn>
         </GradientTitleRow>
       </Gs.Container>
 
@@ -341,7 +341,7 @@ const Landing = (props) => {
 
       <Gs.Container>
         <TopCollections>
-          No data available 
+          No data available
           {/* <TCColumn>
             <TCBox>
               <TC1>1</TC1>
@@ -719,7 +719,7 @@ const Landing = (props) => {
 
       <Gs.Container>
         <Trending>
-            No data available
+          No data available
           {/* <div className='item'>
             <LiveBox>
               <div className='img-outer ver3'>
@@ -1116,13 +1116,14 @@ const W60 = styled(FlexDiv)`
 `;
 
 const ImgOuter = styled.div`
-  position:relative;
-  img{border-radius:2px; 
+  position:relative; width:100%; height:510px; overflow:hidden;
+  img{border-radius:2px; width:100%; height:100%; object-fit:cover;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
   }
   p{position:absolute; left:16px; top:16px; margin:0px; background-color: #E6E6E6; border-radius: 10px; font-weight: bold; font-size: 12px; line-height: 16px; color: #1D1D1D; padding:2px 10px;}
-  &.light-bg{ margin:0px 3.5px 3px; width: calc(33.33% - 8px);
+  &.light-bg{ margin:0px 3.5px 3px; width: calc(33.33% - 8px); height:250px;
     p{background: rgba(196, 196, 196, 0.15); color:#F6F6F6;}
+    
   }
 `;
 
