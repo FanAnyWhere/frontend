@@ -173,9 +173,8 @@ function Header(props) {
             </a>
           </nav>
 
-          {props.user?.role?.roleName !== 'COLLECTOR' ?
-            <GradientBtn>Create</GradientBtn>
-            : <GradientBtn><BecomeCelebrity /></GradientBtn>}
+          {props.user?.role?.roleName !== 'CELEBRITY' &&
+            <GradientBtn>Create</GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
             <WhiteBorderBtn className='ani-1 active'
@@ -198,7 +197,7 @@ function Header(props) {
               </button>
               <Collapse onInit={onInit} isOpen={isOpen1}>
                 <UserBox>
-                  <UserName>{'username'}</UserName>
+                  <UserName>{props.user?.name}</UserName>
                   <AddressBar><p>{address}</p>
                     <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])}
                       data-place="bottom" data-class="wallettooltip" data-tip="copied"
@@ -216,7 +215,7 @@ function Header(props) {
                   </BalanceBox>
                 </UserBox>
                 <Link to='/my-profile'>Profile</Link>
-                <Link to='/' onClick={() => disconnect()}>Disconnect</Link>
+                <Link to='#' onClick={() => disconnect()}>Disconnect</Link>
               </Collapse>
             </AccountDropdown>
           </AfterLogin>}

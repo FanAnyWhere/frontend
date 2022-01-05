@@ -3,6 +3,7 @@ import { services } from '../services';
 export const userActions = {
     getNotifications,
     getUserDetails,
+    getUserNFT,
     updateUserDetails,
     getNotificationFilters,
 }
@@ -62,4 +63,17 @@ function updateUserDetails(params) {
       }
     })
   }
+}
+
+function getUserNFT() {
+  return async (dispatch) => {
+    const response = services.get('nft/listNftByUser')
+    response.then((promise) => {
+      if (promise.status === 200) {
+        dispatch({ type: 'FETCHED_NFT', data: promise.data.data });
+      } else {
+        // console.log("error");
+      }
+    });
+  };
 }

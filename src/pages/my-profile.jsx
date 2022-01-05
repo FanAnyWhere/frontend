@@ -50,6 +50,7 @@ import UserIcon from '../assets/images/user-img.png';
 import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
 import ipfs from '../config/ipfs'
+import NFT from '../modals/nft'
 
 
 function MyProfile(props) {
@@ -91,7 +92,12 @@ function MyProfile(props) {
 
   let profileInput = useRef()
   let profileCoverInput = useRef()
-  let walletAddress = useRef()
+
+  useEffect(() => {
+    if (!props.NFTs) props.getUserNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.NFTs])
+
 
   useEffect( () => {
     const getUser = async () => {
@@ -117,7 +123,6 @@ function MyProfile(props) {
 
   useEffect(() => {
     const getUser = async () => {
-      console.log('fetch users latest data ')
       props.getUserDetails() // fetch user details
     }
     if (props.updated?.details) getUser()
@@ -181,7 +186,7 @@ function MyProfile(props) {
   const updateCoverFile = async () => {
     let ipfsHash = await ipfs.add(cover.buffer, { // get buffer IPFS hash
       pin: true, progress: (bytes) => {
-        console.log('File upload progress ', Math.floor(bytes * 100 / (cover.file.size)))
+        // console.log('File upload progress ', Math.floor(bytes * 100 / (cover.file.size)))
       }
     })
     let userObj = { cover: ipfsHash.path };
@@ -191,7 +196,7 @@ function MyProfile(props) {
   const updateProfileFile = async () => {
     let ipfsHash = await ipfs.add(profile.buffer, { // get buffer IPFS hash
       pin: true, progress: (bytes) => {
-        console.log('File upload progress ', Math.floor(bytes * 100 / (profile.file.size)))
+        // console.log('File upload progress ', Math.floor(bytes * 100 / (profile.file.size)))
       }
     })
     props.updateProfile({ profile: ipfsHash.path }); // update profile
@@ -204,8 +209,6 @@ function MyProfile(props) {
       setCopied(false)
     }, 3000);
   }
-
-  console.log('user ? ', props.user?.createdAt)
 
   return (
     <>
@@ -264,8 +267,8 @@ function MyProfile(props) {
               </AddressBar>
             </div>
             <div className='PTT-right'>
-              <Link to='#' className="edit-profile">Unfollow</Link>
-              <GradientBtn>Follow</GradientBtn>
+              {/* <Link to='#' className="edit-profile">Unfollow</Link>
+              <GradientBtn>Follow</GradientBtn> */}
               <Link to='/edit-profile' className="edit-profile">Edit Profile</Link>
               <CustomDropdown className='custom-width'>
                 <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
@@ -317,13 +320,9 @@ function MyProfile(props) {
             </div>
             <FollowBoxRow>
               <div className='follow-box'>
-                <FNumber>0</FNumber>
+                <FNumber>{props.user ? props.user.nftCreated : '000'}</FNumber>
                 <p>Items</p>
               </div>
-              {/* <div className='follow-box'>
-                <FNumber>000</FNumber>
-                <p>FAW</p>
-              </div> */}
               <div className='follow-box'>
                 <FNumber>{props.user ? props.user.followingCount : '000'}</FNumber>
                 <p>Following</p>
@@ -353,14 +352,25 @@ function MyProfile(props) {
           </PRBottom>
         </PRRight>
       </ProfileRow>
+
       <ActFilterList>
-        <Link to='' className='active'>On Sale<span>00</span></Link>
-        <Link to=''>Collected<span>00</span></Link>
-        <Link to=''>Created<span>00</span></Link>
-        <Link to=''>Following<span>00</span></Link>
-        <Link to=''>Liked<span>00</span></Link>
-        <Link to=''>Bids Placed<span>00</span></Link>
-        <Link to=''>Bids Received<span>00</span></Link>
+        
+        {/* <Link to='#'>Collected
+        </Link> */}
+        <Link to='#' onClick={() => props.fetch}>
+          Created
+          {/* <span>{}</span> */}
+        </Link>
+        <Link to='#'>
+          Collections
+          {/* <span>{}</span> */}
+        </Link>
+        <Link to='#'>
+          Liked
+          {/* <span>00</span> */}
+        </Link>
+        {/* <Link to='#'>Bids Placed<span>00</span></Link>
+        <Link to='#'>Bids Received<span>00</span></Link> */}
       </ActFilterList>
 
       <ProfileMain>
@@ -368,7 +378,6 @@ function MyProfile(props) {
           <GradientBar className={filterOpen && 'active'}>
             <LeftTitle>Filters</LeftTitle>
             <BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
-              console.log('icon clicked ')
               setFilterOpen(!filterOpen)
             }}/>
           </GradientBar>
@@ -504,546 +513,15 @@ function MyProfile(props) {
               </CustomSwitch>
             </ResultRight> */}
           </ProfilefilterBar>
+
           <Trending>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT12} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT13} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={TimerIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Buy Now</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT14} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot, CrazyGoon231, TRex2020</p>
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/' className='disabled'>Waiting to Accept</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT15} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT16} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT17} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs ver3'>AbsArtBot <img src={VerifiedIcon} alt='' /></p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Buy Now</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT18} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs ver3'>AbsArtBot <img src={VerifiedIcon} alt='' /></p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Buy Now</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT19} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={SendIcon} alt='' />
-                  </div>
-                  <h3 className='ver3 mb-0'>Abstract Monster from Zortapia</h3>
-                  <p className='abs'>Monstor Collection</p>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/' className='disabled'>Not for Sale</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT20} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot, CrazyGoon231, TRex2020</p>
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/' className='disabled'>Waiting to Accept</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT21} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT12} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT13} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={TimerIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Buy Now</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT14} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot, CrazyGoon231, TRex2020</p>
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/' className='disabled'>Waiting to Accept</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT15} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT16} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT17} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs ver3'>AbsArtBot <img src={VerifiedIcon} alt='' /></p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Buy Now</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT18} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs ver3'>AbsArtBot <img src={VerifiedIcon} alt='' /></p>
-                    <img src={FireIcon} alt='' />
-                  </div>
-                  <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Buy Now</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item active'>
-              <LiveBox>
-                <div className='img-outer ver3'>
-                  <img src={NFT19} alt='' />
-                </div>
-                <div className='box-content'>
-                  <div className='sign-row'>
-                    <p className='abs'>AbsArtBot</p>
-                    <img src={SendIcon} alt='' />
-                  </div>
-                  <h3 className='ver3 mb-0'>Abstract Monster from Zortapia</h3>
-                  <p className='abs'>Monstor Collection</p>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer ver2'>
-                        <p>2 days left</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/' className='disabled'>Not for Sale</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
+
+            {!props.NFTs ? 'loading...' : 
+              props.NFTs.map( (nft) => {
+                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} />
+              })
+            }
+
           </Trending>
           {/* <NoItemBox>
             <NITitle>No Item to Display</NITitle>
@@ -1497,6 +975,8 @@ const CustomcheckBox = styled.div`
 const mapDipatchToProps = (dispatch) => {
   return {
     getUserDetails: () => dispatch(actions.getUserDetails()),
+    getUserNFTs: () => dispatch(actions.getUserNFT()),
+    clearNFTs: () => dispatch({ type: 'FETCHED_NFT', data: null }),
     updateProfile: (params) => dispatch(actions.updateUserDetails(params)),
   }
 }
@@ -1505,6 +985,7 @@ const mapStateToProps = (state) => {
     authenticated: state.isAuthenticated,
     updated: state.updateProfile,
     user: state.fetchUserDetails,
+    NFTs: state.fetchNFTs,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(MyProfile));

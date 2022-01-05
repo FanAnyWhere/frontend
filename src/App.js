@@ -25,15 +25,15 @@ function App() {
   }
 
   return (
-    <Router basename={'np/fanAnyWhere'}>
+    <Router >
       <Suspense fallback={<Loading />}>
         <section className='MainBox clearfix'>
           <Gs.GlobalStyle />
           <Header />
           <Switch>
             <Route path="/" exact> <Marketplace />  </Route>
-            <Route path="/marketplace" > <Marketplace /> </Route>
-            <Route path="/nft-list"><NFTList /></Route>
+            <Route path="/marketplace" > <NFTList /> </Route>
+            {/* <Route path="/nft-list"><NFTList /></Route> */}
             <Route path="/activity"><Activity /></Route>
             <Route path="/my-profile"><MyProfile /></Route>
             <Route path="/edit-profile"><EditProfile /></Route>

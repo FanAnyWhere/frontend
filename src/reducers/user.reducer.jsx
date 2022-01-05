@@ -33,3 +33,12 @@ export function updateProfile(state = null, action) {
       return state;
   }
 }
+
+export function fetchNFTs(state = false, action) {
+  switch (action.type) {
+    case 'FETCHED_NFT':
+      return action.data;
+    default:
+      return state;
+  }
+}

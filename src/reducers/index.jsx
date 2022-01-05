@@ -4,6 +4,7 @@ import { fetchNotifications,
   fetchNotificationFilters,
   fetchUserDetails,
   updateProfile,
+  fetchNFTs,
 } from './user.reducer'
 
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   fetchNonce,
   dataRefresh,
   updateProfile,
+  fetchNFTs,
   isAuthenticated,
   fetchNotifications,
   fetchUserDetails,
