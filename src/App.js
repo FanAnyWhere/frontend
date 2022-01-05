@@ -9,9 +9,9 @@ import LoaderGIF from './assets/images/loader.gif'
 // import components
 import Header from './component/header'
 import Footer from './component/footer'
-const Marketplace = React.lazy(() => import('./pages/marketplace'))
+const Landing = React.lazy(() => import('./pages/landing'))
 const NotFound = React.lazy(() => import('./pages/not.found'))
-const NFTList = React.lazy(() => import('./pages/nft-list'))
+const Marketplace = React.lazy(() => import('./pages/marketplace'))
 const Activity = React.lazy(() => import('./pages/activity'))
 const MyProfile = React.lazy(() => import('./pages/my-profile'))
 const EditProfile = React.lazy(() => import('./pages/edit-profile'))
@@ -31,9 +31,8 @@ function App() {
           <Gs.GlobalStyle />
           <Header />
           <Switch>
-            <Route path="/" exact> <Marketplace />  </Route>
-            <Route path="/marketplace" > <NFTList /> </Route>
-            {/* <Route path="/nft-list"><NFTList /></Route> */}
+            <Route path="/" exact> <Landing />  </Route>
+            <Route path="/marketplace" > <Marketplace /> </Route>
             <Route path="/activity"><Activity /></Route>
             <Route path="/my-profile"><MyProfile /></Route>
             <Route path="/edit-profile"><EditProfile /></Route>

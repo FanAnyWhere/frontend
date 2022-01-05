@@ -523,11 +523,15 @@ function MyProfile(props) {
             }
 
           </Trending>
-          {/* <NoItemBox>
-            <NITitle>No Item to Display</NITitle>
-            <NIDesc>Oops! There are no items here. You could always browse for something else in our marketplace.</NIDesc>
-            <GradientBtn>Browse Marketplace</GradientBtn>
-          </NoItemBox> */}
+          
+          {props.NFTs?.length === 0 && 
+            <NoItemBox>
+              <NITitle>No Item to Display</NITitle>
+              <NIDesc>Oops! There are no items here. You could always browse for something else in our marketplace.</NIDesc>
+              <GradientBtn>Browse Marketplace</GradientBtn>
+            </NoItemBox>
+          }
+
         </PRightpanel>
       </ProfileMain>
 
@@ -985,7 +989,7 @@ const mapStateToProps = (state) => {
     authenticated: state.isAuthenticated,
     updated: state.updateProfile,
     user: state.fetchUserDetails,
-    NFTs: state.fetchNFTs,
+    NFTs: state.fetchUserNFTs,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(MyProfile));

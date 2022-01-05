@@ -5,6 +5,11 @@ import { fetchNotifications,
   fetchUserDetails,
   updateProfile,
   fetchNFTs,
+  fetchTopNFT,
+  fetchCreators,
+  fetchCategories,
+  fetchUserNFTs,
+  fetchTopCollections,
 } from './user.reducer'
 
 
@@ -13,10 +18,15 @@ const rootReducer = combineReducers({
   dataRefresh,
   updateProfile,
   fetchNFTs,
+  fetchTopNFT,
   isAuthenticated,
   fetchNotifications,
   fetchUserDetails,
+  fetchUserNFTs,
+  fetchCategories,
+  fetchTopCollections,
   fetchNotificationFilters,
+  fetchCreators,
 })
 
 export default rootReducer

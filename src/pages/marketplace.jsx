@@ -1,1152 +1,212 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import styled from 'styled-components';
-import Gs from '../theme/globalStyles';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import { Link, NavLink } from 'react-router-dom';
-import { AiOutlineHeart } from 'react-icons/ai';
-import CountUp from 'react-countup';
+import Collapse from '@kunukn/react-collapse';
+import { Link } from 'react-router-dom';
+import { HiOutlineChevronDown } from 'react-icons/hi';
+import Collapsible from 'react-collapsible';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { BiRightArrowAlt } from 'react-icons/bi';
+import { Scrollbars } from 'react-custom-scrollbars';
 
-import NFT1 from '../assets/images/nft-1.jpg';
-import NFT2 from '../assets/images/nft-2.jpg';
-import NFT3 from '../assets/images/nft-3.jpg';
-import NFT4 from '../assets/images/nft-4.jpg';
-import NFT5 from '../assets/images/nft-5.jpg';
-import NFT6 from '../assets/images/nft-6.jpg';
-import NFT7 from '../assets/images/nft-7.jpg';
-import NFT8 from '../assets/images/nft-8.jpg';
-import NFT9 from '../assets/images/nft-9.jpg';
-import NFT10 from '../assets/images/nft-10.jpg';
-import NFT11 from '../assets/images/nft-11.jpg';
-import CollectionUser from '../assets/images/collection-user.png';
-import CreatorUser from '../assets/images/creator-user.png';
-import NFT12 from '../assets/images/nft-12.jpg';
-import NFT13 from '../assets/images/nft-13.jpg';
-import NFT14 from '../assets/images/nft-14.jpg';
-import NFT15 from '../assets/images/nft-15.jpg';
-import NFT16 from '../assets/images/nft-16.jpg';
-import NFT17 from '../assets/images/nft-17.jpg';
-import NFT18 from '../assets/images/nft-18.jpg';
-import NFT19 from '../assets/images/nft-19.jpg';
-import NFT20 from '../assets/images/nft-20.jpg';
-import NFT21 from '../assets/images/nft-21.jpg';
-import FireIcon from '../assets/images/fire.png';
-import VerifiedIcon from '../assets/images/verified.png';
-import SendIcon from '../assets/images/send.png';
-import TimerIcon from '../assets/images/timer.png';
-import FeatureIcon from '../assets/images/feature-icon.png';
+import ArrowUp from '../assets/images/arrow-up.png';
+import SearchWhiteIcon from '../assets/images/search-white.png';
+import UserIcon from '../assets/images/user-img.png';
+import GreenIcon from '../assets/images/green-icon.png';
 
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 1
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 1
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 1
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1
-  }
-};
+import NFT from '../modals/nft'
+import { actions } from '../actions'
 
-const responsive1 = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 4,
-    partialVisibilityGutter: 12
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 4,
-    partialVisibilityGutter: 12
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 3
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1
-  }
-};
 
-function Marketplace(props) {
+const Marketplace = (props) => {
+
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
+  const [isOpen4, setIsOpen4] = useState(false);
+  const [isOpen7, setIsOpen7] = useState(false);
+  const onInit = ({ state, style, node }) => {
+    setIsOpen1(false);
+    setIsOpen2(false);
+    setIsOpen3(false);
+    setIsOpen4(false);
+    setIsOpen7(false);
+  };
+
+  const [filterOpen, setFilterOpen] = useState(false)
+
+  useEffect(() => {
+    if (!props.NFTs) props.getNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.NFTs]) // fetch the NFTs
+
+  useEffect(() => {
+    if (!props.categories) props.getCategories()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.categories]) // fetch the Categories
 
   return (
     <>
-      <NFTTopSlider>
-        <Gs.Container>
-          <Carousel responsive={responsive}>
-            <div className='item'>
-              <W40>
-                <ImgOuter>
-                  <img src={NFT1} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-              </W40>
-              <W60>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT2} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT3} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT4} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT5} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT6} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT7} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-              </W60>
-            </div>
-            <div className='item'>
-              <W40>
-                <ImgOuter>
-                  <img src={NFT1} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-              </W40>
-              <W60>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT2} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT3} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT4} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT5} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT6} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT7} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-              </W60>
-            </div>
-            <div className='item'>
-              <W40>
-                <ImgOuter>
-                  <img src={NFT1} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-              </W40>
-              <W60>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT2} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT3} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT4} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT5} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT6} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-                <ImgOuter className='light-bg'>
-                  <img src={NFT7} alt='' />
-                  <p>Abstract Rocker</p>
-                </ImgOuter>
-              </W60>
-            </div>
-          </Carousel>
-        </Gs.Container>
-      </NFTTopSlider>
+      <ProfileMain>
+        <PLeftpanel className={filterOpen && 'active'}>
+          <GradientBar className={filterOpen && 'active'}>
+            <LeftTitle>Filters</LeftTitle>
+            <BiRightArrowAlt className={filterOpen && 'active'} onClick={() => setFilterOpen(!filterOpen)} />
+          </GradientBar>
 
-      <Gs.Container>
-        <GradientTitleRow>
-          <h2>Live Auction</h2>
-          <WhiteBorderBtn>See all</WhiteBorderBtn>
-        </GradientTitleRow>
-      </Gs.Container>
-
-      <LiveAuctionSlider>
-        <Gs.Container>
-          <Carousel responsive={responsive1} partialVisible={true}>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT8} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
+          <NFTlistLeft className={filterOpen && 'active'}>
+            <CustomAccordian>
+              <Collapsible trigger="Status">
+                <WhiteBorderBtn>On Auction</WhiteBorderBtn>
+                <WhiteBorderBtn>Buy Now</WhiteBorderBtn>
+                <WhiteBorderBtn>New</WhiteBorderBtn>
+                <WhiteBorderBtn>Ending Soon</WhiteBorderBtn>
+                <WhiteBorderBtn>Has Offers</WhiteBorderBtn>
+              </Collapsible>
+              <Collapsible trigger="Price">
+                <CustomDropdown>
+                  <label onClick={() => setIsOpen3(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
+                  <Collapse onInit={onInit} isOpen={isOpen3}>
+                    <Scrollbars style={{ height: 244 }}>
+                      <div className='priceList'>
+                        <Link className={filterOpen && 'active'} to='/'>USD</Link>
+                        <Link to='/'>INR</Link>
+                        <Link to='/'>WON</Link>
+                        <Link to='/'>JPY</Link>
+                        <Link to='/'>AFN</Link>
+                        <Link to='/'>Euro</Link>
                       </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT9} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
+                    </Scrollbars>
+                  </Collapse>
+                </CustomDropdown>
+                <FormGroup>
+                  <input type='text' placeholder='Min' />
+                  <span>to</span>
+                  <input type='text' placeholder='Max' />
+                </FormGroup>
+              </Collapsible>
+              <Collapsible trigger="Category">
+                <CustomDropdown className='pb-10'>
+                  <label onClick={() => setIsOpen4(state => !state)}>Choose  a Category <HiOutlineChevronDown /></label>
+                  <Collapse onInit={onInit} isOpen={isOpen4}>
+                    <CustomcheckBox>
+                      <Scrollbars style={{ height: 244 }}>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                        <label className="container">Placeholder Text
+                          <input type="checkbox" />
+                          <span className="checkmark"></span>
+                        </label>
+                      </Scrollbars>
+                    </CustomcheckBox>
+                  </Collapse>
+                </CustomDropdown>
+              </Collapsible>
+              <Collapsible trigger="Celebrity">
+                <CustomDropdown className='pb-10'>
+                  <NavSearch onClick={() => setIsOpen7(state => !state)}>
+                    <input type="text" placeholder="Search for a Celebrity" />
+                    <img src={SearchWhiteIcon} alt='' />
+                  </NavSearch>
+                  <Collapse onInit={onInit} isOpen={isOpen7}>
+                    <Scrollbars style={{ height: 244 }}>
+                      <div className='priceList search-list'>
+                        <Link to='/' className={filterOpen && 'active'}><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
                       </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT10} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT11} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT1} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT8} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT9} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-          </Carousel>
-        </Gs.Container>
-      </LiveAuctionSlider>
+                    </Scrollbars>
+                  </Collapse>
+                </CustomDropdown>
+              </Collapsible>
+              <Collapsible trigger="Collections">
+                <WhiteBorderBtn>Collection 1</WhiteBorderBtn>
+                <WhiteBorderBtn>Collection 2</WhiteBorderBtn>
+                <WhiteBorderBtn>Collection 3</WhiteBorderBtn>
+                <WhiteBorderBtn>Collection 4</WhiteBorderBtn>
+                <WhiteBorderBtn>Collection 5</WhiteBorderBtn>
+              </Collapsible>
+            </CustomAccordian>
+          </NFTlistLeft>
+        </PLeftpanel>
 
-      <Gs.Container>
-        <GradientTitleRow>
-          <h2>Top Collections</h2>
-          <WhiteBorderBtn>See all</WhiteBorderBtn>
-        </GradientTitleRow>
-      </Gs.Container>
+        <PRightpanel className={filterOpen && 'active'}>
+          <RightTitle>
+            Explore
+          </RightTitle>
 
-      <Gs.Container>
-        <TopCollections>
-          <TCColumn>
-            <TCBox>
-              <TC1>1</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>2</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>3</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>4</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>5</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>6</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>7</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>8</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>9</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>10</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>11</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>12</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>13</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>14</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>15</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-        </TopCollections>
-      </Gs.Container>
+          <ResultBar>
+            <p>{props.NFTs && props.NFTs.length} Results</p>
 
-      <Gs.Container>
-        <GradientTitleRow className='ver2'>
-          <h2>Notable Drops</h2>
-        </GradientTitleRow>
-      </Gs.Container>
+            <ResultRight>
+              <CustomDropdown className='short'>
+                <label onClick={() => setIsOpen2(state => !state)}>Sort by <HiOutlineChevronDown /></label>
+                <Collapse onInit={onInit} isOpen={isOpen2}>
+                  <Link to='/'>Low to High</Link>
+                  <Link to='/'>High to Low</Link>
+                </Collapse>
+              </CustomDropdown>
+              {/* <CustomSwitch>
+                <button className={filterOpen && 'active'}><img src={ListIcon} alt='' /></button>
+                <button><img src={GridIcon} alt='' /></button>
+              </CustomSwitch> */}
+            </ResultRight>
+          </ResultBar>
 
-      <Gs.Container>
-        <NotableDrops>
-          <div className='item'>
-            <LiveBox className='blue'>
-              <div className='img-outer ver2'>
-                <img src={NFT8} alt='' />
-              </div>
-              <div className='box-content ver2'>
-                <p className='abs ver2'>AbsArtBot</p>
-                <h3 className='ver2'>Abstract Monster from Zorpia</h3>
-                <PriceLine className='ver2'>
-                  <div>
-                    <p className='grey ver2'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey ver2'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p className='ver2'><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox className='dark-blue'>
-              <div className='img-outer ver2'>
-                <img src={NFT10} alt='' />
-              </div>
-              <div className='box-content ver2'>
-                <p className='abs ver2'>AbsArtBot</p>
-                <h3 className='ver2'>Abstract Monster from Zorpia</h3>
-                <PriceLine className='ver2'>
-                  <div>
-                    <p className='grey ver2'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey ver2'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p className='ver2'><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox className='light-blue'>
-              <div className='img-outer ver2'>
-                <img src={NFT11} alt='' />
-              </div>
-              <div className='box-content ver2'>
-                <p className='abs ver2'>AbsArtBot</p>
-                <h3 className='ver2'>Abstract Monster from Zorpia</h3>
-                <PriceLine className='ver2'>
-                  <div>
-                    <p className='grey ver2'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey ver2'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p className='ver2'><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-        </NotableDrops>
-      </Gs.Container>
+          {/* <ProfilefilterBar>
+            <FilterBar>
+              <button><span>Selected FIlter <IoCloseSharp /></span></button>
+              <button><span>Selected FIlter <IoCloseSharp /></span></button>
+              <button><span>Selected FIlter <IoCloseSharp /></span></button>
+              <button><span>Selected FIlter <IoCloseSharp /></span></button>
+              <button className='c-all'>Clear All</button>
+            </FilterBar>
+          </ProfilefilterBar> */}
 
-      <Gs.Container>
-        <GradientTitleRow>
-          <h2>Top Creators</h2>
-          <WhiteBorderBtn>See all</WhiteBorderBtn>
-        </GradientTitleRow>
-      </Gs.Container>
 
-      <Gs.Container>
-        <TopCollections className='ver2'>
-          <TCColumn>
-            <TCBox>
-              <TC1>1</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>2</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>3</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>4</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>5</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>6</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>7</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>8</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>9</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>10</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>11</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>12</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>13</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>14</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>15</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-        </TopCollections>
-      </Gs.Container>
+          <Trending>
+            {!props.NFTs ? 'loading' : props.NFTs.length === 0 && 'No data available'}
 
-      <Gs.Container>
-        <GradientTitleRow className='ver3'>
-          <h2>Trending</h2>
-        </GradientTitleRow>
-      </Gs.Container>
-
-      <Gs.Container>
-        <Trending>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT12} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot</p>
-                  <img src={FireIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT13} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot</p>
-                  <img src={TimerIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Buy Now</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT14} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot, CrazyGoon231, TRex2020</p>
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/' className='disabled'>Waiting to Accept</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT15} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot</p>
-                  <img src={FireIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT16} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot</p>
-                  <img src={FireIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT17} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs ver3'>AbsArtBot <img src={VerifiedIcon} alt='' /></p>
-                  <img src={FireIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Buy Now</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT18} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs ver3'>AbsArtBot <img src={VerifiedIcon} alt='' /></p>
-                  <img src={FireIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Buy Now</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT19} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot</p>
-                  <img src={SendIcon} alt='' />
-                </div>
-                <h3 className='ver3 mb-0'>Abstract Monster from Zortapia</h3>
-                <p className='abs'>Monstor Collection</p>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/' className='disabled'>Not for Sale</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT20} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot, CrazyGoon231, TRex2020</p>
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/' className='disabled'>Waiting to Accept</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-          <div className='item'>
-            <LiveBox>
-              <div className='img-outer ver3'>
-                <img src={NFT21} alt='' />
-              </div>
-              <div className='box-content'>
-                <div className='sign-row'>
-                  <p className='abs'>AbsArtBot</p>
-                  <img src={FireIcon} alt='' />
-                </div>
-                <h3 className='ver3'>Abstract Monster from Zortapia</h3>
-                <PriceLine>
-                  <div>
-                    <p className='grey'>Price</p>
-                    <p>0.0002FAN</p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='grey'>1/1</p>
-                    <div className='timer ver2'>
-                      <p>2 days left</p>
-                    </div>
-                  </div>
-                </PriceLine>
-                <BidLike>
-                  <Link to='/'>Place a Bid</Link>
-                  <p><AiOutlineHeart /> 2</p>
-                </BidLike>
-              </div>
-            </LiveBox>
-          </div>
-        </Trending>
-      </Gs.Container>
-
-      <ExploreArt>
-        <Gs.Container>
-          <ArtTitle>Explore the  world of digital art. </ArtTitle>
-          <CustomCounter>
-            <div className='counter-block'>
-              <CountUp start={0} end={999999} duration={4} delay={5} /><span className='INL-text'>FAN</span>
-              <p>Worth of art purchased</p>
-            </div>
-            <div className='counter-block'>
-              <CountUp start={0} end={230} duration={4} delay={5} />
-              <p>Great creators</p>
-            </div>
-            <div className='counter-block'>
-              <CountUp start={0} end={9999} duration={4} delay={5} />
-              <p>NFTs in marketplace</p>
-            </div>
-          </CustomCounter>
-          <WhiteBorderBtn>Explore All</WhiteBorderBtn>
-        </Gs.Container>
-      </ExploreArt>
-
-      <Gs.Container>
-        <WhiteTitle>
-          Featured on the News
-        </WhiteTitle>
-      </Gs.Container>
-
-      <Gs.Container>
-        <News>
-          <W33>
-            <div className='news-box'>
-              <img src={FeatureIcon} alt='' />
-              <FeatureTitle>Features on News</FeatureTitle>
-              <FeatureDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</FeatureDesc>
-            </div>
-          </W33>
-          <W33>
-            <div className='news-box'>
-              <img src={FeatureIcon} alt='' />
-              <FeatureTitle>Features on News</FeatureTitle>
-              <FeatureDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</FeatureDesc>
-            </div>
-          </W33>
-          <W33>
-            <div className='news-box'>
-              <img src={FeatureIcon} alt='' />
-              <FeatureTitle>Features on News</FeatureTitle>
-              <FeatureDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</FeatureDesc>
-            </div>
-          </W33>
-        </News>
-      </Gs.Container>
-
-      <Gs.Container>
-        <NewsLetter>
-          <div className='newsletter-left'>
-            <NewsLetterTitle>Sign up for our newsletter</NewsLetterTitle>
-            <NewsLetterDesc>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint velit officia consequat duis enim velit mollit.</NewsLetterDesc>
-          </div>
-          <div className='newsletter-right'>
-            <NotifyInput>
-              <input type='text' placeholder='Enter email address' />
-              <GradientBtn>Notify me</GradientBtn>
-            </NotifyInput>
-            <p>We care about the protection of your data. read our <Link to='/'>Privacy policy</Link></p>
-          </div>
-        </NewsLetter>
-      </Gs.Container>
-
+            {props.NFTs && props.NFTs.map( (nft, key) => {
+              return  <NFT nft={nft} />
+            })}
+          </Trending>
+        </PRightpanel>
+      </ProfileMain>
     </>
   );
 }
@@ -1155,39 +215,133 @@ const FlexDiv = styled.div`
   display:flex; align-items: center; justify-content:center; flex-wrap:wrap;
 `;
 
-const NFTTopSlider = styled.div`
-  margin-top:117px; margin-bottom:38px; align-items:flex-start;
-  .item{display: flex; justify-content:center; padding:5px 0px 5px 5px;}
-  .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff; z-index:0;}
-  .react-multiple-carousel__arrow--left{left:5px;}
-  .react-multiple-carousel__arrow--right{right:4px;}
+const FilterBar = styled(FlexDiv)`
+  justify-content:flex-start;
+  button{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; box-sizing: border-box; border-radius: 4px; margin-right:15px;
+    svg{cursor:pointer; font-size:18px; margin-left:5px;}
+    &.c-all{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border:none; padding:0px; background:none; margin-left:15px;
+      :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+    }
+    span{display:flex; align-items:center; justify-content:center; background-color:#1d1d1d; border-radius: 4px; padding:3px 2px 3px 3px;}
+  }
 `;
 
-const W40 = styled.div`
-  width:39.5%;
+const ResultRight = styled(FlexDiv)`
+  justify-content:flex-end;
 `;
 
-const W60 = styled(FlexDiv)`
-  width:60.5%;
-`;
-
-const ImgOuter = styled.div`
+const CustomDropdown = styled.div`
   position:relative;
-  img{border-radius:2px; 
-    :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
+  &.pb-10{padding-bottom:10px;}
+  label{display:flex; align-items:center; justify-content:space-between; font-family: 'Roboto', sans-serif; margin-right:11px; width: 218px; padding:7px 8px; border: 1px solid #767676; box-sizing: border-box; border-radius: 2px; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676;
+    svg{color:#fff; font-size:20px; cursor:pointer;}
   }
-  p{position:absolute; left:16px; top:16px; margin:0px; background-color: #E6E6E6; border-radius: 10px; font-weight: bold; font-size: 12px; line-height: 16px; color: #1D1D1D; padding:2px 10px;}
-  &.light-bg{ margin:0px 3.5px 3px; width: calc(33.33% - 8px);
-    p{background: rgba(196, 196, 196, 0.15); color:#F6F6F6;}
+  &.short{
+    label{width:121px;}
+  }
+  .collapse-css-transition{
+    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; padding:6px 15px; display:block;
+      :hover{opacity:0.8;}
+    }
+  }
+  &.custom-width{ 
+    .collapse-css-transition{width:262px; top:50px; right:0px; left:auto; padding:10px 13px; border-radius: 5px;
+      a{padding:6px 0px; display:flex; align-items:center;
+        span{
+          width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
+        }
+      }
+    }
+  }
+  &.report-box{
+    .collapse-css-transition{width:131px; top:50px; right:0px; left:auto; padding:10px; border-radius: 5px;
+      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;}
+    }
+  }
+  .priceList{
+    a.active{background-color:#1A1A1A; position:relative;
+      :after{content:''; position:absolute; right:13px; top:13px; background: url(${GreenIcon}) no-repeat; width:18px; height:14px;}
+    }
+  }
+  .search-list{
+    a{display:flex; align-items:center; 
+      img{margin-right:10px;}
+    }
   }
 `;
 
-const GradientTitleRow = styled(FlexDiv)`
-  justify-content:space-between; margin-bottom:35px;
-  h2{margin:0px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 32px; line-height: 48px;}
-  &.ver2{justify-content:center; margin-bottom:60px;}
-  &.ver3{margin-bottom:20px;}
-  button{margin-right:0px;}
+const CustomSwitch = styled(FlexDiv)`
+  border: 1px solid #AEAEAE; box-sizing: border-box; border-radius: 2px; width: 100px;
+  button{width:50%; font-weight: bold; font-size: 16px; line-height: 20px; color:#fff; padding:13px 0px; display:flex; align-items:center; justify-content:center;
+    &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
+      :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
+    }
+  }
+`;
+
+const ProfilefilterBar = styled(FlexDiv)`
+  justify-content:space-between; margin:20px 20px 25px;
+`;
+
+const GradientBar = styled(FlexDiv)`
+  justify-content:space-between; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+  &.active{border-radius: 0px 5px 0px 0px; }
+  svg{font-size:28px; margin-right:16px; cursor:pointer; transition:0.3s ease all;
+    &.active{transform:rotate(180deg);}
+  }
+`;
+
+const Trending = styled(FlexDiv)`
+  justify-content:flex-start; margin:0px 20px;
+  .item{margin:0px 7px 40px 0px; width:calc(14.28% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
+    :last-child{margin-right:0px;}
+    :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
+    &.active{width:calc(16.66% - 7px);}
+  }
+`;
+
+const ProfileMain = styled(FlexDiv)`
+  position:relative; margin-top:91px;
+`;
+
+const PLeftpanel = styled.div`
+  width:340px; height:100%; background-color: #2F2F2F; position:absolute; left:-270px; top:0; z-index:9;  
+  border:1px solid #2F2F2F; border-left:0px; border-top:0px;
+  &.active{left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
+`;
+
+const PRightpanel = styled.div`
+  width:calc(100% - 70px); margin-left:70px;
+  &.active{width:calc(100% - 340px); margin-left:340px;}
+`;
+
+const NFTlistLeft = styled.div`
+  display:none;
+  &.active{display:block;}
+`;
+
+const LeftTitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; padding:13px 16px;
+`;
+
+const CustomAccordian = styled.div`
+  .Collapsible{
+    .Collapsible__trigger{ position:relative; cursor:pointer; font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; background-color:#2F2F2F; padding:5px 0px 5px 20px; display:block;
+      :after{content:''; position:absolute; right:24px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;}
+      &.is-closed{
+        :after{background: url(${ArrowUp}) no-repeat; transform:rotate(180deg);}
+      }
+    }
+    .Collapsible__contentInner{
+      padding:10px 15px 0px 10px; background-color:#1A1A1A;
+      button{font-weight:normal; margin:0px 10px 10px 0px; border: 1px solid #AEAEAE; box-sizing: border-box; border-radius: 20px; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; font-weight:normal; color: #AEAEAE;
+        :hover{color:#fff; border-color:#fff;}
+      }
+      label{width:100%;}
+      .collapse-css-transition{width:100%; position:initial;}
+    }
+  }
 `;
 
 const WhiteBorderBtn = styled.button`
@@ -1195,185 +349,113 @@ const WhiteBorderBtn = styled.button`
   :hover{border-color:#0FBFFC;}
 `;
 
-const GradientBtn = styled.button`
-  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
-  :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
-`;
-
-const LiveAuctionSlider = styled.div`
-  margin-bottom:55px;
-  .item{margin:0px 4px;}
-  .react-multiple-carousel__arrow, .react-multiple-carousel__arrow:hover{ background-color:#1D1D1D; border:1px solid #fff; z-index:0;}
-  .react-multiple-carousel__arrow--left{left:0px;}
-  .react-multiple-carousel__arrow--right{right:0px;}
-`;
-
-const LiveBox = styled.div`
-  background-color:#2F2F2F; border-radius: 5px; font-family: 'Roboto', sans-serif;
-  &.blue{background-color:#032035;}
-  &.dark-blue{background-color:#08090D;}
-  &.light-blue{background-color:#113C50;}
-  .img-outer{ width:100%; height:260px; overflow:hidden; border-top-left-radius: 2px; border-top-right-radius: 2px;
-    img{width:100%; height:100%; object-fit:cover;}
-    &.ver2{height:358px;}
-    &.ver3{height:190px;}
-  }
-  .box-content{
-    padding:12px 10px;
-    &.ver2{padding:16px 14px;}
-    .abs{
-      margin:0px;font-weight: normal; font-size: 10px; line-height: 16px; color: #AEAEAE;
-      &.ver2{margin-bottom:10px;}
-      &.ver3{display:flex; align-items:center;
-        img{margin-left:4px;}
-      }
-    }
-    h3{
-      color: #F6F6F6; font-weight: bold; font-size: 16px; line-height: 24px; margin:0px 0px 15px;
-      &.ver2{margin-bottom:25px;}
-      &.ver3{white-space: nowrap; width: 100%; overflow: hidden; text-overflow: ellipsis;}
-      &.mb-0{margin-bottom:0px;}
-    }
-    .sign-row{display:flex; align-items:center; justify-content:space-between;}
-  }
-`;
-
-const PriceLine = styled(FlexDiv)`
-  justify-content:space-between; margin-bottom:15px;
-  &.ver2{margin-bottom:30px;}
-  p{font-weight: 400; font-size: 12px; line-height: 16px; color: #F6F6F6; margin:0px;
-    &.grey{color: #AEAEAE;
-      &.ver2{margin-bottom:5px;}
-    }
-  }
-  .text-right{text-align:right;}
-  .timer{ background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; border-radius:2px;
-    p{background-color:#2F2F2F; font-weight: 400; font-size: 12px; line-height: 16px; padding:1px 19px;}
-    &.ver2{background:none; padding:0px;
-      p{background-color:transparent; padding:0px;}
-    }
-  }
-`;
-
-const BidLike = styled(FlexDiv)`
-  justify-content:space-between; 
-  a{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Rubik', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; margin:0px;
-    &.disabled{background:none; color:#AEAEAE; -webkit-text-fill-color:#AEAEAE; pointer-events:none;}
-    :hover{color:#0FBFFC; -webkit-text-fill-color: #0FBFFC;}
-  }
-  p{font-weight: bold; font-size: 10px; line-height: 16px; color: #5F5F5F; display:flex; align-items:center; margin:0px;
-    svg{margin:0px 3px 0px 0px; font-size:14px; cursor:pointer;}
-    &.ver2{margin-right:5px;}
-  }
-`;
-
-const TopCollections = styled(FlexDiv)`
-  margin-bottom:50px;
-  &.ver2{margin-bottom:75px}
-`;
-
-const TCColumn = styled(FlexDiv)`
-  justify-content: flex-start; width:calc(20% - 17px); margin-right:17px;
-`;
-
-const TCBox = styled(FlexDiv)`
-  margin-bottom:10px;
-`;
-
-const TC1 = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF;
-`;
-
-const TC2 = styled.div`
-  margin:0px 5px 0px 16px; width:50px; height:50px; overflow:hidden;
-  img{width:100%; height:100%; object-fit:cover; border-radius:50%;}
-`;
-
-const TC3 = styled.div`
-  h4{font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; font-family: 'Roboto', sans-serif; margin:0px;}
-  p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; font-family: 'Roboto', sans-serif; margin:0px;}
-`;
-
-const NotableDrops = styled(FlexDiv)`
-  margin-bottom:66px; justify-content:space-between;
-  .item{margin:0px 17px 20px 0px; width:calc(33.33% - 17px);
+const FormGroup = styled(FlexDiv)`
+  justify-content:space-between; margin:20px 0px 0px; padding-bottom:10px;
+  span{font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif;}
+  input{width:calc(50% - 20px); height:40px; background-color:#1D1D1D; font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; padding:8px; color: #fff; border: 1px solid #767676; box-sizing: border-box; border-radius: 2px;
     :last-child{margin-right:0px;}
-  }
-`;
-
-const Trending = styled(FlexDiv)`
-  margin-bottom:130px; justify-content:flex-start;
-  .item{margin:0px 7px 20px 0px; width:calc(20% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
-    :last-child{margin-right:0px;}
-    :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
-  }
-`;
-
-const ExploreArt = styled.div`
-  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:75px 0px 77px; text-align:center; margin-bottom:75px;
-`;
-
-const ArtTitle = styled.div`
-  font-weight: normal; font-size: 48px; line-height: 72px; color: #FFFFFF; margin:0px 0px 50px;
-`;
-
-const CustomCounter = styled(FlexDiv)`
-  margin-bottom:72px;
-  .counter-block{width:calc(33.33% - 30px); margin:0px 15px; position:relative;
-    span{font-weight: bold; font-size: 32px; line-height: 48px; color:#fff; }
-    p{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color:#fff; margin:15px 0px 0px;}
-    :after{content:''; position:absolute; left:calc(50% - 24px); right:0; top:50px; width:48px; height:4px; background-color:#824CF5; border-radius: 2px;}
-  }
-`;
-
-const WhiteTitle = styled.div`
-  font-weight: bold; font-size: 32px; line-height: 48px; color: #FFFFFF; margin:0px 0px 30px;
-`;
-
-const News = styled(FlexDiv)`
-  justify-content:space-between; margin-bottom:130px;
-`;
-
-const W33 = styled.div`
-  width:calc(33.33% - 17px); margin-right:17px;
-  :last-child{margin-right:0px;}
-  img{margin-bottom:30px;}
-  .news-box{padding:56px 24px; background: #2F2F2F; box-shadow: 0px 20px 50px rgba(18, 17, 39, 0.08); border-radius: 2px;}
-`;
-
-const FeatureTitle = styled.div`
-  font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 16px; line-height: 22px; color: #FFFFFF; margin:0px 0px 16px;
-`;
-const FeatureDesc = styled.div`
-  font-family: 'Poppins', sans-serif; font-weight: normal; font-size: 14px; line-height: 25px; color: rgba(255, 255, 255, 0.56);
-`;
-
-const NewsLetter = styled(FlexDiv)`
-  justify-content:space-between; background: #2F2F2F; border-radius: 2px; margin-bottom:80px; padding:142px 104px 143px 145px;
-  .newsletter-left{width:55%;}
-  .newsletter-right{width:45%;
-    p{margin:0px; font-weight: normal; font-size: 12px; line-height: 22px; color: rgba(255, 255, 255, 0.48); font-family: 'Poppins', sans-serif;
-      a{color: #599bf9;}
-    }
-  }
-`;
-
-const NewsLetterTitle = styled.div`
-  font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 32px; line-height: 45px; color: #FFFFFF; margin-bottom:12px;
-`;
-
-const NewsLetterDesc = styled.div`
-  font-family: 'Poppins', sans-serif; font-weight: normal; font-size: 16px; line-height: 29px; color: rgba(255, 255, 255, 0.56); padding-right: 30px;
-`;
-
-const NotifyInput = styled(FlexDiv)`
-  align-items:flex-start; justify-content:flex-start;
-  input{padding:0px 16px; background: #FFFFFF; border-radius: 2px;font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 25px; width:267px; height:52px; border:none; margin:0px 8px 12px 0px;
     ::placeholder {
-      color: rgba(18, 17, 39, 0.4);
+      color: #767676;
     }
   }
-  button{padding:14px 32px; line-height:19px; font-weight:500;}
- `;
+`;
 
-export default Marketplace;
+const RightTitle = styled.div`
+  margin:0px 20px 35px; font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF;
+`;
+
+
+const ResultBar = styled(FlexDiv)`
+  justify-content:space-between; margin:0px 20px 30px;
+  p{margin:0px; font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF;}
+`;
+
+const NavSearch = styled.div`
+  position:relative; 
+  img{position:absolute; top:11px; left:11px; cursor:pointer;}
+  input{font-family: 'Roboto', sans-serif; border:1px solid #aeaeae; padding:8px 8px 8px 40px; background-color:#1d1d1d; box-sizing: border-box; border-radius:2px; width:100%; color:#fff; font-weight: normal; font-size: 16px; line-height: 24px;
+    ::placeholder {
+      color: #767676;
+    }
+  }
+`;
+
+const CustomcheckBox = styled.div`
+.container {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  padding:10px 10px 10px 50px;
+  border:0px;
+  margin:0px;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  height: 14px;
+  width: 14px;
+  border:2px solid #fff;
+  border-radius:2px;
+}
+
+.checkmark:after,.checkmark:before {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after,
+.container input:checked ~ .checkmark:before {
+  display: block;
+}
+.container .checkmark:before {
+  content:'';
+  background-color:#2f2f2f;
+  width:4px;
+  height:8px;
+  position:absolute;
+  right:-2px;
+  top:-2px;
+}
+.container .checkmark:after {
+  left: 6px;
+  top: -4px;
+  width: 4px;
+  height: 13px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+`;
+
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getNFTs: () => dispatch(actions.getNFTs()),
+    getCategories: () => dispatch(actions.getCategories()),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    NFTs: state.fetchNFTs,
+    categories: state.fetchCategories,
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Marketplace))

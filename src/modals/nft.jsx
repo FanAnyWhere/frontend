@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { AiOutlineHeart } from 'react-icons/ai'
 
-import NFT12 from '../assets/images/nft-12.jpg'
 import FireIcon from '../assets/images/fire.png'
 
 
