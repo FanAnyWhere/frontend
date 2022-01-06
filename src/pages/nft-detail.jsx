@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { AiOutlineHeart,AiTwotoneHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiTwotoneHeart } from 'react-icons/ai';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -62,14 +62,14 @@ const NFTDetail = (props) => {
 
   useEffect(() => {
     // Specify how to clean up after this effect
-    return () => { 
+    return () => {
       props.clearNFT()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const buyNFT = () => {
-    
+
   }
 
   return (
@@ -95,14 +95,14 @@ const NFTDetail = (props) => {
             <EPRight>
               <NDTop>
                 <NDLeft>
-                  <CollectionName>{props.nft.collectionId ? props.nft.collectionId: 'Collection Name'}</CollectionName>
+                  <CollectionName>{props.nft.collectionId ? props.nft.collectionId : 'Collection Name'}</CollectionName>
                   <NTitleName>{props.nft.title}</NTitleName>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
                     {props.nft.isLiked ? <AiTwotoneHeart disbaled={!props.authenticated && true} /> : <AiOutlineHeart />}
                     {' '}
-                    {!props.likesCount ? 0 : props.likesCount.count }
+                    {!props.likesCount ? 0 : props.likesCount.count}
                   </UPButton>
 
                   <CustomDropdown className='custom-width'>
@@ -242,7 +242,7 @@ const NFTDetail = (props) => {
                       <DeatTitle>Category</DeatTitle>
                       <DeatDesc>
                         {props.nft.category.map((category) => {
-                          return category.isActive && category.categoryName.en+','
+                          return category.isActive && category.categoryName.en + ','
                         })}
                       </DeatDesc>
                       <DeatTitle>External Link</DeatTitle>
@@ -336,12 +336,12 @@ const NFTDetail = (props) => {
                 {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
                 <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
-
+                <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow>
                 <GradientBtn onClick={() => {
-                  if(!props.authenticated.isLoggedIn) setOpenForth(true)
+                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
                   else buyNFT()
                 }} className='full'>Place a bid for {props.nft.price} FAW</GradientBtn>
-                
+
                 <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
                   modal: 'customModal',
@@ -524,6 +524,7 @@ const GreenAlertRow = styled.div`
   font-weight: normal; font-size: 16px; line-height: 24px; color: #10C061; background: #2F2F2F; border-radius: 5px; padding:8px 16px; margin:0px 0px 16px; width:100%; box-sizing: border-box;
   &.yellow-alert-text{color: #F99807;}
   &.blue-alert-text{color: #0F8AFC;}
+  &.red-alert-text{color: #DF5454;}
 `;
 
 const FollowBoxRow = styled(FlexDiv)`
