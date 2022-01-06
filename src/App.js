@@ -37,7 +37,7 @@ function App() {
             <Route path="/activity"><Activity /></Route>
             <Route path="/my-profile"><MyProfile /></Route>
             <Route path="/edit-profile"><EditProfile /></Route>
-            <Route path="/nft-detail"><NFTDetail /></Route>
+            <Route path="/nft-detail/:id"><NFTDetail /></Route>
             <Route component={NotFound} />
           </Switch>
           <Footer />

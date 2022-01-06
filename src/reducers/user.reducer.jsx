@@ -96,3 +96,39 @@ export function fetchLiveAuctionNFTs(state = false, action) {
       return state;
   }
 }
+
+export function fetchNFT(state = false, action) {
+  switch (action.type) {
+    case 'FETCHED_NFT':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchLikesCount(state = { count: 0 }, action) {
+  switch (action.type) {
+    case 'FETCHED_LIKES_COUNT':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchLikeToggled(state = null, action) {
+  switch (action.type) {
+    case 'FETCHED_LIKE_TOGGLED':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchIsLiked(state = { isFollowed: false }, action) {
+  switch (action.type) {
+    case 'FETCHED_IS_LIKED':
+      return action.data;
+    default:
+      return state;
+  }
+}

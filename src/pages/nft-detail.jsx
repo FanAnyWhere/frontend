@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Gs from '../theme/globalStyles';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Collapse from '@kunukn/react-collapse';
 import { Link } from 'react-router-dom';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineHeart,AiTwotoneHeart } from 'react-icons/ai';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -19,7 +22,12 @@ import FacebookIcon from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 
+import { actions } from '../actions'
+
+
 const NFTDetail = (props) => {
+
+  const { id } = useParams()
 
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen6, setIsOpen6] = useState(false);
@@ -43,432 +51,382 @@ const NFTDetail = (props) => {
     </svg>
   );
 
+  useEffect(() => {
+    if (!props.nft) {
+      props.getNFT(id)
+      props.getLikesCount(id)
+      props.getIsLiked(id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.nft]) // fetch the nft
+
+  useEffect(() => {
+    // Specify how to clean up after this effect
+    return () => { 
+      props.clearNFT()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const buyNFT = () => {
+    
+  }
+
   return (
     <>
       <Gs.Container>
-        <EPOuter>
-          <EPLeft>
-            <div className='nft-d-outer'>
-              <img src={NFTdImg} alt='' />
-            </div>
-          </EPLeft>
-          <EPRight>
-            <NDTop>
-              <NDLeft>
-                <CollectionName>Collection Name</CollectionName>
-                <NTitleName>Title Name</NTitleName>
-              </NDLeft>
-              <NDRight>
-                <UPButton className='large'><AiOutlineHeart />2</UPButton>
-                <CustomDropdown className='custom-width'>
-                  <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
-                  <Collapse onInit={onInit} isOpen={isOpen5}>
-                    <DDTitle>Share Options</DDTitle>
-                    <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
-                    <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
-                    <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
-                  </Collapse>
-                </CustomDropdown>
-                <CustomDropdown className='custom-width-2'>
-                  <UPButton onClick={() => setIsOpen7(state => !state)}><BiDotsHorizontalRounded /></UPButton>
-                  <Collapse onInit={onInit} isOpen={isOpen7}>
-                    <Link to='#'>Edit</Link>
-                    <Link to='#'>Mark as Not for Sale</Link>
-                  </Collapse>
-                </CustomDropdown>
-                <CustomDropdown className='report-box'>
-                  <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
-                  <Collapse onInit={onInit} isOpen={isOpen6}>
-                    <p onClick={() => setOpenFirst(true)}>Report Profile</p>
-                  </Collapse>
 
-                  <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
-                    overlay: 'customOverlay',
-                    modal: 'customModal',
-                  }}>
-                    <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
-                    <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
-                    <MessageOuter>
-                      <label>Message</label>
-                      <textarea>Gives us some details</textarea>
-                      <p>Please provide specific and clear message</p>
-                      <div className='button-list'>
-                        <WhiteBorderBtn>Cancel</WhiteBorderBtn>
-                        <GradientBtn>Report</GradientBtn>
-                      </div>
-                    </MessageOuter>
-                  </Modal>
-                </CustomDropdown>
-              </NDRight>
-            </NDTop>
-            <DFollowRow>
-              <FollowBoxRow className='bigger'>
-                <div className='follow-box'>
-                  <p>From</p>
-                  <FNumber>000 FAW</FNumber>
-                </div>
-                <div className='follow-box'>
-                  <p>Highest Bid</p>
-                  <FNumber>000 FAW</FNumber>
-                </div>
-                <div className='follow-box'>
-                  <p>Available</p>
-                  <FNumber>1 of 1</FNumber>
-                </div>
-              </FollowBoxRow>
-              <FollowBoxRow className='smaller'>
-                <div className='follow-box'>
-                  <p>Created by</p>
-                  <FNumber>John doe</FNumber>
-                </div>
-              </FollowBoxRow>
-            </DFollowRow>
-            <ActFilterList>
-              <Tabs>
-                <TabList>
-                  <Tab>Owners</Tab>
-                  <Tab>Bids</Tab>
-                  <Tab>Details</Tab>
-                  <Tab>History</Tab>
-                </TabList>
-                <TabPanel>
-                  <Scrollbars style={{ height: 431 }}>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
+        {!props.nft &&
+          <SiteLoader>
+            <div className='loader-inner'>
+              <div className="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader>
+        }
+
+        {props.nft &&
+          <EPOuter>
+            <EPLeft>
+              <div className='nft-d-outer'>
+                <img src={props.nft.image?.original} alt='' />
+              </div>
+            </EPLeft>
+            <EPRight>
+              <NDTop>
+                <NDLeft>
+                  <CollectionName>{props.nft.collectionId ? props.nft.collectionId: 'Collection Name'}</CollectionName>
+                  <NTitleName>{props.nft.title}</NTitleName>
+                </NDLeft>
+                <NDRight>
+                  <UPButton className='large'>
+                    {props.nft.isLiked ? <AiTwotoneHeart disbaled={!props.authenticated && true} /> : <AiOutlineHeart />}
+                    {' '}
+                    {!props.likesCount ? 0 : props.likesCount.count }
+                  </UPButton>
+
+                  <CustomDropdown className='custom-width'>
+                    <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
+                    <Collapse onInit={onInit} isOpen={isOpen5}>
+                      <DDTitle>Share Options</DDTitle>
+                      <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
+                      <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
+                      <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                    </Collapse>
+                  </CustomDropdown>
+                  <CustomDropdown className='custom-width-2'>
+                    <UPButton onClick={() => setIsOpen7(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                    <Collapse onInit={onInit} isOpen={isOpen7}>
+                      <Link to='#'>Edit</Link>
+                      <Link to='#'>Mark as Not for Sale</Link>
+                    </Collapse>
+                  </CustomDropdown>
+                  <CustomDropdown className='report-box'>
+                    <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                    <Collapse onInit={onInit} isOpen={isOpen6}>
+                      <p onClick={() => setOpenFirst(true)}>Report Profile</p>
+                    </Collapse>
+
+                    <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
+                      overlay: 'customOverlay',
+                      modal: 'customModal',
+                    }}>
+                      <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
+                      <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
+                      <MessageOuter>
+                        <label>Message</label>
+                        <textarea>Gives us some details</textarea>
+                        <p>Please provide specific and clear message</p>
+                        <div className='button-list'>
+                          <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                          <GradientBtn>Report</GradientBtn>
                         </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                      <OwnerRight>
-                        <GradientBtn>Buy</GradientBtn>
-                      </OwnerRight>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                      <OwnerRight>
-                        <GradientBtn>Buy</GradientBtn>
-                      </OwnerRight>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>Owner Name Lorem Ipsum or ID</OwnerName>
-                          <OwnerDesc>1 edition <span>Not for sale</span></OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                  </Scrollbars>
-                </TabPanel>
-                <TabPanel>
-                  <Scrollbars style={{ height: 431 }}>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>0.00 FAW <span>by</span> Username Lorem <span>for 1 Edition</span></OwnerName>
-                          <OwnerDesc>00/00/0000, 00:00 AM</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>0.00 FAW <span>by</span> Username Lorem <span>for 1 Edition</span></OwnerName>
-                          <OwnerDesc>00/00/0000, 00:00 AM</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName>0.00 FAW <span>by</span> Username Lorem <span>for 1 Edition</span></OwnerName>
-                          <OwnerDesc>00/00/0000, 00:00 AM</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                  </Scrollbars>
-                </TabPanel>
-                <TabPanel>
-                  <Scrollbars style={{ height: 431 }}>
-                    <DeatTitle>Description</DeatTitle>
-                    <DeatDesc>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</DeatDesc>
-                    <DeatTitle>Category</DeatTitle>
-                    <DeatDesc>Category Name</DeatDesc>
-                    <DeatTitle>External Link</DeatTitle>
-                    <DeatDesc><Link to=''>http://mysite.xyz/media-winning-moment </Link></DeatDesc>
-                  </Scrollbars>
-                </TabPanel>
-                <TabPanel>
-                  <Scrollbars style={{ height: 431 }}>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
-                          <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
-                          <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Transferred 1 editon to</span> CryptoID</OwnerName>
-                          <OwnerDesc>by <span>CryptoID</span> 00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Bid </span> 0.000 FAW</OwnerName>
-                          <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Unlisted by </span> Lorem Ipsum Name</OwnerName>
-                          <OwnerDesc>00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
-                          <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                    <OwnerOuter>
-                      <OwnerLeft>
-                        <div className='img-outer'>
-                          <img src={NFTdImg} alt='' />
-                        </div>
-                        <div>
-                          <OwnerName><span>Minted by</span> Lorem Ipsum Name</OwnerName>
-                          <OwnerDesc>00 hours ago</OwnerDesc>
-                        </div>
-                      </OwnerLeft>
-                    </OwnerOuter>
-                  </Scrollbars>
-                </TabPanel>
-              </Tabs>
-            </ActFilterList>
-            <EqualBtnList>
-              {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
-              <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
-              {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
-              <GradientBtn onClick={() => setOpenForth(true)} className='full'>Place a bid for 0.00 FAW</GradientBtn>
-              <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
-                overlay: 'customOverlay',
-                modal: 'customModal',
-              }}>
-                <ReportTitle><img src={ExclaimIcon} alt='' />Sign In</ReportTitle>
-                <ReportDesc>Please Sign in with wallet to place a bid for this item. </ReportDesc>
-                <MessageOuter>
-                  <div className='button-list'>
-                    <WhiteBorderBtn>Cancel</WhiteBorderBtn>
-                    <GradientBtn onClick={() => setOpenFifth(true)}>Sign in with Wallet</GradientBtn>
+                      </MessageOuter>
+                    </Modal>
+                  </CustomDropdown>
+                </NDRight>
+              </NDTop>
+              <DFollowRow>
+                <FollowBoxRow className='bigger'>
+                  <div className='follow-box'>
+                    <p>From</p>
+                    <FNumber>{props.nft.price} FAW</FNumber>
                   </div>
-                </MessageOuter>
-              </Modal>
-              <Modal open={openFifth} onClose={() => setOpenFifth(false)} center closeIcon={closeIcon} classNames={{
-                overlay: 'customOverlay',
-                modal: 'customModal',
-              }}>
-                <ReportTitle><img src={ExclaimIcon} alt='' />Checkout</ReportTitle>
-                <ReportDesc>You are about to pay for <b>Art Name Lorem</b> owned by <b>Lorem Ipsum Author</b>.</ReportDesc>
-                <CustomSwitch>
-                  <button className='active'>Pay with Crypto</button>
-                  <button>Pay with Visa</button>
-                </CustomSwitch>
-                <HRrow>
-                  <hr />
-                </HRrow>
-                <CheckoutRow>
-                  Balance <span>$000 USD</span>
-                </CheckoutRow>
-                <CheckoutRow>
-                  Service Fee 0.0% <span>00 FAW</span>
-                </CheckoutRow>
-                <CheckoutRow>
-                  1 FAW <span>$000 USD</span>
-                </CheckoutRow>
-                <CheckoutRow>
-                  Total Price <span>$000 USD</span>
-                </CheckoutRow>
-                <CheckoutRow>
-                  Blockchain Fee <span>$000 USD</span>
-                </CheckoutRow>
-                <CheckoutRow>
-                  Exchange provider fee 0% <span>00 FAW</span>
-                </CheckoutRow>
-                <CheckoutRow className='purple-row'>
-                  You will Pay<span>00 FAW</span>
-                </CheckoutRow>
-                <GreenAlertRow className='yellow-alert-text'>Sufficient funds available to make payment.</GreenAlertRow>
-                <GradientBtn className='full'>Make Payment</GradientBtn>
-              </Modal>
-              {/* <GradientBtn>Edit Item</GradientBtn>
-              <WhiteBorderBtn>List item for Sale</WhiteBorderBtn> */}
-              {/* <GradientBtn onClick={() => setOpenThird(true)}>Reject Bid</GradientBtn>
-              <WhiteBorderBtn onClick={() => setOpenSecond(true)}>Accept Bid for 000 FAW</WhiteBorderBtn> */}
-              <Modal open={openThird} onClose={() => setOpenThird(false)} center closeIcon={closeIcon} classNames={{
-                overlay: 'customOverlay',
-                modal: 'customModal',
-              }}>
-                <ReportTitle>Reject Bid</ReportTitle>
-                <ReportDesc>Reject bid of <b>00 FAW</b> from <b>Bidder name Lorem</b> for the <b>Art Name Lorem Ipsum</b>. </ReportDesc>
-                <MessageOuter>
-                  <div className='button-list'>
-                    <WhiteBorderBtn>Cancel</WhiteBorderBtn>
-                    <GradientBtn>Confirm</GradientBtn>
+                  <div className='follow-box'>
+                    <p>Highest Bid</p>
+                    <FNumber>{props.nft.price} FAW</FNumber>
                   </div>
-                </MessageOuter>
-              </Modal>
-              <Modal open={openSecond} onClose={() => setOpenSecond(false)} center closeIcon={closeIcon} classNames={{
-                overlay: 'customOverlay',
-                modal: 'customModal',
-              }}>
-                <ReportTitle>Accept Bid</ReportTitle>
-                <ReportDesc>Accept bid of <b>00 FAW</b> from <b>Bidder name Lorem</b> for the <b>Art Name Lorem Ipsum</b>. </ReportDesc>
-                <MessageOuter>
-                  <div className='button-list'>
-                    <WhiteBorderBtn>Cancel</WhiteBorderBtn>
-                    <GradientBtn>Confirm</GradientBtn>
+                  <div className='follow-box'>
+                    <p>Available</p>
+                    <FNumber>1 of {props.nft.edition}</FNumber>
                   </div>
-                </MessageOuter>
-              </Modal>
-            </EqualBtnList>
-          </EPRight>
-        </EPOuter>
+                </FollowBoxRow>
+                <FollowBoxRow className='smaller'>
+                  <div className='follow-box'>
+                    <p>Created by</p>
+                    <FNumber>{props.nft.ownerId.name}</FNumber>
+                  </div>
+                </FollowBoxRow>
+              </DFollowRow>
+              <ActFilterList>
+                <Tabs>
+                  <TabList>
+                    <Tab>Owners</Tab>
+                    {/* <Tab>Bids</Tab> */}
+                    <Tab>Details</Tab>
+                    {/* <Tab>History</Tab> */}
+                  </TabList>
+                  <TabPanel>
+                    <Scrollbars style={{ height: 431 }}>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={props.nft.ownerId.profile} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                            <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                        {props.authenticated.isLoggedIn &&
+                          <OwnerRight>
+                            <GradientBtn>Buy</GradientBtn>
+                          </OwnerRight>
+                        }
+                      </OwnerOuter>
+                    </Scrollbars>
+                  </TabPanel>
+                  {/* <TabPanel>
+                    <Scrollbars style={{ height: 431 }}>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName>0.00 FAW <span>by</span> Username Lorem <span>for 1 Edition</span></OwnerName>
+                            <OwnerDesc>00/00/0000, 00:00 AM</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName>0.00 FAW <span>by</span> Username Lorem <span>for 1 Edition</span></OwnerName>
+                            <OwnerDesc>00/00/0000, 00:00 AM</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName>0.00 FAW <span>by</span> Username Lorem <span>for 1 Edition</span></OwnerName>
+                            <OwnerDesc>00/00/0000, 00:00 AM</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                    </Scrollbars>
+                  </TabPanel> */}
+                  <TabPanel>
+                    <Scrollbars style={{ height: 431 }}>
+                      <DeatTitle>Description</DeatTitle>
+                      <DeatDesc>
+                        {props.nft.description}
+                      </DeatDesc>
+                      <DeatTitle>Category</DeatTitle>
+                      <DeatDesc>
+                        {props.nft.category.map((category) => {
+                          return category.isActive && category.categoryName.en+','
+                        })}
+                      </DeatDesc>
+                      <DeatTitle>External Link</DeatTitle>
+                      <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
+                    </Scrollbars>
+                  </TabPanel>
+                  {/* <TabPanel>
+                    <Scrollbars style={{ height: 431 }}>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
+                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
+                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Transferred 1 editon to</span> CryptoID</OwnerName>
+                            <OwnerDesc>by <span>CryptoID</span> 00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Bid </span> 0.000 FAW</OwnerName>
+                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Unlisted by </span> Lorem Ipsum Name</OwnerName>
+                            <OwnerDesc>00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
+                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={NFTdImg} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName><span>Minted by</span> Lorem Ipsum Name</OwnerName>
+                            <OwnerDesc>00 hours ago</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                      </OwnerOuter>
+                    </Scrollbars>
+                  </TabPanel> */}
+                </Tabs>
+              </ActFilterList>
+              <EqualBtnList>
+                {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
+                <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
+                {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
+
+                <GradientBtn onClick={() => {
+                  if(!props.authenticated.isLoggedIn) setOpenForth(true)
+                  else buyNFT()
+                }} className='full'>Place a bid for {props.nft.price} FAW</GradientBtn>
+                
+                <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle><img src={ExclaimIcon} alt='' />Sign In</ReportTitle>
+                  <ReportDesc>Please Sign in with wallet to place a bid for this item. </ReportDesc>
+                  <MessageOuter>
+                    <div className='button-list'>
+                      {/* <WhiteBorderBtn>Cancel</WhiteBorderBtn> */}
+                      {/* <GradientBtn onClick={() => setOpenFifth(true)}>Sign in with Wallet</GradientBtn> */}
+                    </div>
+                  </MessageOuter>
+                </Modal>
+
+                <Modal open={openFifth} onClose={() => setOpenFifth(false)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle><img src={ExclaimIcon} alt='' />Checkout</ReportTitle>
+                  <ReportDesc>You are about to pay for <b>Art Name Lorem</b> owned by <b>Lorem Ipsum Author</b>.</ReportDesc>
+                  <CustomSwitch>
+                    <button className='active'>Pay with Crypto</button>
+                    <button>Pay with Visa</button>
+                  </CustomSwitch>
+                  <HRrow>
+                    <hr />
+                  </HRrow>
+                  <CheckoutRow>
+                    Balance <span>$000 USD</span>
+                  </CheckoutRow>
+                  <CheckoutRow>
+                    Service Fee 0.0% <span>00 FAW</span>
+                  </CheckoutRow>
+                  <CheckoutRow>
+                    1 FAW <span>$000 USD</span>
+                  </CheckoutRow>
+                  <CheckoutRow>
+                    Total Price <span>$000 USD</span>
+                  </CheckoutRow>
+                  <CheckoutRow>
+                    Blockchain Fee <span>$000 USD</span>
+                  </CheckoutRow>
+                  <CheckoutRow>
+                    Exchange provider fee 0% <span>00 FAW</span>
+                  </CheckoutRow>
+                  <CheckoutRow className='purple-row'>
+                    You will Pay<span>00 FAW</span>
+                  </CheckoutRow>
+                  <GreenAlertRow className='yellow-alert-text'>Sufficient funds available to make payment.</GreenAlertRow>
+                  <GradientBtn className='full'>Make Payment</GradientBtn>
+                </Modal>
+                {/* <GradientBtn>Edit Item</GradientBtn>
+                <WhiteBorderBtn>List item for Sale</WhiteBorderBtn> */}
+                {/* <GradientBtn onClick={() => setOpenThird(true)}>Reject Bid</GradientBtn>
+                <WhiteBorderBtn onClick={() => setOpenSecond(true)}>Accept Bid for 000 FAW</WhiteBorderBtn> */}
+                <Modal open={openThird} onClose={() => setOpenThird(false)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle>Reject Bid</ReportTitle>
+                  <ReportDesc>Reject bid of <b>00 FAW</b> from <b>Bidder name Lorem</b> for the <b>Art Name Lorem Ipsum</b>. </ReportDesc>
+                  <MessageOuter>
+                    <div className='button-list'>
+                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                      <GradientBtn>Confirm</GradientBtn>
+                    </div>
+                  </MessageOuter>
+                </Modal>
+                <Modal open={openSecond} onClose={() => setOpenSecond(false)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle>Accept Bid</ReportTitle>
+                  <ReportDesc>Accept bid of <b>00 FAW</b> from <b>Bidder name Lorem</b> for the <b>Art Name Lorem Ipsum</b>. </ReportDesc>
+                  <MessageOuter>
+                    <div className='button-list'>
+                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                      <GradientBtn>Confirm</GradientBtn>
+                    </div>
+                  </MessageOuter>
+                </Modal>
+              </EqualBtnList>
+            </EPRight>
+          </EPOuter>
+        }
       </Gs.Container>
     </>
   );
@@ -715,4 +673,37 @@ const CustomDropdown = styled.div`
   }
 `;
 
-export default NFTDetail;
+const SiteLoader = styled(FlexDiv)`
+  margin:30px 0px;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
+`;
+
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getNFT: (id) => dispatch(actions.getNFT(id)),
+    getIsLiked: (id) => dispatch(actions.getIsLiked(id)),
+    likeToggler: (id) => dispatch(actions.likeToggler(id)),
+    getLikesCount: (id) => dispatch(actions.getLikesCount(id)),
+    clearNFT: () => dispatch({ type: 'FETCHED_NFT', data: false }),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    nft: state.fetchNFT,
+    isLiked: state.fetchIsLiked,
+    likesCount: state.fetchLikesCount,
+    likeToggled: state.fetchLikeToggled,
+    authenticated: state.isAuthenticated,
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(NFTDetail))

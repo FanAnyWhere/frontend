@@ -99,20 +99,24 @@ const Landing = (props) => {
               <div className='item'>
                 {props.TopNFTs.length > 0 &&
                   <W40>
-                    <ImgOuter>
-                      <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />
-                      <p>{(props.TopNFTs[0]).nftId.title}</p>
-                    </ImgOuter>
+                    <Link to={'/nft-detail/'+(props.TopNFTs[0]).nftId._id}>
+                      <ImgOuter>
+                        <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />
+                        <p>{(props.TopNFTs[0]).nftId.title}</p>
+                      </ImgOuter>
+                    </Link>
                   </W40>
                 }
                 {props.TopNFTs.length > 0 &&
                   <W60>
                     {props.TopNFTs.map((nft, key) => {
                       return nft.isActive && key !== 0 &&
-                        <ImgOuter className='light-bg' key={key}>
-                          <img src={nft.nftId.image.compressed} alt='' />
-                          <p>{nft.nftId.title}</p>
-                        </ImgOuter>
+                        // <Link to={'/nft-detail/'+(props.TopNFTs[0]).nftId._id}>
+                          <ImgOuter className='light-bg' key={key}>
+                            <img src={nft.nftId.image.compressed} alt='' />
+                            <p>{nft.nftId.title}</p>
+                          </ImgOuter>
+                        // </Link>
                     })}
                   </W60>}
               </div>
