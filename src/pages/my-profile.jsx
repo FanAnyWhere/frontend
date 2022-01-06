@@ -355,7 +355,7 @@ function MyProfile(props) {
       </ProfileRow>
 
       <ActFilterList>
-        
+
         {/* <Link to='#'>Collected
         </Link> */}
         <Link to='#' onClick={() => props.fetch}>
@@ -517,15 +517,15 @@ function MyProfile(props) {
 
           <Trending>
 
-            {!props.NFTs ? 'loading...' : 
-              props.NFTs.map( (nft, key) => {
-                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key}/>
+            {!props.NFTs ? 'loading...' :
+              props.NFTs.map((nft, key) => {
+                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} />
               })
             }
 
           </Trending>
-          
-          {props.NFTs?.length === 0 && 
+
+          {props.NFTs?.length === 0 &&
             <NoItemBox>
               <NITitle>No Item to Display</NITitle>
               <NIDesc>Oops! There are no items here. You could always browse for something else in our marketplace.</NIDesc>
@@ -546,13 +546,13 @@ const FlexDiv = styled.div`
 
 const ProfileCover = styled.div`
   background: #2F2F2F; border-radius: 5px; margin:56px 20px 15px;
-  .img-outer{width:100%; height:250px; overflow:hidden; border-radius:5px; background-color: #2F2F2F;
+  .img-outer{width:100%; height:250px; overflow:hidden; border-radius:5px; background-color: #2F2F2F; position:relative;
     img{width:100%; height:100%; object-fit:cover;}
-    .overlay{background-color: #1A1A1A; width:100%; height:250px; opacity:0; position:relative;
-      button{position:absolute; right:20px; bottom:20px; margin:0px;}
+    .overlay{ width:100%; height:250px; position:absolute; left:0px; top:0px;
+      button{position:absolute; right:20px; bottom:20px; margin:0px; opacity:0;}
     }
     :hover{
-      .overlay{opacity:1;}
+      button{opacity:1;}
     }
   }
 `;
@@ -563,13 +563,13 @@ const ProfileRow = styled(FlexDiv)`
 
 const PRLeft = styled.div`
   margin-left:54px; margin-right:42px;
-  .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%; background-color: #AEAEAE;
+  .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%; background-color: #AEAEAE; position:relative;
     img{width:100%; height:100%; object-fit:cover;}
-    .overlay{width:100%; height:200px; opacity:0; background-color: #767676; display:flex; align-items:center; justify-content:center;
-      img{width:18px; height:18px; cursor:pointer;}
+    .overlay{width:100%; height:200px; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;
+      img{width:18px; height:18px; cursor:pointer; opacity:0;}
     }
     :hover{
-      .overlay{opacity:1;}
+      img{opacity:1;}
     }
   }
 `;
