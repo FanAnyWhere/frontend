@@ -88,23 +88,23 @@ const Landing = (props) => {
             </div>
           </SiteLoader> */}
 
-          {!props.TopNFTs ? 
+          {!props.TopNFTs ?
             <SiteLoader>
               <div className='loader-inner'>
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader>:
+            </SiteLoader> :
             <Carousel responsive={responsive}>
               <div className='item'>
                 {props.TopNFTs.length > 0 &&
                   <W40>
-                    <Link to={'/nft-detail/'+(props.TopNFTs[0]).nftId._id}>
-                      <ImgOuter>
+                    <ImgOuter>
+                      <Link to={'/nft-detail/' + (props.TopNFTs[0]).nftId._id}>
                         <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />
-                        <p>{(props.TopNFTs[0]).nftId.title}</p>
-                      </ImgOuter>
-                    </Link>
+                      </Link>
+                      <p>{(props.TopNFTs[0]).nftId.title}</p>
+                    </ImgOuter>
                   </W40>
                 }
                 {props.TopNFTs.length > 0 &&
@@ -112,11 +112,13 @@ const Landing = (props) => {
                     {props.TopNFTs.map((nft, key) => {
                       return nft.isActive && key !== 0 &&
                         // <Link to={'/nft-detail/'+(props.TopNFTs[0]).nftId._id}>
-                          <ImgOuter className='light-bg' key={key}>
+                        <ImgOuter className='light-bg' key={key}>
+                          <Link to='/'>
                             <img src={nft.nftId.image.compressed} alt='' />
-                            <p>{nft.nftId.title}</p>
-                          </ImgOuter>
-                        // </Link>
+                          </Link>
+                          <p>{nft.nftId.title}</p>
+                        </ImgOuter>
+                      // </Link>
                     })}
                   </W60>}
               </div>
@@ -135,17 +137,17 @@ const Landing = (props) => {
       <LiveAuctionSlider>
         <Gs.Container>
 
-        {!props.LiveAuctionNFTs ? 
+          {!props.LiveAuctionNFTs ?
             <SiteLoader>
               <div className='loader-inner'>
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader>:
+            </SiteLoader> :
             <Carousel responsive={responsive1} partialVisible={true}>
-                  {props.LiveAuctionNFTs.map((nft, key) => {
-                    return nft.isActive && nft.auctionEndDate && <NFT nft={nft} key={key} />
-                  })}
+              {props.LiveAuctionNFTs.map((nft, key) => {
+                return nft.isActive && nft.auctionEndDate && <NFT nft={nft} key={key} />
+              })}
             </Carousel>
           }
           {props.LiveAuctionNFTs && props.LiveAuctionNFTs.length === 0 && 'No data available'}
@@ -403,7 +405,7 @@ const Landing = (props) => {
       <Gs.Container>
         <TopCollections className='ver2'>
           No data available
-            {/* <SiteLoader>
+          {/* <SiteLoader>
               <div className='loader-inner'>
                 <div className="loader"></div>
                 <p>Loading</p>
