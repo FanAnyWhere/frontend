@@ -19,7 +19,10 @@ const EditProfile = (props) => {
               <input type='text' placeholder='Enter Name' />
             </FormBox>
             <FormBox>
-              <label>Bio</label>
+              <LabelRow>
+                <label>Bio</label>
+                <p>Optional</p>
+              </LabelRow>
               <textarea>Some thing about yourself</textarea>
             </FormBox>
             <FormBox>
@@ -60,7 +63,6 @@ const EditProfile = (props) => {
             </div>
             <NoteText>We recommend an image of at least 300 x 300. Gifs work too</NoteText>
           </EPRight>
-
         </EPOuter>
       </Gs.Container>
     </>
@@ -142,5 +144,11 @@ const EPRight = styled.div`
 const NoteText = styled.div`
   font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; margin:13px 0px 0px; max-width: 200px; text-align: center; width: 100%;
 `;
+
+const LabelRow = styled(FlexDiv)`
+  justify-content:space-between; 
+  p{font-weight: normal; font-size: 12px; line-height: 16px; color: #AEAEAE;  font-family: 'Roboto', sans-serif; margin:0px;}
+`;
+
 
 export default EditProfile;

@@ -16,6 +16,7 @@ const Activity = React.lazy(() => import('./pages/activity'))
 const MyProfile = React.lazy(() => import('./pages/my-profile'))
 const EditProfile = React.lazy(() => import('./pages/edit-profile'))
 const NFTDetail = React.lazy(() => import('./pages/nft-detail'))
+const CreateNFT = React.lazy(() => import('./pages/create-nft'))
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/my-profile"><MyProfile /></Route>
             <Route path="/edit-profile"><EditProfile /></Route>
             <Route path="/nft-detail"><NFTDetail /></Route>
+            <Route path="/create-nft"><CreateNFT /></Route>
             <Route component={NotFound} />
           </Switch>
           <Footer />
