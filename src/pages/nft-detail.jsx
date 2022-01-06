@@ -14,7 +14,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import NFTdImg from '../assets/images/nft-detail-img.jpg';
 import UpArrow from '../assets/images/up-arrow.png';
 import CopyIcon from '../assets/images/copy.png';
 import TwitterIcon from '../assets/images/twitter.png';
@@ -22,6 +21,9 @@ import FacebookIcon from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 
+import TransactionStatus from '../modals/transaction.statius'
+import { web3 } from '../web3'
+import { getContractInstance } from '../helper/functions'
 import { actions } from '../actions'
 
 
@@ -46,10 +48,15 @@ const NFTDetail = (props) => {
 
   const closeIcon = (
     <svg fill="currentColor" viewBox="0 4 16 40" width={50} height={50}>
-      <line x1="15" y1="15" x2="25" y2="25" stroke="#767676" stroke-width="2.6" stroke-linecap="round" stroke-miterlimit="10"></line>
-      <line x1="25" y1="15" x2="15" y2="25" stroke="#767676" stroke-width="2.6" stroke-linecap="round" stroke-miterlimit="10"></line>
+      <line x1="15" y1="15" x2="25" y2="25" stroke="#767676" strokeWidth="2.6" strokeLinecap="round" strokeMiterlimitit="10"></line>
+      <line x1="25" y1="15" x2="15" y2="25" stroke="#767676" strokeWidth="2.6" strokeLinecap="round" strokeMiterlimitit="10"></line>
     </svg>
   );
+
+
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [txtStatus, setTxnStatus] = useState(false)
+  const escrowContractInstance = getContractInstance(true)
 
   useEffect(() => {
     if (!props.nft) {
@@ -68,13 +75,37 @@ const NFTDetail = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const buyNFT = () => {
-
+  const buyNFT = async () => {
+    setOpenConfirm(false) // close the confirm pop up
+    let val = props.nft.price.toString()
+    setTxnStatus('initiate') // first step for transaction 
+    await escrowContractInstance.methods['buyNow'](props.nft.nonce, props.nft.edition, 0)
+      .send({ from : props.authenticated.accounts[0], value: web3.utils.toWei(val) })
+      .on('transactionHash', (hash) => {
+        setTxnStatus('progress') // second step for transaction 
+      })
+      .on('receipt', (receipt) => {
+        setTimeout(() => {
+          // refresh the state
+          props.getNFT(id)
+          setTxnStatus('complete') // third step for transaction 
+        }, 5000);
+      })
+      .on('error', (error) => {
+        setTxnStatus('error') // four step for transaction 
+      });
   }
 
+  const confirm = () => {
+    setOpenConfirm(true)
+  }
+
+  // console.log('nft ? ', props.nft)
   return (
     <>
       <Gs.Container>
+
+        {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)}/>}
 
         {!props.nft &&
           <SiteLoader>
@@ -95,7 +126,7 @@ const NFTDetail = (props) => {
             <EPRight>
               <NDTop>
                 <NDLeft>
-                  <CollectionName>{props.nft.collectionId ? props.nft.collectionId : 'Collection Name'}</CollectionName>
+                  <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
                   <NTitleName>{props.nft.title}</NTitleName>
                 </NDLeft>
                 <NDRight>
@@ -188,11 +219,11 @@ const NFTDetail = (props) => {
                             <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
                           </div>
                         </OwnerLeft>
-                        {props.authenticated.isLoggedIn &&
+                        {/* {props.authenticated.isLoggedIn &&
                           <OwnerRight>
                             <GradientBtn>Buy</GradientBtn>
                           </OwnerRight>
-                        }
+                        } */}
                       </OwnerOuter>
                     </Scrollbars>
                   </TabPanel>
@@ -336,11 +367,28 @@ const NFTDetail = (props) => {
                 {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
                 <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
-                <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow>
-                <GradientBtn onClick={() => {
-                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                  else buyNFT()
-                }} className='full'>Place a bid for {props.nft.price} FAW</GradientBtn>
+                {/* <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
+                
+                {props.nft.saleState === 'BUY' ?
+                  props.nft.auctionEndDate && 
+                  props.nft.auctionEndDate > new Date().getTime() / 1000 ?
+                    <GradientBtn className='full'> Buy will start soon </GradientBtn>
+                  : <GradientBtn onClick={() => {
+                      if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                      else confirm()
+                    }} className='full'>
+                      BUY NOW
+                    </GradientBtn>
+                  : ''
+                }
+                
+                {props.nft.saleState === 'AUCTION' ?
+                    props.nft.auctionEndDate && 
+                    props.nft.auctionEndDate > new Date().getTime() / 1000 ?
+                      <GradientBtn className='full'> Auction will start soon </GradientBtn>
+                    :  <GradientBtn className='full'> Place a Bid </GradientBtn>
+                  : ''
+                }
 
                 <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
@@ -352,6 +400,20 @@ const NFTDetail = (props) => {
                     <div className='button-list'>
                       {/* <WhiteBorderBtn>Cancel</WhiteBorderBtn> */}
                       {/* <GradientBtn onClick={() => setOpenFifth(true)}>Sign in with Wallet</GradientBtn> */}
+                    </div>
+                  </MessageOuter>
+                </Modal>
+
+                <Modal open={openConfirm} onClose={() => setOpenConfirm(!openConfirm)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle>Confirm</ReportTitle>
+                  <ReportDesc>Do you confirm the transaction ? </ReportDesc>
+                  <MessageOuter>
+                    <div className='button-list'>
+                      <WhiteBorderBtn onClick={() => setOpenConfirm(!openConfirm)}>Cancel</WhiteBorderBtn>
+                      <GradientBtn onClick={() => buyNFT()}>Buy</GradientBtn>
                     </div>
                   </MessageOuter>
                 </Modal>
