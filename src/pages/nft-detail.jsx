@@ -23,9 +23,11 @@ const NFTDetail = (props) => {
 
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen6, setIsOpen6] = useState(false);
+  const [isOpen7, setIsOpen7] = useState(false);
   const onInit = ({ state, style, node }) => {
     setIsOpen5(false);
     setIsOpen6(false);
+    setIsOpen7(false);
   };
 
   const [openFirst, setOpenFirst] = useState(false);
@@ -67,11 +69,19 @@ const NFTDetail = (props) => {
                     <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
                   </Collapse>
                 </CustomDropdown>
+                <CustomDropdown className='custom-width-2'>
+                  <UPButton onClick={() => setIsOpen7(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                  <Collapse onInit={onInit} isOpen={isOpen7}>
+                    <Link to='#'>Edit</Link>
+                    <Link to='#'>Mark as Not for Sale</Link>
+                  </Collapse>
+                </CustomDropdown>
                 <CustomDropdown className='report-box'>
                   <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                   <Collapse onInit={onInit} isOpen={isOpen6}>
                     <p onClick={() => setOpenFirst(true)}>Report Profile</p>
                   </Collapse>
+
                   <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
                     overlay: 'customOverlay',
                     modal: 'customModal',
@@ -374,6 +384,7 @@ const NFTDetail = (props) => {
             <EqualBtnList>
               {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
               <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
+              {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
               <GradientBtn onClick={() => setOpenForth(true)} className='full'>Place a bid for 0.00 FAW</GradientBtn>
               <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
                 overlay: 'customOverlay',
@@ -552,8 +563,9 @@ const HRrow = styled.div`
 `;
 
 const GreenAlertRow = styled.div`
-  font-weight: normal; font-size: 16px; line-height: 24px; color: #10C061; background: #2F2F2F; border-radius: 5px; padding:8px 16px; margin:0px 0px 16px;
+  font-weight: normal; font-size: 16px; line-height: 24px; color: #10C061; background: #2F2F2F; border-radius: 5px; padding:8px 16px; margin:0px 0px 16px; width:100%; box-sizing: border-box;
   &.yellow-alert-text{color: #F99807;}
+  &.blue-alert-text{color: #0F8AFC;}
 `;
 
 const FollowBoxRow = styled(FlexDiv)`
