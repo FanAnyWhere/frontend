@@ -6,39 +6,10 @@ import Gs from '../theme/globalStyles';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
-import { AiOutlineHeart } from 'react-icons/ai';
 import CountUp from 'react-countup';
-
-import NFT1 from '../assets/images/nft-1.jpg';
-import NFT2 from '../assets/images/nft-2.jpg';
-import NFT3 from '../assets/images/nft-3.jpg';
-import NFT4 from '../assets/images/nft-4.jpg';
-import NFT5 from '../assets/images/nft-5.jpg';
-import NFT6 from '../assets/images/nft-6.jpg';
-import NFT7 from '../assets/images/nft-7.jpg';
-import NFT8 from '../assets/images/nft-8.jpg';
-import NFT9 from '../assets/images/nft-9.jpg';
-import NFT10 from '../assets/images/nft-10.jpg';
-import NFT11 from '../assets/images/nft-11.jpg';
-import CollectionUser from '../assets/images/collection-user.png';
-import CreatorUser from '../assets/images/creator-user.png';
-import NFT12 from '../assets/images/nft-12.jpg';
-import NFT13 from '../assets/images/nft-13.jpg';
-import NFT14 from '../assets/images/nft-14.jpg';
-import NFT15 from '../assets/images/nft-15.jpg';
-import NFT16 from '../assets/images/nft-16.jpg';
-import NFT17 from '../assets/images/nft-17.jpg';
-import NFT18 from '../assets/images/nft-18.jpg';
-import NFT19 from '../assets/images/nft-19.jpg';
-import NFT20 from '../assets/images/nft-20.jpg';
-import NFT21 from '../assets/images/nft-21.jpg';
-import FireIcon from '../assets/images/fire.png';
-import VerifiedIcon from '../assets/images/verified.png';
-import SendIcon from '../assets/images/send.png';
-import TimerIcon from '../assets/images/timer.png';
 import FeatureIcon from '../assets/images/feature-icon.png';
 
-
+import NFT from '../modals/nft'
 import { actions } from '../actions'
 
 const responsive = {
@@ -89,26 +60,41 @@ const Landing = (props) => {
   }, [props.TopNFTs]) // fetch the top NFTs
 
   useEffect(() => {
-    // if (!props.TopCollections) props.getTopCollections()
+    if (!props.TopCollections) props.getTopCollections()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.TopCollections]) // fetch the Collections
 
+  // useEffect(() => {
+  //   if (!props.TopCreators) props.getTopCreators()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [props.TopCreators]) // fetch the Creators
+
   useEffect(() => {
-    // if (!props.TopCreators) props.getTopCreators()
+    if (!props.LiveAuctionNFTs) props.getLiveAuctionNFT()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.TopCreators]) // fetch the Creators
+  }, [props.LiveAuctionNFTs]) // fetch the Live Auctions NFTs
+
 
   return (
     <>
       <NFTTopSlider>
         <Gs.Container>
-          <SiteLoader>
+
+          {/* For Loading... */}
+          {/* <SiteLoader>
             <div className='loader-inner'>
-              <div class="loader"></div>
+              <div className="loader"></div>
               <p>Loading</p>
             </div>
-          </SiteLoader>
-          {!props.TopNFTs ? 'loading..' :
+          </SiteLoader> */}
+
+          {!props.TopNFTs ? 
+            <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader>:
             <Carousel responsive={responsive}>
               <div className='item'>
                 {props.TopNFTs.length > 0 &&
@@ -144,197 +130,21 @@ const Landing = (props) => {
 
       <LiveAuctionSlider>
         <Gs.Container>
-          <Carousel responsive={responsive1} partialVisible={true}>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT8} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT9} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT10} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT11} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT1} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT8} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-            <div className='item'>
-              <LiveBox>
-                <div className='img-outer'>
-                  <img src={NFT9} alt='' />
-                </div>
-                <div className='box-content'>
-                  <p className='abs'>AbsArtBot</p>
-                  <h3>Abstract Monster from Zorpia</h3>
-                  <PriceLine>
-                    <div>
-                      <p className='grey'>Price</p>
-                      <p>0.0002FAN</p>
-                    </div>
-                    <div className='text-right'>
-                      <p className='grey'>1/1</p>
-                      <div className='timer'>
-                        <p>00:02:10</p>
-                      </div>
-                    </div>
-                  </PriceLine>
-                  <BidLike>
-                    <Link to='/'>Place a Bid</Link>
-                    <p><AiOutlineHeart /> 2</p>
-                  </BidLike>
-                </div>
-              </LiveBox>
-            </div>
-          </Carousel>
+
+        {!props.LiveAuctionNFTs ? 
+            <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader>:
+            <Carousel responsive={responsive1} partialVisible={true}>
+                  {props.LiveAuctionNFTs.map((nft, key) => {
+                    return nft.isActive && nft.auctionEndDate && <NFT nft={nft} key={key} />
+                  })}
+            </Carousel>
+          }
+          {props.LiveAuctionNFTs && props.LiveAuctionNFTs.length === 0 && 'No data available'}
         </Gs.Container>
       </LiveAuctionSlider>
 
@@ -348,6 +158,12 @@ const Landing = (props) => {
       <Gs.Container>
         <TopCollections>
           No data available
+          {/* <SiteLoader>
+            <div className='loader-inner'>
+              <div className="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader> */}
           {/* <TCColumn>
             <TCBox>
               <TC1>1</TC1>
@@ -583,6 +399,12 @@ const Landing = (props) => {
       <Gs.Container>
         <TopCollections className='ver2'>
           No data available
+            {/* <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader> */}
 
           {/* <TCColumn>
             <TCBox>
@@ -726,6 +548,12 @@ const Landing = (props) => {
       <Gs.Container>
         <Trending>
           No data available
+          {/* <SiteLoader>
+            <div className='loader-inner'>
+              <div className="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader> */}
           {/* <div className='item'>
             <LiveBox>
               <div className='img-outer ver3'>
@@ -1346,6 +1174,7 @@ const mapDipatchToProps = (dispatch) => {
   return {
     getTopNFT: () => dispatch(actions.getTopNFT()),
     getTopCreators: () => dispatch(actions.getCreators()),
+    getLiveAuctionNFT: () => dispatch(actions.getLiveAuctionNFT()),
     getTopCollections: () => dispatch(actions.getTopCollections()),
   }
 }
@@ -1353,6 +1182,7 @@ const mapStateToProps = (state) => {
   return {
     TopNFTs: state.fetchTopNFT,
     TopCreators: state.fetchCreators,
+    LiveAuctionNFTs: state.fetchLiveAuctionNFTs,
     TopCollections: state.fetchTopCollections,
   }
 }

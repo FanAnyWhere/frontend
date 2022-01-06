@@ -87,3 +87,12 @@ export function fetchCategories(state = false, action) {
       return state;
   }
 }
+
+export function fetchLiveAuctionNFTs(state = false, action) {
+  switch (action.type) {
+    case 'FETCHED_LIVE_AUCTION_NFTS':
+      return action.data;
+    default:
+      return state;
+  }
+}

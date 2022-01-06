@@ -10,6 +10,7 @@ export const userActions = {
     getCategories,
     updateUserDetails,
     getTopCollections,
+    getLiveAuctionNFT,
     getNotificationFilters,
 }
 
@@ -141,6 +142,19 @@ function getCategories() {
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'FETCHED_CATEGORIES', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getLiveAuctionNFT() {
+  return (dispatch) => {
+    const response = services.get('nft/liveAuctionList');
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_LIVE_AUCTION_NFTS', data: promise.data.data })
       } else {
         // console.log("error");
       }
