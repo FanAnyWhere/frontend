@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { AiOutlineHeart } from 'react-icons/ai'
 
 import FireIcon from '../assets/images/fire.png'
+import Timer from '../helper/timer';
 
 
 const NFT = (props) => {
@@ -26,43 +27,42 @@ const NFT = (props) => {
 
     return <>
             <div className={`item ${filterOpen && 'active'}`}>
-                <Link to={'/nftDetails/'+nft._id}>
-                    <LiveBox>
-                    <div className='img-outer ver3'>
-                        <img src={nft.image.compressed} alt='' />
-                        {/* <img src={NFT12} alt='' /> */}
-                    </div>
-                    <div className='box-content'>
-                        <div className='sign-row'>
-                        <p className='abs'>{nft.title}</p>
-                        <img src={FireIcon} alt='' />
-                        </div>
-                        <h3 className='ver3'>{nft.description}</h3>
-                        <PriceLine>
-                        <div>
-                            <p className='grey'>Price</p>
-                            <p>{nft.price} FAN</p>
-                        </div>
-                        <div className='text-right'>
-                            <p className='grey'>{nft.nftSold}/{nft.edition}</p>
-                            <div className='timer ver2'>
-                            <p>
-                                {nft.auctionEndDate && 'h 00m 00s'}
-                                {/* 2 days left */}
-                            </p>
-                            </div>
-                        </div>
-                        </PriceLine>
-                        <BidLike>
-                            <Link to='#'> Buy Now </Link>
-                            <p><AiOutlineHeart /> {}</p>
-                        </BidLike>
-                    </div>
-                    </LiveBox>
-                </Link>
-            </div>
-        {/* </Link> */}
-    </>
+              <Link to={'/nft-detail/'+nft._id}>
+                  <LiveBox>
+                  <div className='img-outer ver3'>
+                      <img src={nft.image.compressed} alt='' />
+                      {/* <img src={NFT12} alt='' /> */}
+                  </div>
+                  <div className='box-content'>
+                      <div className='sign-row'>
+                      <p className='abs'>{nft.title}</p>
+                      <img src={FireIcon} alt='' />
+                      </div>
+                      <h3 className='ver3'>{nft.description}</h3>
+                      <PriceLine>
+                      <div>
+                          <p className='grey'>Price</p>
+                          <p>{nft.price} FAN</p>
+                      </div>
+                      <div className='text-right'>
+                          <p className='grey'>{nft.nftSold}/{nft.edition}</p>
+                          <div className='timer ver2'>
+                          <p>
+                              {/* 2 days left */}
+                              {nft.auctionEndDate? <Timer timeLeft={nft.auctionEndDate} />: ''}
+                          </p>
+                          </div>
+                      </div>
+                      </PriceLine>
+                      <BidLike>
+                          <Link to='#'> {''} </Link>
+                          <p><AiOutlineHeart /> {}</p>
+                      </BidLike>
+                  </div>
+                  </LiveBox>
+              </Link>
+          </div>
+      </>
 }
 
 // Common Style Div 

@@ -6,10 +6,15 @@ export const userActions = {
     getUserNFT,
     getTopNFT,
     getNFTs,
+    getNFT,
     getCreators,
     getCategories,
+    getLikesCount,
+    likeToggler,
+    getIsLiked,
     updateUserDetails,
     getTopCollections,
+    getLiveAuctionNFT,
     getNotificationFilters,
 }
 
@@ -141,6 +146,73 @@ function getCategories() {
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'FETCHED_CATEGORIES', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getLiveAuctionNFT() {
+  return (dispatch) => {
+    const response = services.get('nft/liveAuctionList');
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_LIVE_AUCTION_NFTS', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getNFT(id) {
+  return (dispatch) => {
+    const response = services.get('nft/single/'+id);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_NFT', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getLikesCount(id) {
+  return async (dispatch) => {
+    const response = services.get('like/getLikesCount/'+id);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_LIKES_COUNT', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getIsLiked(id) {
+  return async (dispatch) => {
+    const response = services.get('like/isLiked/'+id);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_IS_LIKED', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+
+function likeToggler(id) {
+  return async (dispatch) => {
+    const response = services.get('like/toggle/'+id);
+    return response.then((promise) => {
+      if (promise.status === 200) {
+        dispatch(getIsLiked(id));
+        dispatch(getLikesCount(id));
       } else {
         // console.log("error");
       }
