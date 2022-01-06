@@ -199,14 +199,14 @@ const Marketplace = (props) => {
 
 
           <Trending>
-            {!props.NFTs ? 
+            {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
                   <div className="loader"></div>
                   <p>Loading</p>
                 </div>
               </SiteLoader>
-           : props.NFTs.length === 0 && 'No data available'}
+              : props.NFTs.length === 0 && 'No data available'}
 
             {props.NFTs && props.NFTs.map((nft, key) => {
               return <NFT nft={nft} filterOpen={filterOpen} />
@@ -455,7 +455,7 @@ const CustomcheckBox = styled.div`
 
 
 const SiteLoader = styled(FlexDiv)`
-  margin:30px 0px;
+  margin:30px 0px; width:100%;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
