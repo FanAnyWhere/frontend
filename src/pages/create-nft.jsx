@@ -449,7 +449,7 @@ const ReportDesc = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:absolute; top:0; left:0; right:0;
+  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
