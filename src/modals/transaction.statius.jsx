@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { Modal } from 'react-responsive-modal'
+import { IoMdCloseCircle } from 'react-icons/io';
+import { HiQuestionMarkCircle, HiCheckCircle } from 'react-icons/hi';
+
 
 const TransactionStatus = (props) => {
 
@@ -10,29 +13,33 @@ const TransactionStatus = (props) => {
     </svg>
   )
 
-    return (
-        <Modal open={props.isOpen} center closeIcon={closeIcon}
-          onClose={() => props.onClose()} center classNames={{
-            overlay: 'customOverlay',
-            modal: 'customModal',
-        }}>
-            <ReportTitle>Transaction Status</ReportTitle>
-            <ReportDesc>
-                {props.status === 'initiate' && 'Transaction please confirm transaction'}
-                {props.status === 'progress' && 'Transaction is in pending'}
-                {props.status === 'complete' && 'Transaction is completed'}
-                {props.status === 'error' && 'Transaction is failed'}
-            </ReportDesc>
+  return (
+    <Modal open={props.isOpen} center closeIcon={closeIcon}
+      onClose={() => props.onClose()} center classNames={{
+        overlay: 'customOverlay',
+        modal: 'customModal',
+      }}>
 
-            <MessageOuter>
-              {props.status === 'complete' &&
-                <div className='button-list'>
-                    <GradientBtn onClick={() => props.onClose()}>Ok</GradientBtn>
-                </div>
-              }
-            </MessageOuter>
-        </Modal>
-    )
+      <ReportTitle>Transaction Status</ReportTitle>
+      <ReportDesc>
+        {props.status === 'initiate' && 'Transaction please confirm transaction'}
+        {/* <HiQuestionMarkCircle className='yellow' /> */}
+        {props.status === 'progress' && 'Transaction is in pending'}
+        {props.status === 'complete' && 'Transaction is completed'}
+        {/* <HiCheckCircle className='green' /> */}
+        {props.status === 'error' && 'Transaction is failed'}
+        {/* <IoMdCloseCircle className='red' /> */}
+      </ReportDesc>
+
+      <MessageOuter>
+        {props.status === 'complete' &&
+          <div className='button-list'>
+            <GradientBtn onClick={() => props.onClose()}>Ok</GradientBtn>
+          </div>
+        }
+      </MessageOuter>
+    </Modal >
+  )
 }
 
 // Common Style Div 
@@ -45,9 +52,15 @@ const ReportTitle = styled(FlexDiv)`
   img{margin-right:18px;}
 `;
 
-const ReportDesc = styled.div`
+const ReportDesc = styled(FlexDiv)`
+  justify-content:flex-start;
   font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 16px;
   b{font-weight:500;}
+  svg{margin-left:5px; font-size:20px;
+    &.red{color:#DF5454;}
+    &.yellow{color:#ffc107;}
+    &.green{color:#10C061;}
+  }
 `;
 
 const MessageOuter = styled.div`
@@ -65,6 +78,20 @@ const GradientBtn = styled.button`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
   :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
   &.full{width:100%; margin:0px;}
+`;
+
+const SiteLoader = styled(FlexDiv)`
+  margin:30px 0px;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
 `;
 
 export default TransactionStatus
