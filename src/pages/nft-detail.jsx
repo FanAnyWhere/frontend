@@ -100,7 +100,6 @@ const NFTDetail = (props) => {
     setOpenConfirm(true)
   }
 
-  // console.log('nft ? ', props.nft)
   return (
     <>
       <Gs.Container>
@@ -188,7 +187,7 @@ const NFTDetail = (props) => {
                   </div>
                   <div className='follow-box'>
                     <p>Available</p>
-                    <FNumber>1 of {props.nft.edition}</FNumber>
+                    <FNumber>{Number(props.nft.edition) - Number(props.nft.nftSold)} of {props.nft.edition}</FNumber>
                   </div>
                 </FollowBoxRow>
                 <FollowBoxRow className='smaller'>
@@ -367,23 +366,25 @@ const NFTDetail = (props) => {
                 <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
                 {/* <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
-
-                {props.nft.saleState === 'BUY' ?
-                  props.nft.auctionEndDate &&
-                    props.nft.auctionEndDate > new Date().getTime() / 1000 ?
+                
+                {props.nft.saleState === 'BUY' && props.nft?.ownerId?.id !== props.user?.id ?
+                  props.nft.auctionEndDate && 
+                  props.nft.auctionEndDate > new Date().getTime() / 1000 ?
                     <GradientBtn className='full'> Buy will start soon </GradientBtn>
-                    : <GradientBtn onClick={() => {
-                      if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                  : props.nft.nftSold === props.nft.edition ? 
+                    <GradientBtn  className='full'> Sold </GradientBtn>
+                    :
+                    <GradientBtn onClick={() => {
+                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
                       else confirm()
                     }} className='full'>
                       BUY NOW
                     </GradientBtn>
                   : ''
                 }
-
-                {props.nft.saleState === 'AUCTION' ?
-                  props.nft.auctionEndDate &&
-                    props.nft.auctionEndDate > new Date().getTime() / 1000 ?
+                
+                {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
+                    props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
                     <GradientBtn className='full'> Auction will start soon </GradientBtn>
                     : <GradientBtn className='full'> Place a Bid </GradientBtn>
                   : ''
@@ -764,6 +765,7 @@ const mapDipatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     nft: state.fetchNFT,
+    user: state.fetchUserDetails,
     isLiked: state.fetchIsLiked,
     likesCount: state.fetchLikesCount,
     likeToggled: state.fetchLikeToggled,
