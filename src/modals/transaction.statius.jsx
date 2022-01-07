@@ -27,7 +27,7 @@ const TransactionStatus = (props) => {
             <MessageOuter>
               {props.status === 'complete' &&
                 <div className='button-list'>
-                    <GradientBtn onClick={}={props.onClose()}>Ok</GradientBtn>
+                    <GradientBtn onClick={() => props.onClose()}>Ok</GradientBtn>
                 </div>
               }
             </MessageOuter>
