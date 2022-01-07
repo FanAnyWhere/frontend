@@ -29,16 +29,21 @@ Gs.GlobalStyle = createGlobalStyle`
   .track-vertical{ width:19px !important; height:100%; display:block; background-color:#000; position:absolute; right:0px;}
   .thumb-vertical{ width:9px !important; margin:3px 5px; background-color:#ccc; }
 
-.collapse-css-transition { transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .collapse-css-transition { transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1); }
 
-.customOverlay.react-responsive-modal-overlay{background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);}
-.customModal.react-responsive-modal-modal {box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px; background: #2F2F2F; max-Width:414px; width:100%; padding:20px 25px;}
-.customModal .react-responsive-modal-closeButton svg{color:red;}
+  .customOverlay.react-responsive-modal-overlay{background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);}
+  .customModal.react-responsive-modal-modal {box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px; background: #2F2F2F; max-Width:414px; width:100%; padding:20px 25px;}
+  .customModal .react-responsive-modal-closeButton svg{color:red;}
+
+  .Toastify .Toastify__toast--success{background-color:#10C061; min-height:40px;}
+  .Toastify .Toastify__toast--error{background-color:#DF5454; min-height:40px;}
+  .Toastify .Toastify__toast--warning{background-color:#ffc107; min-height:40px;}
+  .Toastify .Toastify__toast--info{background-color:#3498db; min-height:40px;}
 `;
 
 
 Gs.Container = styled.div`
-margin:0 auto; width: 100%; max-width:1276px;
+  margin:0 auto; width: 100%; max-width:1276px;
 `;
 
 export default Gs; 

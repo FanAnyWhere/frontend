@@ -50,7 +50,7 @@ function App() {
         </section>
         <ToastContainer autoClose={8000}
           theme={'colored'}
-          position='bottom-left'
+          position='bottom-right'
           pauseOnHover />
       </Suspense>
     </Router>
