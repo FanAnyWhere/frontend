@@ -15,7 +15,7 @@ import SearchWhiteIcon from '../assets/images/search-white.png';
 import UserIcon from '../assets/images/user-img.png';
 import GreenIcon from '../assets/images/green-icon.png';
 
-import NFT from '../modals/nft'
+import NFT from '../modals/nft.card'
 import { actions } from '../actions'
 
 

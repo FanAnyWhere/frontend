@@ -12,6 +12,8 @@ export const userActions = {
     getLikesCount,
     likeToggler,
     getIsLiked,
+    getLikedNFT,
+    getCollectedNFT,
     getCategoryList,
     updateUserDetails,
     getTopCollections,
@@ -77,9 +79,12 @@ function updateUserDetails(params) {
   }
 }
 
-function getUserNFT() {
+function getUserNFT(id, filter) {
   return async (dispatch) => {
-    const response = services.get('nft/listNftByUser')
+    const response = services.get(
+      id ? 'nft/listNftByUser/'+id+'?status='+filter
+        : 'nft/listNftByUser?status='+filter,
+      )
     response.then((promise) => {
       if (promise.status === 200) {
         dispatch({ type: 'FETCHED_USER_NFT', data: promise.data.data });
@@ -240,6 +245,32 @@ function getCollectionList(id) {
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'COLLECTION_LIST', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getCollectedNFT(id) {
+  return async (dispatch) => {
+    const response = services.get('nft/getCollectedNfts/'+id);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_USER_NFT', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getLikedNFT(id) {
+  return async (dispatch) => {
+    const response = services.get('nft/getLikedNfts/'+id);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_USER_NFT', data: promise.data.data })
       } else {
         // console.log("error");
       }

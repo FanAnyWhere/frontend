@@ -8,9 +8,11 @@ import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import FeatureIcon from '../assets/images/feature-icon.png';
+import CreatorUser from '../assets/images/creator-user.png'
 
-import NFT from '../modals/nft'
-import { actions } from '../actions'
+import NFT from '../modals/nft.card';
+import Collection from '../modals/collection.card';
+import { actions } from '../actions';
 
 const responsive = {
   superLargeDesktop: {
@@ -68,6 +70,8 @@ const Landing = (props) => {
     if (!props.TopCreators) props.getTopCreators()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.TopCreators]) // fetch the Creators
+
+  console.log('TopCreators ? ', props.TopCreators)
 
   useEffect(() => {
     if (!props.LiveAuctionNFTs) props.getLiveAuctionNFT()
@@ -161,143 +165,21 @@ const Landing = (props) => {
 
       <Gs.Container>
         <TopCollections>
-          No data available
-          {/* <SiteLoader>
-            <div className='loader-inner'>
-              <div className="loader"></div>
-              <p>Loading</p>
-            </div>
-          </SiteLoader> */}
-          {/* <TCColumn>
-            <TCBox>
-              <TC1>1</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>2</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>3</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>4</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>5</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>6</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>7</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>8</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>9</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>10</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>11</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>12</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>13</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>14</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>15</TC1>
-              <TC2><img src={CollectionUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn> */}
+          {!props.TopCollections ?
+            <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader> 
+            :
+            <TCColumn>
+              {/* {props.TopCollections.map((collection, key) => {
+                return collection.collectionId.isActive && <Collection collection={collection} key={key} />
+              })} */}
+            </TCColumn>
+          }
+          {props.TopCollections && props.TopCollections.length === 0 && 'No data available'}
         </TopCollections>
       </Gs.Container>
 
@@ -402,7 +284,31 @@ const Landing = (props) => {
 
       <Gs.Container>
         <TopCollections className='ver2'>
-          No data available
+          {!props.TopCreators ?
+            <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader> 
+            :
+            <TCColumn>
+              {props.TopCreators.map((creators, key) => {
+                console.log('creators ?', creators)
+                return <>
+                  <TCBox>
+                    <TC1>1</TC1>
+                    <TC2><img src={CreatorUser} alt='' /></TC2>
+                    <TC3>
+                      <h4>Collection Name</h4>
+                      <p>$10000.00</p>
+                    </TC3>
+                  </TCBox>
+                </>
+              })}
+            </TCColumn>
+          }
+          {props.TopCreators && props.TopCreators.length === 0 && 'No data available'}
           {/* <SiteLoader>
               <div className='loader-inner'>
                 <div className="loader"></div>

@@ -1,42 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import Gs from '../theme/globalStyles';
+import 'react-responsive-modal/styles.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router'
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MdOutlineContentCopy } from 'react-icons/md';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { IoCloseSharp } from 'react-icons/io5';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
-import { AiOutlineHeart } from 'react-icons/ai';
 import { BiRightArrowAlt, BiDotsHorizontalRounded } from 'react-icons/bi';
 import Collapsible from 'react-collapsible';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Modal } from 'react-responsive-modal';
 import dateFormat from 'dateformat';
-import 'react-responsive-modal/styles.css';
 import copy from 'copy-to-clipboard';
 
-import ProfileCoverImg from '../assets/images/profile-cover.jpg';
-import ProfileImg from '../assets/images/nft-5.jpg';
 import UpArrow from '../assets/images/up-arrow.png';
-import GridIcon from '../assets/images/grid.png';
-import ListIcon from '../assets/images/list.png';
-import FireIcon from '../assets/images/fire.png';
-import VerifiedIcon from '../assets/images/verified.png';
-import SendIcon from '../assets/images/send.png';
-import TimerIcon from '../assets/images/timer.png';
-import NFT12 from '../assets/images/nft-12.jpg';
-import NFT13 from '../assets/images/nft-13.jpg';
-import NFT14 from '../assets/images/nft-14.jpg';
-import NFT15 from '../assets/images/nft-15.jpg';
-import NFT16 from '../assets/images/nft-16.jpg';
-import NFT17 from '../assets/images/nft-17.jpg';
-import NFT18 from '../assets/images/nft-18.jpg';
-import NFT19 from '../assets/images/nft-19.jpg';
-import NFT20 from '../assets/images/nft-20.jpg';
-import NFT21 from '../assets/images/nft-21.jpg';
 import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import EditIcon from '../assets/images/edit-icon.png';
@@ -50,7 +29,7 @@ import UserIcon from '../assets/images/user-img.png';
 import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
 import ipfs from '../config/ipfs'
-import NFT from '../modals/nft'
+import NFT from '../modals/nft.card'
 
 
 function MyProfile(props) {
@@ -89,6 +68,7 @@ function MyProfile(props) {
   const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [tab, setTab] = useState('created')
 
   let profileInput = useRef()
   let profileCoverInput = useRef()
@@ -97,6 +77,16 @@ function MyProfile(props) {
     if (!props.NFTs) props.getUserNFTs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs])
+
+  useEffect(() => {
+    if (tab === 'collected') props.getCollectedNFTs(props.user.id)
+    if (tab === 'liked') props.getLikedNFTs(props.user.id)
+    if (tab === 'created') props.getUserNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab])
+
+  console.log('- tab ? ', tab)
+  console.log('- props.NFTs ? ', props.NFTs)
 
 
   useEffect(() => {
@@ -356,20 +346,15 @@ function MyProfile(props) {
 
       <ActFilterList>
 
-        {/* <Link to='#'>Collected
-        </Link> */}
-        <Link to='#' onClick={() => props.fetch}>
+        <Link to='#' className={tab === 'created' && 'active'} onClick={() => setTab('created')}>
           Created
           {/* <span>{}</span> */}
         </Link>
-        <Link to='#'>
-          Collections
-          {/* <span>{}</span> */}
-        </Link>
-        <Link to='#'>
-          Liked
-          {/* <span>00</span> */}
-        </Link>
+        <Link to='#' className={tab === 'collected' && 'active'} onClick={() => setTab('collected')} >Collected </Link>
+        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' && 'active'} 
+          onClick={() => setTab('collections')} > Collections </Link> }
+        <Link to='#' className={tab === 'liked' && 'active'}
+          onClick={() => setTab('liked')} > Liked </Link>
         {/* <Link to='#'>Bids Placed<span>00</span></Link>
         <Link to='#'>Bids Received<span>00</span></Link> */}
       </ActFilterList>
@@ -529,7 +514,7 @@ function MyProfile(props) {
             <NoItemBox>
               <NITitle>No Item to Display</NITitle>
               <NIDesc>Oops! There are no items here. You could always browse for something else in our marketplace.</NIDesc>
-              <GradientBtn>Browse Marketplace</GradientBtn>
+              <GradientBtn onClick={() => props.history.push('/marketplace')}>Browse Marketplace</GradientBtn>
             </NoItemBox>
           }
 
@@ -987,6 +972,8 @@ const mapDipatchToProps = (dispatch) => {
   return {
     getUserDetails: () => dispatch(actions.getUserDetails()),
     getUserNFTs: () => dispatch(actions.getUserNFT()),
+    getLikedNFTs: (id) => dispatch(actions.getLikedNFT(id)),
+    getCollectedNFTs: (id) => dispatch(actions.getCollectedNFT(id)),
     clearNFTs: () => dispatch({ type: 'FETCHED_NFT', data: null }),
     updateProfile: (params) => dispatch(actions.updateUserDetails(params)),
   }

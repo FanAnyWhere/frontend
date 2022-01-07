@@ -33,6 +33,7 @@ function Header(props) {
   const [openLogin, setOpenLogin] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
   const [address, setAddress] = useState('00000000000')
+  const [copied, setCopied] = useState(false)
   const [accountBalance, setAccountBalance] = useState('000.00')
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
 
@@ -131,8 +132,14 @@ function Header(props) {
   }
 
   const copyToClipboard = (address) => {
+    setCopied(true)
     copy(address)
+    setTimeout(() => {
+      setCopied(false)
+    }, 3000);
   }
+
+  // console.log('user ? ', props.user.status)
 
   return (
     <>
@@ -173,8 +180,12 @@ function Header(props) {
             </a>
           </nav>
 
-          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn && 
-            <GradientBtn onClick={() => props.history.push('/create-nft')} >Create</GradientBtn>}
+          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn 
+            && props.user?.status === 'APPROVED' &&
+              <GradientBtn onClick={() => props.history.push('/create-nft')} >Create</GradientBtn>}
+
+          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn 
+            && props.user?.status === 'PENDING' && <GradientBtn>Pending</GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
             <WhiteBorderBtn className='ani-1 active'
@@ -199,8 +210,8 @@ function Header(props) {
                 <UserBox>
                   <UserName>{props.user?.name}</UserName>
                   <AddressBar><p>{address}</p>
-                    <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])} />
-                    <CopyedText>Copied!</CopyedText>
+                    {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])} />}
+                    {copied && <CopyedText>Copied!</CopyedText>}
                   </AddressBar>
                   <BalanceBox>
                     <BalanceLeft>
