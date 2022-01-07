@@ -71,8 +71,6 @@ const Landing = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.TopCreators]) // fetch the Creators
 
-  console.log('TopCreators ? ', props.TopCreators)
-
   useEffect(() => {
     if (!props.LiveAuctionNFTs) props.getLiveAuctionNFT()
     // eslint-disable-next-line react-hooks/exhaustive-deps

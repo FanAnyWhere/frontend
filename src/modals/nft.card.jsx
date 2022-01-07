@@ -29,6 +29,7 @@ const NFT = (props) => {
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
+
   return <>
     <div className={`item ${filterOpen && 'active'}`}>
       <Link to={'/nft-detail/' + nft._id}>
@@ -40,13 +41,13 @@ const NFT = (props) => {
           <div className='box-content'>
             <div className='sign-row'>
               {/* <p className='abs'>{nft.title}</p> */}
-              <p className='abs'>Creator Name</p>
-              <img src={FireIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Trending" />
+              <p className='abs'>{nft.ownerId.name}</p>
+              {/* <img src={FireIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Trending" /> */}
               {/* <img src={TimerIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Live Auction" /> */}
               {/* <img src={SendIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Featured" /> */}
             </div>
             <h3 className='ver3 mb-0'>{nft.title}</h3>
-            <p className='abs ver4'>Collection Name</p>
+            <p className='abs ver4'>{nft.collectionId?.name}</p>
             <PriceLine>
               <div>
                 <p className='grey'>Price</p>
@@ -62,10 +63,10 @@ const NFT = (props) => {
                 </div>
               </div>
             </PriceLine>
-            <BidLike>
+            {/* <BidLike>
               <Link to='#'> {''} </Link>
               <p><AiOutlineHeart /> { }</p>
-            </BidLike>
+            </BidLike> */}
           </div>
         </LiveBox>
       </Link>
