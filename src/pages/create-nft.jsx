@@ -249,7 +249,7 @@ const CNOuter = styled(FlexDiv)`
 `;
 
 const CNLeft = styled.div`
-  width:calc(50.5% - 50px); margin-right:50px; 
+  width:calc(55.5% - 100px); margin-right:100px; 
   .nft-d-outer{width:100%; height:750px; overflow:hidden;
     img{width:100%; height:100%; object-fit:cover; border-radius: 5px;}
   }

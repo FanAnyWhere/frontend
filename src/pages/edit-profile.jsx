@@ -87,7 +87,7 @@ const EPOuter = styled(FlexDiv)`
 `;
 
 const EPLeft = styled.div`
-  width:calc(50% - 45px); margin-right:45px; 
+  width:calc(55% - 100px); margin-right:100px; 
 `;
 
 const FormBox = styled.div`

@@ -343,8 +343,9 @@ const ResultRight = styled(FlexDiv)`
 
 const CollectionRow = styled(FlexDiv)`
   justify-content:flex-start; align-items:flex-start; 
-  .item{background-color:#2F2F2F; border-radius: 5px; width:calc(14.28% - 15px); margin:0px 15px 20px 0px;
-    :nth-child(6n){margin-right:0px;}
+  .item{background-color:#2F2F2F; border-radius: 5px; width:calc(14.40% - 15px); margin:0px 15px 20px 0px;
+    :nth-child(7n){margin-right:0px;}
+    :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
   }
 `;
 
