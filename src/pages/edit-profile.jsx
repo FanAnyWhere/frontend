@@ -130,13 +130,13 @@ const EqualBtnList = styled(FlexDiv)`
 `;
 
 const EPRight = styled.div`
-  .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%; background-color: #AEAEAE;
+  .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%; background-color: #AEAEAE; position:relative;
     img{width:100%; height:100%; object-fit:cover;}
-    .overlay{width:100%; height:200px; opacity:0; background-color: #767676; display:flex; align-items:center; justify-content:center;
-      img{width:18px; height:18px; cursor:pointer;}
+    .overlay{width:100%; height:200px; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;
+      img{width:18px; height:18px; cursor:pointer; opacity:0;}
     }
-    :hover{
-      .overlay{opacity:1;}
+    :hover{ background-color:#767676;
+      img{opacity:1;}
     }
   }
 `;
