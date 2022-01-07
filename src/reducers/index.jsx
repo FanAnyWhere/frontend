@@ -12,7 +12,9 @@ import { fetchNotifications,
   fetchCategories,
   fetchUserNFTs,
   fetchLikesCount,
+  fetchCategoryList,
   fetchTopCollections,
+  fetchCollectionList,
   fetchLiveAuctionNFTs,
 } from './user.reducer'
 
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
   fetchIsLiked,
   isAuthenticated,
   fetchNotifications,
+  fetchCollectionList,
+  fetchCategoryList,
   fetchUserDetails,
   fetchUserNFTs,
   fetchLikesCount,

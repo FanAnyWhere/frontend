@@ -12,8 +12,10 @@ export const userActions = {
     getLikesCount,
     likeToggler,
     getIsLiked,
+    getCategoryList,
     updateUserDetails,
     getTopCollections,
+    getCollectionList,
     getLiveAuctionNFT,
     getNotificationFilters,
 }
@@ -116,7 +118,7 @@ function getTopCollections() {
 
 function getCreators() {
   return (dispatch) => {
-    const response = services.get('user/listVerifiefCreator');
+    const response = services.post('user/listVerifiefCreator');
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'FETCHED_CELEBRITIES', data: promise.data.data })
@@ -205,7 +207,6 @@ function getIsLiked(id) {
   };
 }
 
-
 function likeToggler(id) {
   return async (dispatch) => {
     const response = services.get('like/toggle/'+id);
@@ -213,6 +214,32 @@ function likeToggler(id) {
       if (promise.status === 200) {
         dispatch(getIsLiked(id));
         dispatch(getLikesCount(id));
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getCategoryList() {
+  return async (dispatch) => {
+    const response = services.get('category/list');
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'CATEGORY_LIST', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getCollectionList(id) {
+  return async (dispatch) => {
+    const response = services.get('nft/listCollection/'+id);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'COLLECTION_LIST', data: promise.data.data })
       } else {
         // console.log("error");
       }

@@ -64,10 +64,10 @@ const Landing = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.TopCollections]) // fetch the Collections
 
-  // useEffect(() => {
-  //   if (!props.TopCreators) props.getTopCreators()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [props.TopCreators]) // fetch the Creators
+  useEffect(() => {
+    if (!props.TopCreators) props.getTopCreators()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.TopCreators]) // fetch the Creators
 
   useEffect(() => {
     if (!props.LiveAuctionNFTs) props.getLiveAuctionNFT()
@@ -110,7 +110,7 @@ const Landing = (props) => {
                 {props.TopNFTs.length > 0 &&
                   <W60>
                     {props.TopNFTs.map((nft, key) => {
-                      return nft.isActive && key !== 0 &&
+                      return nft.isActive && key !== 0 && key < 7 &&
                         // <Link to={'/nft-detail/'+(props.TopNFTs[0]).nftId._id}>
                           <ImgOuter className='light-bg' key={key}>
                             <img src={nft.nftId.image.compressed} alt='' />

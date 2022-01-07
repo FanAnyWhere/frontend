@@ -173,8 +173,8 @@ function Header(props) {
             </a>
           </nav>
 
-          {props.user?.role?.roleName !== 'CELEBRITY' &&
-            <GradientBtn>Create</GradientBtn>}
+          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn && 
+            <GradientBtn onClick={() => props.history.push('/create-nft')} >Create</GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
             <WhiteBorderBtn className='ani-1 active'

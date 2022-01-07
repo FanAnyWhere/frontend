@@ -132,3 +132,21 @@ export function fetchIsLiked(state = { isFollowed: false }, action) {
       return state;
   }
 }
+
+export function fetchCategoryList(state = null, action) {
+  switch (action.type) {
+    case 'CATEGORY_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchCollectionList(state = null, action) {
+  switch (action.type) {
+    case 'COLLECTION_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}
