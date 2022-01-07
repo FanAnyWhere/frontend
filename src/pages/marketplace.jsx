@@ -315,18 +315,18 @@ const Trending = styled(FlexDiv)`
 `;
 
 const ProfileMain = styled(FlexDiv)`
-  position:relative; margin-top:91px;
+  position:relative; align-items:stretch; justify-content:flex-start; margin-top:91px;
 `;
 
 const PLeftpanel = styled.div`
-  width:340px; height:100%; background-color: #2F2F2F; position:absolute; left:-270px; top:0; z-index:9;  
+  width:340px; height:auto; background-color: #2F2F2F; margin-left:-270px;  
   border:1px solid #2F2F2F; border-left:0px; border-top:0px;
-  &.active{left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
+  &.active{margin-left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
 `;
 
 const PRightpanel = styled.div`
-  width:calc(100% - 70px); margin-left:70px;
-  &.active{width:calc(100% - 340px); margin-left:340px;}
+  width:calc(100% - 71px);
+  &.active{width:calc(100% - 341px);}
 `;
 
 const NFTlistLeft = styled.div`
