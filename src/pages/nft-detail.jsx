@@ -79,7 +79,8 @@ const NFTDetail = (props) => {
     setOpenConfirm(false) // close the confirm pop up
     let val = props.nft.price.toString()
     setTxnStatus('initiate') // first step for transaction 
-    await escrowContractInstance.methods['buyNow'](props.nft.nonce, props.nft.edition, 0)
+    let currentEdition = Number(props.nft.edition) - Number(props.nft.nftSold)
+    await escrowContractInstance.methods['buyNow'](props.nft.nonce, currentEdition, 0)
       .send({ from: props.authenticated.accounts[0], value: web3.utils.toWei(val) })
       .on('transactionHash', (hash) => {
         setTxnStatus('progress') // second step for transaction 
@@ -99,6 +100,8 @@ const NFTDetail = (props) => {
   const confirm = () => {
     setOpenConfirm(true)
   }
+
+  console.log('- nft ? ', props.nft)
 
   return (
     <>
