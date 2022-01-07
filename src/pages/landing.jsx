@@ -111,14 +111,12 @@ const Landing = (props) => {
                   <W60>
                     {props.TopNFTs.map((nft, key) => {
                       return nft.isActive && key !== 0 && key < 7 &&
-                        // <Link to={'/nft-detail/'+(props.TopNFTs[0]).nftId._id}>
-                        <ImgOuter className='light-bg' key={key}>
-                          <Link to='/'>
-                            <img src={nft.nftId.image.compressed} alt='' />
-                          </Link>
-                          <p>{nft.nftId.title}</p>
-                        </ImgOuter>
-                      // </Link>
+                          <ImgOuter className='light-bg' key={key}>
+                            <Link to={'/nft-detail/'+nft.nftId._id}>
+                              <img src={nft.nftId.image.compressed} alt='' />
+                            </Link>
+                            <p>{nft.nftId.title}</p>
+                          </ImgOuter>
                     })}
                   </W60>}
               </div>

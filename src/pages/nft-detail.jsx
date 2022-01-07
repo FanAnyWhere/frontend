@@ -187,7 +187,7 @@ const NFTDetail = (props) => {
                   </div>
                   <div className='follow-box'>
                     <p>Available</p>
-                    <FNumber>{Number(props.nft.edition) - Number(props.nft.nftSold)} of {props.nft.edition}</FNumber>
+                    <FNumber>{props.nft.nftSold} of {props.nft.edition}</FNumber>
                   </div>
                 </FollowBoxRow>
                 <FollowBoxRow className='smaller'>
