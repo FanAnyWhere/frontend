@@ -592,9 +592,9 @@ const PTitle = styled.div`
 
 const PRTop = styled(FlexDiv)`
   align-items:flex-start; justify-content:space-between; margin-bottom:25px;
-  a.edit-profile{border: 2px solid #000000; box-sizing: border-box; border-radius: 2px; padding:7px 16px; font-weight: bold; 
+  a.edit-profile{border: 2px solid #fff; box-sizing: border-box; border-radius: 2px; padding:7px 16px; font-weight: bold; 
     font-size: 16px; line-height: 24px; color: #FFFFFF; 
-    :hover{background-color:#000;}
+    :hover{opacity:0.9;}
   }
   .PTT-right{display:flex; align-items:flex-start;}
 `;
