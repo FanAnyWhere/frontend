@@ -378,9 +378,9 @@ function MyProfile(props) {
         <PLeftpanel className={filterOpen && 'active'}>
           <GradientBar className={filterOpen && 'active'}>
             <LeftTitle>Filters</LeftTitle>
-            <BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
+            <span className={filterOpen && 'active'}><BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
               setFilterOpen(!filterOpen)
-            }} />
+            }} /></span>
           </GradientBar>
 
           <NFTlistLeft className={filterOpen && 'active'}>
@@ -729,8 +729,11 @@ const ProfilefilterBar = styled(FlexDiv)`
 const GradientBar = styled(FlexDiv)`
   justify-content:space-between; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
   &.active{border-radius: 0px 5px 0px 0px; }
-  svg{font-size:28px; margin-right:16px; cursor:pointer; transition:0.3s ease all;
+  svg{font-size:28px; cursor:pointer; transition:0.3s ease all;
     &.active{transform:rotate(180deg);}
+  }
+  span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); width: 70px; height: 50px; display: flex; align-items: center; justify-content: center;
+    &.active{background:none;}
   }
 `;
 
@@ -834,7 +837,7 @@ const LeftTitle = styled.div`
 const CustomAccordian = styled.div`
   .Collapsible{
     .Collapsible__trigger{ position:relative; cursor:pointer; font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; background-color:#2F2F2F; padding:5px 0px 5px 20px; display:block;
-      :after{content:''; position:absolute; right:24px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;}
+      :after{content:''; position:absolute; right:28px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;}
       &.is-closed{
         :after{background: url(${ArrowUp}) no-repeat; transform:rotate(180deg);}
       }
