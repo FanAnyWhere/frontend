@@ -199,19 +199,22 @@ const Marketplace = (props) => {
 
 
           <Trending>
-            {!props.NFTs ? 
+            {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
                   <div className="loader"></div>
                   <p>Loading</p>
                 </div>
               </SiteLoader>
-           : props.NFTs.length === 0 && 'No data available'}
+              : props.NFTs.length === 0 && 'No data available'}
 
             {props.NFTs && props.NFTs.map((nft, key) => {
               return <NFT nft={nft} filterOpen={filterOpen} />
             })}
           </Trending>
+          <LoadMore>
+            <GradientBtn>Load More</GradientBtn>
+          </LoadMore>
         </PRightpanel>
       </ProfileMain>
     </>
@@ -455,7 +458,7 @@ const CustomcheckBox = styled.div`
 
 
 const SiteLoader = styled(FlexDiv)`
-  margin:30px 0px;
+  margin:30px 0px; width:100%;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
@@ -467,6 +470,15 @@ const SiteLoader = styled(FlexDiv)`
     }
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
+`;
+
+const LoadMore = styled(FlexDiv)`
+  button{margin:0px;}
+`;
+
+const GradientBtn = styled.button`
+  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
+  :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
 `;
 
 const mapDipatchToProps = (dispatch) => {

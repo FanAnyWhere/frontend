@@ -80,7 +80,7 @@ const NFTDetail = (props) => {
     let val = props.nft.price.toString()
     setTxnStatus('initiate') // first step for transaction 
     await escrowContractInstance.methods['buyNow'](props.nft.nonce, props.nft.edition, 0)
-      .send({ from : props.authenticated.accounts[0], value: web3.utils.toWei(val) })
+      .send({ from: props.authenticated.accounts[0], value: web3.utils.toWei(val) })
       .on('transactionHash', (hash) => {
         setTxnStatus('progress') // second step for transaction 
       })
@@ -104,7 +104,7 @@ const NFTDetail = (props) => {
     <>
       <Gs.Container>
 
-        {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)}/>}
+        {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)} />}
 
         {!props.nft &&
           <SiteLoader>
@@ -126,7 +126,7 @@ const NFTDetail = (props) => {
               <NDTop>
                 <NDLeft>
                   <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
-                  <NTitleName>{props.nft.title}</NTitleName>
+                  <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}</NTitleName>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
@@ -145,7 +145,6 @@ const NFTDetail = (props) => {
                     </Collapse>
                   </CustomDropdown>
                   <CustomDropdown className='custom-width-2'>
-                    <UPButton onClick={() => setIsOpen7(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen7}>
                       <Link to='#'>Edit</Link>
                       <Link to='#'>Mark as Not for Sale</Link>
@@ -376,7 +375,7 @@ const NFTDetail = (props) => {
                     <GradientBtn  className='full'> Sold </GradientBtn>
                     :
                     <GradientBtn onClick={() => {
-                      if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
                       else confirm()
                     }} className='full'>
                       BUY NOW
@@ -385,10 +384,9 @@ const NFTDetail = (props) => {
                 }
                 
                 {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
-                    props.nft.auctionEndDate && 
-                    props.nft.auctionEndDate > new Date().getTime() / 1000 ?
-                      <GradientBtn className='full'> Auction will start soon </GradientBtn>
-                    :  <GradientBtn className='full'> Place a Bid </GradientBtn>
+                    props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
+                    <GradientBtn className='full'> Auction will start soon </GradientBtn>
+                    : <GradientBtn className='full'> Place a Bid </GradientBtn>
                   : ''
                 }
 
@@ -565,10 +563,12 @@ const ReportDesc = styled.div`
 `;
 
 const NDTop = styled(FlexDiv)`
-  justify-content:space-between; margin-bottom:15px;
+  align-items:flex-start; justify-content:space-between; margin-bottom:15px;
 `;
 
-const NDLeft = styled.div``;
+const NDLeft = styled.div`
+  width:65%;
+`;
 
 const NDRight = styled(FlexDiv)``;
 
@@ -594,7 +594,7 @@ const GreenAlertRow = styled.div`
 const FollowBoxRow = styled(FlexDiv)`
   background: #2F2F2F; border-radius: 5px; justify-content:flex-start; margin-right:7px;
   p{font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; color: #767676; margin:0px;}
-  .follow-box{ padding:12px 22px; position:relative;
+  .follow-box{ padding:12px 15px; position:relative;
     :after{content:''; background-color:rgb(118 118 118 / 25%); position:absolute; right:0px; top:12px; width:1px; height:37px;}
     :last-child{
       :after{display:none;}
@@ -739,7 +739,7 @@ const CustomDropdown = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  margin:30px 0px;
+  margin:100px 0px;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;

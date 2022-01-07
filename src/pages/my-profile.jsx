@@ -551,7 +551,7 @@ const ProfileCover = styled.div`
     .overlay{ width:100%; height:250px; position:absolute; left:0px; top:0px;
       button{position:absolute; right:20px; bottom:20px; margin:0px; opacity:0;}
     }
-    :hover{
+    :hover{ background-color:#1A1A1A;
       button{opacity:1;}
     }
   }
@@ -568,7 +568,7 @@ const PRLeft = styled.div`
     .overlay{width:100%; height:200px; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;
       img{width:18px; height:18px; cursor:pointer; opacity:0;}
     }
-    :hover{
+    :hover{ background-color:#767676;
       img{opacity:1;}
     }
   }

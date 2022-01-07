@@ -2,67 +2,76 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { AiOutlineHeart } from 'react-icons/ai'
+import ReactTooltip from 'react-tooltip'
 
 import FireIcon from '../assets/images/fire.png'
 import Timer from '../helper/timer';
+import VerifiedIcon from '../assets/images/verified.png';
+import SendIcon from '../assets/images/send.png';
+import TimerIcon from '../assets/images/timer.png';
 
 
 const NFT = (props) => {
 
-    let { nft, filterOpen } = props
+  let { nft, filterOpen } = props
 
-    // const [ext, setExt] = useState(nft.image.format)
-    // useEffect(() => {
-    //     const getExtenstion = () => {
-    //         if (!nft.image.format) {
-    //             let ext = getFileType(nft.image.compressed);
-    //                 ext.then(function (result) {
-    //                 setExt(result);
-    //             })
-    //         }
-    //     }
-    //     getExtenstion();
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+  // const [ext, setExt] = useState(nft.image.format)
+  // useEffect(() => {
+  //     const getExtenstion = () => {
+  //         if (!nft.image.format) {
+  //             let ext = getFileType(nft.image.compressed);
+  //                 ext.then(function (result) {
+  //                 setExt(result);
+  //             })
+  //         }
+  //     }
+  //     getExtenstion();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-    return <>
-            <div className={`item ${filterOpen && 'active'}`}>
-              <Link to={'/nft-detail/'+nft._id}>
-                  <LiveBox>
-                  <div className='img-outer ver3'>
-                      <img src={nft.image.compressed} alt='' />
-                      {/* <img src={NFT12} alt='' /> */}
-                  </div>
-                  <div className='box-content'>
-                      <div className='sign-row'>
-                      <p className='abs'>{nft.title}</p>
-                      <img src={FireIcon} alt='' />
-                      </div>
-                      <h3 className='ver3'>{nft.description}</h3>
-                      <PriceLine>
-                      <div>
-                          <p className='grey'>Price</p>
-                          <p>{nft.price} FAN</p>
-                      </div>
-                      <div className='text-right'>
-                          <p className='grey'>{nft.nftSold}/{nft.edition}</p>
-                          <div className='timer ver2'>
-                          <p>
-                              {/* 2 days left */}
-                              {nft.auctionEndDate? <Timer timeLeft={nft.auctionEndDate} />: ''}
-                          </p>
-                          </div>
-                      </div>
-                      </PriceLine>
-                      <BidLike>
-                          <Link to='#'> {''} </Link>
-                          <p><AiOutlineHeart /> {}</p>
-                      </BidLike>
-                  </div>
-                  </LiveBox>
-              </Link>
+  return <>
+    <div className={`item ${filterOpen && 'active'}`}>
+      <Link to={'/nft-detail/' + nft._id}>
+        <LiveBox>
+          <div className='img-outer ver3'>
+            <img src={nft.image.compressed} alt='' />
+            {/* <img src={NFT12} alt='' /> */}
           </div>
-      </>
+          <div className='box-content'>
+            <div className='sign-row'>
+              {/* <p className='abs'>{nft.title}</p> */}
+              <p className='abs'>Creator Name</p>
+              <img src={FireIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Trending" />
+              {/* <img src={TimerIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Live Auction" /> */}
+              {/* <img src={SendIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Featured" /> */}
+            </div>
+            <h3 className='ver3 mb-0'>{nft.title}</h3>
+            <p className='abs ver4'>Collection Name</p>
+            <PriceLine>
+              <div>
+                <p className='grey'>Price</p>
+                <p>{nft.price} FAN</p>
+              </div>
+              <div className='text-right'>
+                <p className='grey'>{nft.nftSold}/{nft.edition}</p>
+                <div className='timer ver2'>
+                  <p>
+                    {/* 2 days left */}
+                    {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
+                  </p>
+                </div>
+              </div>
+            </PriceLine>
+            <BidLike>
+              <Link to='#'> {''} </Link>
+              <p><AiOutlineHeart /> { }</p>
+            </BidLike>
+          </div>
+        </LiveBox>
+      </Link>
+    </div>
+    <ReactTooltip html={true} data-multiline={true} effect="solid" />
+  </>
 }
 
 // Common Style Div 
@@ -89,6 +98,7 @@ const LiveBox = styled.div`
       &.ver3{display:flex; align-items:center;
         img{margin-left:4px;}
       }
+      &.ver4{margin-bottom:15px;}
     }
     h3{
       color: #F6F6F6; font-weight: bold; font-size: 16px; line-height: 24px; margin:0px 0px 15px;

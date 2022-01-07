@@ -157,7 +157,7 @@ function Header(props) {
             >
               {tab}
             </NavLink>)}
-            <a  onClick={() => setIsOpen3(state => !state)} >Help Center
+            <a onClick={() => setIsOpen3(state => !state)} >Help Center
               <HelpDropdown className={`${isOpen3 && 'active'}`}>
                 <BiChevronDown />
                 <Collapse onInit={onInit} isOpen={isOpen3}>
@@ -199,9 +199,8 @@ function Header(props) {
                 <UserBox>
                   <UserName>{props.user?.name}</UserName>
                   <AddressBar><p>{address}</p>
-                    <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])}
-                      data-place="bottom" data-class="wallettooltip" data-tip="copied"
-                    />
+                    <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])} />
+                    <CopyedText>Copied!</CopyedText>
                   </AddressBar>
                   <BalanceBox>
                     <BalanceLeft>
@@ -355,6 +354,10 @@ const NotificationDropdown = styled.div`
     position:absolute; top:46px; right:0px; width:400px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:15px 0px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
   }
   .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
+`;
+
+const CopyedText = styled.div`
+  color:#824CF5; font-weight: bold; font-size: 12px; line-height: 16px; margin-left:5px;
 `;
 
 const mapDipatchToProps = (dispatch) => {

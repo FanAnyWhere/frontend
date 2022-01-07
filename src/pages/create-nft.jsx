@@ -234,6 +234,12 @@ const CreateNFT = (props) => {
             </Trending>
           </CNRight>
         </CNOuter>
+        <SiteLoader>
+          <div className='loader-inner'>
+            <div className="loader"></div>
+            <p>Loading</p>
+          </div>
+        </SiteLoader>
       </Gs.Container>
     </>
   );
@@ -249,7 +255,7 @@ const CNOuter = styled(FlexDiv)`
 `;
 
 const CNLeft = styled.div`
-  width:calc(50.5% - 50px); margin-right:50px; 
+  width:calc(55.5% - 100px); margin-right:100px; 
   .nft-d-outer{width:100%; height:750px; overflow:hidden;
     img{width:100%; height:100%; object-fit:cover; border-radius: 5px;}
   }
@@ -440,6 +446,20 @@ const ReportTitle = styled(FlexDiv)`
 const ReportDesc = styled.div`
   font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 16px;
   b{font-weight:500;}
+`;
+
+const SiteLoader = styled(FlexDiv)`
+  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:absolute; top:0; left:0; right:0;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
 `;
 
 const MessageOuter = styled.div`
