@@ -6,27 +6,27 @@ import CreatorPImg from '../assets/images/creator-profile.png';
 
 
 const creator = (props) => {
-    let { creator, key } = props
+  let { creator, key } = props
 
-    return <div className='item' key={key}>
-        <Link to={'/creator/'+creator.id}>
-            <CollectionCover>
-            <img src={creator.cover ? creator.cover :CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-            <ProfilePicture>
-                <img src={creator.profile ? creator.profile:CreatorPImg} alt='' />
-            </ProfilePicture>
-            <CCName>{creator.name}</CCName>
-            <CCBy>$10000.00</CCBy>
-            <FollowerRow>
-                <FollowNumber><span>{creator.followersCount}</span> followers</FollowNumber>
-                <FollowNumber><span>{creator.followingCount}</span> following</FollowNumber>
-            </FollowerRow>
-            <Link to='#'>Follow</Link>
-            </CollectionBottom>
-        </Link>
-      </div>
+  return <div className='item' key={key}>
+    <Link to={'/creator/' + creator.id}>
+      <CollectionCover>
+        <img src={creator.cover ? creator.cover : CreatorCImg} alt='' />
+      </CollectionCover>
+      <CollectionBottom>
+        <ProfilePicture>
+          <img src={creator.profile ? creator.profile : CreatorPImg} alt='' />
+        </ProfilePicture>
+        <CCName>{creator.name}</CCName>
+        <CCBy>$10000.00</CCBy>
+        <FollowerRow>
+          <FollowNumber><span>{creator.followersCount}</span> followers</FollowNumber>
+          <FollowNumber><span>{creator.followingCount}</span> following</FollowNumber>
+        </FollowerRow>
+        <Link to='#'>Follow</Link>
+      </CollectionBottom>
+    </Link>
+  </div>
 }
 
 // Common Style Div 
@@ -40,7 +40,7 @@ const CollectionCover = styled(FlexDiv)`
 `;
 
 const ProfilePicture = styled.div`
-  width:83.33px; height:83.33px; overflow:hidden; position:absolute; top:-41.66px; left:calc(50% - 41.66px);
+  width:83.33px; height:83.33px; overflow:hidden; position:absolute; top:-41.66px; left:calc(50% - 41.66px); border-radius:50%;
   img{width:100%; height:100%; object-fit:cover;}
 `;
 
