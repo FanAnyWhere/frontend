@@ -12,11 +12,14 @@ import { fetchNotifications,
   fetchCreators,
   fetchCategories,
   fetchUserNFTs,
+  fetchPagination,
   fetchLikesCount,
+  fetchCollections,
   fetchCategoryList,
   fetchTopCollections,
   fetchCollectionList,
   fetchLiveAuctionNFTs,
+  fetchMoreCollections,
 } from './user.reducer'
 
 
@@ -37,10 +40,13 @@ const rootReducer = combineReducers({
   fetchUserNFTs,
   fetchLikesCount,
   fetchCategories,
+  fetchCollections,
   fetchTopCollections,
   fetchNotificationFilters,
   fetchCreators,
+  fetchPagination,
   fetchLiveAuctionNFTs,
+  fetchMoreCollections,
 })
 
 export default rootReducer

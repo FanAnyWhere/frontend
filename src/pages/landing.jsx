@@ -172,7 +172,7 @@ const Landing = (props) => {
           {props.TopCollections &&
             <TCColumn2>
               {props.TopCollections.map((collection, key) => {
-                return collection.collectionId.isActive && <Collection collection={collection} key={key} />
+                return collection.collectionId.isActive && <Collection collection={collection.collectionId} key={key} />
               })}
             </TCColumn2>
           }
@@ -290,9 +290,7 @@ const Landing = (props) => {
           {props.TopCreators &&
             <TCColumn>
               {props.TopCreators.map((creator, key) => {
-                console.log('-creator : ', creator)
-                return <>
-                  <TCBox>
+                return <TCBox key={key}>
                     <TC1>1</TC1>
                     <TC2><img src={creator.profile} alt='' /></TC2>
                     <TC3>
@@ -300,7 +298,6 @@ const Landing = (props) => {
                       <p>$10000.00</p>
                     </TC3>
                   </TCBox>
-                </>
               })}
             </TCColumn>
           }

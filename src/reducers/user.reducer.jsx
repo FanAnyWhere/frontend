@@ -159,3 +159,30 @@ export function addNFT(state = false, action) {
       return state;
   }
 }
+
+export function fetchCollections(state = false, action) {
+  switch (action.type) {
+    case 'COLLECTIONS_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchPagination(state = false, action) {
+  switch (action.type) {
+    case 'FETCHED_PAGINATION':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchMoreCollections(state = null, action) {
+  switch (action.type) {
+    case 'MORE_COLLECTIONS_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Gs from '../theme/globalStyles';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
 import { Link } from 'react-router-dom';
 
-import RImg from '../assets/images/img1.jpg';
 import GreenIcon from '../assets/images/green-icon.png';
 import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
-import CCImg from '../assets/images/collection-cover.jpg';
-import CPImg from '../assets/images/cp-img.png';
+
+import { actions } from '../actions'
+import Collection from '../modals/collection.card'
+
 
 const Collections = (props) => {
 
@@ -18,6 +20,14 @@ const Collections = (props) => {
   const onInit = ({ state, style, node }) => {
     setIsOpen2(false);
   };
+
+  const [confyView, setConfyView] = useState(true)
+
+  useEffect(() => {
+    if (!props.collections) props.getCollections()
+    // else setCollections(collections)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.collections]) // fetch collections
 
   return (
     <>
@@ -28,7 +38,7 @@ const Collections = (props) => {
           </ECDesc>
           <NumberOuter>
             <NumberBox>
-              <NumberTitle>000</NumberTitle>
+              <NumberTitle>{props.collections ? props.collections.length : '000'}</NumberTitle>
               <p>Collections</p>
             </NumberBox>
             <NumberBox>
@@ -42,179 +52,40 @@ const Collections = (props) => {
             <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
             <Collapse onInit={onInit} isOpen={isOpen2}>
               <div className='priceList'>
-                <Link to='/' className='active'>Recently Added</Link>
-                <Link to='/'>Price: Low to High</Link>
-                <Link to='/'>Price: High to Low</Link>
-                <Link to='/'>Ending Soon</Link>
+                <Link to='#' className='active'>Recently Added</Link>
+                <Link to='#'>Price: Low to High</Link>
+                <Link to='#'>Price: High to Low</Link>
+                <Link to='#'>Ending Soon</Link>
               </div>
             </Collapse>
           </CustomDropdown>
           <CustomSwitch>
-            <button className='active'><img src={ListIcon} alt='' /></button>
-            <button><img src={GridIcon} alt='' /></button>
+            <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+            <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
           </CustomSwitch>
         </ResultRight>
-        <CollectionRow className='comfy-view'>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Collection Name</CCName>
-              <CCBy>by <Link to='/'>Creator Name</Link></CCBy>
-              <CCText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</CCText>
-            </CollectionBottom>
-          </div>
+
+        {!props.collections && <SiteLoader>
+            <div className='loader-inner'>
+              <div className="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader>  }
+
+        <CollectionRow className={confyView && 'comfy-view'}>
+
+          {props.collections && props.collections.length === 0 && 'No Data Is Display'}
+          
+          {props.collections && props.collections.map( (collection, key) => {
+            return collection.isActive && <Collection key={key} collection={collection} /> }
+          )}
+        
         </CollectionRow>
-        <LoadMore>
+            
+        {/* <LoadMore>
           <GradientBtn>Load More</GradientBtn>
         </LoadMore>
+         */}
       </CollectionMain>
     </>
   );
@@ -359,4 +230,33 @@ const CustomSwitch = styled(FlexDiv)`
   }
 `;
 
-export default Collections;
+const SiteLoader = styled(FlexDiv)`
+  margin:30px 0px;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
+`;
+
+
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getCollections: (params) => dispatch(actions.getCollections(params)),
+    getMoreCollections: (params) => dispatch(actions.getMoreCollections(params)),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    collections: state.fetchCollections,
+    pagination: state.fetchPagination,
+    moreCollections: state.fetchMoreCollections,
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Collections))
