@@ -205,7 +205,8 @@ const Marketplace = (props) => {
 
 
           <Trending className='comfy-view'>
-            <NDA> No data available</NDA>
+            
+            {props.NFTs && props.NFTs.length === 0 && <NDA> No data available</NDA>}
             {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
