@@ -227,7 +227,7 @@ function MyProfile(props) {
               onClick={() => {
                 profileCoverInput.current.click()
               }}>
-              Add Cover Photo
+              {props.user?.cover ? 'Change': 'Add'} {' '} Cover Photo
             </GradientBtn>
           </div>
         </div>
