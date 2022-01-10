@@ -2,21 +2,23 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const collection = (props) => {
-    let { collection } = props
+    let { collection, key } = props
 
-    return <div className='item'>
-                <CollectionCover>
-                    <img src={collection.collectionId.logo} alt='' />
-                </CollectionCover>
-                <CollectionBottom>
-                <ProfilePicture>
-                    {/* <img src={collection.collectionId.logo} alt='' /> */}
-                </ProfilePicture>
-                <CCName>{collection.collectionId.name}</CCName>
-                <CCBy>by <Link to={'/celebrity/'+collection.collectionId.ownerId.id}>{collection.collectionId.ownerId.name}</Link></CCBy>
-                <CCText>{collection.collectionId.description}</CCText>
-                </CollectionBottom>
-            </div>
+    return <div className='item' key={key}>
+      <Link to={'/collection/'+collection.id}>
+        <CollectionCover>
+          <img src={collection.logo} alt='' />
+        </CollectionCover>
+        <CollectionBottom>
+          <ProfilePicture>
+            <img src={collection.ownerId.profile} alt='' />
+          </ProfilePicture>
+          <CCName>{collection.name}</CCName>
+          <CCBy>by <Link to={'/creator/'+collection.ownerId.id}>{collection.ownerId.name}</Link></CCBy>
+          <CCText>{collection.description}</CCText>
+        </CollectionBottom>
+      </Link>
+    </div>
 }
 
 // Common Style Div 

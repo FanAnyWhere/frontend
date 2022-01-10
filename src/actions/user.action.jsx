@@ -14,12 +14,14 @@ export const userActions = {
     likeToggler,
     getIsLiked,
     getLikedNFT,
+    getCollections,
     getCollectedNFT,
     getCategoryList,
     updateUserDetails,
     getTopCollections,
     getCollectionList,
     getLiveAuctionNFT,
+    getMoreCollections,
     getNotificationFilters,
 }
 
@@ -285,6 +287,34 @@ function addNFT(data) {
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'ADDED_NFT', data: promise.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getCollections(params={}) {
+  return async (dispatch) => {
+    const response = services.post('nft/listCollections', params);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
+        dispatch({ type: 'COLLECTIONS_LIST', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  }; 
+}
+
+function getMoreCollections(params={}) {
+  return async (dispatch) => {
+    const response = services.post('nft/listCollections', params);
+    response.then((promise) => {
+      if (promise.status === 200) {
+        dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
+        dispatch({ type: 'MORE_COLLECTIONS_LIST', data: promise.data.data })
       } else {
         // console.log("error");
       }
