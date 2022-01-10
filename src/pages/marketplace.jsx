@@ -14,6 +14,8 @@ import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import UserIcon from '../assets/images/user-img.png';
 import GreenIcon from '../assets/images/green-icon.png';
+import GridIcon from '../assets/images/grid.png';
+import ListIcon from '../assets/images/list.png';
 
 import NFT from '../modals/nft.card'
 import { actions } from '../actions'
@@ -180,10 +182,10 @@ const Marketplace = (props) => {
                   <Link to='/'>High to Low</Link>
                 </Collapse>
               </CustomDropdown>
-              {/* <CustomSwitch>
-                <button className={filterOpen && 'active'}><img src={ListIcon} alt='' /></button>
+              <CustomSwitch>
+                <button className='active'><img src={ListIcon} alt='' /></button>
                 <button><img src={GridIcon} alt='' /></button>
-              </CustomSwitch> */}
+              </CustomSwitch>
             </ResultRight>
           </ResultBar>
 
@@ -198,7 +200,7 @@ const Marketplace = (props) => {
           </ProfilefilterBar> */}
 
 
-          <Trending>
+          <Trending className='comfy-view'>
             {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
@@ -308,11 +310,13 @@ const GradientBar = styled(FlexDiv)`
 `;
 
 const Trending = styled(FlexDiv)`
-  justify-content:flex-start; margin:0px 20px;
-  .item{margin:0px 7px 40px 0px; width:calc(14.28% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
-    :last-child{margin-right:0px;}
+  align-items:flex-start; justify-content:flex-start; margin:0px 16px;
+  .item{margin:0px 4px 40px; width:calc(14.28% - 8px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
     &.active{width:calc(16.66% - 7px);}
+  }
+  &.comfy-view{ margin:0px 15px;
+    .item{margin:0px 5px 25px; width:calc(20% - 10px);}
   }
 `;
 

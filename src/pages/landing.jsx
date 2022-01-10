@@ -113,12 +113,12 @@ const Landing = (props) => {
                   <W60>
                     {props.TopNFTs.map((nft, key) => {
                       return nft.isActive && key !== 0 && key < 7 &&
-                          <ImgOuter className='light-bg' key={key}>
-                            <Link to={'/nft-detail/'+nft.nftId._id}>
-                              <img src={nft.nftId.image.compressed} alt='' />
-                            </Link>
-                            <p>{nft.nftId.title}</p>
-                          </ImgOuter>
+                        <ImgOuter className='light-bg' key={key}>
+                          <Link to={'/nft-detail/' + nft.nftId._id}>
+                            <img src={nft.nftId.image.compressed} alt='' />
+                          </Link>
+                          <p>{nft.nftId.title}</p>
+                        </ImgOuter>
                     })}
                   </W60>}
               </div>
@@ -169,7 +169,7 @@ const Landing = (props) => {
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader> 
+            </SiteLoader>
             :
             <TCColumn>
               {/* {props.TopCollections.map((collection, key) => {
@@ -288,7 +288,7 @@ const Landing = (props) => {
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader> 
+            </SiteLoader>
             :
             <TCColumn>
               {props.TopCreators.map((creators, key) => {
@@ -955,7 +955,7 @@ const BidLike = styled(FlexDiv)`
 `;
 
 const TopCollections = styled(FlexDiv)`
-  margin-bottom:50px;
+  justify-content: flex-start; margin-bottom:50px;
   &.ver2{margin-bottom:75px}
 `;
 

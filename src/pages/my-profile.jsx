@@ -25,6 +25,8 @@ import FacebookIcon from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 import UserIcon from '../assets/images/user-img.png';
+import GridIcon from '../assets/images/grid.png';
+import ListIcon from '../assets/images/list.png';
 
 import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
@@ -354,8 +356,8 @@ function MyProfile(props) {
           {/* <span>{}</span> */}
         </Link>
         <Link to='#' className={tab === 'collected' && 'active'} onClick={() => setTab('collected')} >Collected </Link>
-        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' && 'active'} 
-          onClick={() => setTab('collections')} > Collections </Link> }
+        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' && 'active'}
+          onClick={() => setTab('collections')} > Collections </Link>}
         <Link to='#' className={tab === 'liked' && 'active'}
           onClick={() => setTab('liked')} > Liked </Link>
         {/* <Link to='#'>Bids Placed<span>00</span></Link>
@@ -488,22 +490,22 @@ function MyProfile(props) {
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
               <button className='c-all'>Clear All</button>
             </FilterBar> */}
-            {/* <ResultRight>
-              <CustomDropdown className='short'>
+            <ResultRight>
+              {/* <CustomDropdown className='short'>
                 <label onClick={() => setIsOpen2(state => !state)}>Sort by <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <Link to='/'>Low to High</Link>
                   <Link to='/'>High to Low</Link>
                 </Collapse>
-              </CustomDropdown>
+              </CustomDropdown> */}
               <CustomSwitch>
                 <button><img src={ListIcon} alt='' /></button>
                 <button className='active'><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
-            </ResultRight> */}
+            </ResultRight>
           </ProfilefilterBar>
 
-          <Trending>
+          <Trending className='comfy-view'>
 
             {!props.NFTs ? 'loading...' :
               props.NFTs.map((nft, key) => {
@@ -533,7 +535,7 @@ const FlexDiv = styled.div`
 `;
 
 const ProfileCover = styled.div`
-  background: #2F2F2F; border-radius: 5px; margin:56px 20px 15px;
+  background: #2F2F2F; border-radius: 5px; margin:56px 20px 15px; 
   .img-outer{width:100%; height:250px; overflow:hidden; border-radius:5px; background-color: #2F2F2F; position:relative;
     img{width:100%; height:100%; object-fit:cover;}
     .overlay{ width:100%; height:250px; position:absolute; left:0px; top:0px;
@@ -711,7 +713,7 @@ const CustomSwitch = styled(FlexDiv)`
 `;
 
 const ProfilefilterBar = styled(FlexDiv)`
-  justify-content:space-between; margin:20px 20px 25px;
+  justify-content:flex-end; margin:20px 20px 25px;
 `;
 
 const GradientBar = styled(FlexDiv)`
@@ -726,11 +728,13 @@ const GradientBar = styled(FlexDiv)`
 `;
 
 const Trending = styled(FlexDiv)`
-  justify-content:flex-start; margin:0px 20px;
-  .item{margin:0px 7px 40px 0px; width:calc(14.28% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
-    :last-child{margin-right:0px;}
+  align-items:flex-start; justify-content:flex-start; margin:0px 16px;
+  .item{margin:0px 4px 40px; width:calc(14.28% - 8px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
     &.active{width:calc(16.66% - 7px);}
+  }
+  &.comfy-view{ margin:0px 15px;
+    .item{margin:0px 5px 25px; width:calc(20% - 10px);}
   }
 `;
 
