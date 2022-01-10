@@ -163,18 +163,18 @@ const Landing = (props) => {
 
       <Gs.Container>
         {!props.TopCollections && <SiteLoader>
-              <div className='loader-inner'>
-                <div className="loader"></div>
-                <p>Loading</p>
-              </div>
-            </SiteLoader>}
+          <div className='loader-inner'>
+            <div className="loader"></div>
+            <p>Loading</p>
+          </div>
+        </SiteLoader>}
         <TopCollections>
           {props.TopCollections &&
-            <TCColumn>
+            <TCColumn2>
               {props.TopCollections.map((collection, key) => {
                 return collection.collectionId.isActive && <Collection collection={collection} key={key} />
               })}
-            </TCColumn>
+            </TCColumn2>
           }
           {props.TopCollections && props.TopCollections.length === 0 && 'No data available'}
         </TopCollections>
@@ -281,11 +281,11 @@ const Landing = (props) => {
 
       <Gs.Container>
         {!props.TopCreators && <SiteLoader>
-              <div className='loader-inner'>
-                <div className="loader"></div>
-                <p>Loading</p>
-              </div>
-            </SiteLoader>}
+          <div className='loader-inner'>
+            <div className="loader"></div>
+            <p>Loading</p>
+          </div>
+        </SiteLoader>}
         <TopCollections className='ver2'>
           {props.TopCreators &&
             <TCColumn>
@@ -453,7 +453,7 @@ const Landing = (props) => {
 
       <Gs.Container>
         <Trending>
-          No data available
+          <NDA> No data available</NDA>
           {/* <SiteLoader>
             <div className='loader-inner'>
               <div className="loader"></div>
@@ -962,6 +962,11 @@ const TCColumn = styled(FlexDiv)`
   justify-content: flex-start; width:calc(20% - 17px); margin-right:17px;
 `;
 
+const TCColumn2 = styled(FlexDiv)`
+  justify-content: flex-start;
+  .item{background-color: #2F2F2F; border-radius: 5px; width: calc(25% - 15px); margin: 0px 15px 20px 0px;}
+`;
+
 const TCBox = styled(FlexDiv)`
   margin-bottom:10px;
 `;
@@ -1075,6 +1080,10 @@ const SiteLoader = styled(FlexDiv)`
     }
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
+`;
+
+const NDA = styled(FlexDiv)`
+  width:100%; margin:10px 0px;
 `;
 
 const mapDipatchToProps = (dispatch) => {
