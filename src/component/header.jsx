@@ -9,7 +9,8 @@ import { MdOutlineContentCopy } from 'react-icons/md'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTooltip from 'react-tooltip'
-import copy from 'copy-to-clipboard';
+import copy from 'copy-to-clipboard'
+import Media from '../theme/media-breackpoint'
 
 import { actions } from '../actions'
 import { web3, walletConnectProvider } from '../web3'
@@ -168,7 +169,7 @@ function Header(props) {
               <NavLink to='/activity'
                 className={nav === 'activity' && 'active'}>
                 Activity
-              </NavLink> }
+              </NavLink>}
             <a onClick={() => setIsOpen3(state => !state)} >Help Center
               <HelpDropdown className={`${isOpen3 && 'active'}`}>
                 <BiChevronDown />
@@ -276,9 +277,12 @@ const GradientBtn = styled.button`
 const NavSearch = styled.div`
   position:relative;
   img{position:absolute; top:11px; left:11px; cursor:pointer;}
-  input{font-family: 'Roboto', sans-serif; border:1px solid #aeaeae; padding:8px 8px 8px 40px; background-color:#1d1d1d; border-radius:2px; width:500px; margin-right:4px; color:#fff; font-weight: normal; font-size: 16px; line-height: 24px;
+  input{font-family: 'Roboto', sans-serif; border:1px solid #aeaeae; padding:8px 8px 8px 40px; background-color:#1d1d1d; border-radius:2px; width:450px; margin-right:4px; color:#fff; font-weight: normal; font-size: 16px; line-height: 24px;
     ::placeholder {
       color: #767676;
+    }
+    ${Media.lg} {
+      width:350px;
     }
   }
 `;

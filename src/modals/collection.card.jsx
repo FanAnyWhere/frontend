@@ -5,20 +5,20 @@ const collection = (props) => {
   let { collection, key } = props
 
   return <div className='item' key={key}>
-      <Link to={'/collection/' + collection.id}>
-        <CollectionCover>
-          <img src={collection.logo} alt='' />
-        </CollectionCover>
-        <CollectionBottom>
-          <ProfilePicture>
-            <img src={collection.ownerId.profile} alt='' />
-          </ProfilePicture>
-          <CCName>{collection.name}</CCName>
-          <CCBy>by <Link to={'/creator/' + collection.ownerId.id}>{collection.ownerId.name}</Link></CCBy>
-          <CCText>{collection.description}</CCText>
-        </CollectionBottom>
-      </Link>
-    </div>
+    <Link to={'/collection/' + collection.id}>
+      <CollectionCover>
+        <img src={collection.logo} alt='' />
+      </CollectionCover>
+      <CollectionBottom>
+        <ProfilePicture>
+          <img src={collection.ownerId.profile} alt='' />
+        </ProfilePicture>
+        <CCName>{collection.name}</CCName>
+        <CCBy>by <Link to={'/creator/' + collection.ownerId.id}>{collection.ownerId.name}</Link></CCBy>
+        <CCText>{collection.description}</CCText>
+      </CollectionBottom>
+    </Link>
+  </div>
 }
 
 // Common Style Div 
@@ -45,7 +45,7 @@ const ProfilePicture = styled.div`
 `;
 
 const CCName = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; margin:30px 0px 0px;
+  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; margin:30px 0px 0px; text-transform:capitalize;
 `;
 
 const CCBy = styled.div`
