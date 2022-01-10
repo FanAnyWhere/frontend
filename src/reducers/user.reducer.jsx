@@ -150,3 +150,12 @@ export function fetchCollectionList(state = null, action) {
       return state;
   }
 }
+
+export function addNFT(state = false, action) {
+  switch (action.type) {
+    case 'ADDED_NFT':
+      return action.data;
+    default:
+      return state;
+  }
+}

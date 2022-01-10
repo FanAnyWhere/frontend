@@ -212,9 +212,11 @@ const Marketplace = (props) => {
               return <NFT nft={nft} filterOpen={filterOpen} />
             })}
           </Trending>
-          <LoadMore>
+
+          {/* <LoadMore>
             <GradientBtn>Load More</GradientBtn>
-          </LoadMore>
+          </LoadMore> */}
+          
         </PRightpanel>
       </ProfileMain>
     </>

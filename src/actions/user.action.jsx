@@ -6,6 +6,7 @@ export const userActions = {
     getUserNFT,
     getTopNFT,
     getNFTs,
+    addNFT,
     getNFT,
     getCreators,
     getCategories,
@@ -271,6 +272,19 @@ function getLikedNFT(id) {
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'FETCHED_USER_NFT', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function addNFT(data) {
+  return async (dispatch) => {
+    const response = services.post('nft/addNft', JSON.stringify(data));
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'ADDED_NFT', data: promise.data })
       } else {
         // console.log("error");
       }
