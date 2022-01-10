@@ -292,7 +292,6 @@ const Landing = (props) => {
             :
             <TCColumn>
               {props.TopCreators.map((creators, key) => {
-                console.log('creators ?', creators)
                 return <>
                   <TCBox>
                     <TC1>1</TC1>

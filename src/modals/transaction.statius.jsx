@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { Modal } from 'react-responsive-modal'
 import { IoMdCloseCircle } from 'react-icons/io';
 import { HiQuestionMarkCircle, HiCheckCircle } from 'react-icons/hi';
@@ -12,6 +14,8 @@ const TransactionStatus = (props) => {
       <line x1="25" y1="15" x2="15" y2="25" stroke="#767676" strokeWidth="2.6" strokeLinecap="round" strokeMiterlimitit="10"></line>
     </svg>
   )
+
+  const location = useLocation();
 
   return (
     <Modal open={props.isOpen} center closeIcon={closeIcon}
@@ -34,7 +38,13 @@ const TransactionStatus = (props) => {
       <MessageOuter>
         {props.status === 'complete' &&
           <div className='button-list'>
-            <GradientBtn onClick={() => props.onClose()}>Ok</GradientBtn>
+            <GradientBtn onClick={() => {
+              if (location.pathname === '/create-nft' && props.status === 'complete') {
+                props.history.push('/marketplace')
+              } else {
+                props.onClose()
+              }
+            }}>Ok</GradientBtn>
           </div>
         }
       </MessageOuter>
@@ -94,4 +104,4 @@ const SiteLoader = styled(FlexDiv)`
   }
 `;
 
-export default TransactionStatus
+export default withRouter(TransactionStatus)
