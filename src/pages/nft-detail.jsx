@@ -101,8 +101,6 @@ const NFTDetail = (props) => {
     setOpenConfirm(true)
   }
 
-  console.log('- nft ? ', props.nft)
-
   return (
     <>
       <Gs.Container>

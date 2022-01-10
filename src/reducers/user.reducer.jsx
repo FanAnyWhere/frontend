@@ -186,3 +186,12 @@ export function fetchMoreCollections(state = null, action) {
       return state;
   }
 }
+
+export function fetchMoreCreators(state = null, action) {
+  switch (action.type) {
+    case 'MORE_CREATORS_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}

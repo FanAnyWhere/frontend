@@ -8,7 +8,6 @@ export const userActions = {
     getNFTs,
     addNFT,
     getNFT,
-    getCreators,
     getCategories,
     getLikesCount,
     likeToggler,
@@ -22,6 +21,8 @@ export const userActions = {
     getCollectionList,
     getLiveAuctionNFT,
     getMoreCollections,
+    getMoreCreators,
+    getCreators,
     getNotificationFilters,
 }
 
@@ -124,11 +125,12 @@ function getTopCollections() {
   };
 }
 
-function getCreators() {
+function getCreators(params={}) {
   return (dispatch) => {
-    const response = services.post('user/listVerifiefCreator');
+    const response = services.post('user/listVerifiefCreator', params);
     return response.then((promise) => {
       if (promise.data) {
+        dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
         dispatch({ type: 'FETCHED_CELEBRITIES', data: promise.data.data })
       } else {
         // console.log("error");
@@ -315,6 +317,20 @@ function getMoreCollections(params={}) {
       if (promise.status === 200) {
         dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
         dispatch({ type: 'MORE_COLLECTIONS_LIST', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getMoreCreators(params={}) {
+  return async (dispatch) => {
+    const response = services.post('user/listVerifiefCreator', params);
+    response.then((promise) => {
+      if (promise.status === 200) {
+        dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
+        dispatch({ type: 'MORE_CREATORS_LIST', data: promise.data.data })
       } else {
         // console.log("error");
       }

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Gs from '../theme/globalStyles';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
@@ -9,8 +11,11 @@ import RImg from '../assets/images/img1.jpg';
 import GreenIcon from '../assets/images/green-icon.png';
 import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
-import CreatorCImg from '../assets/images/creator-cover.jpg';
-import CreatorPImg from '../assets/images/creator-profile.png';
+
+
+import Creator from '../modals/creator.card';
+import { actions } from '../actions';
+
 
 const Creators = (props) => {
 
@@ -19,17 +24,24 @@ const Creators = (props) => {
     setIsOpen2(false);
   };
 
+  const [confyView, setConfyView] = useState(true)
+
+  useEffect(() => {
+    if (!props.creators) props.getCreators()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.creators]) // fetch creators
+
   return (
     <>
       <CollectionMain>
-        <ECTitle>Explore Creators</ECTitle>
+        <ECTitle>Explore Celebrities</ECTitle>
         <CDesc>
           <ECDesc>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </ECDesc>
           <NumberOuter>
             <NumberBox>
-              <NumberTitle>230</NumberTitle>
-              <p>Great creators</p>
+              <NumberTitle>{props.creator ? props.creator.length : '000'}</NumberTitle>
+              <p>Great celebrity</p>
             </NumberBox>
             <NumberBox>
               <NumberTitle>9999</NumberTitle>
@@ -50,20 +62,35 @@ const Creators = (props) => {
             </Collapse>
           </CustomDropdown>
           <CustomSwitch>
-            <button className='active'><img src={ListIcon} alt='' /></button>
-            <button><img src={GridIcon} alt='' /></button>
+            <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+            <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
           </CustomSwitch>
         </ResultRight>
-        <CollectionRow className='comfy-view'>
-          <div className='item'>
+
+        {!props.creators && <SiteLoader>
+            <div className='loader-inner'>
+              <div className="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader>  }
+
+        <CollectionRow className={confyView && 'comfy-view'}>
+
+          {props.creators && props.creators.length === 0 && 'No Data Is Display'}
+
+          {props.creators && props.creators.map( (creator, key) => {
+            return creator.isActive && <Creator key={key} creator={creator} /> }
+          )}
+
+          {/* <div className='item'>
             <CollectionCover>
-              <img src={CreatorCImg} alt='' />
+              <img src={celebrityCImg} alt='' />
             </CollectionCover>
             <CollectionBottom>
               <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
+                <img src={celebrityPImg} alt='' />
               </ProfilePicture>
-              <CCName>Creator Name</CCName>
+              <CCName>celebrity Name</CCName>
               <CCBy>$10000.00</CCBy>
               <FollowerRow>
                 <FollowNumber><span>000</span> followers</FollowNumber>
@@ -71,233 +98,13 @@ const Creators = (props) => {
               </FollowerRow>
               <Link to='/'>Follow</Link>
             </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
-          <div className='item'>
-            <CollectionCover>
-              <img src={CreatorCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={CreatorPImg} alt='' />
-              </ProfilePicture>
-              <CCName>Creator Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div>
+          </div> */}
 
         </CollectionRow>
-        <LoadMore>
+
+        {/* <LoadMore>
           <GradientBtn>Load More</GradientBtn>
-        </LoadMore>
+        </LoadMore> */}
       </CollectionMain>
     </>
   );
@@ -450,4 +257,33 @@ const CustomSwitch = styled(FlexDiv)`
   }
 `;
 
-export default Creators;
+const SiteLoader = styled(FlexDiv)`
+  margin:30px 0px;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
+`;
+
+
+const mapDipatchToProps = (dispatch) => {
+  return {
+    getCreators: () => dispatch(actions.getCreators()),
+    getMoreCreators: (params) => dispatch(actions.getMoreCreators(params)),
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    creators: state.fetchCreators,
+    pagination: state.fetchPagination,
+    morecelebritys: state.fetchMoreCreators,
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Creators))
