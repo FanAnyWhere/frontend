@@ -28,7 +28,7 @@ import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../
 
 function Header(props) {
 
-  const navTabs = ['Marketplace', 'Celebrities', 'Activity']
+  const navTabs = ['Marketplace', 'Celebrities']
   const location = useLocation()
   const [openLogin, setOpenLogin] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
@@ -164,6 +164,11 @@ function Header(props) {
             >
               {tab}
             </NavLink>)}
+            {props.authenticated.isLoggedIn &&
+              <NavLink to='/activity'
+                className={nav === 'activity' && 'active'}>
+                Activity
+              </NavLink> }
             <a onClick={() => setIsOpen3(state => !state)} >Help Center
               <HelpDropdown className={`${isOpen3 && 'active'}`}>
                 <BiChevronDown />
