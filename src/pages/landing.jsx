@@ -162,19 +162,18 @@ const Landing = (props) => {
       </Gs.Container>
 
       <Gs.Container>
-        <TopCollections>
-          {!props.TopCollections ?
-            <SiteLoader>
+        {!props.TopCollections && <SiteLoader>
               <div className='loader-inner'>
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader>
-            :
+            </SiteLoader>}
+        <TopCollections>
+          {props.TopCollections &&
             <TCColumn>
-              {/* {props.TopCollections.map((collection, key) => {
+              {props.TopCollections.map((collection, key) => {
                 return collection.collectionId.isActive && <Collection collection={collection} key={key} />
-              })} */}
+              })}
             </TCColumn>
           }
           {props.TopCollections && props.TopCollections.length === 0 && 'No data available'}
@@ -281,23 +280,23 @@ const Landing = (props) => {
       </Gs.Container>
 
       <Gs.Container>
-        <TopCollections className='ver2'>
-          {!props.TopCreators ?
-            <SiteLoader>
+        {!props.TopCreators && <SiteLoader>
               <div className='loader-inner'>
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader>
-            :
+            </SiteLoader>}
+        <TopCollections className='ver2'>
+          {props.TopCreators &&
             <TCColumn>
-              {props.TopCreators.map((creators, key) => {
+              {props.TopCreators.map((creator, key) => {
+                console.log('-creator : ', creator)
                 return <>
                   <TCBox>
                     <TC1>1</TC1>
-                    <TC2><img src={CreatorUser} alt='' /></TC2>
+                    <TC2><img src={creator.profile} alt='' /></TC2>
                     <TC3>
-                      <h4>Collection Name</h4>
+                      <h4>{creator.name}</h4>
                       <p>$10000.00</p>
                     </TC3>
                   </TCBox>
