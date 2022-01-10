@@ -488,13 +488,17 @@ function MyProfile(props) {
               <button className='c-all'>Clear All</button>
             </FilterBar> */}
             <ResultRight>
-              {/* <CustomDropdown className='short'>
-                <label onClick={() => setIsOpen2(state => !state)}>Sort by <HiOutlineChevronDown /></label>
+              <CustomDropdown>
+                <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
-                  <Link to='/'>Low to High</Link>
-                  <Link to='/'>High to Low</Link>
+                  <div className='priceList'>
+                    <Link to='/' className='active'>Recently Added</Link>
+                    <Link to='/'>Price: Low to High</Link>
+                    <Link to='/'>Price: High to Low</Link>
+                    <Link to='/'>Ending Soon</Link>
+                  </div>
                 </Collapse>
-              </CustomDropdown> */}
+              </CustomDropdown>
               <CustomSwitch>
                 <button><img src={ListIcon} alt='' /></button>
                 <button className='active'><img src={GridIcon} alt='' /></button>
@@ -702,7 +706,7 @@ const CustomDropdown = styled.div`
 
 const CustomSwitch = styled(FlexDiv)`
   border: 1px solid #AEAEAE; box-sizing: border-box; border-radius: 2px; width: 100px;
-  button{width:50%; font-weight: bold; font-size: 16px; line-height: 20px; color:#fff; padding:13px 0px; display:flex; align-items:center; justify-content:center;
+  button{width:50%; font-weight: bold; font-size: 16px; line-height: 20px; color:#fff; padding:12px 0px; display:flex; align-items:center; justify-content:center;
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
       :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
     }

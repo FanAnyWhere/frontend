@@ -68,7 +68,7 @@ const ReportDesc = styled(FlexDiv)`
   b{font-weight:500;}
   svg{margin-left:5px; font-size:20px;
     &.red{color:#DF5454;}
-    &.yellow{color:#ffc107;}
+    &.yellow{color:#F99807;}
     &.green{color:#10C061;}
   }
 `;

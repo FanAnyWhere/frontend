@@ -180,11 +180,11 @@ function Header(props) {
             </a>
           </nav>
 
-          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn 
+          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
             && props.user?.status === 'APPROVED' &&
-              <GradientBtn onClick={() => props.history.push('/create-nft')} >Create</GradientBtn>}
+            <GradientBtn onClick={() => props.history.push('/create-nft')} >Create</GradientBtn>}
 
-          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn 
+          {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
             && props.user?.status === 'PENDING' && <GradientBtn>Pending</GradientBtn>}
 
           {!props.authenticated.isLoggedIn &&
@@ -250,7 +250,7 @@ const HeaderSection = styled(FlexDiv)`
 const HeadLeft = styled.div``;
 
 const HeadRight = styled(FlexDiv)`
-  a{ display:inline-flex; align-items:center;
+  a{ display:inline-flex; align-items:center; cursor:pointer;
     font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; margin:0px 12px; padding:0px; border-bottom:2px solid #1D1D1D;
     &.active{color:#fff; border-color:#fff;}
     :hover{color:#aeaeae; border-color:#aeaeae;}

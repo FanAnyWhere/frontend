@@ -37,8 +37,8 @@ Gs.GlobalStyle = createGlobalStyle`
 
   .Toastify .Toastify__toast--success{background-color:#10C061; min-height:40px;}
   .Toastify .Toastify__toast--error{background-color:#DF5454; min-height:40px;}
-  .Toastify .Toastify__toast--warning{background-color:#ffc107; min-height:40px;}
-  .Toastify .Toastify__toast--info{background-color:#3498db; min-height:40px;}
+  .Toastify .Toastify__toast--warning{background-color:#F99807; min-height:40px;}
+  .Toastify .Toastify__toast--info{background-color:#0F8AFC; min-height:40px;}
 `;
 
 
