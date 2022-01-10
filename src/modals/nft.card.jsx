@@ -99,7 +99,7 @@ const LiveBox = styled.div`
       &.ver3{display:flex; align-items:center;
         img{margin-left:4px;}
       }
-      &.ver4{margin-bottom:15px;}
+      &.ver4{margin-bottom:15px; height:16px;}
     }
     h3{
       color: #F6F6F6; font-weight: bold; font-size: 16px; line-height: 24px; margin:0px 0px 15px;

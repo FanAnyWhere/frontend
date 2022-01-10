@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const collection = (props) => {
-    let { collection, key } = props
+  let { collection, key } = props
 
-    return <div className='item' key={key}>
-      <Link to={'/collection/'+collection.id}>
+  return <div className='item' key={key}>
+      <Link to={'/collection/' + collection.id}>
         <CollectionCover>
           <img src={collection.logo} alt='' />
         </CollectionCover>
@@ -14,7 +14,7 @@ const collection = (props) => {
             <img src={collection.ownerId.profile} alt='' />
           </ProfilePicture>
           <CCName>{collection.name}</CCName>
-          <CCBy>by <Link to={'/celebrity/'+collection.ownerId.id}>{collection.ownerId.name}</Link></CCBy>
+          <CCBy>by <Link to={'/creator/' + collection.ownerId.id}>{collection.ownerId.name}</Link></CCBy>
           <CCText>{collection.description}</CCText>
         </CollectionBottom>
       </Link>
@@ -40,7 +40,7 @@ const CollectionBottom = styled.div`
 `;
 
 const ProfilePicture = styled.div`
-  width:83.33px; height:83.33px; overflow:hidden; position:absolute; top:-41.66px; left:calc(50% - 41.66px);
+  width:83.33px; height:83.33px; overflow:hidden; position:absolute; top:-41.66px; left:calc(50% - 41.66px); border-radius:50%;
   img{width:100%; height:100%; object-fit:cover;}
 `;
 
@@ -54,7 +54,7 @@ const CCBy = styled.div`
 `;
 
 const CCText = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676;
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; min-height:48px; overflow:hidden;
 `;
 
 const CollectionRow = styled(FlexDiv)`
