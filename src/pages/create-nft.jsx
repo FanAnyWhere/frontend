@@ -64,6 +64,7 @@ const CreateNFT = (props) => {
 
   useEffect( () => {
     if (props.user && props.user.status === 'PENDING') props.history.push('/')
+    if (!props.authenticated.isLoggedIn) props.history.push('/')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.user])
 

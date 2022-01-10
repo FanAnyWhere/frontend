@@ -28,6 +28,7 @@ import UserIcon from '../assets/images/user-img.png';
 
 import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
+import { Toast } from '../helper/toastify.message'
 import ipfs from '../config/ipfs'
 import NFT from '../modals/nft.card'
 
@@ -74,26 +75,28 @@ function MyProfile(props) {
   let profileCoverInput = useRef()
 
   useEffect(() => {
-    if (!props.NFTs) props.getUserNFTs()
+    if (!props.NFTs && props.authenticated.isLoggedIn) props.getUserNFTs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs])
 
   useEffect(() => {
     if (tab === 'collected') props.getCollectedNFTs(props.user.id)
     if (tab === 'liked') props.getLikedNFTs(props.user.id)
-    if (tab === 'created') props.getUserNFTs()
+    if (tab === 'created' && props.authenticated.isLoggedIn) props.getUserNFTs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab])
-
-  console.log('- tab ? ', tab)
-  console.log('- props.NFTs ? ', props.NFTs)
 
 
   useEffect(() => {
     const getUser = async () => {
       props.getUserDetails() // fetch user details
     }
-    getUser()
+    if (props.authenticated.isLoggedIn) {
+      getUser()
+    } else {
+      Toast.warning('Frist Connect with wallet')
+      props.history.push('/')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -11,6 +11,7 @@ import User1 from '../assets/images/user-1.png'
 import User2 from '../assets/images/user-2.png'
 import User3 from '../assets/images/user-3.png'
 import Loader from '../helper/loader'
+import { Toast } from '../helper/toastify.message'
 import { actions } from '../actions'
 
 
@@ -31,7 +32,12 @@ const Activity = (props) => {
       await props.getNotifications() // fetch notifications
       // await props.getNotificationFilters() // fetch notifications filters
     }
-    getNotifications()
+    if (props.authenticated.isLoggedIn) {
+      getNotifications() 
+    } else {
+      Toast.warning('Frist Connect with wallet')
+      props.history.push('/')
+    }
     // eslint-disable-next-line
   }, [])
 
