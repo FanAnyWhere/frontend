@@ -50,7 +50,7 @@ const Collections = (props) => {
             <button><img src={GridIcon} alt='' /></button>
           </CustomSwitch>
         </ResultRight>
-        <CollectionRow>
+        <CollectionRow className='comfy-view'>
           <div className='item'>
             <CollectionCover>
               <img src={CCImg} alt='' />
@@ -263,6 +263,9 @@ const CollectionRow = styled(FlexDiv)`
   .item{background-color:#2F2F2F; border-radius: 5px; width:calc(16.80% - 15px); margin:0px 15px 20px 0px;
     :nth-child(6n){margin-right:0px;}
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
+  }
+  &.comfy-view{ margin:0px -5px;
+    .item{margin:0px 5px 25px; width:calc(20% - 10px);}
   }
 `;
 
