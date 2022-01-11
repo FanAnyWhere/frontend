@@ -101,6 +101,8 @@ const NFTDetail = (props) => {
     setOpenConfirm(true)
   }
 
+  console.log('nft ', props.nft?.saleState)
+
   return (
     <>
       <Gs.Container>
@@ -188,7 +190,7 @@ const NFTDetail = (props) => {
                   </div>
                   <div className='follow-box'>
                     <p>Available</p>
-                    <FNumber>{props.nft.nftSold} of {props.nft.edition}</FNumber>
+                    <FNumber>{Number(props.nft.edition) - Number(props.nft.nftSold)} of {props.nft.edition}</FNumber>
                   </div>
                 </FollowBoxRow>
                 <FollowBoxRow className='smaller'>
@@ -383,6 +385,8 @@ const NFTDetail = (props) => {
                       </GradientBtn>
                   : ''
                 }
+
+                {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>}
 
                 {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
                   props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
