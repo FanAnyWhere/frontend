@@ -68,6 +68,7 @@ function CelebrityDetails(props) {
 
 
   const [filterOpen, setFilterOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState(null)
   const [confyView, setConfyView] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -87,6 +88,10 @@ function CelebrityDetails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    setLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.follow])
 
   useEffect(() => {
     if (tab === 'collected') props.getCollectedNFTs(id)
@@ -102,12 +107,6 @@ function CelebrityDetails(props) {
       props.getIsFollow(id) // fetch user is following
     }
     getUser() // get user details
-    // if (localStorage.getItem('fawToken')) {
-    //   getUser()
-    // } else {
-    //   Toast.warning('Frist Connect with wallet')
-    //   props.history.push('/')
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -127,7 +126,7 @@ function CelebrityDetails(props) {
   }, [props.user])
 
   const followToggler = async () => {
-    console.log('toggle ? ', id)
+    setLoading(true)
     props.followToggler(id)
   }
 
@@ -178,7 +177,7 @@ function CelebrityDetails(props) {
 
                 <GradientBtn className={props.follow.isFollowed && 'white-border'}
                   onClick={() => followToggler(id)}>
-                  {props.follow.isFollowed ? 'Unfollow' : 'Follow'} <div class="btn-loader"></div>
+                  {loading ? <div class="btn-loader"></div>: props.follow.isFollowed ? 'Unfollow' : 'Follow'}
                 </GradientBtn>
 
                 <CustomDropdown className='custom-width'>
