@@ -104,7 +104,7 @@ function CelebrityDetails(props) {
   useEffect(() => {
     const getUser = async () => {
       props.getUserDetails(id) // fetch user details
-      props.getIsFollow(id) // fetch user is following
+      if (localStorage.getItem('fawToken')) props.getIsFollow(id) // fetch user is following
     }
     getUser() // get user details
     // eslint-disable-next-line react-hooks/exhaustive-deps
