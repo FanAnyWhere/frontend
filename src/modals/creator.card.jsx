@@ -11,11 +11,11 @@ const creator = (props) => {
   return <div className='item' key={key}>
     <Link to={'/creator/' + creator.id}>
       <CollectionCover>
-        <img src={creator.cover ? creator.cover : CreatorCImg} alt='' />
+        <img src={creator.cover ? creator.cover : null} alt='' />
       </CollectionCover>
       <CollectionBottom>
         <ProfilePicture>
-          <img src={creator.profile ? creator.profile : CreatorPImg} alt='' />
+          <img src={creator.profile ? creator.profile : null} alt='' />
         </ProfilePicture>
         <CCName>{creator.name}</CCName>
         <CCBy>$10000.00</CCBy>
