@@ -82,6 +82,7 @@ function MyProfile(props) {
       props.clearUserDetails()
       props.clearNFTs()
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
