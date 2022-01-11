@@ -9,7 +9,7 @@ const creator = (props) => {
   let { creator, key } = props
 
   return <div className='item' key={key}>
-    <Link to={'/creator/' + creator.id}>
+    <Link to={'/celebrity/' + creator.id}>
       <CollectionCover>
         <img src={creator.cover ? creator.cover : null} alt='' />
       </CollectionCover>

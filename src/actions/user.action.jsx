@@ -23,6 +23,9 @@ export const userActions = {
     getMoreCollections,
     getMoreCreators,
     getCreators,
+    getIsFollow,
+    followToggler,
+    getSignleUserDetails,
     getNotificationFilters,
 }
 
@@ -60,6 +63,21 @@ function getUserDetails() {
       if (promise.status === 200) {
         if (promise.data.data) {
           dispatch({type: 'FETCHED_USER_DETAILS', data: promise.data.data});
+        }
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getSignleUserDetails(id) {
+  return (dispatch) => {
+    const response = services.get('user/getSingleUser/'+id);
+    response.then(async (promise) => {
+      if (promise.status === 200) {
+        if (promise.data.data) {
+          dispatch({type: 'FETCHED_SINGLE_USER_DETAILS', data: promise.data.data});
         }
       } else {
         // console.log("error");
@@ -331,6 +349,32 @@ function getMoreCreators(params={}) {
       if (promise.status === 200) {
         dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
         dispatch({ type: 'MORE_CREATORS_LIST', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getIsFollow(id) {
+  return async (dispatch) => {
+    const response = services.get('follow/checkIsFollowed/'+id);
+    response.then((promise) => {
+      if (promise.status === 200) {
+        dispatch({ type: 'FETCHED_IS_FOLLOW', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function followToggler(id) {
+  return async (dispatch) => {
+    const response = services.get('follow/toggle/'+id);
+    response.then((promise) => {
+      if (promise.status === 200) {
+        dispatch(getIsFollow(id));
       } else {
         // console.log("error");
       }

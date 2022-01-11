@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import 'react-responsive-modal/styles.css';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -31,11 +32,12 @@ import ListIcon from '../assets/images/list.png';
 import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
 import { Toast } from '../helper/toastify.message'
-import ipfs from '../config/ipfs'
 import NFT from '../modals/nft.card'
 
 
-function MyProfile(props) {
+function CelebrityDetails(props) {
+
+  const { id } = useParams()
 
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -66,16 +68,16 @@ function MyProfile(props) {
 
 
   const [filterOpen, setFilterOpen] = useState(false)
-  const [profile, setProfile] = useState({ file: null, url: null, buffer: null })
-  const [cover, setCover] = useState({ file: null, url: null, buffer: null })
-  const [loading, setLoading] = useState(false)
-  const [confyView, setConfyView] = useState(true)
   const [address, setAddress] = useState(null)
+  const [confyView, setConfyView] = useState(true)
   const [copied, setCopied] = useState(false)
   const [tab, setTab] = useState('created')
 
-  let profileInput = useRef()
-  let profileCoverInput = useRef()
+  useEffect(() => {
+    if (!props.NFTs) props.getUserNFTs(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.NFTs])
+
 
   useEffect(() => {
     return () => {
@@ -84,29 +86,27 @@ function MyProfile(props) {
     }
   }, [])
 
-  useEffect(() => {
-    if (!props.NFTs && props.authenticated.isLoggedIn) props.getUserNFTs()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.NFTs])
 
   useEffect(() => {
-    if (tab === 'collected') props.getCollectedNFTs(props.user.id)
-    if (tab === 'liked') props.getLikedNFTs(props.user.id)
-    if (tab === 'created' && props.authenticated.isLoggedIn) props.getUserNFTs()
+    if (tab === 'collected') props.getCollectedNFTs(id)
+    if (tab === 'liked') props.getLikedNFTs(id)
+    if (tab === 'created') props.getUserNFTs(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab])
 
 
   useEffect(() => {
     const getUser = async () => {
-      props.getUserDetails() // fetch user details
+      props.getUserDetails(id) // fetch user details
+      props.getIsFollow(id) // fetch user is following
     }
-    if (localStorage.getItem('fawToken')) {
-      getUser()
-    } else {
-      Toast.warning('Frist Connect with wallet')
-      props.history.push('/')
-    }
+    getUser() // get user details
+    // if (localStorage.getItem('fawToken')) {
+    //   getUser()
+    // } else {
+    //   Toast.warning('Frist Connect with wallet')
+    //   props.history.push('/')
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -125,90 +125,13 @@ function MyProfile(props) {
     // eslint-disable-next-line
   }, [props.user])
 
-  useEffect(() => {
-    const getUser = async () => {
-      Toast.success('Cover photo updated successfully')
-      setLoading(false)
-      props.getUserDetails() // fetch user details
-    }
-    if (props.updated?.details) getUser()
-    // eslint-disable-next-line
-  }, [props.updated])
+  console.log('status ? ', props.follow, id)
 
-  useEffect(() => {
-    const updateCover = async () => {
-      updateCoverFile() // update cover image
-    }
-    if (cover.buffer) updateCover()
-    // eslint-disable-next-line
-  }, [cover])
-
-  useEffect(() => {
-    const updateProfile = async () => {
-      updateProfileFile() // update profile image
-    }
-    if (profile.buffer) updateProfile()
-    // eslint-disable-next-line
-  }, [profile])
-
-  const convertToBuffer = async (reader, operation = false, url = null, file = null) => {
-    //file is converted to a buffer to prepare for uploading to IPFS`
-    const buffer = await Buffer.from(reader.result);
-    //set this buffer -using es6 syntax
-    if (operation)
-      setCover({ buffer: buffer, url: url, file: file })
-    else
-      setProfile({ buffer: buffer, url: url, file: file })
+  const followToggler = async () => {
+    console.log('toggle ? ', id)
+    props.followToggler(id)
   }
-
-  const profileFileChange = async () => {
-    setLoading(true) // start loader
-    let file = profileInput.current.files[0];
-    let url = URL.createObjectURL(file);
-    setProfile({ buffer: null, url: url, file: file })
-    if (file.size > 1572864) {
-      // check file size
-      file = await compressImage(file); // compress image
-    }
-    let reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => convertToBuffer(reader, false, url, file);
-  }
-
-  const coverFileChange = async () => {
-    setLoading(true) // start the loader
-    let file = profileCoverInput.current.files[0]
-    let url = URL.createObjectURL(file)
-    setCover({ buffer: null, url: url, file: file })
-    if (file.size > 1572864) {
-      // check file size
-      file = await compressImage(file); // compress image
-    }
-    let reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => convertToBuffer(reader, true, url, file);
-  }
-
-  const updateCoverFile = async () => {
-    let ipfsHash = await ipfs.add(cover.buffer, { // get buffer IPFS hash
-      pin: true, progress: (bytes) => {
-        // console.log('File upload progress ', Math.floor(bytes * 100 / (cover.file.size)))
-      }
-    })
-    let userObj = { cover: ipfsHash.path };
-    setLoading(true)
-    props.updateProfile(userObj); // update profile
-  }
-
-  const updateProfileFile = async () => {
-    let ipfsHash = await ipfs.add(profile.buffer, { // get buffer IPFS hash
-      pin: true, progress: (bytes) => {
-        // console.log('File upload progress ', Math.floor(bytes * 100 / (profile.file.size)))
-      }
-    })
-    props.updateProfile({ profile: ipfsHash.path }); // update profile
-  }
-
+  
   const copyToClipboard = (address) => {
     setCopied(true)
     copy(address)
@@ -219,60 +142,25 @@ function MyProfile(props) {
 
   return (
     <>
+{/* 
+        {!props.user &&
+          <SiteLoader>
+            <div className='loader-inner'>
+              <div className="loader"></div>
+              <p>Loading</p>
+            </div>
+          </SiteLoader>
+        } */}
+
       <ProfileCover>
         <div className='img-outer'>
           <img src={props.user?.cover} alt='' />
-          <div className='overlay'>
-            {loading && <SiteLoader>
-                <div className='loader-inner'>
-                  <div className="loader"></div>
-                  <p>Uploading</p>
-                </div>
-              </SiteLoader>}
-            <input
-              type='file'
-              accept="image/*"
-              ref={profileCoverInput}
-              name='profileCoverInput'
-              id='profileCoverInput'
-              hidden
-              onChange={() => {
-                coverFileChange()
-              }}
-            />
-            <GradientBtn
-              onClick={() => {
-                profileCoverInput.current.click()
-              }}>
-              {props.user?.cover ? 'Change' : 'Add'} {' '} Cover Photo
-            </GradientBtn>
-          </div>
         </div>
       </ProfileCover>
       <ProfileRow>
         <PRLeft>
           <div className='image-outer'>
             <img src={props.user?.profile} alt='' />
-            <div className='overlay'>
-              {/* <SiteLoader>
-                <div className='loader-inner'>
-                  <div className="loader"></div>
-                  <p>Uploading</p>
-                </div>
-              </SiteLoader> */}
-              {/* <input
-                type='file'
-                accept="image/*"
-                ref={profileInput}
-                name='profile_pic'
-                id='profile_file'
-                hidden
-                onChange={() => {
-                  profileFileChange()
-                }}
-              />
-              <img src={EditIcon} alt='' onClick={() => { profileInput.current.click() }} /> */}
-            </div>
           </div>
         </PRLeft>
         <PRRight>
@@ -285,43 +173,48 @@ function MyProfile(props) {
                 {copied && <CopyedText>Copied!</CopyedText>}
               </AddressBar>
             </div>
-            <div className='PTT-right'>
-              {/* <Link to='#' className="edit-profile">Unfollow</Link>
-              <GradientBtn>Follow</GradientBtn> */}
-              <Link to='/edit-profile' className="edit-profile">Edit Profile</Link>
-              <CustomDropdown className='custom-width'>
-                <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
-                <Collapse onInit={onInit} isOpen={isOpen5}>
-                  <DDTitle>Share Options</DDTitle>
-                  <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
-                  <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
-                  <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
-                </Collapse>
-              </CustomDropdown>
-              <CustomDropdown className='report-box'>
-                <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
-                <Collapse onInit={onInit} isOpen={isOpen6}>
-                  <p onClick={() => setOpenFirst(true)}>Report Profile</p>
-                </Collapse>
-                <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
-                  overlay: 'customOverlay',
-                  modal: 'customModal',
-                }}>
-                  <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
-                  <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
-                  <MessageOuter>
-                    <label>Message</label>
-                    <textarea>Gives us some details</textarea>
-                    <p>Please provide specific and clear message</p>
-                    <div className='button-list'>
-                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
-                      <GradientBtn>Report</GradientBtn>
-                    </div>
-                  </MessageOuter>
-                </Modal>
-              </CustomDropdown>
 
-            </div>
+            {props.authenticated.isLoggedIn && 
+              <div className='PTT-right'>
+
+                <GradientBar className={props.follow.isFollowed && 'edit-profile'} 
+                  onClick={() => followToggler(id)}>
+                  {props.follow.isFollowed ? 'Unfollow': 'Follow'}
+                </GradientBar>
+
+                <CustomDropdown className='custom-width'>
+                  <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
+                  <Collapse onInit={onInit} isOpen={isOpen5}>
+                    <DDTitle>Share Options</DDTitle>
+                    <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
+                    <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
+                    <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                  </Collapse>
+                </CustomDropdown>
+                <CustomDropdown className='report-box'>
+                  <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                  <Collapse onInit={onInit} isOpen={isOpen6}>
+                    <p onClick={() => setOpenFirst(true)}>Report Profile</p>
+                  </Collapse>
+                  <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
+                    overlay: 'customOverlay',
+                    modal: 'customModal',
+                  }}>
+                    <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
+                    <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
+                    <MessageOuter>
+                      <label>Message</label>
+                      <textarea>Gives us some details</textarea>
+                      <p>Please provide specific and clear message</p>
+                      <div className='button-list'>
+                        <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                        <GradientBtn>Report</GradientBtn>
+                      </div>
+                    </MessageOuter>
+                  </Modal>
+                </CustomDropdown>
+
+              </div> }
           </PRTop>
           <PRBottom>
             <div className='prb-left'>
@@ -938,22 +831,6 @@ const NavSearch = styled.div`
   }
 `;
 
-
-const SiteLoader = styled(FlexDiv)`
-  height:100%; position:absolute; left:0; right:0;
-  .loader-inner{
-    text-align:center;
-    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
-      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
-  }
-`;
-
 const CustomcheckBox = styled.div`
 .container {
   display: block;
@@ -1020,24 +897,40 @@ const CustomcheckBox = styled.div`
 }
 `;
 
+const SiteLoader = styled(FlexDiv)`
+  height:calc(100vh - 290px);
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
+`;
+
 
 const mapDipatchToProps = (dispatch) => {
   return {
-    getUserDetails: () => dispatch(actions.getUserDetails()),
-    getUserNFTs: () => dispatch(actions.getUserNFT()),
+    getUserDetails: (id) => dispatch(actions.getSignleUserDetails(id)),
+    getUserNFTs: (id) => dispatch(actions.getUserNFT(id)),
     getLikedNFTs: (id) => dispatch(actions.getLikedNFT(id)),
+    getIsFollow: (id) => dispatch(actions.getIsFollow(id)),
+    followToggler: (id) => dispatch(actions.followToggler(id)),
     getCollectedNFTs: (id) => dispatch(actions.getCollectedNFT(id)),
     clearNFTs: () => dispatch({ type: 'FETCHED_NFT', data: false }),
-    clearUserDetails: () => dispatch({ type: 'FETCHED_USER_DETAILS', data: false }),
-    updateProfile: (params) => dispatch(actions.updateUserDetails(params)),
+    clearUserDetails: () => dispatch({ type: 'FETCHED_SINGLE_USER_DETAILS', data: false }),
   }
 }
 const mapStateToProps = (state) => {
   return {
     authenticated: state.isAuthenticated,
-    updated: state.updateProfile,
-    user: state.fetchUserDetails,
+    user: state.fetchSingleUserDetails,
+    follow: state.fetchIsFollow,
     NFTs: state.fetchUserNFTs,
   }
 }
-export default withRouter(connect(mapStateToProps, mapDipatchToProps)(MyProfile));
+export default withRouter(connect(mapStateToProps, mapDipatchToProps)(CelebrityDetails));

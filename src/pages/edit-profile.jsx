@@ -133,7 +133,7 @@ const EditProfile = (props) => {
         {loading && <SiteLoader>
             <div className='loader-inner'>
               <div className='loader'></div>
-              <p>adding..</p>
+              <p>updating..</p>
             </div>
           </SiteLoader>}
 

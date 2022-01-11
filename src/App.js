@@ -19,6 +19,7 @@ const NFTDetail = React.lazy(() => import('./pages/nft-detail'))
 const CreateNFT = React.lazy(() => import('./pages/create-nft'))
 const Collections = React.lazy(() => import('./pages/collections'))
 const Creators = React.lazy(() => import('./pages/creators'))
+const CelebrityDetails = React.lazy(() => import('./pages/creator.detail'))
 
 function App() {
 
@@ -45,7 +46,7 @@ function App() {
             <Route path="/collections"><Collections /></Route>
             {/* <Route path="/collections/i:d"><Collections /></Route> */}
             <Route path="/celebrities"><Creators /></Route>
-            {/* <Route path="/celebrity/:id"><Creators /></Route> */}
+            <Route path="/celebrity/:id"><CelebrityDetails /></Route>
             <Route component={NotFound} />
           </Switch>
           <Footer />

@@ -25,6 +25,15 @@ export function fetchUserDetails(state = {}, action) {
   }
 }
 
+export function fetchSingleUserDetails(state = false, action) {
+  switch (action.type) {
+    case 'FETCHED_SINGLE_USER_DETAILS':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
 export function updateProfile(state = null, action) {
   switch (action.type) {
     case 'PROFILE_UPDATED':
@@ -190,6 +199,15 @@ export function fetchMoreCollections(state = null, action) {
 export function fetchMoreCreators(state = null, action) {
   switch (action.type) {
     case 'MORE_CREATORS_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchIsFollow(state = { isFollowed: false }, action) {
+  switch (action.type) {
+    case 'FETCHED_IS_FOLLOW':
       return action.data;
     default:
       return state;
