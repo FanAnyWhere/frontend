@@ -93,7 +93,7 @@ function MyProfile(props) {
     const getUser = async () => {
       props.getUserDetails() // fetch user details
     }
-    if (props.authenticated.isLoggedIn) {
+    if (localStorage.getItem('fawToken')) {
       getUser()
     } else {
       Toast.warning('Frist Connect with wallet')
@@ -119,6 +119,8 @@ function MyProfile(props) {
 
   useEffect(() => {
     const getUser = async () => {
+      Toast.success('Cover photo updated successfully')
+      setLoading(false)
       props.getUserDetails() // fetch user details
     }
     if (props.updated?.details) getUser()
@@ -186,6 +188,7 @@ function MyProfile(props) {
       }
     })
     let userObj = { cover: ipfsHash.path };
+    setLoading(true)
     props.updateProfile(userObj); // update profile
   }
 
@@ -212,12 +215,12 @@ function MyProfile(props) {
         <div className='img-outer'>
           <img src={props.user?.cover} alt='' />
           <div className='overlay'>
-            <SiteLoader>
-              <div className='loader-inner'>
-                <div className="loader"></div>
-                <p>Uploading</p>
-              </div>
-            </SiteLoader>
+            {loading && <SiteLoader>
+                <div className='loader-inner'>
+                  <div className="loader"></div>
+                  <p>Uploading</p>
+                </div>
+              </SiteLoader>}
             <input
               type='file'
               accept="image/*"
@@ -243,13 +246,13 @@ function MyProfile(props) {
           <div className='image-outer'>
             <img src={props.user?.profile} alt='' />
             <div className='overlay'>
-              <SiteLoader>
+              {/* <SiteLoader>
                 <div className='loader-inner'>
                   <div className="loader"></div>
                   <p>Uploading</p>
                 </div>
-              </SiteLoader>
-              <input
+              </SiteLoader> */}
+              {/* <input
                 type='file'
                 accept="image/*"
                 ref={profileInput}
@@ -260,7 +263,7 @@ function MyProfile(props) {
                   profileFileChange()
                 }}
               />
-              <img src={EditIcon} alt='' onClick={() => { profileInput.current.click() }} />
+              <img src={EditIcon} alt='' onClick={() => { profileInput.current.click() }} /> */}
             </div>
           </div>
         </PRLeft>

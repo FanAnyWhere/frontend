@@ -13,7 +13,7 @@ import TimerIcon from '../assets/images/timer.png';
 
 const NFT = (props) => {
 
-  let { nft, filterOpen } = props
+  let { nft, filterOpen, index } = props
 
   // const [ext, setExt] = useState(nft.image.format)
   // useEffect(() => {
@@ -30,8 +30,7 @@ const NFT = (props) => {
   // }, []);
 
 
-  return <>
-    <div className={`item ${filterOpen && 'active'}`}>
+  return <div className={`item ${filterOpen && 'active'}`} key={index}>
       <Link to={'/nft-detail/' + nft._id}>
         <LiveBox>
           <div className='img-outer ver3'>
@@ -71,8 +70,6 @@ const NFT = (props) => {
         </LiveBox>
       </Link>
     </div>
-    <ReactTooltip html={true} data-multiline={true} effect="solid" />
-  </>
 }
 
 // Common Style Div 
