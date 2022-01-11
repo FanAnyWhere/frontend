@@ -291,12 +291,14 @@ const Landing = (props) => {
             <TCColumn>
               {props.TopCreators.map((creator, key) => {
                 return <TCBox key={key}>
-                  <TC1>{key + 1}</TC1>
-                  <TC2><img src={creator.profile} alt='' /></TC2>
-                  <TC3>
-                    <h4>{creator.name}</h4>
-                    <p>$10000.00</p>
-                  </TC3>
+                  <Link to={'/celebrity/'+creator.id} >
+                    <TC1>{key + 1}</TC1>
+                    <TC2><img src={creator.profile} alt='' /></TC2>
+                    <TC3>
+                      <h4>{creator.name}</h4>
+                      <p>$10000.00</p>
+                    </TC3>
+                  </Link>
                 </TCBox>
               })}
             </TCColumn>
