@@ -146,7 +146,7 @@ const Landing = (props) => {
             </SiteLoader> :
             <Carousel responsive={responsive1} partialVisible={true}>
               {props.LiveAuctionNFTs.map((nft, key) => {
-                return nft.isActive && nft.auctionEndDate && <NFT nft={nft} key={key} />
+                return nft.isActive && nft.auctionEndDate && <NFT nft={nft} index={key} />
               })}
             </Carousel>
           }
@@ -172,7 +172,7 @@ const Landing = (props) => {
           {props.TopCollections &&
             <TCColumn2>
               {props.TopCollections.map((collection, key) => {
-                return key < 4 && collection.collectionId.isActive && <Collection collection={collection.collectionId} key={key} />
+                return key < 4 && collection.collectionId.isActive && <Collection collection={collection.collectionId} index={key} />
               })}
             </TCColumn2>
           }
@@ -291,12 +291,14 @@ const Landing = (props) => {
             <TCColumn>
               {props.TopCreators.map((creator, key) => {
                 return <TCBox key={key}>
-                  <TC1>1</TC1>
-                  <TC2><img src={creator.profile} alt='' /></TC2>
-                  <TC3>
-                    <h4>{creator.name}</h4>
-                    <p>$10000.00</p>
-                  </TC3>
+                  <Link to={'/celebrity/'+creator.id} >
+                    <TC1>{key + 1}</TC1>
+                    <TC2><img src={creator.profile} alt='' /></TC2>
+                    <TC3>
+                      <h4>{creator.name}</h4>
+                      <p>$10000.00</p>
+                    </TC3>
+                  </Link>
                 </TCBox>
               })}
             </TCColumn>

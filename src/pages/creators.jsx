@@ -31,6 +31,11 @@ const Creators = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.creators]) // fetch creators
 
+  useEffect(() => {
+    if (!props.NFTs) props.getNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.NFTs]) // fetch the NFTs
+
   return (
     <>
       <CollectionMain>
@@ -40,11 +45,11 @@ const Creators = (props) => {
           </ECDesc>
           <NumberOuter>
             <NumberBox>
-              <NumberTitle>{props.creator ? props.creator.length : '000'}</NumberTitle>
+              <NumberTitle>{props.creators ? props.creators.length : '000'}</NumberTitle>
               <p>Great celebrity</p>
             </NumberBox>
             <NumberBox>
-              <NumberTitle>9999</NumberTitle>
+              <NumberTitle>{props.NFTs ? props.NFTs.length : '000'}</NumberTitle>
               <p>NFTs in marketplace</p>
             </NumberBox>
           </NumberOuter>
@@ -276,11 +281,13 @@ const SiteLoader = styled(FlexDiv)`
 const mapDipatchToProps = (dispatch) => {
   return {
     getCreators: () => dispatch(actions.getCreators()),
+    getNFTs: () => dispatch(actions.getNFTs()),
     getMoreCreators: (params) => dispatch(actions.getMoreCreators(params)),
   }
 }
 const mapStateToProps = (state) => {
   return {
+    NFTs: state.fetchNFTs,
     creators: state.fetchCreators,
     pagination: state.fetchPagination,
     morecelebritys: state.fetchMoreCreators,

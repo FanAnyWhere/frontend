@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const collection = (props) => {
-  let { collection, key } = props
+  let { collection, index } = props
+  
 
-  return <div className='item' key={key}>
+  return <div className='item' key={index}>
     <Link to={'/collection/' + collection.id}>
       <CollectionCover>
         <img src={collection.logo} alt='' />
