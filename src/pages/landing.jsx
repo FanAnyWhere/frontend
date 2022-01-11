@@ -960,8 +960,8 @@ const TCColumn = styled(FlexDiv)`
 `;
 
 const TCColumn2 = styled(FlexDiv)`
-  justify-content: flex-start;
-  .item{background-color: #2F2F2F; border-radius: 5px; width: calc(25% - 15px); margin: 0px 15px 20px 0px;}
+  justify-content: flex-start; margin:0px -7px 0px -8px;
+  .item{background-color: #2F2F2F; border-radius: 5px; width: calc(25% - 15px); margin: 0px 7px 20px 8px;}
 `;
 
 const TCBox = styled(FlexDiv)`
