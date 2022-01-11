@@ -46,6 +46,7 @@ const EditProfile = (props) => {
     return () => {
       props.clearUpdate()
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const EditProfile = (props) => {
       setTwitter(props.user.portfolio?.twitter)
       setInstagram(props.user.portfolio?.instagarm)
     }
+    // eslint-disable-next-line
   }, [props.user])
 
   const copyToClipboard = (address) => {

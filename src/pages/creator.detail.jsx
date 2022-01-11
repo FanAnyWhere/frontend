@@ -84,6 +84,7 @@ function CelebrityDetails(props) {
       props.clearUserDetails()
       props.clearNFTs()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -124,8 +125,6 @@ function CelebrityDetails(props) {
     }
     // eslint-disable-next-line
   }, [props.user])
-
-  console.log('status ? ', props.follow, id)
 
   const followToggler = async () => {
     console.log('toggle ? ', id)
