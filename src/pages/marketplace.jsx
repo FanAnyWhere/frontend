@@ -38,9 +38,12 @@ const Marketplace = (props) => {
 
   const [filterOpen, setFilterOpen] = useState(false)
   const [confyView, setConfyView] = useState(false)
+  const [nfts, setNFTs] = useState([])
+  const [pageNo, setPageNo] = useState(1)
 
   useEffect(() => {
     if (!props.NFTs) props.getNFTs()
+    if (props.NFTs) setNFTs(props.NFTs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs]) // fetch the NFTs
 
@@ -48,6 +51,16 @@ const Marketplace = (props) => {
     if (!props.categories) props.getCategories()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.categories]) // fetch the Categories
+
+  useEffect(() => {
+    if (props.moreNFTs) setNFTs( nfts.concat(props.moreNFTs))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.moreNFTs])
+
+  const fetchMore = async (page) => {
+    setPageNo(page)
+    props.getMoreNFTs({ page: page }) // fetch more NFTs
+  }
 
   return (
     <>
@@ -173,7 +186,7 @@ const Marketplace = (props) => {
           </RightTitle>
 
           <ResultBar>
-            <p>{props.NFTs && props.NFTs.length} Results</p>
+            <p>{props.pagination && props.pagination.totalRecords} Results</p>
 
             <ResultRight>
               <CustomDropdown>
@@ -217,14 +230,14 @@ const Marketplace = (props) => {
               </SiteLoader>
               : props.NFTs.length === 0 && 'No data available'}
 
-            {props.NFTs && props.NFTs.map((nft, key) => {
-              return <NFT nft={nft} filterOpen={filterOpen} />
+            {props.NFTs && nfts.map((nft, key) => {
+              return <NFT nft={nft} filterOpen={filterOpen} index={key} />
             })}
           </Trending>
 
-          {/* <LoadMore>
-            <GradientBtn>Load More</GradientBtn>
-          </LoadMore> */}
+          {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
+            <GradientBtn onClick={() => fetchMore(pageNo + 1)}>Load More</GradientBtn>
+          </LoadMore>}
 
         </PRightpanel>
       </ProfileMain>
@@ -503,14 +516,17 @@ const NDA = styled(FlexDiv)`
 
 const mapDipatchToProps = (dispatch) => {
   return {
-    getNFTs: () => dispatch(actions.getNFTs()),
+    getNFTs: (param) => dispatch(actions.getNFTs(param)),
     getCategories: () => dispatch(actions.getCategories()),
+    getMoreNFTs: (param) => dispatch(actions.getMoreNFTs(param)),
   }
 }
 const mapStateToProps = (state) => {
   return {
     NFTs: state.fetchNFTs,
     categories: state.fetchCategories,
+    pagination: state.fetchPagination,
+    moreNFTs: state.fetchMoreNFTs,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Marketplace))

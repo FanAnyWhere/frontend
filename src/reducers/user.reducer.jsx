@@ -187,7 +187,7 @@ export function fetchPagination(state = false, action) {
   }
 }
 
-export function fetchMoreCollections(state = null, action) {
+export function fetchMoreCollections(state = false, action) {
   switch (action.type) {
     case 'MORE_COLLECTIONS_LIST':
       return action.data;
@@ -196,9 +196,18 @@ export function fetchMoreCollections(state = null, action) {
   }
 }
 
-export function fetchMoreCreators(state = null, action) {
+export function fetchMoreCreators(state = false, action) {
   switch (action.type) {
     case 'MORE_CREATORS_LIST':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchMoreNFTs(state = false, action) {
+  switch (action.type) {
+    case 'FETCHED_MORE_NFTS':
       return action.data;
     default:
       return state;

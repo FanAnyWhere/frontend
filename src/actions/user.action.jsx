@@ -25,6 +25,7 @@ export const userActions = {
     getCreators,
     getIsFollow,
     followToggler,
+    getMoreNFTs,
     getSignleUserDetails,
     getNotificationFilters,
 }
@@ -157,12 +158,27 @@ function getCreators(params={}) {
   };
 }
 
-function getNFTs() {
+function getNFTs(params={}) {
   return (dispatch) => {
-    const response = services.post('nft/listMarketPlace');
+    const response = services.post('nft/listMarketPlace', params);
     return response.then((promise) => {
       if (promise.data) {
+        dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
         dispatch({ type: 'FETCHED_NFTS', data: promise.data.data })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getMoreNFTs(params={}) {
+  return (dispatch) => {
+    const response = services.post('nft/listMarketPlace', params);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_PAGINATION', data: promise.data.pagination })
+        dispatch({ type: 'FETCHED_MORE_NFTS', data: promise.data.data })
       } else {
         // console.log("error");
       }
