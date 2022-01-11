@@ -212,6 +212,12 @@ function MyProfile(props) {
         <div className='img-outer'>
           <img src={props.user?.cover} alt='' />
           <div className='overlay'>
+            <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Uploading</p>
+              </div>
+            </SiteLoader>
             <input
               type='file'
               accept="image/*"
@@ -227,7 +233,7 @@ function MyProfile(props) {
               onClick={() => {
                 profileCoverInput.current.click()
               }}>
-              {props.user?.cover ? 'Change': 'Add'} {' '} Cover Photo
+              {props.user?.cover ? 'Change' : 'Add'} {' '} Cover Photo
             </GradientBtn>
           </div>
         </div>
@@ -237,6 +243,12 @@ function MyProfile(props) {
           <div className='image-outer'>
             <img src={props.user?.profile} alt='' />
             <div className='overlay'>
+              <SiteLoader>
+                <div className='loader-inner'>
+                  <div className="loader"></div>
+                  <p>Uploading</p>
+                </div>
+              </SiteLoader>
               <input
                 type='file'
                 accept="image/*"
@@ -912,6 +924,22 @@ const NavSearch = styled.div`
     ::placeholder {
       color: #767676;
     }
+  }
+`;
+
+
+const SiteLoader = styled(FlexDiv)`
+  height:100%; position:absolute; left:0; right:0;
+  .loader-inner{
+    text-align:center;
+    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
 `;
 

@@ -740,7 +740,7 @@ const CustomDropdown = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  margin:100px 0px;
+  height:calc(100vh - 290px);
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
