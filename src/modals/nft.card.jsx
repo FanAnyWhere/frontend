@@ -31,45 +31,45 @@ const NFT = (props) => {
 
 
   return <div className={`item ${filterOpen && 'active'}`} key={index}>
-      <Link to={'/nft-detail/' + nft._id}>
-        <LiveBox>
-          <div className='img-outer ver3'>
-            <img src={nft.image.compressed} alt='' />
-            {/* <img src={NFT12} alt='' /> */}
+    <Link to={'/nft-detail/' + nft._id}>
+      <LiveBox>
+        <div className='img-outer ver3'>
+          <img src={nft.image.compressed} alt='' />
+          {/* <img src={NFT12} alt='' /> */}
+        </div>
+        <div className='box-content'>
+          <div className='sign-row'>
+            {/* <p className='abs'>{nft.title}</p> */}
+            <p className='abs'>{nft.ownerId.name}</p>
+            {/* <img src={FireIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Trending" /> */}
+            {/* <img src={TimerIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Live Auction" /> */}
+            {/* <img src={SendIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Featured" /> */}
           </div>
-          <div className='box-content'>
-            <div className='sign-row'>
-              {/* <p className='abs'>{nft.title}</p> */}
-              <p className='abs'>{nft.ownerId.name}</p>
-              {/* <img src={FireIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Trending" /> */}
-              {/* <img src={TimerIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Live Auction" /> */}
-              {/* <img src={SendIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Featured" /> */}
+          <h3 className='ver3 mb-0'>{nft.title}</h3>
+          <p className='abs ver4'>{nft.collectionId?.name}</p>
+          <PriceLine>
+            <div>
+              <p className='grey'>Price</p>
+              <p>{nft.price} FAN</p>
             </div>
-            <h3 className='ver3 mb-0'>{nft.title}</h3>
-            <p className='abs ver4'>{nft.collectionId?.name}</p>
-            <PriceLine>
-              <div>
-                <p className='grey'>Price</p>
-                <p>{nft.price} FAN</p>
+            <div className='text-right'>
+              <p className='grey'>{Number(props.nft.edition) - Number(props.nft.nftSold)}/{nft.edition}</p>
+              <div className='timer ver2'>
+                <p>
+                  {/* 2 days left */}
+                  {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
+                </p>
               </div>
-              <div className='text-right'>
-                <p className='grey'>{Number(props.nft.edition) - Number(props.nft.nftSold)}/{nft.edition}</p>
-                <div className='timer ver2'>
-                  <p>
-                    {/* 2 days left */}
-                    {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
-                  </p>
-                </div>
-              </div>
-            </PriceLine>
-            {/* <BidLike>
+            </div>
+          </PriceLine>
+          {/* <BidLike>
               <Link to='#'> {''} </Link>
               <p><AiOutlineHeart /> { }</p>
             </BidLike> */}
-          </div>
-        </LiveBox>
-      </Link>
-    </div>
+        </div>
+      </LiveBox>
+    </Link>
+  </div>
 }
 
 // Common Style Div 
@@ -91,7 +91,7 @@ const LiveBox = styled.div`
     padding:12px 10px;
     &.ver2{padding:16px 14px;}
     .abs{
-      margin:0px;font-weight: normal; font-size: 10px; line-height: 16px; color: #AEAEAE;
+      margin:0px;font-weight: normal; font-size: 10px; line-height: 16px; color: #AEAEAE; text-transform:capitalize;
       &.ver2{margin-bottom:10px;}
       &.ver3{display:flex; align-items:center;
         img{margin-left:4px;}

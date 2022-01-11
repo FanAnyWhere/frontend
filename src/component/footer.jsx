@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import { FaLinkedinIn, FaTwitter, FaTelegramPlane } from 'react-icons/fa';
+import Media from '../theme/media-breackpoint';
 
 import Logo from '../../public/images/logo.png'
 
@@ -37,6 +38,13 @@ const FlexDiv = styled.div`
 const FooterSection = styled.div`
     padding:80px 0px; max-width:1448px; width:100%; margin:0 auto;
     hr{border-color: rgba(196, 196, 196, 0.15);}
+    ${Media.xl} {
+        max-width:1276px;
+    }
+    ${Media.lg} {
+        max-width:-webkit-fill-available;
+        margin:0 15px;
+    }
 `;
 
 const FooterTop = styled.div`

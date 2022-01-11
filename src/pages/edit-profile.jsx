@@ -11,6 +11,7 @@ import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
 import { Toast } from '../helper/toastify.message'
 import ipfs from '../config/ipfs'
+import LoaderGIF from '../assets/images/loader.gif'
 
 
 const EditProfile = (props) => {
@@ -127,17 +128,17 @@ const EditProfile = (props) => {
       Toast.error('Please fill all required fields')
     }
   }
+  const Loading = () => {
+    return (<Loader>
+      <img src={LoaderGIF} alt='' />
+    </Loader>)
+  }
 
   return (
     <>
       <Gs.Container>
 
-        {loading && <SiteLoader>
-            <div className='loader-inner'>
-              <div className='loader'></div>
-              <p>updating..</p>
-            </div>
-          </SiteLoader>}
+        {loading && <Loading />}
 
         <EPTitle>Edit Profile</EPTitle>
         <EPDesc>Keep your profile updated and manage your profile</EPDesc>
@@ -310,6 +311,10 @@ const SiteLoader = styled(FlexDiv)`
     }
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
+`;
+
+const Loader = styled(FlexDiv)`
+  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);
 `;
 
 const mapDipatchToProps = (dispatch) => {

@@ -409,7 +409,7 @@ const UserBox = styled.div`
 `;
 
 const UserName = styled.div`
-  font-weight: 500; font-size: 16px; line-height: 24px; color: #FFFFFF;
+  font-weight: 500; font-size: 16px; line-height: 24px; color: #FFFFFF; text-transform:capitalize;
 `;
 
 const AddressBar = styled(FlexDiv)`

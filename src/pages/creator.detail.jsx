@@ -177,7 +177,7 @@ function CelebrityDetails(props) {
 
                 <GradientBtn className={props.follow.isFollowed && 'white-border'}
                   onClick={() => followToggler(id)}>
-                  {loading ? <div class="btn-loader"></div>: props.follow.isFollowed ? 'Unfollow' : 'Follow'}
+                  {loading ? <div class="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}
                 </GradientBtn>
 
                 <CustomDropdown className='custom-width'>
@@ -495,7 +495,7 @@ const PRRight = styled.div`
 `;
 
 const PTitle = styled.div`
-  font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 12px;
+  font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 12px; text-transform:capitalize;
 `;
 
 const PRTop = styled(FlexDiv)`

@@ -605,7 +605,7 @@ const PRRight = styled.div`
 `;
 
 const PTitle = styled.div`
-  font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 12px;
+  font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 12px; text-transform:capitalize;
 `;
 
 const PRTop = styled(FlexDiv)`
