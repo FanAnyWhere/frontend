@@ -291,13 +291,13 @@ const Landing = (props) => {
             <TCColumn>
               {props.TopCreators.map((creator, key) => {
                 return <TCBox key={key}>
-                    <TC1>1</TC1>
-                    <TC2><img src={creator.profile} alt='' /></TC2>
-                    <TC3>
-                      <h4>{creator.name}</h4>
-                      <p>$10000.00</p>
-                    </TC3>
-                  </TCBox>
+                  <TC1>1</TC1>
+                  <TC2><img src={creator.profile} alt='' /></TC2>
+                  <TC3>
+                    <h4>{creator.name}</h4>
+                    <p>$10000.00</p>
+                  </TC3>
+                </TCBox>
               })}
             </TCColumn>
           }
@@ -978,7 +978,7 @@ const TC2 = styled.div`
 `;
 
 const TC3 = styled.div`
-  h4{font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; font-family: 'Roboto', sans-serif; margin:0px;}
+  h4{font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; font-family: 'Roboto', sans-serif; margin:0px; text-transform:capitalize;}
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; font-family: 'Roboto', sans-serif; margin:0px;}
 `;
 
