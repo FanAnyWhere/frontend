@@ -37,7 +37,7 @@ const Marketplace = (props) => {
   };
 
   const [filterOpen, setFilterOpen] = useState(false)
-  const [confyView, setConfyView] = useState(true)
+  const [confyView, setConfyView] = useState(false)
 
   useEffect(() => {
     if (!props.NFTs) props.getNFTs()
@@ -206,7 +206,7 @@ const Marketplace = (props) => {
 
 
           <Trending className={confyView && 'comfy-view'}>
-            
+
             {props.NFTs && props.NFTs.length === 0 && <NDA> No data available</NDA>}
             {!props.NFTs ?
               <SiteLoader>

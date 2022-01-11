@@ -24,7 +24,7 @@ const Creators = (props) => {
     setIsOpen2(false);
   };
 
-  const [confyView, setConfyView] = useState(true)
+  const [confyView, setConfyView] = useState(false)
 
   useEffect(() => {
     if (!props.creators) props.getCreators()
@@ -73,18 +73,19 @@ const Creators = (props) => {
         </ResultRight>
 
         {!props.creators && <SiteLoader>
-            <div className='loader-inner'>
-              <div className="loader"></div>
-              <p>Loading</p>
-            </div>
-          </SiteLoader>  }
+          <div className='loader-inner'>
+            <div className="loader"></div>
+            <p>Loading</p>
+          </div>
+        </SiteLoader>}
 
         <CollectionRow className={confyView && 'comfy-view'}>
 
           {props.creators && props.creators.length === 0 && 'No Data Is Display'}
 
-          {props.creators && props.creators.map( (creator, key) => {
-            return creator.isActive && <Creator key={key} creator={creator} /> }
+          {props.creators && props.creators.map((creator, key) => {
+            return creator.isActive && <Creator key={key} creator={creator} />
+          }
           )}
 
           {/* <div className='item'>

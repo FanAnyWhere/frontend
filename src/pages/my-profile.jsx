@@ -69,7 +69,7 @@ function MyProfile(props) {
   const [profile, setProfile] = useState({ file: null, url: null, buffer: null })
   const [cover, setCover] = useState({ file: null, url: null, buffer: null })
   const [loading, setLoading] = useState(false)
-  const [confyView, setConfyView] = useState(true)
+  const [confyView, setConfyView] = useState(false)
   const [address, setAddress] = useState(null)
   const [copied, setCopied] = useState(false)
   const [tab, setTab] = useState('created')

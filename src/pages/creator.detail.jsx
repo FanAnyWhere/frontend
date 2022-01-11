@@ -69,7 +69,7 @@ function CelebrityDetails(props) {
 
   const [filterOpen, setFilterOpen] = useState(false)
   const [address, setAddress] = useState(null)
-  const [confyView, setConfyView] = useState(true)
+  const [confyView, setConfyView] = useState(false)
   const [copied, setCopied] = useState(false)
   const [tab, setTab] = useState('created')
 
@@ -131,7 +131,7 @@ function CelebrityDetails(props) {
     console.log('toggle ? ', id)
     props.followToggler(id)
   }
-  
+
   const copyToClipboard = (address) => {
     setCopied(true)
     copy(address)
@@ -142,15 +142,15 @@ function CelebrityDetails(props) {
 
   return (
     <>
-{/* 
-        {!props.user &&
-          <SiteLoader>
-            <div className='loader-inner'>
-              <div className="loader"></div>
-              <p>Loading</p>
-            </div>
-          </SiteLoader>
-        } */}
+
+      {!props.user &&
+        <SiteLoader>
+          <div className='loader-inner'>
+            <div className="loader"></div>
+            <p>Loading</p>
+          </div>
+        </SiteLoader>
+      }
 
       <ProfileCover>
         <div className='img-outer'>
@@ -174,13 +174,13 @@ function CelebrityDetails(props) {
               </AddressBar>
             </div>
 
-            {props.authenticated.isLoggedIn && 
+            {props.authenticated.isLoggedIn &&
               <div className='PTT-right'>
 
-                <GradientBar className={props.follow.isFollowed && 'edit-profile'} 
+                <GradientBtn className={props.follow.isFollowed && 'white-border'}
                   onClick={() => followToggler(id)}>
-                  {props.follow.isFollowed ? 'Unfollow': 'Follow'}
-                </GradientBar>
+                  {props.follow.isFollowed ? 'Unfollow' : 'Follow'} <div class="btn-loader"></div>
+                </GradientBtn>
 
                 <CustomDropdown className='custom-width'>
                   <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
@@ -214,7 +214,7 @@ function CelebrityDetails(props) {
                   </Modal>
                 </CustomDropdown>
 
-              </div> }
+              </div>}
           </PRTop>
           <PRBottom>
             <div className='prb-left'>
@@ -735,6 +735,17 @@ const PRightpanel = styled.div`
 const GradientBtn = styled.button`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
   :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
+  &.white-border{border: 2px solid #fff; background:none; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
+    :hover{border-color:#0FBFFC;}
+  }
+  .btn-loader {
+    border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; margin:0 auto; width: 10px; height: 10px; animation: spin 0.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 `;
 
 const NFTlistLeft = styled.div`
@@ -898,7 +909,7 @@ const CustomcheckBox = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  height:calc(100vh - 290px);
+  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0; z-index:99;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;

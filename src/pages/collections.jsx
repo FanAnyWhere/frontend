@@ -21,7 +21,7 @@ const Collections = (props) => {
     setIsOpen2(false);
   };
 
-  const [confyView, setConfyView] = useState(true)
+  const [confyView, setConfyView] = useState(false)
 
   useEffect(() => {
     if (!props.collections) props.getCollections()
@@ -66,22 +66,23 @@ const Collections = (props) => {
         </ResultRight>
 
         {!props.collections && <SiteLoader>
-            <div className='loader-inner'>
-              <div className="loader"></div>
-              <p>Loading</p>
-            </div>
-          </SiteLoader>  }
+          <div className='loader-inner'>
+            <div className="loader"></div>
+            <p>Loading</p>
+          </div>
+        </SiteLoader>}
 
         <CollectionRow className={confyView && 'comfy-view'}>
 
           {props.collections && props.collections.length === 0 && 'No Data Is Display'}
-          
-          {props.collections && props.collections.map( (collection, key) => {
-            return collection.isActive && <Collection key={key} collection={collection} /> }
+
+          {props.collections && props.collections.map((collection, key) => {
+            return collection.isActive && <Collection key={key} collection={collection} />
+          }
           )}
-        
+
         </CollectionRow>
-            
+
         {/* <LoadMore>
           <GradientBtn>Load More</GradientBtn>
         </LoadMore>
