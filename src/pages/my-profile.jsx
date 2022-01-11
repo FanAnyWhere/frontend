@@ -224,11 +224,11 @@ function MyProfile(props) {
           <img src={props.user?.cover} alt='' />
           <div className='overlay'>
             {loading && <SiteLoader>
-                <div className='loader-inner'>
-                  <div className="loader"></div>
-                  <p>Uploading</p>
-                </div>
-              </SiteLoader>}
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Uploading</p>
+              </div>
+            </SiteLoader>}
             <input
               type='file'
               accept="image/*"

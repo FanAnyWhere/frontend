@@ -48,7 +48,7 @@ const EditProfile = (props) => {
     }
   }, [])
 
-  useEffect( () =>{
+  useEffect(() => {
     if (props.user) {
       setName(props.user.name)
       setBio(props.user.bio)
@@ -116,8 +116,8 @@ const EditProfile = (props) => {
   const onSubmit = () => {
     let err = false
     let array = []
-    if (!name) { array.push('name'); err = true;  } 
-    if (!email) { array.push('email'); err = true;  } 
+    if (!name) { array.push('name'); err = true; }
+    if (!email) { array.push('email'); err = true; }
     setErrors(array)
     if (!err) {
       updateProfile() // update profile
@@ -129,7 +129,7 @@ const EditProfile = (props) => {
   return (
     <>
       <Gs.Container>
-        
+
         {loading && <SiteLoader>
             <div className='loader-inner'>
               <div className='loader'></div>
@@ -144,7 +144,7 @@ const EditProfile = (props) => {
             <FormBox>
               <LabelRow>
                 <label>Display Name</label>
-                {errors && errors.includes('name') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('name') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <input type='text' placeholder='Enter Name' value={name === null ? '' : name} required onChange={(e) => setName(e.target.value)} />
             </FormBox>
@@ -158,15 +158,15 @@ const EditProfile = (props) => {
             <FormBox>
               <LabelRow>
                 <label>Email Address</label>
-                {errors && errors.includes('email') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('email') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
-              <input type='text' placeholder='Enter Email ID' 
+              <input type='text' placeholder='Enter Email ID'
                 value={!email ? '' : email} required disabled={props.user?.email && true}
                 onChange={(e) => setEmail(e.target.value)} />
             </FormBox>
             <FormBox>
               <label>Website</label>
-              <input type='text' placeholder='https://' onChange={(e) => setWebsite(e.target.value)}/>
+              <input type='text' placeholder='https://' onChange={(e) => setWebsite(e.target.value)} />
             </FormBox>
             <FormBox>
               <label>Twitter</label>
@@ -191,7 +191,7 @@ const EditProfile = (props) => {
           </EPLeft>
           <EPRight>
             <div className='image-outer'>
-              <img src={profile.url ? profile.url:  props.user?.profile } alt='' />
+              <img src={profile.url ? profile.url : props.user?.profile} alt='' />
               <div className='overlay'>
                 <input
                   type='file'
@@ -297,7 +297,7 @@ const LabelRow = styled(FlexDiv)`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0;
+  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0; z-index:99;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 

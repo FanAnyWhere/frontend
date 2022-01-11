@@ -291,7 +291,7 @@ const Landing = (props) => {
             <TCColumn>
               {props.TopCreators.map((creator, key) => {
                 return <TCBox key={key}>
-                  <Link to={'/celebrity/'+creator.id} >
+                  <Link to={'/celebrity/' + creator.id} >
                     <TC1>{key + 1}</TC1>
                     <TC2><img src={creator.profile} alt='' /></TC2>
                     <TC3>
@@ -968,6 +968,7 @@ const TCColumn2 = styled(FlexDiv)`
 
 const TCBox = styled(FlexDiv)`
   margin-bottom:10px;
+  a{display:flex; align-items:center;}
 `;
 
 const TC1 = styled.div`
