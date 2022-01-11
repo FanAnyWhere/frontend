@@ -37,6 +37,7 @@ const Marketplace = (props) => {
   };
 
   const [filterOpen, setFilterOpen] = useState(false)
+  const [confyView, setConfyView] = useState(true)
 
   useEffect(() => {
     if (!props.NFTs) props.getNFTs()
@@ -187,8 +188,8 @@ const Marketplace = (props) => {
                 </Collapse>
               </CustomDropdown>
               <CustomSwitch>
-                <button className='active'><img src={ListIcon} alt='' /></button>
-                <button><img src={GridIcon} alt='' /></button>
+                <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+                <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
             </ResultRight>
           </ResultBar>
@@ -204,7 +205,7 @@ const Marketplace = (props) => {
           </ProfilefilterBar> */}
 
 
-          <Trending className='comfy-view'>
+          <Trending className={confyView && 'comfy-view'}>
             
             {props.NFTs && props.NFTs.length === 0 && <NDA> No data available</NDA>}
             {!props.NFTs ?
