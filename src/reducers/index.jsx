@@ -24,6 +24,8 @@ import { fetchNotifications,
   fetchLiveAuctionNFTs,
   fetchSingleUserDetails,
   fetchMoreCollections,
+  fetchTotalMarketplaceNFTs,
+  fetchSaleMarketplaceNFTs,
 } from './user.reducer'
 
 
@@ -55,6 +57,8 @@ const rootReducer = combineReducers({
   fetchLiveAuctionNFTs,
   fetchMoreCollections,
   fetchSingleUserDetails,
+  fetchTotalMarketplaceNFTs,
+  fetchSaleMarketplaceNFTs,
 })
 
 export default rootReducer

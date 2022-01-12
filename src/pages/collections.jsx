@@ -32,6 +32,11 @@ const Collections = (props) => {
   }, [props.collections]) // fetch collections
 
   useEffect(() => {
+    props.getSaleNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // fetch sale NFTs
+
+  useEffect(() => {
     if (props.moreCollections) setCollections( collections.concat(props.moreCollections))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.moreCollections]) // fetch more collections
@@ -54,7 +59,7 @@ const Collections = (props) => {
               <p>Collections</p>
             </NumberBox>
             <NumberBox>
-              <NumberTitle>9999</NumberTitle>
+              <NumberTitle>{props.saleNFTs && props.saleNFTs.totalRecords}</NumberTitle>
               <p>NFTs on Sale</p>
             </NumberBox>
           </NumberOuter>
@@ -261,6 +266,7 @@ const SiteLoader = styled(FlexDiv)`
 
 const mapDipatchToProps = (dispatch) => {
   return {
+    getSaleNFTs: () => dispatch(actions.getSaleNFTs({ filter: ['BUYNOW'] })),
     getCollections: (params) => dispatch(actions.getCollections(params)),
     getMoreCollections: (params) => dispatch(actions.getMoreCollections(params)),
   }
@@ -269,6 +275,7 @@ const mapStateToProps = (state) => {
   return {
     pagination: state.fetchPagination,
     collections: state.fetchCollections,
+    saleNFTs: state.fetchSaleMarketplaceNFTs,
     moreCollections: state.fetchMoreCollections,
   }
 }

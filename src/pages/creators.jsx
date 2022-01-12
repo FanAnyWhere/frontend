@@ -35,6 +35,11 @@ const Creators = (props) => {
   }, [props.creators]) // fetch creators
 
   useEffect(() => {
+    props.getTotalNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // fetch total marketplace nfts
+
+  useEffect(() => {
     if (props.moreCreators) setCreators( creators.concat(props.moreCreators))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.moreCreators]) // fetch more creators
@@ -57,7 +62,7 @@ const Creators = (props) => {
               <p>Great celebrity</p>
             </NumberBox>
             <NumberBox>
-              <NumberTitle>{props.NFTs ? props.NFTs.length : '000'}</NumberTitle>
+              <NumberTitle>{props.totalNfts ? props.totalNfts.totalRecords : '000'}</NumberTitle>
               <p>NFTs in marketplace</p>
             </NumberBox>
           </NumberOuter>
@@ -274,6 +279,7 @@ const mapDipatchToProps = (dispatch) => {
   return {
     getCreators: () => dispatch(actions.getCreators()),
     getMoreCreators: (params) => dispatch(actions.getMoreCreators(params)),
+    getTotalNFTs: () => dispatch(actions.getTotalMarketPlaceNFTs()),
   }
 }
 const mapStateToProps = (state) => {
@@ -281,6 +287,7 @@ const mapStateToProps = (state) => {
     creators: state.fetchCreators,
     pagination: state.fetchPagination,
     moreCreators: state.fetchMoreCreators,
+    totalNfts: state.fetchTotalMarketplaceNFTs,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Creators))
