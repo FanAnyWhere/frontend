@@ -75,11 +75,11 @@ const Marketplace = (props) => {
     if (filter === 'endingSoon') props.getNFTs({ filter: ['AUCTION'] })
     if (filter === 'AUCTION') {
       props.getNFTs({ filter: ['AUCTION'] })
-      setApplied([ ...applied, { name: 'On Auction', id: 'AUCTION', type: 'filter' } ])
+      // setApplied([ ...applied, { name: 'On Auction', id: 'AUCTION', type: 'filter' } ])
     }
     if (filter === 'BUYNOW') {
       props.getNFTs({ filter: ['BUYNOW'] })
-      setApplied([ ...applied, { name: 'Buy Now', id: 'BUYNOW', type: 'filter' } ])
+      // setApplied([ ...applied, { name: 'Buy Now', id: 'BUYNOW', type: 'filter' } ])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
@@ -107,16 +107,16 @@ const Marketplace = (props) => {
   const categorySelect = (e, name) => {
     if (e.target.checked) {
       setCategoryList([ ...categoryFilter, e.target.value ])
-      setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
+      // setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
     } else {
       setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
-      setApplied(applied.filter(appl => appl.id !== e.target.value))
+      // setApplied(applied.filter(appl => appl.id !== e.target.value))
     }
   }
 
   const collectionSelect = (e, name) => {
     setSelectCollection(e.target.value)
-    setApplied([ ...applied, { name: name, id: e.target.value, type: 'collection' } ])
+    // setApplied([ ...applied, { name: name, id: e.target.value, type: 'collection' } ])
   }
 
   // const cancelFilter = (apply) => {
@@ -254,12 +254,12 @@ const Marketplace = (props) => {
 
           <ProfilefilterBar>
             <FilterBar>
-              {applied.length && applied.map((apply) => {
+              {applied.length > 0 && applied.map((apply) => {
                 return <button><span>{apply.name}
                  {/* <IoCloseSharp onClick={() => cancelFilter(apply)}/> */}
                 </span></button>
               })}
-              {applied.length && <button className='c-all' onClick={() => {
+              {applied.length > 0 && <button className='c-all' onClick={() => {
                 setFilter('recently')
                 setSelectCollection(false)
                 setCategoryList([])
