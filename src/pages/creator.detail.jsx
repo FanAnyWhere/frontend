@@ -30,6 +30,7 @@ import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
 
 import { actions } from '../actions'
+import LoaderGIF from '../assets/images/loader.gif'
 import { compressImage } from '../helper/functions'
 import { Toast } from '../helper/toastify.message'
 import NFT from '../modals/nft.card'
@@ -130,6 +131,21 @@ function CelebrityDetails(props) {
     props.followToggler(id)
   }
 
+  useEffect(() => {
+    const getCompactAddress = (address) => {
+      let compactAddress = address
+        ? address.substring(0, 5) +
+        '....' +
+        address.substring(address.length - 5, address.length)
+        : '00000000000'
+      setAddress(compactAddress)
+    }
+    if (props.user) {
+      getCompactAddress(props.user.walletAddress)
+    }
+    // eslint-disable-next-line
+  }, [props.user])
+
   const copyToClipboard = (address) => {
     setCopied(true)
     copy(address)
@@ -142,12 +158,9 @@ function CelebrityDetails(props) {
     <>
 
       {!props.user &&
-        <SiteLoader>
-          <div className='loader-inner'>
-            <div className="loader"></div>
-            <p>Loading</p>
-          </div>
-        </SiteLoader>
+        <Loader>
+          <img src={LoaderGIF} alt='' />
+        </Loader>
       }
 
       <ProfileCover>
@@ -919,6 +932,10 @@ const SiteLoader = styled(FlexDiv)`
     }
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
+`;
+
+const Loader = styled(FlexDiv)`
+  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);
 `;
 
 
