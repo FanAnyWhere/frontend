@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components';
+import Media from '../theme/media-breackpoint';
 
 var Gs = {}
 
@@ -44,6 +45,19 @@ Gs.GlobalStyle = createGlobalStyle`
 
 Gs.Container = styled.div`
   margin:0 auto; width: 100%; max-width:1276px;
+  ${Media.lg} {
+    max-width:1170px;
+  }
+  ${Media.md2} {
+    max-width:961px;
+  }
+  ${Media.md} {
+    max-width:737px;
+  }
+  ${Media.sm} {
+    max-width: -webkit-fill-available;
+    margin: 0px 15px;
+  }
 `;
 
 export default Gs; 

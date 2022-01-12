@@ -9,10 +9,28 @@ import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import FeatureIcon from '../assets/images/feature-icon.png';
 import CreatorUser from '../assets/images/creator-user.png'
+import Media from '../theme/media-breackpoint';
+import { AiOutlineHeart } from 'react-icons/ai'
+import FireIcon from '../assets/images/fire.png'
+import Timer from '../helper/timer';
+import VerifiedIcon from '../assets/images/verified.png';
+import SendIcon from '../assets/images/send.png';
+import TimerIcon from '../assets/images/timer.png';
 
 import NFT from '../modals/nft.card';
 import Collection from '../modals/collection.card';
 import { actions } from '../actions';
+
+import NFT12 from '../assets/images/nft-12.jpg';
+import NFT13 from '../assets/images/nft-12.jpg';
+import NFT14 from '../assets/images/nft-12.jpg';
+import NFT15 from '../assets/images/nft-12.jpg';
+import NFT16 from '../assets/images/nft-12.jpg';
+import NFT17 from '../assets/images/nft-12.jpg';
+import NFT18 from '../assets/images/nft-12.jpg';
+import NFT19 from '../assets/images/nft-12.jpg';
+import NFT20 from '../assets/images/nft-12.jpg';
+import NFT21 from '../assets/images/nft-12.jpg';
 
 const responsive = {
   superLargeDesktop: {
@@ -286,7 +304,7 @@ const Landing = (props) => {
             <p>Loading</p>
           </div>
         </SiteLoader>}
-        <TopCollections className='ver2'>
+        <TopCelebrities>
           {props.TopCreators &&
             <TCColumn>
               {props.TopCreators.map((creator, key) => {
@@ -441,7 +459,7 @@ const Landing = (props) => {
               </TC3>
             </TCBox>
           </TCColumn> */}
-        </TopCollections>
+        </TopCelebrities>
       </Gs.Container>
 
       <Gs.Container>
@@ -868,7 +886,11 @@ const ImgOuter = styled.div`
 
 const GradientTitleRow = styled(FlexDiv)`
   justify-content:space-between; margin-bottom:35px;
-  h2{margin:0px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 32px; line-height: 48px;}
+  h2{margin:0px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 32px; line-height: 48px;
+    ${Media.xxs} {
+      font-size: 26px; line-height: 38px; 
+    }
+  }
   &.ver2{justify-content:center; margin-bottom:60px;}
   &.ver3{margin-bottom:20px;}
   button{margin-right:0px;}
@@ -954,16 +976,47 @@ const BidLike = styled(FlexDiv)`
 
 const TopCollections = styled(FlexDiv)`
   justify-content: flex-start; margin-bottom:50px;
-  &.ver2{margin-bottom:75px}
+`;
+
+const TopCelebrities = styled(FlexDiv)`
+  justify-content: flex-start; margin-bottom:75px;
+  ${Media.lg} {
+    flex-wrap:nowrap; overflow-x: auto;
+  }
 `;
 
 const TCColumn = styled(FlexDiv)`
   justify-content: flex-start; width:calc(20% - 17px); margin-right:17px;
+  ${Media.md2} {
+    width:calc(25% - 17px);
+  }
+  ${Media.md} {
+    width:calc(33.33% - 17px);
+  }
+  ${Media.sm} {
+    width:calc(50% - 17px);
+  }
+  ${Media.xs} {
+    width:calc(76% - 17px);
+  }
 `;
 
 const TCColumn2 = styled(FlexDiv)`
   justify-content: flex-start; margin:0px -7px 0px -8px;
-  .item{background-color: #2F2F2F; border-radius: 5px; width: calc(25% - 15px); margin: 0px 7px 20px 8px;}
+  .item{background-color: #2F2F2F; border-radius: 5px; width: calc(25% - 15px); margin: 0px 7px 20px 8px;
+    ${Media.md2} {
+      width: calc(33.33% - 15px);
+    }
+    ${Media.sm} {
+      width: calc(50% - 15px);
+    }
+    ${Media.xs} {
+      width: 100%; margin:0px 0px 20px;
+    }
+  }
+  ${Media.xs} {
+    margin:0px;
+  }
 `;
 
 const TCBox = styled(FlexDiv)`
@@ -976,12 +1029,12 @@ const TC1 = styled.div`
 `;
 
 const TC2 = styled.div`
-  margin:0px 5px 0px 16px; width:50px; height:50px; overflow:hidden;
+  margin:0px 5px 0px 16px; width:50px; height:50px; overflow:hidden; min-width:50px;
   img{width:100%; height:100%; object-fit:cover; border-radius:50%;}
 `;
 
 const TC3 = styled.div`
-  h4{font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; font-family: 'Roboto', sans-serif; margin:0px; text-transform:capitalize;}
+  h4{font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; font-family: 'Roboto', sans-serif; margin:0px; text-transform:capitalize; white-space: nowrap;}
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; font-family: 'Roboto', sans-serif; margin:0px;}
 `;
 
@@ -993,19 +1046,43 @@ const NotableDrops = styled(FlexDiv)`
 `;
 
 const Trending = styled(FlexDiv)`
-  margin-bottom:130px; justify-content:flex-start;
-  .item{margin:0px 7px 20px 0px; width:calc(20% - 7px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
+  align-items:flex-start; justify-content:flex-start; margin:0px -5px 130px;
+  .item{margin:0px 5px 20px; width:calc(20% - 10px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :last-child{margin-right:0px;}
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
+    ${Media.lg} {
+      width:calc(25% - 10px);
+    }
+    ${Media.md} {
+      width:calc(33.33% - 10px);
+    }
+    ${Media.sm} {
+      width:calc(50% - 10px);
+    }
+    ${Media.xs} {
+      width:100%; margin:0px 5px 10px;
+    }
+  }
+  ${Media.sm} {
+    margin:0px -5px 65px;
+  }
+  ${Media.xs} {
+    margin:0px 0px 65px;
   }
 `;
 
 const ExploreArt = styled.div`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:75px 0px 77px; text-align:center; margin-bottom:75px;
+  ${Media.sm} {
+    margin-bottom:30px;
+  }
 `;
 
 const ArtTitle = styled.div`
   font-weight: normal; font-size: 48px; line-height: 72px; color: #FFFFFF; margin:0px 0px 50px;
+  ${Media.sm} {
+    font-weight:bold; font-size: 32px; line-height: 48px;
+  }
 `;
 
 const CustomCounter = styled(FlexDiv)`
@@ -1014,6 +1091,12 @@ const CustomCounter = styled(FlexDiv)`
     span{font-weight: bold; font-size: 32px; line-height: 48px; color:#fff; }
     p{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color:#fff; margin:15px 0px 0px;}
     :after{content:''; position:absolute; left:calc(50% - 24px); right:0; top:50px; width:48px; height:4px; background-color:#824CF5; border-radius: 2px;}
+    ${Media.sm} {
+      width:100%; margin:0px 0px 50px;
+    }
+  }
+  ${Media.sm} {
+    margin-bottom:0px;
   }
 `;
 
@@ -1023,6 +1106,9 @@ const WhiteTitle = styled.div`
 
 const News = styled(FlexDiv)`
   justify-content:space-between; margin-bottom:130px;
+  ${Media.sm} {
+    margin-bottom:10px;
+  }
 `;
 
 const W33 = styled.div`
@@ -1030,6 +1116,9 @@ const W33 = styled.div`
   :last-child{margin-right:0px;}
   img{margin-bottom:30px;}
   .news-box{padding:56px 24px; background: #2F2F2F; box-shadow: 0px 20px 50px rgba(18, 17, 39, 0.08); border-radius: 2px;}
+  ${Media.sm} {
+    width:100%; margin:0px 0px 10px;
+  }
 `;
 
 const FeatureTitle = styled.div`
@@ -1041,11 +1130,45 @@ const FeatureDesc = styled.div`
 
 const NewsLetter = styled(FlexDiv)`
   justify-content:space-between; background: #2F2F2F; border-radius: 2px; margin-bottom:80px; padding:142px 104px 143px 145px;
-  .newsletter-left{width:55%;}
+  .newsletter-left{width:55%;
+    ${Media.lg} {
+      width:50%;
+    }
+    ${Media.md2} {
+      width:46%;
+    }
+    ${Media.md} {
+      width:100%;
+    }
+  }
   .newsletter-right{width:45%;
+    ${Media.lg} {
+      width:50%;
+    }
+    ${Media.md2} {
+      width:54%;
+    }
+    ${Media.md} {
+      width:100%;
+    }
     p{margin:0px; font-weight: normal; font-size: 12px; line-height: 22px; color: rgba(255, 255, 255, 0.48); font-family: 'Poppins', sans-serif;
       a{color: #599bf9;}
     }
+  }
+  ${Media.lg} {
+    padding:142px 100px;
+  }
+  ${Media.md2} {
+    padding:100px 30px;
+  }
+  ${Media.md} {
+    padding:50px 30px;
+  }
+  ${Media.sm} {
+    padding:30px;
+  }
+  ${Media.xs} {
+    padding:30px 12px; margin-bottom:0px;
   }
 `;
 
@@ -1055,6 +1178,12 @@ const NewsLetterTitle = styled.div`
 
 const NewsLetterDesc = styled.div`
   font-family: 'Poppins', sans-serif; font-weight: normal; font-size: 16px; line-height: 29px; color: rgba(255, 255, 255, 0.56); padding-right: 30px;
+  ${Media.lg} {
+    padding-right: 50px;
+  }
+  ${Media.md} {
+    padding-right: 0px; margin-bottom:25px;
+  }
 `;
 
 const NotifyInput = styled(FlexDiv)`
@@ -1063,8 +1192,21 @@ const NotifyInput = styled(FlexDiv)`
     ::placeholder {
       color: rgba(18, 17, 39, 0.4);
     }
+    ${Media.lg}{
+      height:47px;
+    }
+    ${Media.sm} {
+      width:240px;
+    }
+    ${Media.xs} {
+      width:100%;
+    }
   }
-  button{padding:14px 32px; line-height:19px; font-weight:500;}
+  button{padding:14px 32px; line-height:19px; font-weight:500;
+    ${Media.xs} {
+      margin-left:0px; margin-bottom:10px;
+    }
+  }
  `;
 
 const SiteLoader = styled(FlexDiv)`
