@@ -44,9 +44,6 @@ const Creators = (props) => {
     props.getMoreCreators({ page: page }) // fetch more creators
   }
 
-  console.log('creators ', props.creators)
-  console.log('more creators ', props.moreCreators)
-
   return (
     <>
       <CollectionMain>
@@ -66,7 +63,7 @@ const Creators = (props) => {
           </NumberOuter>
         </CDesc>
         <ResultRight>
-          <CustomDropdown>
+          {/* <CustomDropdown>
             <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
             <Collapse onInit={onInit} isOpen={isOpen2}>
               <div className='priceList'>
@@ -76,7 +73,7 @@ const Creators = (props) => {
                 <Link to='/'>Ending Soon</Link>
               </div>
             </Collapse>
-          </CustomDropdown>
+          </CustomDropdown> */}
           <CustomSwitch>
             <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
             <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
