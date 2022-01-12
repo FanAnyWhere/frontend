@@ -25,16 +25,27 @@ const Creators = (props) => {
   };
 
   const [confyView, setConfyView] = useState(false)
+  const [creators, setCreators] = useState([])
+  const [pageNo, setPageNo] = useState(1)
 
   useEffect(() => {
     if (!props.creators) props.getCreators()
+    if (props.creators) setCreators(props.creators)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.creators]) // fetch creators
 
   useEffect(() => {
-    if (!props.NFTs) props.getNFTs()
+    if (props.moreCreators) setCreators( creators.concat(props.moreCreators))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.NFTs]) // fetch the NFTs
+  }, [props.moreCreators]) // fetch more creators
+
+  const fetchMore = async (page) => {
+    setPageNo(page)
+    props.getMoreCreators({ page: page }) // fetch more creators
+  }
+
+  console.log('creators ', props.creators)
+  console.log('more creators ', props.moreCreators)
 
   return (
     <>
@@ -45,7 +56,7 @@ const Creators = (props) => {
           </ECDesc>
           <NumberOuter>
             <NumberBox>
-              <NumberTitle>{props.creators ? props.creators.length : '000'}</NumberTitle>
+              <NumberTitle>{props.pagination && props.pagination.totalRecords}</NumberTitle>
               <p>Great celebrity</p>
             </NumberBox>
             <NumberBox>
@@ -83,34 +94,17 @@ const Creators = (props) => {
 
           {props.creators && props.creators.length === 0 && 'No Data Is Display'}
 
-          {props.creators && props.creators.map((creator, key) => {
+          {props.creators && creators.map((creator, key) => {
             return creator.isActive && <Creator key={key} creator={creator} />
           }
           )}
 
-          {/* <div className='item'>
-            <CollectionCover>
-              <img src={celebrityCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={celebrityPImg} alt='' />
-              </ProfilePicture>
-              <CCName>celebrity Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div> */}
-
         </CollectionRow>
 
-        {/* <LoadMore>
-          <GradientBtn>Load More</GradientBtn>
-        </LoadMore> */}
+        {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
+            <GradientBtn onClick={() => fetchMore(pageNo + 1)}>Load More</GradientBtn>
+          </LoadMore>}
+          
       </CollectionMain>
     </>
   );
@@ -282,16 +276,14 @@ const SiteLoader = styled(FlexDiv)`
 const mapDipatchToProps = (dispatch) => {
   return {
     getCreators: () => dispatch(actions.getCreators()),
-    getNFTs: () => dispatch(actions.getNFTs()),
     getMoreCreators: (params) => dispatch(actions.getMoreCreators(params)),
   }
 }
 const mapStateToProps = (state) => {
   return {
-    NFTs: state.fetchNFTs,
     creators: state.fetchCreators,
     pagination: state.fetchPagination,
-    morecelebritys: state.fetchMoreCreators,
+    moreCreators: state.fetchMoreCreators,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Creators))

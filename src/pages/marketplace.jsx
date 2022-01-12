@@ -273,7 +273,6 @@ const Marketplace = (props) => {
 
           <Trending className={confyView ? 'comfy-view':''}>
 
-            {props.NFTs && props.NFTs.length === 0 && <NDA> No data available</NDA>}
             {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
@@ -286,6 +285,7 @@ const Marketplace = (props) => {
             {props.NFTs && nfts.map((nft, key) => {
               return <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
             })}
+            
           </Trending>
 
           {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
