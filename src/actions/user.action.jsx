@@ -26,6 +26,8 @@ export const userActions = {
     getIsFollow,
     followToggler,
     getMoreNFTs,
+    getSaleNFTs,
+    getTotalMarketPlaceNFTs,
     getSignleUserDetails,
     getNotificationFilters,
 }
@@ -391,6 +393,32 @@ function followToggler(id) {
     response.then((promise) => {
       if (promise.status === 200) {
         dispatch(getIsFollow(id));
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getTotalMarketPlaceNFTs(params={}) {
+  return (dispatch) => {
+    const response = services.post('nft/listMarketPlace', params);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_TOTAL_MARKETPLACE_NFTS', data: promise.data.pagination })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getSaleNFTs(params={}) {
+  return (dispatch) => {
+    const response = services.post('nft/listMarketPlace', params);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_SALE_MARKETPLACE_NFTS', data: promise.data.pagination })
       } else {
         // console.log("error");
       }

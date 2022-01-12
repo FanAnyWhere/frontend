@@ -13,6 +13,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import UserIcon from '../assets/images/user-img.png';
+import { IoCloseSharp } from 'react-icons/io5';
 import GreenIcon from '../assets/images/green-icon.png';
 import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
@@ -42,6 +43,7 @@ const Marketplace = (props) => {
   const [pageNo, setPageNo] = useState(1)
   const [categoryFilter, setCategoryList] = useState([])
   const [filter, setFilter] = useState('recently')
+  const [applied, setApplied] = useState([])
   const [selectCollection, setSelectCollection] = useState(false)
 
 
@@ -71,8 +73,14 @@ const Marketplace = (props) => {
     if (filter === 'lowToHight') props.getNFTs({ filter: 'lowToHigh' })
     if (filter === 'highToLow') props.getNFTs({ filter: 'highToLow' })
     if (filter === 'endingSoon') props.getNFTs({ filter: ['AUCTION'] })
-    if (filter === 'AUCTION') props.getNFTs({ filter: ['AUCTION'] })
-    if (filter === 'BUYNOW') props.getNFTs({ filter: ['BUYNOW'] })
+    if (filter === 'AUCTION') {
+      props.getNFTs({ filter: ['AUCTION'] })
+      // setApplied([ ...applied, { name: 'On Auction', id: 'AUCTION', type: 'filter' } ])
+    }
+    if (filter === 'BUYNOW') {
+      props.getNFTs({ filter: ['BUYNOW'] })
+      // setApplied([ ...applied, { name: 'Buy Now', id: 'BUYNOW', type: 'filter' } ])
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
   
@@ -96,25 +104,46 @@ const Marketplace = (props) => {
     else props.getMoreNFTs({ page: page }) // fetch more NFTs
   }
 
-  const categorySelect = (e) => {
-    if (e.target.checked) setCategoryList([ ...categoryFilter, e.target.value ])
-    else setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
+  const categorySelect = (e, name) => {
+    if (e.target.checked) {
+      setCategoryList([ ...categoryFilter, e.target.value ])
+      // setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
+    } else {
+      setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
+      // setApplied(applied.filter(appl => appl.id !== e.target.value))
+    }
   }
 
-  const collectionSelect = (e) => {
+  const collectionSelect = (e, name) => {
     setSelectCollection(e.target.value)
+    // setApplied([ ...applied, { name: name, id: e.target.value, type: 'collection' } ])
   }
+
+  // const cancelFilter = (apply) => {
+  //   if (apply.type === 'filter') {
+  //     setApplied(applied.filter(appl => appl.type === apply.type && appl.id !== apply.id))
+  //     setFilter('recently')
+  //   }
+  //   if (apply.type === 'category') {
+  //     setApplied(applied.filter(appl => appl.type === apply.type && appl.id !== apply.id))
+  //     setCategoryList(categoryFilter.filter(cat => cat !== apply.id))
+  //   }
+  //   if (apply.type === 'collection') {
+  //     setApplied(applied.filter(appl => appl.type === apply.type && appl.id !== apply.id))
+  //     setSelectCollection(false)
+  //   }
+  // }
 
   return (
     <>
       <ProfileMain>
-        <PLeftpanel className={filterOpen && 'active'}>
-          <GradientBar className={filterOpen && 'active'}>
+        <PLeftpanel className={filterOpen ? 'active':''}>
+          <GradientBar className={filterOpen ? 'active':''}>
             <LeftTitle>Filters</LeftTitle>
-            <span className={filterOpen && 'active'}><BiRightArrowAlt className={filterOpen && 'active'} onClick={() => setFilterOpen(!filterOpen)} /></span>
+            <span className={filterOpen ? 'active':''}><BiRightArrowAlt className={filterOpen ? 'active':''} onClick={() => setFilterOpen(!filterOpen)} /></span>
           </GradientBar>
 
-          <NFTlistLeft className={filterOpen && 'active'}>
+          <NFTlistLeft className={filterOpen ? 'active':''}>
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <WhiteBorderBtn onClick={() => setFilter('AUCTION')}>On Auction</WhiteBorderBtn>
@@ -127,7 +156,7 @@ const Marketplace = (props) => {
                   <Collapse onInit={onInit} isOpen={isOpen3}>
                     <Scrollbars style={{ height: 244 }}>
                       <div className='priceList'>
-                        <Link className={filterOpen && 'active'} to='/'>USD</Link>
+                        <Link className={filterOpen ? 'active':''} to='/'>USD</Link>
                         <Link to='/'>INR</Link>
                         <Link to='/'>WON</Link>
                         <Link to='/'>JPY</Link>
@@ -152,7 +181,7 @@ const Marketplace = (props) => {
                         {props.categories && props.categories.map((category, index) => {
                           return <label className="container" key={index}>
                               {category.categoryName.en}
-                              <input type="checkbox" value={category.id} onChange={(e) => categorySelect(e)} />
+                              <input checked={categoryFilter.includes(category.id)} type="checkbox" value={category.id} onChange={(e) => categorySelect(e, category.categoryName.en)} />
                               <span className="checkmark"></span>
                             </label>
                         })}
@@ -189,14 +218,14 @@ const Marketplace = (props) => {
 
               <Collapsible trigger="Collections">
                 {props.collections && props.collections.map((collection, index) => {
-                  return <WhiteBorderBtn className='active' key={index} value={collection.id} onClick={(e) => collectionSelect(e)}>{collection.name}</WhiteBorderBtn>
+                  return <WhiteBorderBtn className='active' key={index} value={collection.id} onClick={(e) => collectionSelect(e, collection.name)}>{collection.name}</WhiteBorderBtn>
                 })}
               </Collapsible>
             </CustomAccordian>
           </NFTlistLeft>
         </PLeftpanel>
 
-        <PRightpanel className={filterOpen && 'active'}>
+        <PRightpanel className={filterOpen ? 'active':''}>
           <RightTitle>
             Explore
           </RightTitle>
@@ -209,34 +238,41 @@ const Marketplace = (props) => {
                 <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
-                    <Link to='#' onClick={() => setFilter('recently')} className={filter === 'recently' && 'active'}>Recently Added</Link>
-                    <Link to='#' onClick={() => setFilter('lowToHight')} className={filter === 'lowToHight' && 'active'} >Price: Low to High</Link>
-                    <Link to='#' onClick={() => setFilter('highToLow')} className={filter === 'highToLow' && 'active'}>Price: High to Low</Link>
-                    <Link to='#' onClick={() => setFilter('endingSoon')} className={filter === 'endingSoon' && 'active'}>Ending Soon</Link>
+                    <Link to='#' onClick={() => setFilter('recently')} className={filter === 'recently' ? 'active':''}>Recently Added</Link>
+                    <Link to='#' onClick={() => setFilter('lowToHight')} className={filter === 'lowToHight' ? 'active':''} >Price: Low to High</Link>
+                    <Link to='#' onClick={() => setFilter('highToLow')} className={filter === 'highToLow' ? 'active':''}>Price: High to Low</Link>
+                    <Link to='#' onClick={() => setFilter('endingSoon')} className={filter === 'endingSoon' ? 'active':''}>Ending Soon</Link>
                   </div>
                 </Collapse>
               </CustomDropdown>
               <CustomSwitch>
-                <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
-                <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
+                <button className={confyView ? 'active':''} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+                <button className={!confyView ? 'active':''} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
             </ResultRight>
           </ResultBar>
 
-          {/* <ProfilefilterBar>
+          <ProfilefilterBar>
             <FilterBar>
-              <button><span>Selected FIlter <IoCloseSharp /></span></button>
-              <button><span>Selected FIlter <IoCloseSharp /></span></button>
-              <button><span>Selected FIlter <IoCloseSharp /></span></button>
-              <button><span>Selected FIlter <IoCloseSharp /></span></button>
-              <button className='c-all'>Clear All</button>
+              {applied.length > 0 && applied.map((apply) => {
+                return <button><span>{apply.name}
+                 {/* <IoCloseSharp onClick={() => cancelFilter(apply)}/> */}
+                </span></button>
+              })}
+              {applied.length > 0 && <button className='c-all' onClick={() => {
+                setFilter('recently')
+                setSelectCollection(false)
+                setCategoryList([])
+                props.clearNFTs()
+                props.clearPagination()
+                setApplied([])
+              }}>Clear All</button>}
             </FilterBar>
-          </ProfilefilterBar> */}
+          </ProfilefilterBar>
 
 
-          <Trending className={confyView && 'comfy-view'}>
+          <Trending className={confyView ? 'comfy-view':''}>
 
-            {props.NFTs && props.NFTs.length === 0 && <NDA> No data available</NDA>}
             {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
@@ -249,6 +285,7 @@ const Marketplace = (props) => {
             {props.NFTs && nfts.map((nft, key) => {
               return <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
             })}
+            
           </Trending>
 
           {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>

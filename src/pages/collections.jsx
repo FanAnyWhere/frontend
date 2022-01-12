@@ -22,12 +22,29 @@ const Collections = (props) => {
   };
 
   const [confyView, setConfyView] = useState(false)
+  const [collections, setCollections] = useState([])
+  const [pageNo, setPageNo] = useState(1)
 
   useEffect(() => {
     if (!props.collections) props.getCollections()
-    // else setCollections(collections)
+    if (props.collections) setCollections(props.collections)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.collections]) // fetch collections
+
+  useEffect(() => {
+    props.getSaleNFTs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // fetch sale NFTs
+
+  useEffect(() => {
+    if (props.moreCollections) setCollections( collections.concat(props.moreCollections))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.moreCollections]) // fetch more collections
+
+  const fetchMore = async (page) => {
+    setPageNo(page)
+    props.getMoreCollections({ page: page }) // fetch more Collections
+  }
 
   return (
     <>
@@ -38,17 +55,17 @@ const Collections = (props) => {
           </ECDesc>
           <NumberOuter>
             <NumberBox>
-              <NumberTitle>{props.collections ? props.collections.length : '000'}</NumberTitle>
+              <NumberTitle>{props.pagination && props.pagination.totalRecords}</NumberTitle>
               <p>Collections</p>
             </NumberBox>
             <NumberBox>
-              <NumberTitle>9999</NumberTitle>
+              <NumberTitle>{props.saleNFTs && props.saleNFTs.totalRecords}</NumberTitle>
               <p>NFTs on Sale</p>
             </NumberBox>
           </NumberOuter>
         </CDesc>
         <ResultRight>
-          <CustomDropdown>
+          {/* <CustomDropdown>
             <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
             <Collapse onInit={onInit} isOpen={isOpen2}>
               <div className='priceList'>
@@ -58,7 +75,7 @@ const Collections = (props) => {
                 <Link to='#'>Ending Soon</Link>
               </div>
             </Collapse>
-          </CustomDropdown>
+          </CustomDropdown> */}
           <CustomSwitch>
             <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
             <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
@@ -76,17 +93,17 @@ const Collections = (props) => {
 
           {props.collections && props.collections.length === 0 && 'No Data Is Display'}
 
-          {props.collections && props.collections.map((collection, key) => {
+          {props.collections && collections.map((collection, key) => {
             return collection.isActive && <Collection key={key} collection={collection} />
           }
           )}
 
         </CollectionRow>
 
-        {/* <LoadMore>
-          <GradientBtn>Load More</GradientBtn>
-        </LoadMore>
-         */}
+        {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
+            <GradientBtn onClick={() => fetchMore(pageNo + 1)}>Load More</GradientBtn>
+          </LoadMore>}
+        
       </CollectionMain>
     </>
   );
@@ -249,14 +266,16 @@ const SiteLoader = styled(FlexDiv)`
 
 const mapDipatchToProps = (dispatch) => {
   return {
+    getSaleNFTs: () => dispatch(actions.getSaleNFTs({ filter: ['BUYNOW'] })),
     getCollections: (params) => dispatch(actions.getCollections(params)),
     getMoreCollections: (params) => dispatch(actions.getMoreCollections(params)),
   }
 }
 const mapStateToProps = (state) => {
   return {
-    collections: state.fetchCollections,
     pagination: state.fetchPagination,
+    collections: state.fetchCollections,
+    saleNFTs: state.fetchSaleMarketplaceNFTs,
     moreCollections: state.fetchMoreCollections,
   }
 }

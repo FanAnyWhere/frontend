@@ -222,3 +222,21 @@ export function fetchIsFollow(state = { isFollowed: false }, action) {
       return state;
   }
 }
+
+export function fetchTotalMarketplaceNFTs(state = 0, action) {
+  switch (action.type) {
+    case 'FETCHED_TOTAL_MARKETPLACE_NFTS':
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export function fetchSaleMarketplaceNFTs(state = 0, action) {
+  switch (action.type) {
+    case 'FETCHED_SALE_MARKETPLACE_NFTS':
+      return action.data;
+    default:
+      return state;
+  }
+}

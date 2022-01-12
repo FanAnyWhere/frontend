@@ -25,16 +25,29 @@ const Creators = (props) => {
   };
 
   const [confyView, setConfyView] = useState(false)
+  const [creators, setCreators] = useState([])
+  const [pageNo, setPageNo] = useState(1)
 
   useEffect(() => {
     if (!props.creators) props.getCreators()
+    if (props.creators) setCreators(props.creators)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.creators]) // fetch creators
 
   useEffect(() => {
-    if (!props.NFTs) props.getNFTs()
+    props.getTotalNFTs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.NFTs]) // fetch the NFTs
+  }, []) // fetch total marketplace nfts
+
+  useEffect(() => {
+    if (props.moreCreators) setCreators( creators.concat(props.moreCreators))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.moreCreators]) // fetch more creators
+
+  const fetchMore = async (page) => {
+    setPageNo(page)
+    props.getMoreCreators({ page: page }) // fetch more creators
+  }
 
   return (
     <>
@@ -45,17 +58,17 @@ const Creators = (props) => {
           </ECDesc>
           <NumberOuter>
             <NumberBox>
-              <NumberTitle>{props.creators ? props.creators.length : '000'}</NumberTitle>
+              <NumberTitle>{props.pagination && props.pagination.totalRecords}</NumberTitle>
               <p>Great celebrity</p>
             </NumberBox>
             <NumberBox>
-              <NumberTitle>{props.NFTs ? props.NFTs.length : '000'}</NumberTitle>
+              <NumberTitle>{props.totalNfts ? props.totalNfts.totalRecords : '000'}</NumberTitle>
               <p>NFTs in marketplace</p>
             </NumberBox>
           </NumberOuter>
         </CDesc>
         <ResultRight>
-          <CustomDropdown>
+          {/* <CustomDropdown>
             <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
             <Collapse onInit={onInit} isOpen={isOpen2}>
               <div className='priceList'>
@@ -65,7 +78,7 @@ const Creators = (props) => {
                 <Link to='/'>Ending Soon</Link>
               </div>
             </Collapse>
-          </CustomDropdown>
+          </CustomDropdown> */}
           <CustomSwitch>
             <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
             <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
@@ -83,34 +96,17 @@ const Creators = (props) => {
 
           {props.creators && props.creators.length === 0 && 'No Data Is Display'}
 
-          {props.creators && props.creators.map((creator, key) => {
+          {props.creators && creators.map((creator, key) => {
             return creator.isActive && <Creator key={key} creator={creator} />
           }
           )}
 
-          {/* <div className='item'>
-            <CollectionCover>
-              <img src={celebrityCImg} alt='' />
-            </CollectionCover>
-            <CollectionBottom>
-              <ProfilePicture>
-                <img src={celebrityPImg} alt='' />
-              </ProfilePicture>
-              <CCName>celebrity Name</CCName>
-              <CCBy>$10000.00</CCBy>
-              <FollowerRow>
-                <FollowNumber><span>000</span> followers</FollowNumber>
-                <FollowNumber><span>000</span> following</FollowNumber>
-              </FollowerRow>
-              <Link to='/'>Follow</Link>
-            </CollectionBottom>
-          </div> */}
-
         </CollectionRow>
 
-        {/* <LoadMore>
-          <GradientBtn>Load More</GradientBtn>
-        </LoadMore> */}
+        {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
+            <GradientBtn onClick={() => fetchMore(pageNo + 1)}>Load More</GradientBtn>
+          </LoadMore>}
+          
       </CollectionMain>
     </>
   );
@@ -282,16 +278,16 @@ const SiteLoader = styled(FlexDiv)`
 const mapDipatchToProps = (dispatch) => {
   return {
     getCreators: () => dispatch(actions.getCreators()),
-    getNFTs: () => dispatch(actions.getNFTs()),
     getMoreCreators: (params) => dispatch(actions.getMoreCreators(params)),
+    getTotalNFTs: () => dispatch(actions.getTotalMarketPlaceNFTs()),
   }
 }
 const mapStateToProps = (state) => {
   return {
-    NFTs: state.fetchNFTs,
     creators: state.fetchCreators,
     pagination: state.fetchPagination,
-    morecelebritys: state.fetchMoreCreators,
+    moreCreators: state.fetchMoreCreators,
+    totalNfts: state.fetchTotalMarketplaceNFTs,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Creators))
