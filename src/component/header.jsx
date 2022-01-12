@@ -35,6 +35,7 @@ function Header(props) {
 
   const navTabs = ['Marketplace', 'Celebrities']
   const location = useLocation()
+  const pathname = location.pathname.replace('/', '')
   const [openLogin, setOpenLogin] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
   const [address, setAddress] = useState('00000000000')
@@ -148,7 +149,11 @@ function Header(props) {
     }, 3000);
   }
 
-  // console.log('user ? ', props.user.status)
+  const onSearchKeyUp = (e) => {
+    if (e.key === 'Enter' || e.keyCode === 13 && pathname === 'marketplace') {
+      props.getNFTs({ search: e.target.value }) // fetch search market place nft's
+    }
+  }
 
   return (
     <>
@@ -177,7 +182,8 @@ function Header(props) {
             <MobileMenuDD>
               <Collapse className='MB-search-content' onInit={onInit} isOpen={isOpen6}>
                 <NavSearch>
-                  <input type="text" placeholder="Search for an Art, music..." />
+                  <input type="text" placeholder="Search for an Art, music..." 
+                    onKeyUp={(e) => onSearchKeyUp(e)} />
                   <img src={SearchIcon} alt='' />
                 </NavSearch>
                 <BarOuter>
@@ -221,7 +227,7 @@ function Header(props) {
           </MobileMenu>
           <DesktopMenu>
             <NavSearch>
-              <input type="text" placeholder="Search for an Art, music..." />
+              <input type="text" placeholder="Search for an Art, music..."  onKeyUp={(e) => onSearchKeyUp(e)} />
               <img src={SearchIcon} alt='' />
             </NavSearch>
 
@@ -522,6 +528,7 @@ const HelpDropdown = styled.div`
 const mapDipatchToProps = (dispatch) => {
   return {
     getWeb3: () => dispatch(actions.getWeb3()),
+    getNFTs: (param) => dispatch(actions.getNFTs(param)),
     clearNonce: () => dispatch({ type: 'GENERATE_NONCE', data: null }),
     getUserDetails: () => dispatch(actions.getUserDetails()),
     web3Logout: (accounts) => dispatch({ type: 'LOGGED_OUT', data: { isLoggedIn: false, accounts: accounts } }),

@@ -40,6 +40,15 @@ const Marketplace = (props) => {
   const [confyView, setConfyView] = useState(false)
   const [nfts, setNFTs] = useState([])
   const [pageNo, setPageNo] = useState(1)
+  const [categoryFilter, setCategoryList] = useState([])
+  const [filter, setFilter] = useState('recently')
+  const [selectCollection, setSelectCollection] = useState(false)
+
+
+  useEffect(() => {
+    if (!props.collections) props.getCollections()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.collections]) // fetch collections
 
   useEffect(() => {
     if (!props.NFTs) props.getNFTs()
@@ -57,9 +66,43 @@ const Marketplace = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.moreNFTs])
 
+  useEffect(() => {
+    if (filter === 'recently') props.getNFTs()
+    if (filter === 'lowToHight') props.getNFTs({ filter: 'lowToHigh' })
+    if (filter === 'highToLow') props.getNFTs({ filter: 'highToLow' })
+    if (filter === 'endingSoon') props.getNFTs({ filter: ['AUCTION'] })
+    if (filter === 'AUCTION') props.getNFTs({ filter: ['AUCTION'] })
+    if (filter === 'BUYNOW') props.getNFTs({ filter: ['BUYNOW'] })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter])
+  
+  useEffect(() => {
+    if (categoryFilter.length) props.getNFTs({ category: categoryFilter })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryFilter])
+
+  useEffect(() => {
+    if (selectCollection) props.getNFTs({ collection: selectCollection })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectCollection])
+
   const fetchMore = async (page) => {
     setPageNo(page)
-    props.getMoreNFTs({ page: page }) // fetch more NFTs
+    if (filter === 'lowToHight') props.getMoreNFTs({ page: page, filter: 'lowToHigh' }) // fetch more NFTs
+    else if (filter === 'highToLow') props.getMoreNFTs({ page: page, filter: 'highToLow' }) // fetch more NFTs
+    else if (filter === 'endingSoon') props.getMoreNFTs({ page: page, filter: ['AUCTION'] }) // fetch more NFTs
+    else if (categoryFilter.length) props.getNFTs({ page: page, category: categoryFilter }) // fetch more NFTs
+    else if (selectCollection) props.getNFTs({ page: page, collection: selectCollection }) // fetch more NFTs
+    else props.getMoreNFTs({ page: page }) // fetch more NFTs
+  }
+
+  const categorySelect = (e) => {
+    if (e.target.checked) setCategoryList([ ...categoryFilter, e.target.value ])
+    else setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
+  }
+
+  const collectionSelect = (e) => {
+    setSelectCollection(e.target.value)
   }
 
   return (
@@ -74,13 +117,11 @@ const Marketplace = (props) => {
           <NFTlistLeft className={filterOpen && 'active'}>
             <CustomAccordian>
               <Collapsible trigger="Status">
-                <WhiteBorderBtn>On Auction</WhiteBorderBtn>
-                <WhiteBorderBtn>Buy Now</WhiteBorderBtn>
-                <WhiteBorderBtn>New</WhiteBorderBtn>
-                <WhiteBorderBtn>Ending Soon</WhiteBorderBtn>
-                <WhiteBorderBtn>Has Offers</WhiteBorderBtn>
+                <WhiteBorderBtn onClick={() => setFilter('AUCTION')}>On Auction</WhiteBorderBtn>
+                <WhiteBorderBtn onClick={() => setFilter('BUYNOW')}>Buy Now</WhiteBorderBtn>
               </Collapsible>
-              <Collapsible trigger="Price">
+              
+              {/* <Collapsible trigger="Price">
                 <CustomDropdown>
                   <label onClick={() => setIsOpen3(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
                   <Collapse onInit={onInit} isOpen={isOpen3}>
@@ -101,51 +142,27 @@ const Marketplace = (props) => {
                   <span>to</span>
                   <input type='text' placeholder='Max' />
                 </FormGroup>
-              </Collapsible>
+              </Collapsible> */}
               <Collapsible trigger="Category">
                 <CustomDropdown className='pb-10'>
                   <label onClick={() => setIsOpen4(state => !state)}>Choose  a Category <HiOutlineChevronDown /></label>
                   <Collapse onInit={onInit} isOpen={isOpen4}>
                     <CustomcheckBox>
                       <Scrollbars style={{ height: 244 }}>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <label className="container">Placeholder Text
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
+                        {props.categories && props.categories.map((category, index) => {
+                          return <label className="container" key={index}>
+                              {category.categoryName.en}
+                              <input type="checkbox" value={category.id} onChange={(e) => categorySelect(e)} />
+                              <span className="checkmark"></span>
+                            </label>
+                        })}
                       </Scrollbars>
                     </CustomcheckBox>
                   </Collapse>
                 </CustomDropdown>
               </Collapsible>
-              <Collapsible trigger="Celebrity">
+
+              {/* <Collapsible trigger="Celebrity">
                 <CustomDropdown className='pb-10'>
                   <NavSearch onClick={() => setIsOpen7(state => !state)}>
                     <input type="text" placeholder="Search for a Celebrity" />
@@ -168,13 +185,12 @@ const Marketplace = (props) => {
                     </Scrollbars>
                   </Collapse>
                 </CustomDropdown>
-              </Collapsible>
+              </Collapsible> */}
+
               <Collapsible trigger="Collections">
-                <WhiteBorderBtn>Collection 1</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 2</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 3</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 4</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 5</WhiteBorderBtn>
+                {props.collections && props.collections.map((collection, index) => {
+                  return <WhiteBorderBtn className='active' key={index} value={collection.id} onClick={(e) => collectionSelect(e)}>{collection.name}</WhiteBorderBtn>
+                })}
               </Collapsible>
             </CustomAccordian>
           </NFTlistLeft>
@@ -193,10 +209,10 @@ const Marketplace = (props) => {
                 <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
-                    <Link to='/' className='active'>Recently Added</Link>
-                    <Link to='/'>Price: Low to High</Link>
-                    <Link to='/'>Price: High to Low</Link>
-                    <Link to='/'>Ending Soon</Link>
+                    <Link to='#' onClick={() => setFilter('recently')} className={filter === 'recently' && 'active'}>Recently Added</Link>
+                    <Link to='#' onClick={() => setFilter('lowToHight')} className={filter === 'lowToHight' && 'active'} >Price: Low to High</Link>
+                    <Link to='#' onClick={() => setFilter('highToLow')} className={filter === 'highToLow' && 'active'}>Price: High to Low</Link>
+                    <Link to='#' onClick={() => setFilter('endingSoon')} className={filter === 'endingSoon' && 'active'}>Ending Soon</Link>
                   </div>
                 </Collapse>
               </CustomDropdown>
@@ -231,7 +247,7 @@ const Marketplace = (props) => {
               : props.NFTs.length === 0 && 'No data available'}
 
             {props.NFTs && nfts.map((nft, key) => {
-              return <NFT nft={nft} filterOpen={filterOpen} index={key} />
+              return <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
             })}
           </Trending>
 
@@ -519,6 +535,9 @@ const mapDipatchToProps = (dispatch) => {
     getNFTs: (param) => dispatch(actions.getNFTs(param)),
     getCategories: () => dispatch(actions.getCategories()),
     getMoreNFTs: (param) => dispatch(actions.getMoreNFTs(param)),
+    getCollections: (params) => dispatch(actions.getCollections(params)),
+    clearNFTs: () => dispatch({ type: 'FETCHED_NFTS', data: false }),
+    clearPagination: () => dispatch({ type: 'FETCHED_PAGINATION', data: false }),
   }
 }
 const mapStateToProps = (state) => {
@@ -527,6 +546,7 @@ const mapStateToProps = (state) => {
     categories: state.fetchCategories,
     pagination: state.fetchPagination,
     moreNFTs: state.fetchMoreNFTs,
+    collections: state.fetchCollections,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDipatchToProps)(Marketplace))
