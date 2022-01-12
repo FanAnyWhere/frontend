@@ -49,19 +49,32 @@ const FooterSection = styled.div`
 
 const FooterTop = styled.div`
     text-align:center;
-    img{margin-bottom:37px;}
+    img{margin-bottom:37px;
+        ${Media.sm} {
+            margin-bottom:10px;
+        }
+    }
 `;
 
 const FooterLinks = styled.div`
     margin-bottom:40px;
     a{color:#F6F6F6; font-weight: normal; font-size: 14px; line-height: 17px; margin:0px 26px;
         :hover{color:#0FBFFC;}
+        ${Media.sm} {
+            display:block; margin:20px 0px;
+        }
+    }
+    ${Media.sm} {
+        margin-bottom:0px;
     }
 `;
 
 const FooterBottom = styled(FlexDiv)`
     justify-content:space-between; padding:7px 0px 30px;
     p{margin:0px; font-weight: normal; font-size: 14px; line-height: 17px; color: #F6F6F6;}
+    ${Media.sm} {
+       flex-direction:column-reverse;
+    }
 `;
 
 const SocialLinks = styled(FlexDiv)`
@@ -71,6 +84,9 @@ const SocialLinks = styled(FlexDiv)`
         &.tg{background: linear-gradient(203.2deg, #37AEE2 21.67%, #1E96C8 70%);}
         :last-child{margin-right:0px;}
         :hover{opacity:0.9;}
+    }
+    ${Media.sm} {
+        margin-bottom:25px;
     }
 `;
 
