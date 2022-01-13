@@ -305,7 +305,7 @@ const Marketplace = (props) => {
                     <GradientBtn onClick={() => clearFilters()}>Clear All Filters</GradientBtn>
                   </NoItemBox>
                 </NoItemOuter>
-              :  'No data available'}
+              :  props.NFTs.length === 0 && !isFilter && 'No data available'}
 
             {props.NFTs && nfts.map((nft, key) => {
               return nft.isActive && <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
