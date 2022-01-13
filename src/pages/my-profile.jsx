@@ -540,7 +540,7 @@ function MyProfile(props) {
                 <div className="loader"></div>
                 <p>Loading</p>
               </div>
-            </SiteLoader>  :
+            </SiteLoader> :
               props.NFTs.map((nft, key) => {
                 return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} />
               })

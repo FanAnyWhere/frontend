@@ -18,12 +18,24 @@ const creator = (props) => {
           <img src={creator.profile ? creator.profile : null} alt='' />
         </ProfilePicture>
         <CCName>{creator.name}</CCName>
-        <CCBy>$10000.00</CCBy>
-        <FollowerRow>
+        {/* <CCBy>$10000.00</CCBy> */}
+        <CCBy>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</CCBy>
+        {/* <FollowerRow>
           <FollowNumber><span>{creator.followersCount}</span> followers</FollowNumber>
           <FollowNumber><span>{creator.followingCount}</span> following</FollowNumber>
-        </FollowerRow>
+        </FollowerRow> */}
+        <FollowBoxRow>
+          <div className='follow-box'>
+            <FNumber>00</FNumber>
+            <p>Items</p>
+          </div>
+          <div className='follow-box'>
+            <FNumber>0000</FNumber>
+            <p>FAW</p>
+          </div>
+        </FollowBoxRow>
         <Link to='#'>Follow</Link>
+        <FollowNumber><span>{creator.followersCount}</span> followers</FollowNumber>
       </CollectionBottom>
     </Link>
   </div>
@@ -52,16 +64,29 @@ const CollectionBottom = styled.div`
 `;
 
 const CCName = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #F6F6F6; margin:30px 0px 0px; text-transform:capitalize;
+  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; color: #F6F6F6; margin:35px 0px 6px; text-transform:capitalize;
 `;
 
 const CCBy = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 38px;
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 6px;  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   a{color: #F6F6F6; text-decoration:underline;}
 `;
 
 const FollowerRow = styled(FlexDiv)`
   justify-content:space-between; margin:0px 0px 7px;
+`;
+
+const FollowBoxRow = styled(FlexDiv)`
+  background: rgba(26, 26, 26, 0.25); border-radius: 5px; padding:5px 10px; justify-content:space-between;
+  p{font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; color: #767676; margin:0px;}
+  .follow-box{ text-align:left;
+    :last-child{text-align:right;}
+  }
+`;
+
+const FNumber = styled.div`
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 10px; line-height: 16px; color: #FFFFFF;
 `;
 
 const FollowNumber = styled.div`

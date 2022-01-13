@@ -155,13 +155,13 @@ const ResultRight = styled(FlexDiv)`
 `;
 
 const CollectionRow = styled(FlexDiv)`
-  justify-content:flex-start; align-items:flex-start; 
-  .item{background-color:#2F2F2F; border-radius: 5px; width:calc(14.40% - 15px); margin:0px 15px 20px 0px;
+  justify-content:flex-start; align-items:flex-start; margin:0px -10px;
+  .item{background-color:#2F2F2F; border-radius: 5px; width:calc(14.28% - 20px); margin:0px 10px 20px;
     :nth-child(7n){margin-right:0px;}
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
   }
-  &.comfy-view{ margin:0px -5px;
-    .item{margin:0px 5px 25px; width:calc(20% - 10px);}
+  &.comfy-view{ margin:0px -10px;
+    .item{margin:0px 10px 25px; width:calc(20% - 20px);}
   }
 `;
 
