@@ -30,7 +30,7 @@ const NFT = (props) => {
   // }, []);
 
 
-  return <div className={`item ${filterOpen && 'active'}`} key={index}>
+  return <div className={`item ${filterOpen ? 'active' : ''}`} key={index}>
     <Link to={'/nft-detail/' + nft._id}>
       <LiveBox>
         <div className='img-outer ver3'>
