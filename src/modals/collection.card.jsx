@@ -6,7 +6,7 @@ const collection = (props) => {
   
 
   return <div className='item' key={collection.id}>
-    <Link to={'/collection/' + collection.id}>
+    <Link to={'/marketplace/' + collection.id}>
       <CollectionCover>
         <img src={collection.logo} alt='' />
       </CollectionCover>

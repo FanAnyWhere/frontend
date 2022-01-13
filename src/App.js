@@ -38,6 +38,7 @@ function App() {
           <Switch>
             <Route path="/" exact> <Landing />  </Route>
             <Route path="/marketplace" > <Marketplace /> </Route>
+            <Route path="/marketplace/id" exact > <Marketplace /> </Route>
             <Route path="/activity"><Activity /></Route>
             <Route path="/my-profile"><MyProfile /></Route>
             <Route path="/edit-profile"><EditProfile /></Route>

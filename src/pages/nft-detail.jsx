@@ -129,7 +129,8 @@ const NFTDetail = (props) => {
               <NDTop>
                 <NDLeft>
                   <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
-                  <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}<span>Sold Out</span></NTitleName>
+                  <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}
+                  {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>

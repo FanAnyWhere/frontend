@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -26,8 +25,8 @@ import { actions } from '../actions'
 
 const Marketplace = (props) => {
   
-  // const { id1 } = useParams()
-  // const id = '61d57e15cd4a75cb8c6abb02'
+  const id = props.location.pathname.replace('/marketplace/', '').replace('/marketplace', '')
+  window.history.pushState({}, document.title, '/marketplace')
   const dropRef = useRef();
 
   const [isOpen1, setIsOpen1] = useState(false);
@@ -62,14 +61,14 @@ const Marketplace = (props) => {
 
   useEffect(() => {
     if (!props.NFTs) {
-      // if (id) {
-      //   setSelectCollection(id)
-      //   setIsFilter(true)
-      // }
-      // else {
-      //   props.getNFTs()
-      // }
-      props.getNFTs()
+      if (id) {
+        setSelectCollection(id)
+        setIsFilter(true)
+      }
+      else {
+        props.getNFTs()
+      }
+      // props.getNFTs()
     }
     if (props.NFTs) setNFTs(props.NFTs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +86,6 @@ const Marketplace = (props) => {
 
   useEffect(() => {
     if (filter === 'recently') {
-      console.log('second ')
       props.getNFTs()
       setIsOpen2(false)
     }
@@ -126,7 +124,6 @@ const Marketplace = (props) => {
 
   useEffect(() => {
     if (selectCollection) {
-      console.log('-- collection filter ')
       props.getNFTs({ collection: selectCollection })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,6 +181,8 @@ const Marketplace = (props) => {
     setIsFilter(false)
     setApplied([])
   }
+
+  console.log('props.pagination ? ', props.pagination)
 
   return (
     <>
