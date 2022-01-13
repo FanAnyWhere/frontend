@@ -201,29 +201,25 @@ const NFTDetail = (props) => {
               <ActFilterList>
                 <Tabs>
                   <TabList>
-                    <Tab>Owners</Tab>
-                    {/* <Tab>Bids</Tab> */}
                     <Tab>Details</Tab>
+                    {/* <Tab>Bids</Tab> */}
+                    <Tab>Owners</Tab>
                     {/* <Tab>History</Tab> */}
                   </TabList>
                   <TabPanel>
                     <Scrollbars style={{ height: 431 }}>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={props.nft.ownerId.profile} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName>{props.nft.ownerId.name}</OwnerName>
-                            <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                        {/* {props.authenticated.isLoggedIn &&
-                          <OwnerRight>
-                            <GradientBtn>Buy</GradientBtn>
-                          </OwnerRight>
-                        } */}
-                      </OwnerOuter>
+                      <DeatTitle>Description</DeatTitle>
+                      <DeatDesc>
+                        {props.nft.description}
+                      </DeatDesc>
+                      <DeatTitle>Category</DeatTitle>
+                      <DeatDesc>
+                        {props.nft.category.map((category) => {
+                          return category.isActive && category.categoryName.en + ','
+                        })}
+                      </DeatDesc>
+                      <DeatTitle>External Link</DeatTitle>
+                      <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
                     </Scrollbars>
                   </TabPanel>
                   {/* <TabPanel>
@@ -265,18 +261,22 @@ const NFTDetail = (props) => {
                   </TabPanel> */}
                   <TabPanel>
                     <Scrollbars style={{ height: 431 }}>
-                      <DeatTitle>Description</DeatTitle>
-                      <DeatDesc>
-                        {props.nft.description}
-                      </DeatDesc>
-                      <DeatTitle>Category</DeatTitle>
-                      <DeatDesc>
-                        {props.nft.category.map((category) => {
-                          return category.isActive && category.categoryName.en + ','
-                        })}
-                      </DeatDesc>
-                      <DeatTitle>External Link</DeatTitle>
-                      <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
+                      <OwnerOuter>
+                        <OwnerLeft>
+                          <div className='img-outer'>
+                            <img src={props.nft.ownerId.profile} alt='' />
+                          </div>
+                          <div>
+                            <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                            <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
+                          </div>
+                        </OwnerLeft>
+                        {/* {props.authenticated.isLoggedIn &&
+                          <OwnerRight>
+                            <GradientBtn>Buy</GradientBtn>
+                          </OwnerRight>
+                        } */}
+                      </OwnerOuter>
                     </Scrollbars>
                   </TabPanel>
                   {/* <TabPanel>

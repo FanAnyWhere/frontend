@@ -85,7 +85,7 @@ function MyProfile(props) {
     // eslint-disable-next-line
   }, [])
 
-  useEffect(() => {
+  useEffect(() => {S
     if (!props.NFTs && props.authenticated.isLoggedIn) props.getUserNFTs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs])
@@ -535,7 +535,12 @@ function MyProfile(props) {
 
           <Trending className={confyView && 'comfy-view'}>
 
-            {!props.NFTs ? 'loading...' :
+            {!props.NFTs ? <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader>  :
               props.NFTs.map((nft, key) => {
                 return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} />
               })

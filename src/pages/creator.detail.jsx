@@ -76,7 +76,7 @@ function CelebrityDetails(props) {
   const [tab, setTab] = useState('created')
 
   useEffect(() => {
-    if (!props.NFTs) props.getUserNFTs(id)
+    // if (!props.NFTs) props.getUserNFTs(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs])
 
@@ -438,7 +438,12 @@ function CelebrityDetails(props) {
 
           <Trending className={confyView && 'comfy-view'}>
 
-            {!props.NFTs ? 'loading...' :
+            {!props.NFTs ? <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader> :
               props.NFTs.map((nft, key) => {
                 return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} />
               })
@@ -920,7 +925,7 @@ const CustomcheckBox = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0; z-index:99;
+  height:calc(100vh - 650px);
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
@@ -933,6 +938,7 @@ const SiteLoader = styled(FlexDiv)`
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
 `;
+
 
 const Loader = styled(FlexDiv)`
   height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; 
