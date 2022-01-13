@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components';
 import { connect } from 'react-redux'
@@ -28,10 +28,17 @@ import MbSearchIcon from '../assets/images/mb-search.png'
 import LoginModal from '../modals/login'
 import Notifications from '../modals/notifications'
 import BecomeCelebrity from '../modals/become.celebrity'
+import useOutsideClick from '../helper/outside.click'
 import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../config'
 
 
 function Header(props) {
+
+  const accountRef = useRef();
+  const loginRef = useRef();
+  const helpCenterRef = useRef();
+  const notificationRef = useRef();
+  const myRef = useRef({ location: null });
 
   const navTabs = ['Marketplace', 'Celebrities']
   const location = useLocation()
@@ -42,6 +49,24 @@ function Header(props) {
   const [copied, setCopied] = useState(false)
   const [accountBalance, setAccountBalance] = useState('000.00')
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
+
+  useOutsideClick(accountRef, () => {setIsOpen1(false)})
+  useOutsideClick(loginRef, () => {setOpenLogin(false)})
+  useOutsideClick(helpCenterRef, () => {setIsOpen3(false)})
+  useOutsideClick(notificationRef, () => {setOpenNotification(false)})
+
+  useEffect(() => {
+    // set the location on initial load
+    if (!myRef.current.location) myRef.current.location = location
+    // then make sure dialog is closed on route change
+    else if (myRef.current.location !== location) {
+      setIsOpen1(false)
+      setOpenLogin(false)
+      setIsOpen3(false)
+      setOpenNotification(false)
+      myRef.current.location = location
+    }
+  })
 
   useEffect(() => {
     const checkNetwork = async () => {
@@ -202,25 +227,27 @@ function Header(props) {
                   >
                     {tab}
                   </NavLink></li>)}
-                  {props.authenticated.isLoggedIn &&
-                    <li><NavLink to='/activity'
-                      className={nav === 'activity' ? 'active' : ''}>
-                      Activity
-                    </NavLink></li>}
-                  <li><a onClick={() => setIsOpen3(state => !state)} >Help Center
-                    <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
-                      <BiChevronDown />
-                      <Collapse onInit={onInit} isOpen={isOpen3}>
-                        <Link to=''>How to?</Link>
-                        <Link to=''>FAQs</Link>
-                        <Link to=''>Contact Us</Link>
-                        <Link to=''>Chat with Us</Link>
-                        <hr />
-                        <Link to=''>Privacy</Link>
-                        <Link to=''>Terms & Conditions</Link>
-                      </Collapse>
-                    </HelpDropdown>
-                  </a></li>
+                  <div ref={helpCenterRef} >
+                    {props.authenticated.isLoggedIn &&
+                      <li><NavLink to='/activity'
+                        className={nav === 'activity' ? 'active' : ''}>
+                        Activity
+                      </NavLink></li>}
+                    <li><a onClick={() => setIsOpen3(state => !state)} >Help Center
+                      <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
+                        <BiChevronDown />
+                        <Collapse onInit={onInit} isOpen={isOpen3}>
+                          <Link to=''>How to?</Link>
+                          <Link to=''>FAQs</Link>
+                          <Link to=''>Contact Us</Link>
+                          <Link to=''>Chat with Us</Link>
+                          <hr />
+                          <Link to=''>Privacy</Link>
+                          <Link to=''>Terms & Conditions</Link>
+                        </Collapse>
+                      </HelpDropdown>
+                    </a></li>
+                  </div>
                 </nav>
               </Collapse>
             </MobileMenuDD>
@@ -268,22 +295,27 @@ function Header(props) {
             {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
               && props.user?.status === 'PENDING' && <GradientBtn>Pending</GradientBtn>}
 
-            {!props.authenticated.isLoggedIn &&
-              <WhiteBorderBtn className='ani-1 active'
-                onClick={() => setOpenLogin(!openLogin)}>
-                Connect Wallet
-              </WhiteBorderBtn>
-            }{openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
+            <div  ref={loginRef}>
+              {!props.authenticated.isLoggedIn &&
+                <div  ref={loginRef}>
+                  <WhiteBorderBtn className='ani-1 active'
+                    onClick={() => setOpenLogin(!openLogin)}>
+                    Connect Wallet
+                  </WhiteBorderBtn>
+                </div>
+              }
+              {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
+            </div>
 
             {props.authenticated.isLoggedIn && <AfterLogin>
-              <NotificationDropdown>
+              <NotificationDropdown ref={notificationRef}>
                 <button onClick={() => setOpenNotification(!openNotification)}>
                   <img src={BellIcon} alt='' />
                   {/* <div className='red-dot'></div> */}
                 </button>
                 {openNotification && <Notifications isOpen={openNotification} />}
               </NotificationDropdown>
-              <AccountDropdown>
+              <AccountDropdown ref={accountRef}>
                 <button className={`acc-btn ${isOpen1 ? 'active' : ''}`} onClick={() => setIsOpen1(state => !state)}>
                   <span><div className='user-img'></div></span>
                 </button>
