@@ -256,8 +256,7 @@ function Header(props) {
               </Collapse>
               <Collapse onInit={onInit} isOpen={isOpen5}>
                 <nav className="">
-                  {navTabs.map((tab, key) => <li><NavLink
-                    key={key}
+                  {navTabs.map((tab, key) => <li key={key}><NavLink
                     to={`/${(tab.replace(/ /g, '')).toLowerCase()}`}
                     activeClassName={tab.replace(/ /g, '').toLowerCase() === nav ? 'active' : ''}
                     onClick={() => setNav(tab.replace(/ /g, '').toLowerCase())}

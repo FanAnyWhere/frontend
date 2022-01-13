@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+// import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -18,11 +19,16 @@ import GreenIcon from '../assets/images/green-icon.png';
 import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
 
+import useOutsideClick from '../helper/outside.click'
 import NFT from '../modals/nft.card'
 import { actions } from '../actions'
 
 
 const Marketplace = (props) => {
+  
+  // const { id1 } = useParams()
+  // const id = '61d57e15cd4a75cb8c6abb02'
+  const dropRef = useRef();
 
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -42,11 +48,12 @@ const Marketplace = (props) => {
   const [nfts, setNFTs] = useState([])
   const [pageNo, setPageNo] = useState(1)
   const [categoryFilter, setCategoryList] = useState([])
-  const [filter, setFilter] = useState('recently')
+  const [filter, setFilter] = useState('')
   const [applied, setApplied] = useState([])
   const [isFilter, setIsFilter] = useState(false)
   const [selectCollection, setSelectCollection] = useState(false)
 
+  useOutsideClick(dropRef, () => {setIsOpen2(false)})
 
   useEffect(() => {
     if (!props.collections) props.getCollections()
@@ -54,7 +61,16 @@ const Marketplace = (props) => {
   }, [props.collections]) // fetch collections
 
   useEffect(() => {
-    if (!props.NFTs) props.getNFTs()
+    if (!props.NFTs) {
+      // if (id) {
+      //   setSelectCollection(id)
+      //   setIsFilter(true)
+      // }
+      // else {
+      //   props.getNFTs()
+      // }
+      props.getNFTs()
+    }
     if (props.NFTs) setNFTs(props.NFTs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs]) // fetch the NFTs
@@ -70,27 +86,34 @@ const Marketplace = (props) => {
   }, [props.moreNFTs])
 
   useEffect(() => {
-    if (filter === 'recently') props.getNFTs()
+    if (filter === 'recently') {
+      console.log('second ')
+      props.getNFTs()
+      setIsOpen2(false)
+    }
     if (filter === 'lowToHight') {
       props.getNFTs({ filter: 'lowToHigh' })
-      setFilter(true)
+      setIsFilter(true)
+      setIsOpen2(false)
     }
     if (filter === 'highToLow') {
       props.getNFTs({ filter: 'highToLow' })
-      setFilter(true)
+      setIsFilter(true)
+      setIsOpen2(false)
     }
     if (filter === 'endingSoon') {
       props.getNFTs({ filter: ['AUCTION'] })
-      setFilter(true)
+      setIsFilter(true)
+      setIsOpen2(false)
     }
     if (filter === 'AUCTION') {
       props.getNFTs({ filter: ['AUCTION'] })
-      setFilter(true)
+      setIsFilter(true)
       // setApplied([ ...applied, { name: 'On Auction', id: 'AUCTION', type: 'filter' } ])
     }
     if (filter === 'BUYNOW') {
       props.getNFTs({ filter: ['BUYNOW'] })
-      setFilter(true)
+      setIsFilter(true)
       // setApplied([ ...applied, { name: 'Buy Now', id: 'BUYNOW', type: 'filter' } ])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,7 +125,10 @@ const Marketplace = (props) => {
   }, [categoryFilter])
 
   useEffect(() => {
-    if (selectCollection) props.getNFTs({ collection: selectCollection })
+    if (selectCollection) {
+      console.log('-- collection filter ')
+      props.getNFTs({ collection: selectCollection })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectCollection])
 
@@ -119,18 +145,18 @@ const Marketplace = (props) => {
   const categorySelect = (e, name) => {
     if (e.target.checked) {
       setCategoryList([...categoryFilter, e.target.value])
-      setFilter(true)
+      setIsFilter(true)
       // setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
     } else {
       setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
-      setFilter(false)
+      setIsFilter(false)
       // setApplied(applied.filter(appl => appl.id !== e.target.value))
     }
   }
 
   const collectionSelect = (e, name) => {
     setSelectCollection(e.target.value)
-    setFilter(true)
+    setIsFilter(true)
     // setApplied([ ...applied, { name: name, id: e.target.value, type: 'collection' } ])
   }
 
@@ -155,7 +181,7 @@ const Marketplace = (props) => {
     setCategoryList([])
     props.clearNFTs()
     props.clearPagination()
-    setFilter(false)
+    setIsFilter(false)
     setApplied([])
   }
 
@@ -259,7 +285,7 @@ const Marketplace = (props) => {
             <p>{props.pagination && props.pagination.totalRecords} Results</p>
 
             <ResultRight>
-              <CustomDropdown>
+              <CustomDropdown ref={dropRef}>
                 <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
