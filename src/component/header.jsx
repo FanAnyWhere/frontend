@@ -50,10 +50,10 @@ function Header(props) {
   const [accountBalance, setAccountBalance] = useState('000.00')
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
 
-  useOutsideClick(accountRef, () => {setIsOpen1(false)})
-  useOutsideClick(loginRef, () => {setOpenLogin(false)})
-  useOutsideClick(helpCenterRef, () => {setIsOpen3(false)})
-  useOutsideClick(notificationRef, () => {setOpenNotification(false)})
+  useOutsideClick(accountRef, () => { setIsOpen1(false) })
+  useOutsideClick(loginRef, () => { setOpenLogin(false) })
+  useOutsideClick(helpCenterRef, () => { setIsOpen3(false) })
+  useOutsideClick(notificationRef, () => { setOpenNotification(false) })
 
   useEffect(() => {
     // set the location on initial load
@@ -197,6 +197,41 @@ function Header(props) {
                   onClick={() => setIsOpen6(state => !state)}
                 />
               </BarOuter>
+              <AfterLogin>
+                <NotificationDropdown ref={notificationRef}>
+                  <button onClick={() => setOpenNotification(!openNotification)}>
+                    <img src={BellIcon} alt='' />
+                    {/* <div className='red-dot'></div> */}
+                  </button>
+                  {openNotification && <Notifications isOpen={openNotification} />}
+                </NotificationDropdown>
+                <AccountDropdown ref={accountRef}>
+                  <button className={`acc-btn ${isOpen1 ? 'active' : ''}`} onClick={() => setIsOpen1(state => !state)}>
+                    <span><div className='user-img'></div></span>
+                  </button>
+                  <Collapse onInit={onInit} isOpen={isOpen1}>
+                    <UserBox>
+                      <UserName>{props.user?.name}</UserName>
+                      <AddressBar><p>{address}</p>
+                        {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.authenticated.accounts[0])} />}
+                        {copied && <CopyedText>Copied!</CopyedText>}
+                      </AddressBar>
+                      <BalanceBox>
+                        <BalanceLeft>
+                          <p> Balance</p>
+                          <CurrencyAmout>{accountBalance} MATIC</CurrencyAmout>
+                          <DollerAmout>${'0000.00'}</DollerAmout>
+                        </BalanceLeft>
+                        <BalanceRight>
+                          <GradientBtn>Add Funds</GradientBtn>
+                        </BalanceRight>
+                      </BalanceBox>
+                    </UserBox>
+                    <Link to='/my-profile'>Profile</Link>
+                    <Link to='#' onClick={() => disconnect()}>Disconnect</Link>
+                  </Collapse>
+                </AccountDropdown>
+              </AfterLogin>
               <BarOuter>
                 <Bars
                   className={isOpen5 ? 'menu-active' : null}
@@ -295,9 +330,9 @@ function Header(props) {
             {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
               && props.user?.status === 'PENDING' && <GradientBtn>Pending</GradientBtn>}
 
-            <div  ref={loginRef}>
+            <div ref={loginRef}>
               {!props.authenticated.isLoggedIn &&
-                <div  ref={loginRef}>
+                <div ref={loginRef}>
                   <WhiteBorderBtn className='ani-1 active'
                     onClick={() => setOpenLogin(!openLogin)}>
                     Connect Wallet
@@ -371,6 +406,9 @@ const HeadRight = styled(FlexDiv)`
     &.active{color:#fff; border-color:#fff;}
     :hover{color:#aeaeae; border-color:#aeaeae;}
     svg{font-size:26px;}
+    ${Media.lg} {
+      margin:0px 8px;
+    }
     ${Media.md2} {
       font-size: 14px; line-height: 20px; margin:0px 4px;
     }
@@ -404,8 +442,11 @@ const NavSearch = styled.div`
     ::placeholder {
       color: #767676;
     }
-    ${Media.lg} {
+    ${Media.xl} {
       width:350px;
+    }
+    ${Media.lg} {
+      width:250px;
     }
     ${Media.md2} {
       width:140px; font-size:14px; line-height:22px;
@@ -491,6 +532,13 @@ const NotificationDropdown = styled.div`
   position:relative; line-height:11px;
   .collapse-css-transition{
     position:absolute; top:46px; right:0px; width:400px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:15px 0px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
+    ${Media.sm} {
+      right:-90px;
+    }
+    ${Media.xs} {
+      width:380px;
+    }
+    .mobile-notifibox{width:auto !important;}
   }
   .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
 `;

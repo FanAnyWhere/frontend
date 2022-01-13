@@ -26,7 +26,7 @@ const Notifications = (props) => {
         <NTitle>Notification</NTitle>
         <Link to='/activity' className='see-all'>See All</Link>
       </NotifiTitleBar>
-      <Scrollbars style={{ width: 400, height: 266 }}>
+      <Scrollbars style={{ width: 400, height: 266 }} className='mobile-notifibox'>
 
         {props.notifications?.map((notification, key) => {
           return <NotifiList>
