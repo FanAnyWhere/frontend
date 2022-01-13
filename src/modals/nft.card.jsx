@@ -29,8 +29,7 @@ const NFT = (props) => {
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-
-  return <div className={`item ${filterOpen ? 'active' : ''}`} key={index}>
+  return <div className={`item ${filterOpen ? 'active' : ''}`} key={nft._id}>
     <Link to={'/nft-detail/' + nft._id}>
       <LiveBox>
         <div className='img-outer ver3'>
