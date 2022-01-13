@@ -15,6 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import RImg from '../assets/images/img1.jpg';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import NFT12 from '../assets/images/nft-12.jpg';
+import DefaultImg from '../assets/images/default-img.jpg';
 
 import TransactionStatus from '../modals/transaction.statius';
 import { getContractInstance } from '../helper/functions';
@@ -62,7 +63,7 @@ const CreateNFT = (props) => {
     imgSrc: NFT12,
   })
 
-  useEffect( () => {
+  useEffect(() => {
     if (props.user && props.user.status === 'PENDING') props.history.push('/')
     if (!props.authenticated.isLoggedIn) props.history.push('/')
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,7 +104,7 @@ const CreateNFT = (props) => {
         '100',
         '0',
         params.saleState === 'AUCTION' ? '1' : '0',
-        nftObj.saleState === 'AUCTION' ? [Math.round(auctionDate), params.auctionTime ? params.auctionTime : Number(0)]: [Math.round(auctionDate), Number(0)],
+        nftObj.saleState === 'AUCTION' ? [Math.round(auctionDate), params.auctionTime ? params.auctionTime : Number(0)] : [Math.round(auctionDate), Number(0)],
         web3.utils.toWei(params.price.toString(), 'ether'),
         '0',
         '0x0000000000000000000000000000000000000000'
@@ -135,11 +136,11 @@ const CreateNFT = (props) => {
   }
 
   const onSubmit = () => {
-    let { title, description, category, collection, 
+    let { title, description, category, collection,
       saleState, startDate, auctionTime, price, edition } = nftObj
     let err = false
     let errorss = []
-    if (!imageURL) { errorss.push('image'); err = true;  }
+    if (!imageURL) { errorss.push('image'); err = true; }
     if (!title) { errorss.push('title'); err = true; }
     if (!description) { errorss.push('description'); err = true; }
     if (category.length === 0) { errorss.push('category'); err = true; }
@@ -161,20 +162,23 @@ const CreateNFT = (props) => {
   const createNFT = async () => {
     let hash = { original: null, compressed: null }
     if (fileSize.original !== fileSize.compressed) { // check image is big or not
-      hash.original = await ipfs.add(nftObj.image.original, { pin: true,
+      hash.original = await ipfs.add(nftObj.image.original, {
+        pin: true,
         progress: (bytes) => {
           // console.log('Original File upload progress ', Math.floor(bytes * 100 / (fileSize.original)))
           setUploadRatio(Math.floor((bytes * 100) / fileSize.original))
         },
       })
-      hash.compressed = await ipfs.add(this.state.image.compressed, { pin: true,
+      hash.compressed = await ipfs.add(this.state.image.compressed, {
+        pin: true,
         progress: (bytes) => {
           // console.log('Compressed File upload progress ', Math.floor(bytes * 100 / (fileSize.compressed)))
           setUploadRatio(Math.floor((bytes * 100) / fileSize.compressed))
         },
       })
     } else {
-      hash.original = await ipfs.add(nftObj.image.original, { pin: true,
+      hash.original = await ipfs.add(nftObj.image.original, {
+        pin: true,
         progress: (bytes) => {
           // console.log('Original File upload progress ', Math.floor(bytes * 100 / (fileSize.original)))
           setUploadRatio(Math.floor((bytes * 100) / fileSize.original))
@@ -246,7 +250,7 @@ const CreateNFT = (props) => {
     <>
       <Gs.Container>
 
-      {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)} />}
+        {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)} />}
 
 
         <EPTitle>Create New Item</EPTitle>
@@ -256,30 +260,30 @@ const CreateNFT = (props) => {
             <FormBox>
               <LabelRow>
                 <label>Upload File</label>
-                {errors && errors.includes('image') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('image') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <UploadBox>
                 <div className='upload-inner'>
                   <p>PNG, GIF, WEBP, MP4 or MP3. Max 100mb</p>
 
                   <input
-                      ref={fileInput}
-                      type='file'
-                      name='nftFile'
-                      hidden
-                      // accept='video/*, image/*, audio/*'
-                      accept='image/*'
-                      onChange={(e) => {
-                        fileChange(e)
-                      }}
-                    />
+                    ref={fileInput}
+                    type='file'
+                    name='nftFile'
+                    hidden
+                    // accept='video/*, image/*, audio/*'
+                    accept='image/*'
+                    onChange={(e) => {
+                      fileChange(e)
+                    }}
+                  />
                   <GradientBtn
                     onClick={() => { fileInput.current.click() }}
                   >Choose File</GradientBtn>
 
-                  <div className='img-outer'>
-                    {/* <img src={RImg} alt='' /> */}
-                  </div>
+                  {/* <div className='img-outer'>
+                    <img src={RImg} alt='' />
+                  </div> */}
                 </div>
               </UploadBox>
             </FormBox>
@@ -288,11 +292,11 @@ const CreateNFT = (props) => {
               <LabelRow>
                 <label>Title</label>
                 {/* <p style={{color: 'red'}}>required</p> */}
-                {errors && errors.includes('title') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('title') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
-              <input type='text' placeholder='e.g. Winnng moment from WC 1983' 
+              <input type='text' placeholder='e.g. Winnng moment from WC 1983'
                 required
-                onChange={(e) => setNFTObj({ ...nftObj, title: e.target.value }) }/>
+                onChange={(e) => setNFTObj({ ...nftObj, title: e.target.value })} />
             </FormBox>
             {/* <FormBox>
               <LabelRow>
@@ -306,12 +310,12 @@ const CreateNFT = (props) => {
               <LabelRow>
                 <label>Description</label>
                 {/* <p style={{color: 'red'}}>required</p> */}
-                {errors && errors.includes('description') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('description') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
-              <textarea 
+              <textarea
                 required
                 placeholder='e.g. Captured from pavilion gallery when India won the world cup.'
-                onChange={(e) => setNFTObj({ ...nftObj, description: e.target.value }) }
+                onChange={(e) => setNFTObj({ ...nftObj, description: e.target.value })}
               ></textarea>
               <GreyTextInfo>Description will be shown in the Item’s detail page.</GreyTextInfo>
             </FormBox>
@@ -319,16 +323,16 @@ const CreateNFT = (props) => {
             <FormBox>
               <LabelRow>
                 <label>Category</label>
-                {errors && errors.includes('category') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('category') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <DownArrow>
-                <select 
-                  onChange={(e) => setNFTObj({ ...nftObj, category: [e.target.value]})}
+                <select
+                  onChange={(e) => setNFTObj({ ...nftObj, category: [e.target.value] })}
                   required
                 >
                   <option>Select Category</option>
                   {props.categoryList && props.categoryList.length === 0 && <option>no category</option>}
-                  {props.categoryList && props.categoryList.map( (category, key) => {
+                  {props.categoryList && props.categoryList.map((category, key) => {
                     return <option key={key} value={category.id}> {category.categoryName.en} </option>
                   })}
                 </select>
@@ -339,15 +343,15 @@ const CreateNFT = (props) => {
               <FormBox className='custom-width'>
                 <LabelRow>
                   <label>Collection</label>
-                  {errors && errors.includes('collection') && <p style={{color: 'red'}}>required</p>}
+                  {errors && errors.includes('collection') && <p style={{ color: 'red' }}>required</p>}
                 </LabelRow>
                 <DownArrow>
-                  <select 
-                  required
-                  onChange={(e) => setNFTObj({ ...nftObj, collection: e.target.value })}>
+                  <select
+                    required
+                    onChange={(e) => setNFTObj({ ...nftObj, collection: e.target.value })}>
                     <option>Select Collection</option>
                     {props.collectionList && props.collectionList.length === 0 && <option>no collection</option>}
-                    {props.collectionList && props.collectionList.map( (collection, key) => {
+                    {props.collectionList && props.collectionList.map((collection, key) => {
                       return <option key={key} value={collection.id}> {collection.name} </option>
                     })}
                   </select>
@@ -390,15 +394,15 @@ const CreateNFT = (props) => {
                 </label>
               </SIRight>
             </SwitchItem> */}
-            
+
             <FormBox>
               <LabelRow>
                 <label>Sale Type</label>
-                {errors && errors.includes('sale_type') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('sale_type') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <CustomSwitch>
-                <button className={nftObj.saleState === 'AUCTION' ? 'active': ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'AUCTION' }) }>Timed Auction</button>
-                <button className={nftObj.saleState === 'BUY' ? 'active': ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'BUY' }) }>Buy Now</button>
+                <button className={nftObj.saleState === 'AUCTION' ? 'active' : ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'AUCTION' })}>Timed Auction</button>
+                <button className={nftObj.saleState === 'BUY' ? 'active' : ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'BUY' })}>Buy Now</button>
                 {/* <button>Open for bids</button> */}
               </CustomSwitch>
               <GreyTextInfo>Items can be purchased by matching the buy now price.</GreyTextInfo>
@@ -408,7 +412,7 @@ const CreateNFT = (props) => {
               <FormBox className='w50'>
                 <LabelRow>
                   <label>Starting Date</label>
-                  {errors && errors.includes('start_date') && <p style={{color: 'red'}}>required</p>}
+                  {errors && errors.includes('start_date') && <p style={{ color: 'red' }}>required</p>}
                 </LabelRow>
                 <DownArrow>
                   <DatePicker
@@ -424,14 +428,14 @@ const CreateNFT = (props) => {
                   {/* <BiChevronDown /> */}
                 </DownArrow>
               </FormBox>
-              {nftObj.saleState === 'AUCTION' && 
+              {nftObj.saleState === 'AUCTION' &&
                 <FormBox className='w50'>
                   <LabelRow>
                     <label>Auction Duration</label>
-                    {errors && errors.includes('auction_duration') && <p style={{color: 'red'}}>required</p>}
+                    {errors && errors.includes('auction_duration') && <p style={{ color: 'red' }}>required</p>}
                   </LabelRow>
                   <DownArrow>
-                    <select  onChange={(e) => setNFTObj({ ...nftObj, auctionTime: e.target.value })}>
+                    <select onChange={(e) => setNFTObj({ ...nftObj, auctionTime: e.target.value })}>
                       <option >Select Duration </option>
                       <option value={'12'}>12 </option>
                       <option value={'24'}>24 </option>
@@ -439,16 +443,16 @@ const CreateNFT = (props) => {
                     </select>
                     <BiChevronDown />
                   </DownArrow>
-                </FormBox> }
+                </FormBox>}
             </DateRow>
 
             <FormBox>
               <LabelRow>
                 <label>Price</label>
-                {errors && errors.includes('price') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('price') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <InputOuter>
-                <input type='number' placeholder='Enter Price for one Item' onChange={(e) => setNFTObj({ ...nftObj, price: e.target.value})}/>
+                <input type='number' placeholder='Enter Price for one Item' onChange={(e) => setNFTObj({ ...nftObj, price: e.target.value })} />
                 <InputLabel>FAW</InputLabel>
               </InputOuter>
               <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo>
@@ -466,9 +470,9 @@ const CreateNFT = (props) => {
             <FormBox>
               <LabelRow>
                 <label>Editions</label>
-                {errors && errors.includes('editions') && <p style={{color: 'red'}}>required</p>}
+                {errors && errors.includes('editions') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
-              <input type='number' required placeholder='e.g. 10' onChange={(e) => setNFTObj({ ...nftObj, edition: e.target.value })}/>
+              <input type='number' required placeholder='e.g. 10' onChange={(e) => setNFTObj({ ...nftObj, edition: e.target.value })} />
               <GreyTextInfo>The number of copies that can be minted. No gas cost to you!</GreyTextInfo>
             </FormBox>
             {/* <FormBox>
@@ -488,15 +492,16 @@ const CreateNFT = (props) => {
 
           <CNRight>
             <BITitle className='mb-8'>Preview</BITitle>
-            {/* <PreviewBox>
+            <PreviewBox>
+              <img src={DefaultImg} alt='' />
               <p>Upload item to Preview NFT</p>
-            </PreviewBox> */}
+            </PreviewBox>
             <Trending>
               <div className='item'>
                 <Link to='/'>
                   <LiveBox>
                     <div className='img-outer ver4'>
-                      <img src={imageURL ? imageURL : NFT12} alt='' />
+                      <img src={imageURL ? imageURL : DefaultImg} alt='' />
                     </div>
                     <div className='box-content'>
                       <div className='sign-row'>
@@ -530,11 +535,11 @@ const CreateNFT = (props) => {
         </CNOuter>
 
         {loading && <SiteLoader>
-            <div className='loader-inner'>
-              <div className='loader'></div>
-              <p>adding..</p>
-            </div>
-          </SiteLoader>}
+          <div className='loader-inner'>
+            <div className='loader'></div>
+            <p>adding..</p>
+          </div>
+        </SiteLoader>}
 
       </Gs.Container>
     </>
@@ -651,13 +656,13 @@ const ListText = styled.div`
 `;
 
 const PreviewBox = styled(FlexDiv)`
-  border: 1px solid #767676; box-sizing: border-box; border-radius: 5px; height:400px;
+  align-content: flex-start; border: 1px solid #767676; box-sizing: border-box; border-radius: 5px; height:400px;
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; margin:0px;}
 `;
 
 const Trending = styled(FlexDiv)`
   justify-content:flex-start;
-  .item{margin:0px 7px 40px 0px; width:100%; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;}
+  .item{margin:0px 0px 40px 0px; width:100%; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
 `;
 
 const LiveBox = styled.div`

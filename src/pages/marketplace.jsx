@@ -272,7 +272,13 @@ const Marketplace = (props) => {
 
 
           <Trending className={confyView ? 'comfy-view' : ''}>
-
+            <NoItemOuter>
+              <NoItemBox>
+                <NITitle>No Item to Display for this search.</NITitle>
+                <NIDesc>Oops! There are no items. Try a different filter comination</NIDesc>
+                <GradientBtn>Clear All Filters</GradientBtn>
+              </NoItemBox>
+            </NoItemOuter>
             {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
@@ -565,6 +571,22 @@ const GradientBtn = styled.button`
 
 const NDA = styled(FlexDiv)`
   width:100%; margin:10px 0px;
+`;
+
+const NoItemOuter = styled(FlexDiv)`
+  width:100%;
+`;
+
+const NoItemBox = styled.div`
+  background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
+`;
+
+const NITitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; margin:0px 0px 15px;
+`;
+
+const NIDesc = styled.div`
+  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 20px;
 `;
 
 const mapDipatchToProps = (dispatch) => {
