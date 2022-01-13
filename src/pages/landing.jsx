@@ -107,6 +107,31 @@ const Landing = (props) => {
   }, [props.LiveAuctionNFTs]) // fetch the Live Auctions NFTs
 
 
+  const renderRow = (creators) => {
+    const portions = creators.chunk(3);
+    const data =  portions.map((portion) => {
+        return (
+          <TCColumn>
+            { portion.map((creator, i) => { 
+              return(
+                  <TCBox key={creator.id}>
+                    <Link to={'/celebrity/' + creator.id} >
+                      {/* <TC1>{i + 1}</TC1> */}
+                      <TC2><img src={creator.profile} alt='' /></TC2>
+                      <TC3>
+                        <h4>{creator.name}</h4>
+                        <p>$10000.00</p>
+                      </TC3>
+                    </Link>
+                </TCBox> 
+            )
+          })}
+        </TCColumn>
+      )
+    })
+    return data;
+  }
+
   return (
     <>
       <NFTTopSlider>
@@ -306,6 +331,7 @@ const Landing = (props) => {
         <GradientTitleRow>
           <h2>Top Celebrity</h2>
           <WhiteBorderBtn onClick={() => props.history.push('/celebrities')}>See all</WhiteBorderBtn>
+           
         </GradientTitleRow>
       </Gs.Container>
 
@@ -317,160 +343,8 @@ const Landing = (props) => {
           </div>
         </SiteLoader>}
         <TopCelebrities>
-          {props.TopCreators &&
-            <TCColumn>
-              {props.TopCreators.map((creator, key) => {
-                return <TCBox key={key}>
-                  <Link to={'/celebrity/' + creator.id} >
-                    <TC1>{key + 1}</TC1>
-                    <TC2><img src={creator.profile} alt='' /></TC2>
-                    <TC3>
-                      <h4>{creator.name}</h4>
-                      <p>$10000.00</p>
-                    </TC3>
-                  </Link>
-                </TCBox>
-              })}
-            </TCColumn>
-          }
+          {props.TopCreators&&renderRow(props.TopCreators)}
           {props.TopCreators && props.TopCreators.length === 0 && 'No data available'}
-          {/* <SiteLoader>
-              <div className='loader-inner'>
-                <div className="loader"></div>
-                <p>Loading</p>
-              </div>
-            </SiteLoader> */}
-
-          {/* <TCColumn>
-            <TCBox>
-              <TC1>1</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>2</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>3</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>4</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>5</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>6</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>7</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>8</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>9</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>10</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>11</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>12</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn>
-          <TCColumn>
-            <TCBox>
-              <TC1>13</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>14</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-            <TCBox>
-              <TC1>15</TC1>
-              <TC2><img src={CreatorUser} alt='' /></TC2>
-              <TC3>
-                <h4>Collection Name</h4>
-                <p>$10000.00</p>
-              </TC3>
-            </TCBox>
-          </TCColumn> */}
         </TopCelebrities>
       </Gs.Container>
 
