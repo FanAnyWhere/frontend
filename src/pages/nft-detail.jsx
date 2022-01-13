@@ -20,6 +20,8 @@ import TwitterIcon from '../assets/images/twitter.png';
 import FacebookIcon from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
+import NFTdImg from '../assets/images/green-icon.png';
+import NoBid from '../assets/images/no-bid.png';
 
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
@@ -127,7 +129,7 @@ const NFTDetail = (props) => {
               <NDTop>
                 <NDLeft>
                   <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
-                  <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}</NTitleName>
+                  <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}<span>Sold Out</span></NTitleName>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
@@ -202,7 +204,7 @@ const NFTDetail = (props) => {
                 <Tabs>
                   <TabList>
                     <Tab>Details</Tab>
-                    {/* <Tab>Bids</Tab> */}
+                    <Tab>Bids</Tab>
                     <Tab>Owners</Tab>
                     {/* <Tab>History</Tab> */}
                   </TabList>
@@ -222,7 +224,11 @@ const NFTDetail = (props) => {
                       <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
                     </Scrollbars>
                   </TabPanel>
-                  {/* <TabPanel>
+                  <TabPanel>
+                    <NoItemBox>
+                      <img src={NoBid} alt='' />
+                      <NIDesc>No bids yet.  Be the first to place a bid</NIDesc>
+                    </NoItemBox>
                     <Scrollbars style={{ height: 431 }}>
                       <OwnerOuter>
                         <OwnerLeft>
@@ -258,7 +264,7 @@ const NFTDetail = (props) => {
                         </OwnerLeft>
                       </OwnerOuter>
                     </Scrollbars>
-                  </TabPanel> */}
+                  </TabPanel>
                   <TabPanel>
                     <Scrollbars style={{ height: 431 }}>
                       <OwnerOuter>
@@ -458,6 +464,7 @@ const NFTDetail = (props) => {
                   <GreenAlertRow className='yellow-alert-text'>Sufficient funds available to make payment.</GreenAlertRow>
                   <GradientBtn className='full'>Make Payment</GradientBtn>
                 </Modal>
+                {/* <WhiteBorderBtn className='full'>Remind me when Available</WhiteBorderBtn> */}
                 {/* <GradientBtn>Edit Item</GradientBtn>
                 <WhiteBorderBtn>List item for Sale</WhiteBorderBtn> */}
                 {/* <GradientBtn onClick={() => setOpenThird(true)}>Reject Bid</GradientBtn>
@@ -516,6 +523,7 @@ const EPLeft = styled.div`
 const WhiteBorderBtn = styled.button`
   border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
   :hover{border-color:#0FBFFC;}
+  &.full{width:100%; margin:0px;}
 `;
 
 const GradientBtn = styled.button`
@@ -541,6 +549,7 @@ const CollectionName = styled.div`
 
 const NTitleName = styled.div`
   font-weight: bold; font-size: 32px; line-height: 48px; color: #FFFFFF;
+  span{position:relative; top:-6px; margin-left:10px; padding:2px 10px; background: linear-gradient(92.95deg, #F9B507 0.8%, #FF7A00 103.91%); border-radius: 2px; font-weight: bold; font-size: 12px; line-height: 16px; color: #1D1D1D;}
 `;
 
 const UPButton = styled.button`
@@ -754,6 +763,19 @@ const SiteLoader = styled(FlexDiv)`
     }
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
+`;
+
+const NoItemBox = styled.div`
+  background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
+  img{margin-bottom:20px;}
+`;
+
+const NITitle = styled.div`
+  font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; margin:0px 0px 15px;
+`;
+
+const NIDesc = styled.div`
+  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 20px;
 `;
 
 const mapDipatchToProps = (dispatch) => {
