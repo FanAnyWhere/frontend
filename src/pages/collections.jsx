@@ -37,7 +37,7 @@ const Collections = (props) => {
   }, []) // fetch sale NFTs
 
   useEffect(() => {
-    if (props.moreCollections) setCollections( collections.concat(props.moreCollections))
+    if (props.moreCollections) setCollections(collections.concat(props.moreCollections))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.moreCollections]) // fetch more collections
 
@@ -101,9 +101,9 @@ const Collections = (props) => {
         </CollectionRow>
 
         {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
-            <GradientBtn onClick={() => fetchMore(pageNo + 1)}>Load More</GradientBtn>
-          </LoadMore>}
-        
+          <GradientBtn onClick={() => fetchMore(pageNo + 1)}>Load More</GradientBtn>
+        </LoadMore>}
+
       </CollectionMain>
     </>
   );
@@ -249,7 +249,7 @@ const CustomSwitch = styled(FlexDiv)`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  margin:30px 0px;
+  height:calc(100vh - 650px);
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;

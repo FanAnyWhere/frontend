@@ -64,7 +64,7 @@ const Marketplace = (props) => {
   }, [props.categories]) // fetch the Categories
 
   useEffect(() => {
-    if (props.moreNFTs) setNFTs( nfts.concat(props.moreNFTs))
+    if (props.moreNFTs) setNFTs(nfts.concat(props.moreNFTs))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.moreNFTs])
 
@@ -83,7 +83,7 @@ const Marketplace = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
-  
+
   useEffect(() => {
     if (categoryFilter.length) props.getNFTs({ category: categoryFilter })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,7 +106,7 @@ const Marketplace = (props) => {
 
   const categorySelect = (e, name) => {
     if (e.target.checked) {
-      setCategoryList([ ...categoryFilter, e.target.value ])
+      setCategoryList([...categoryFilter, e.target.value])
       // setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
     } else {
       setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
@@ -137,19 +137,19 @@ const Marketplace = (props) => {
   return (
     <>
       <ProfileMain>
-        <PLeftpanel className={filterOpen ? 'active':''}>
-          <GradientBar className={filterOpen ? 'active':''}>
+        <PLeftpanel className={filterOpen ? 'active' : ''}>
+          <GradientBar className={filterOpen ? 'active' : ''}>
             <LeftTitle>Filters</LeftTitle>
-            <span className={filterOpen ? 'active':''}><BiRightArrowAlt className={filterOpen ? 'active':''} onClick={() => setFilterOpen(!filterOpen)} /></span>
+            <span className={filterOpen ? 'active' : ''}><BiRightArrowAlt className={filterOpen ? 'active' : ''} onClick={() => setFilterOpen(!filterOpen)} /></span>
           </GradientBar>
 
-          <NFTlistLeft className={filterOpen ? 'active':''}>
+          <NFTlistLeft className={filterOpen ? 'active' : ''}>
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <WhiteBorderBtn onClick={() => setFilter('AUCTION')}>On Auction</WhiteBorderBtn>
                 <WhiteBorderBtn onClick={() => setFilter('BUYNOW')}>Buy Now</WhiteBorderBtn>
               </Collapsible>
-              
+
               {/* <Collapsible trigger="Price">
                 <CustomDropdown>
                   <label onClick={() => setIsOpen3(state => !state)}>USD US Dollars <HiOutlineChevronDown /></label>
@@ -180,10 +180,10 @@ const Marketplace = (props) => {
                       <Scrollbars style={{ height: 244 }}>
                         {props.categories && props.categories.map((category, index) => {
                           return <label className="container" key={index}>
-                              {category.categoryName.en}
-                              <input checked={categoryFilter.includes(category.id)} type="checkbox" value={category.id} onChange={(e) => categorySelect(e, category.categoryName.en)} />
-                              <span className="checkmark"></span>
-                            </label>
+                            {category.categoryName.en}
+                            <input checked={categoryFilter.includes(category.id)} type="checkbox" value={category.id} onChange={(e) => categorySelect(e, category.categoryName.en)} />
+                            <span className="checkmark"></span>
+                          </label>
                         })}
                       </Scrollbars>
                     </CustomcheckBox>
@@ -225,7 +225,7 @@ const Marketplace = (props) => {
           </NFTlistLeft>
         </PLeftpanel>
 
-        <PRightpanel className={filterOpen ? 'active':''}>
+        <PRightpanel className={filterOpen ? 'active' : ''}>
           <RightTitle>
             Explore
           </RightTitle>
@@ -238,16 +238,16 @@ const Marketplace = (props) => {
                 <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
-                    <Link to='#' onClick={() => setFilter('recently')} className={filter === 'recently' ? 'active':''}>Recently Added</Link>
-                    <Link to='#' onClick={() => setFilter('lowToHight')} className={filter === 'lowToHight' ? 'active':''} >Price: Low to High</Link>
-                    <Link to='#' onClick={() => setFilter('highToLow')} className={filter === 'highToLow' ? 'active':''}>Price: High to Low</Link>
-                    <Link to='#' onClick={() => setFilter('endingSoon')} className={filter === 'endingSoon' ? 'active':''}>Ending Soon</Link>
+                    <Link to='#' onClick={() => setFilter('recently')} className={filter === 'recently' ? 'active' : ''}>Recently Added</Link>
+                    <Link to='#' onClick={() => setFilter('lowToHight')} className={filter === 'lowToHight' ? 'active' : ''} >Price: Low to High</Link>
+                    <Link to='#' onClick={() => setFilter('highToLow')} className={filter === 'highToLow' ? 'active' : ''}>Price: High to Low</Link>
+                    <Link to='#' onClick={() => setFilter('endingSoon')} className={filter === 'endingSoon' ? 'active' : ''}>Ending Soon</Link>
                   </div>
                 </Collapse>
               </CustomDropdown>
               <CustomSwitch>
-                <button className={confyView ? 'active':''} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
-                <button className={!confyView ? 'active':''} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
+                <button className={confyView ? 'active' : ''} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+                <button className={!confyView ? 'active' : ''} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
             </ResultRight>
           </ResultBar>
@@ -256,7 +256,7 @@ const Marketplace = (props) => {
             <FilterBar>
               {applied.length > 0 && applied.map((apply) => {
                 return <button><span>{apply.name}
-                 {/* <IoCloseSharp onClick={() => cancelFilter(apply)}/> */}
+                  {/* <IoCloseSharp onClick={() => cancelFilter(apply)}/> */}
                 </span></button>
               })}
               {applied.length > 0 && <button className='c-all' onClick={() => {
@@ -271,7 +271,7 @@ const Marketplace = (props) => {
           </ProfilefilterBar>
 
 
-          <Trending className={confyView ? 'comfy-view':''}>
+          <Trending className={confyView ? 'comfy-view' : ''}>
 
             {!props.NFTs ?
               <SiteLoader>
@@ -285,7 +285,7 @@ const Marketplace = (props) => {
             {props.NFTs && nfts.map((nft, key) => {
               return nft.isActive && <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
             })}
-            
+
           </Trending>
 
           {props.pagination?.pageNo < props.pagination?.totalPages && <LoadMore>
@@ -384,9 +384,9 @@ const GradientBar = styled(FlexDiv)`
 
 const Trending = styled(FlexDiv)`
   align-items:flex-start; justify-content:flex-start; margin:0px 16px;
-  .item{margin:0px 4px 40px; width:calc(14.28% - 8px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
+  .item{margin:0px 5px 25px; width:calc(14.28% - 10px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
-    &.active{width:calc(16.66% - 7px);}
+    &.active{width:calc(16.66% - 10px);}
   }
   &.comfy-view{ margin:0px 15px;
     .item{margin:0px 5px 25px; width:calc(20% - 10px);}
@@ -540,7 +540,7 @@ const CustomcheckBox = styled.div`
 
 
 const SiteLoader = styled(FlexDiv)`
-  margin:30px 0px; width:100%;
+  height:calc(100vh - 550px); width:100%;
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;

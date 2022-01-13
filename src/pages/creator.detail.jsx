@@ -660,9 +660,9 @@ const GradientBar = styled(FlexDiv)`
 
 const Trending = styled(FlexDiv)`
   align-items:flex-start; justify-content:flex-start; margin:0px 16px;
-  .item{margin:0px 4px 40px; width:calc(14.28% - 8px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
+  .item{margin:0px 5px 25px; width:calc(14.28% - 10px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
-    &.active{width:calc(16.66% - 7px);}
+    &.active{width:calc(16.66% - 10px);}
   }
   &.comfy-view{ margin:0px 15px;
     .item{margin:0px 5px 25px; width:calc(20% - 10px);}
@@ -935,7 +935,8 @@ const SiteLoader = styled(FlexDiv)`
 `;
 
 const Loader = styled(FlexDiv)`
-  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);
+  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; 
+  // opacity: 0.75; backdrop-filter: blur(4px);
 `;
 
 

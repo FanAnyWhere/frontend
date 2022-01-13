@@ -182,7 +182,7 @@ function Header(props) {
             <MobileMenuDD>
               <Collapse className='MB-search-content' onInit={onInit} isOpen={isOpen6}>
                 <NavSearch>
-                  <input type="text" placeholder="Search for an Art, music..." 
+                  <input type="text" placeholder="Search for an Art, music..."
                     onKeyUp={(e) => onSearchKeyUp(e)} />
                   <img src={SearchIcon} alt='' />
                 </NavSearch>
@@ -227,7 +227,7 @@ function Header(props) {
           </MobileMenu>
           <DesktopMenu>
             <NavSearch>
-              <input type="text" placeholder="Search for an Art, music..."  onKeyUp={(e) => onSearchKeyUp(e)} />
+              <input type="text" placeholder="Search for an Art, music..." onKeyUp={(e) => onSearchKeyUp(e)} />
               <img src={SearchIcon} alt='' />
             </NavSearch>
 
@@ -328,7 +328,11 @@ const HeaderSection = styled(FlexDiv)`
   position:fixed; left:0; right:0; top:0; z-index:99;
 `;
 
-const HeadLeft = styled.div``;
+const HeadLeft = styled.div`
+  ${Media.xs} {
+    img{width:130px;}
+  }
+`;
 
 const HeadRight = styled(FlexDiv)`
   a{ display:inline-flex; align-items:center; cursor:pointer; font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; margin:0px 12px; padding:0px; border-bottom:2px solid #1D1D1D;
@@ -477,6 +481,7 @@ const IconLine = styled(FlexDiv)``;
 
 const BarOuter = styled(FlexDiv)`
   width:40px; height:40px; border-radius:50%; border:1px solid #767676; margin:0px 5px;
+  :last-child{margin-right:0px;}
 `;
 
 const Bars = styled.div`

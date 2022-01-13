@@ -33,7 +33,7 @@ const Activity = (props) => {
       // await props.getNotificationFilters() // fetch notifications filters
     }
     if (props.authenticated.isLoggedIn) {
-      getNotifications() 
+      getNotifications()
     } else {
       Toast.warning('Frist Connect with wallet')
       props.history.push('/')
@@ -112,7 +112,7 @@ const Activity = (props) => {
 
             <FilterTags>
               {filters?.map((filter, key) =>
-                <Link to='#' key={key}>{filter.key}</Link>
+                <Link className='' to='#' key={key}><span>{filter.key}</span></Link>
               )}
             </FilterTags>
           </ActRight>
@@ -190,7 +190,16 @@ const NTitle = styled.div`
 
 const FilterTags = styled(FlexDiv)`
   justify-content:flex-start;
-  a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; pointer-events:none; padding:8px 16px; margin:0px 10px 10px 0px; border: 1px solid #AEAEAE; box-sizing: border-box; border-radius: 20px;}
+  a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; padding:1px; margin:0px 10px 10px 0px; box-sizing: border-box; border-radius: 20px;
+    background: #AEAEAE; display: flex; align-items: center; justify-content: center;
+    span{background-color:#1d1d1d; border-radius: 20px; padding: 8px 16px;}  
+    :hover{
+      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+    }
+    &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); color:#fff;
+      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);}
+    }
+  }
 `;
 
 const mapDipatchToProps = (dispatch) => {
