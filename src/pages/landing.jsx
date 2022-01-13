@@ -129,7 +129,7 @@ const Landing = (props) => {
             </SiteLoader> :
             <Carousel responsive={responsive}>
               <div className='item'>
-                {props.TopNFTs.length > 0 &&
+                {props.TopNFTs.length > 0 && (props.TopNFTs[0]).nftId.isActive && 
                   <W40>
                     <ImgOuter>
                       <Link to={'/nft-detail/' + (props.TopNFTs[0]).nftId._id}>

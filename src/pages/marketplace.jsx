@@ -200,7 +200,7 @@ const Marketplace = (props) => {
                   <Collapse onInit={onInit} isOpen={isOpen7}>
                     <Scrollbars style={{ height: 244 }}>
                       <div className='priceList search-list'>
-                        <Link to='/' className={filterOpen && 'active'}><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='/' className={filterOpen ? 'active' : ''}><img src={UserIcon} alt='' />Placeholder Text</Link>
                         <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
                         <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
                         <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
@@ -289,7 +289,7 @@ const Marketplace = (props) => {
               : props.NFTs.length === 0 && 'No data available'}
 
             {props.NFTs && nfts.map((nft, key) => {
-              return <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
+              return nft.isActive && <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
             })}
 
           </Trending>

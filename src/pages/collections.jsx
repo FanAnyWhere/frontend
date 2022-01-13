@@ -77,8 +77,8 @@ const Collections = (props) => {
             </Collapse>
           </CustomDropdown> */}
           <CustomSwitch>
-            <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
-            <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
+            <button className={confyView ? 'active' : ''} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+            <button className={!confyView ? 'active' : ''} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
           </CustomSwitch>
         </ResultRight>
 

@@ -76,7 +76,7 @@ function CelebrityDetails(props) {
   const [tab, setTab] = useState('created')
 
   useEffect(() => {
-    if (!props.NFTs) props.getUserNFTs(id)
+    // if (!props.NFTs) props.getUserNFTs(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs])
 
@@ -278,29 +278,29 @@ function CelebrityDetails(props) {
 
       <ActFilterList>
 
-        <Link to='#' className={tab === 'created' && 'active'} onClick={() => setTab('created')}>
+        <Link to='#' className={tab === 'created' ? 'active' : ''} onClick={() => setTab('created')}>
           Created
           {/* <span>{}</span> */}
         </Link>
-        <Link to='#' className={tab === 'collected' && 'active'} onClick={() => setTab('collected')} >Collected </Link>
-        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' && 'active'}
+        <Link to='#' className={tab === 'collected' ? 'active' : ''} onClick={() => setTab('collected')} >Collected </Link>
+        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' ? 'active' : ''}
           onClick={() => setTab('collections')} > Collections </Link>}
-        <Link to='#' className={tab === 'liked' && 'active'}
+        <Link to='#' className={tab === 'liked' ? 'active' : ''}
           onClick={() => setTab('liked')} > Liked </Link>
         {/* <Link to='#'>Bids Placed<span>00</span></Link>
         <Link to='#'>Bids Received<span>00</span></Link> */}
       </ActFilterList>
 
       <ProfileMain>
-        <PLeftpanel className={filterOpen && 'active'}>
-          <GradientBar className={filterOpen && 'active'}>
+        <PLeftpanel className={filterOpen ? 'active' : ''}>
+          <GradientBar className={filterOpen ? 'active' : ''}>
             <LeftTitle>Filters</LeftTitle>
-            <span className={filterOpen && 'active'}><BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
+            <span className={filterOpen ? 'active' : ''}><BiRightArrowAlt className={filterOpen ? 'active' : ''} onClick={() => {
               setFilterOpen(!filterOpen)
             }} /></span>
           </GradientBar>
 
-          <NFTlistLeft className={filterOpen && 'active'}>
+          <NFTlistLeft className={filterOpen ? 'active' : ''}>
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <WhiteBorderBtn>On Auction</WhiteBorderBtn>
@@ -408,7 +408,7 @@ function CelebrityDetails(props) {
             </CustomAccordian>
           </NFTlistLeft>
         </PLeftpanel>
-        <PRightpanel className={filterOpen && 'active'}>
+        <PRightpanel className={filterOpen ? 'active' : ''}>
           <ProfilefilterBar>
             {/* <FilterBar>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
@@ -430,15 +430,20 @@ function CelebrityDetails(props) {
                 </Collapse>
               </CustomDropdown>
               <CustomSwitch>
-                <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
-                <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
+                <button className={confyView ? 'active' : ''} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+                <button className={!confyView ? 'active' : ''} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
             </ResultRight>
           </ProfilefilterBar>
 
           <Trending className={confyView && 'comfy-view'}>
 
-            {!props.NFTs ? 'loading...' :
+            {!props.NFTs ? <SiteLoader>
+              <div className='loader-inner'>
+                <div className="loader"></div>
+                <p>Loading</p>
+              </div>
+            </SiteLoader> :
               props.NFTs.map((nft, key) => {
                 return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} />
               })
@@ -920,7 +925,7 @@ const CustomcheckBox = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0; z-index:99;
+  height:calc(100vh - 650px);
   .loader-inner{
     text-align:center;
     .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
@@ -933,6 +938,7 @@ const SiteLoader = styled(FlexDiv)`
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
 `;
+
 
 const Loader = styled(FlexDiv)`
   height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; 

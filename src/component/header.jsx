@@ -204,11 +204,11 @@ function Header(props) {
                   </NavLink></li>)}
                   {props.authenticated.isLoggedIn &&
                     <li><NavLink to='/activity'
-                      className={nav === 'activity' && 'active'}>
+                      className={nav === 'activity' ? 'active' : ''}>
                       Activity
                     </NavLink></li>}
                   <li><a onClick={() => setIsOpen3(state => !state)} >Help Center
-                    <HelpDropdown className={`${isOpen3 && 'active'}`}>
+                    <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
                       <BiChevronDown />
                       <Collapse onInit={onInit} isOpen={isOpen3}>
                         <Link to=''>How to?</Link>
@@ -242,11 +242,11 @@ function Header(props) {
               </NavLink>)}
               {props.authenticated.isLoggedIn &&
                 <NavLink to='/activity'
-                  className={nav === 'activity' && 'active'}>
+                  className={nav === 'activity' ? 'active' : ''}>
                   Activity
                 </NavLink>}
               <a onClick={() => setIsOpen3(state => !state)} >Help Center
-                <HelpDropdown className={`${isOpen3 && 'active'}`}>
+                <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
                   <BiChevronDown />
                   <Collapse onInit={onInit} isOpen={isOpen3}>
                     <Link to=''>How to?</Link>
@@ -284,7 +284,7 @@ function Header(props) {
                 {openNotification && <Notifications isOpen={openNotification} />}
               </NotificationDropdown>
               <AccountDropdown>
-                <button className={`acc-btn ${isOpen1 && 'active'}`} onClick={() => setIsOpen1(state => !state)}>
+                <button className={`acc-btn ${isOpen1 ? 'active' : ''}`} onClick={() => setIsOpen1(state => !state)}>
                   <span><div className='user-img'></div></span>
                 </button>
                 <Collapse onInit={onInit} isOpen={isOpen1}>
