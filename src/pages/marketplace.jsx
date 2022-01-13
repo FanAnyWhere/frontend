@@ -44,6 +44,7 @@ const Marketplace = (props) => {
   const [categoryFilter, setCategoryList] = useState([])
   const [filter, setFilter] = useState('recently')
   const [applied, setApplied] = useState([])
+  const [isFilter, setIsFilter] = useState(false)
   const [selectCollection, setSelectCollection] = useState(false)
 
 
@@ -70,15 +71,26 @@ const Marketplace = (props) => {
 
   useEffect(() => {
     if (filter === 'recently') props.getNFTs()
-    if (filter === 'lowToHight') props.getNFTs({ filter: 'lowToHigh' })
-    if (filter === 'highToLow') props.getNFTs({ filter: 'highToLow' })
-    if (filter === 'endingSoon') props.getNFTs({ filter: ['AUCTION'] })
+    if (filter === 'lowToHight') {
+      props.getNFTs({ filter: 'lowToHigh' })
+      setFilter(true)
+    }
+    if (filter === 'highToLow') {
+      props.getNFTs({ filter: 'highToLow' })
+      setFilter(true)
+    }
+    if (filter === 'endingSoon') {
+      props.getNFTs({ filter: ['AUCTION'] })
+      setFilter(true)
+    }
     if (filter === 'AUCTION') {
       props.getNFTs({ filter: ['AUCTION'] })
+      setFilter(true)
       // setApplied([ ...applied, { name: 'On Auction', id: 'AUCTION', type: 'filter' } ])
     }
     if (filter === 'BUYNOW') {
       props.getNFTs({ filter: ['BUYNOW'] })
+      setFilter(true)
       // setApplied([ ...applied, { name: 'Buy Now', id: 'BUYNOW', type: 'filter' } ])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,15 +119,18 @@ const Marketplace = (props) => {
   const categorySelect = (e, name) => {
     if (e.target.checked) {
       setCategoryList([...categoryFilter, e.target.value])
+      setFilter(true)
       // setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
     } else {
       setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
+      setFilter(false)
       // setApplied(applied.filter(appl => appl.id !== e.target.value))
     }
   }
 
   const collectionSelect = (e, name) => {
     setSelectCollection(e.target.value)
+    setFilter(true)
     // setApplied([ ...applied, { name: name, id: e.target.value, type: 'collection' } ])
   }
 
@@ -133,6 +148,16 @@ const Marketplace = (props) => {
   //     setSelectCollection(false)
   //   }
   // }
+
+  const clearFilters = () => {
+    setFilter('recently')
+    setSelectCollection(false)
+    setCategoryList([])
+    props.clearNFTs()
+    props.clearPagination()
+    setFilter(false)
+    setApplied([])
+  }
 
   return (
     <>
@@ -259,26 +284,12 @@ const Marketplace = (props) => {
                   {/* <IoCloseSharp onClick={() => cancelFilter(apply)}/> */}
                 </span></button>
               })}
-              {applied.length > 0 && <button className='c-all' onClick={() => {
-                setFilter('recently')
-                setSelectCollection(false)
-                setCategoryList([])
-                props.clearNFTs()
-                props.clearPagination()
-                setApplied([])
-              }}>Clear All</button>}
+              {applied.length > 0 && <button className='c-all' onClick={() => clearFilters()}>Clear All</button>}
             </FilterBar>
           </ProfilefilterBar>
 
 
           <Trending className={confyView ? 'comfy-view' : ''}>
-            <NoItemOuter>
-              <NoItemBox>
-                <NITitle>No Item to Display for this search.</NITitle>
-                <NIDesc>Oops! There are no items. Try a different filter comination</NIDesc>
-                <GradientBtn>Clear All Filters</GradientBtn>
-              </NoItemBox>
-            </NoItemOuter>
             {!props.NFTs ?
               <SiteLoader>
                 <div className='loader-inner'>
@@ -286,7 +297,15 @@ const Marketplace = (props) => {
                   <p>Loading</p>
                 </div>
               </SiteLoader>
-              : props.NFTs.length === 0 && 'No data available'}
+              : props.NFTs.length === 0 ? isFilter &&  
+                <NoItemOuter>
+                  <NoItemBox>
+                    <NITitle>No Item to Display for this search.</NITitle>
+                    <NIDesc>Oops! There are no items. Try a different filter comination</NIDesc>
+                    <GradientBtn onClick={() => clearFilters()}>Clear All Filters</GradientBtn>
+                  </NoItemBox>
+                </NoItemOuter>
+              :  'No data available'}
 
             {props.NFTs && nfts.map((nft, key) => {
               return nft.isActive && <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
