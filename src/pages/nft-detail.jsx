@@ -130,7 +130,7 @@ const NFTDetail = (props) => {
                 <NDLeft>
                   <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
                   <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}
-                  {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
+                    {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
@@ -586,7 +586,7 @@ const NDLeft = styled.div`
 const NDRight = styled(FlexDiv)``;
 
 const FNumber = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF;
+  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; text-transform:capitalize;
 `;
 
 const DFollowRow = styled(FlexDiv)`
@@ -641,7 +641,7 @@ const OwnerLeft = styled(FlexDiv)`
 `;
 
 const OwnerName = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF;
+  font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; text-transform:capitalize;
   span{color: #767676;}
 `;
 
