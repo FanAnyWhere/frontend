@@ -372,7 +372,7 @@ const HeadRight = styled(FlexDiv)`
     :hover{color:#aeaeae; border-color:#aeaeae;}
     svg{font-size:26px;}
     ${Media.md2} {
-      font-size: 14px; line-height: 20px; margin:0px 8px;
+      font-size: 14px; line-height: 20px; margin:0px 4px;
     }
     ${Media.md} {
       font-size: 16px; line-height: 24px; margin:7px 24px; 
@@ -393,7 +393,7 @@ const GradientBtn = styled.button`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
   :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
   ${Media.md2} {
-    font-size: 14px; line-height: 20px;
+    font-size: 14px; line-height: 20px; margin:0px 4px;
   }
 `;
 
@@ -408,10 +408,10 @@ const NavSearch = styled.div`
       width:350px;
     }
     ${Media.md2} {
-      width:200px;
+      width:140px; font-size:14px; line-height:22px;
     }
     ${Media.md} {
-      width: 100%; box-sizing: border-box;
+      width: 100%; box-sizing: border-box; font-size: 16px; line-height: 24px;
     }
   }
   ${Media.md} {
@@ -431,6 +431,9 @@ const AfterLogin = styled(FlexDiv)`
           .user-img{background: url(${UserIconGradient}) no-repeat;}
         }
       }
+    }
+    ${Media.md2} {
+      margin:0px 4px;
     }
   }
 `;
