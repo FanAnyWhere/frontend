@@ -109,9 +109,9 @@ const Landing = (props) => {
 
   const renderRow = (creators) => {
     const portions = creators.chunk(3);
-    const data =  portions.map((portion) => {
+    const data =  portions.map((portion, key) => {
         return (
-          <TCColumn>
+          <TCColumn key={key}>
             { portion.map((creator, i) => { 
               return(
                   <TCBox key={creator.id}>
@@ -201,7 +201,7 @@ const Landing = (props) => {
             </SiteLoader> :
             <Carousel responsive={responsive1} partialVisible={true}>
               {props.LiveAuctionNFTs.map((nft, key) => {
-                return nft.isActive && nft.auctionEndDate && <NFT nft={nft} index={key} />
+                return nft.isActive && nft.auctionEndDate && <NFT nft={nft} key={key} />
               })}
             </Carousel>
           }

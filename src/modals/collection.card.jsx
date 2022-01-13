@@ -5,7 +5,7 @@ const collection = (props) => {
   let { collection, index } = props
   
 
-  return <div className='item' key={index}>
+  return <div className='item' key={collection.id}>
     <Link to={'/collection/' + collection.id}>
       <CollectionCover>
         <img src={collection.logo} alt='' />
