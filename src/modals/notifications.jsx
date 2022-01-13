@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
 import { IoCloseSharp } from 'react-icons/io5'
 import { Scrollbars } from 'react-custom-scrollbars'
+import Media from '../theme/media-breackpoint'
 
 import PlusIcon from '../assets/images/plus.png'
 import { actions } from '../actions'
@@ -63,7 +64,11 @@ const NTitle = styled.div`
 
 const NotifiList = styled(FlexDiv)`
   justify-content:flex-start; border-bottom:1px solid rgb(255 255 255 / 10%); padding:18px 14px 18px 18px; position:relative;
-  img{margin-right:18px; width:27px; height:27px; border-radius:50%; object-fit:cover;}
+  img{margin-right:18px; width:27px; height:27px; border-radius:50%; object-fit:cover;
+    ${Media.xs} {
+      margin-right:10px;
+    }
+  }
   svg{font-size:25px; color:#767676; position:absolute; top:16px; right:10px; cursor:pointer;
     :hover{opacity: 0.8;}
   }

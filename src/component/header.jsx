@@ -157,6 +157,7 @@ function Header(props) {
   const [isOpen4, setIsOpen4] = useState(false);
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen6, setIsOpen6] = useState(false);
+  const [isOpen10, setIsOpen10] = useState(false);
   const onInit = ({ state, style, node }) => {
     setIsOpen1(false);
     setIsOpen2(false);
@@ -164,6 +165,7 @@ function Header(props) {
     setIsOpen4(false);
     setIsOpen5(false);
     setIsOpen6(false);
+    setIsOpen10(false);
   }
 
   const copyToClipboard = (address) => {
@@ -206,10 +208,10 @@ function Header(props) {
                   {openNotification && <Notifications isOpen={openNotification} />}
                 </NotificationDropdown>
                 <AccountDropdown ref={accountRef}>
-                  <button className={`acc-btn ${isOpen1 ? 'active' : ''}`} onClick={() => setIsOpen1(state => !state)}>
+                  <button className={`acc-btn ${isOpen10 ? 'active' : ''}`} onClick={() => setIsOpen10(state => !state)}>
                     <span><div className='user-img'></div></span>
                   </button>
-                  <Collapse onInit={onInit} isOpen={isOpen1}>
+                  <Collapse onInit={onInit} isOpen={isOpen10}>
                     <UserBox>
                       <UserName>{props.user?.name}</UserName>
                       <AddressBar><p>{address}</p>
@@ -483,6 +485,12 @@ const AccountDropdown = styled.div`
   position:relative;
   .collapse-css-transition{
     position:absolute; top:45px; right:0px; width:350px; transition: height 252ms cubic-bezier(0.4, 0, 0.2, 1); padding:14px 10px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;  
+    ${Media.sm} {
+      right:-50px; 
+    }
+    ${Media.xs} {
+      width:320px;
+    }
   }
   a{
     display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF; margin:0px;
@@ -536,7 +544,7 @@ const NotificationDropdown = styled.div`
       right:-90px;
     }
     ${Media.xs} {
-      width:380px;
+      width:360px;
     }
     .mobile-notifibox{width:auto !important;}
   }
