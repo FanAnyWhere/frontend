@@ -85,7 +85,7 @@ function MyProfile(props) {
     // eslint-disable-next-line
   }, [])
 
-  useEffect(() => {S
+  useEffect(() => {
     if (!props.NFTs && props.authenticated.isLoggedIn) props.getUserNFTs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.NFTs])
