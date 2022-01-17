@@ -375,29 +375,29 @@ function MyProfile(props) {
 
       <ActFilterList>
 
-        <Link to='#' className={tab === 'created' && 'active'} onClick={() => setTab('created')}>
+        <Link to='#' className={tab === 'created' ? 'active' : ''} onClick={() => setTab('created')}>
           Created
           {/* <span>{}</span> */}
         </Link>
-        <Link to='#' className={tab === 'collected' && 'active'} onClick={() => setTab('collected')} >Collected </Link>
-        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' && 'active'}
+        <Link to='#' className={tab === 'collected' ? 'active' : ''} onClick={() => setTab('collected')} >Collected </Link>
+        {props.user?.role === 'COLLECTOR' && <Link to='#' className={tab === 'collections' ? 'active' : ''}
           onClick={() => setTab('collections')} > Collections </Link>}
-        <Link to='#' className={tab === 'liked' && 'active'}
+        <Link to='#' className={tab === 'liked' ? 'active' : ''}
           onClick={() => setTab('liked')} > Liked </Link>
         {/* <Link to='#'>Bids Placed<span>00</span></Link>
         <Link to='#'>Bids Received<span>00</span></Link> */}
       </ActFilterList>
 
       <ProfileMain>
-        <PLeftpanel className={filterOpen && 'active'}>
-          <GradientBar className={filterOpen && 'active'}>
+        <PLeftpanel className={filterOpen ? 'active' : ''}>
+          <GradientBar className={filterOpen ? 'active' : ''}>
             <LeftTitle>Filters</LeftTitle>
-            <span className={filterOpen && 'active'}><BiRightArrowAlt className={filterOpen && 'active'} onClick={() => {
+            <span className={filterOpen ? 'active' : ''}><BiRightArrowAlt className={filterOpen ? 'active' : ''} onClick={() => {
               setFilterOpen(!filterOpen)
             }} /></span>
           </GradientBar>
 
-          <NFTlistLeft className={filterOpen && 'active'}>
+          <NFTlistLeft className={filterOpen ? 'active' : ''}>
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <WhiteBorderBtn>On Auction</WhiteBorderBtn>
@@ -505,7 +505,7 @@ function MyProfile(props) {
             </CustomAccordian>
           </NFTlistLeft>
         </PLeftpanel>
-        <PRightpanel className={filterOpen && 'active'}>
+        <PRightpanel className={filterOpen ? 'active' : ''}>
           <ProfilefilterBar>
             {/* <FilterBar>
               <button><span>Selected FIlter <IoCloseSharp /></span></button>
@@ -527,8 +527,8 @@ function MyProfile(props) {
                 </Collapse>
               </CustomDropdown>
               <CustomSwitch>
-                <button className={confyView && 'active'} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
-                <button className={!confyView && 'active'} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
+                <button className={confyView ? 'active' : ''} onClick={() => setConfyView(true)}><img src={ListIcon} alt='' /></button>
+                <button className={!confyView ? 'active' : ''} onClick={() => setConfyView(false)}><img src={GridIcon} alt='' /></button>
               </CustomSwitch>
             </ResultRight>
           </ProfilefilterBar>

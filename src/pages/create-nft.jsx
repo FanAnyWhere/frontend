@@ -498,7 +498,7 @@ const CreateNFT = (props) => {
             </PreviewBox>
             <Trending>
               <div className='item'>
-                <Link to='/'>
+                <Link to='#'>
                   <LiveBox>
                     <div className='img-outer ver4'>
                       <img src={imageURL ? imageURL : DefaultImg} alt='' />

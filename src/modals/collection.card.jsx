@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const collection = (props) => {
-  let { collection, index } = props
+  let { collection } = props
   
 
   return <div className='item' key={collection.id}>
@@ -15,7 +15,10 @@ const collection = (props) => {
           <img src={collection.ownerId.profile} alt='' />
         </ProfilePicture>
         <CCName>{collection.name}</CCName>
-        <CCBy>by <Link to={'/celebrity/' + collection.ownerId.id}>{collection.ownerId.name}</Link></CCBy>
+        <CCBy>by 
+          {collection.ownerId.name}
+          {/* <Link to={'/celebrity/' + collection.ownerId.id}></Link> */}
+        </CCBy>
         <CCText>{collection.description}</CCText>
       </CollectionBottom>
     </Link>

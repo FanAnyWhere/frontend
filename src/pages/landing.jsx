@@ -227,7 +227,7 @@ const Landing = (props) => {
           {props.TopCollections &&
             <TCColumn2>
               {props.TopCollections.map((collection, key) => {
-                return key < 4 && collection.collectionId.isActive && <Collection collection={collection.collectionId} index={key} />
+                return key < 4 && collection.collectionId.isActive && <Collection collection={collection.collectionId} key={key} />
               })}
             </TCColumn2>
           }
