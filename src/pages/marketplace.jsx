@@ -9,6 +9,7 @@ import Collapsible from 'react-collapsible';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Media from '../theme/media-breackpoint';
 
 import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
@@ -24,7 +25,7 @@ import { actions } from '../actions'
 
 
 const Marketplace = (props) => {
-  
+
   const id = props.location.pathname.replace('/marketplace/', '').replace('/marketplace', '')
   window.history.pushState({}, document.title, '/marketplace')
   const dropRef = useRef();
@@ -52,7 +53,7 @@ const Marketplace = (props) => {
   const [isFilter, setIsFilter] = useState(false)
   const [selectCollection, setSelectCollection] = useState(false)
 
-  useOutsideClick(dropRef, () => {setIsOpen2(false)})
+  useOutsideClick(dropRef, () => { setIsOpen2(false) })
 
   useEffect(() => {
     if (!props.collections) props.getCollections()
@@ -198,6 +199,10 @@ const Marketplace = (props) => {
               <Collapsible trigger="Status">
                 <WhiteBorderBtn onClick={() => setFilter('AUCTION')}>On Auction</WhiteBorderBtn>
                 <WhiteBorderBtn onClick={() => setFilter('BUYNOW')}>Buy Now</WhiteBorderBtn>
+                <FilterTags>
+                  <Link className='active' to='#'><span>On Auction</span></Link>
+                  <Link className='' to='#'><span>Buy Now</span></Link>
+                </FilterTags>
               </Collapsible>
 
               {/* <Collapsible trigger="Price">
@@ -322,7 +327,7 @@ const Marketplace = (props) => {
                   <p>Loading</p>
                 </div>
               </SiteLoader>
-              : props.NFTs.length === 0 ? isFilter &&  
+              : props.NFTs.length === 0 ? isFilter &&
                 <NoItemOuter>
                   <NoItemBox>
                     <NITitle>No Item to Display for this search.</NITitle>
@@ -330,7 +335,7 @@ const Marketplace = (props) => {
                     <GradientBtn onClick={() => clearFilters()}>Clear All Filters</GradientBtn>
                   </NoItemBox>
                 </NoItemOuter>
-              :  props.NFTs.length === 0 && !isFilter && 'No data available'}
+                : props.NFTs.length === 0 && !isFilter && 'No data available'}
 
             {props.NFTs && nfts.map((nft, key) => {
               return nft.isActive && <NFT nft={nft} filterOpen={filterOpen} index={key} key={key} />
@@ -371,7 +376,17 @@ const CustomDropdown = styled.div`
   position:relative;
   &.pb-10{padding-bottom:10px;}
   label{display:flex; align-items:center; justify-content:space-between; font-family: 'Roboto', sans-serif; margin-right:11px; width: 218px; padding:7px 8px; border: 1px solid #767676; box-sizing: border-box; border-radius: 2px; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676;
-    svg{color:#fff; font-size:20px; cursor:pointer;}
+    svg{color:#fff; font-size:20px; cursor:pointer;
+      ${Media.sm} {
+        margin-left:10px;
+      }
+    }
+    ${Media.md} {
+      margin-right:0px;
+    }
+    ${Media.sm} {
+      width:auto;
+    }
   }
   &.short{
     label{width:121px;}
@@ -380,6 +395,12 @@ const CustomDropdown = styled.div`
     position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; padding:6px 15px; display:block;
       :hover{opacity:0.8;}
+      ${Media.sm} {
+        font-size:14px;
+      }
+    }
+    ${Media.md} {
+      width:100%;
     }
   }
   &.custom-width{ 
@@ -415,6 +436,9 @@ const CustomSwitch = styled(FlexDiv)`
       :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
     }
   }
+  ${Media.md} {
+    display:none;
+  }
 `;
 
 const ProfilefilterBar = styled(FlexDiv)`
@@ -423,12 +447,29 @@ const ProfilefilterBar = styled(FlexDiv)`
 
 const GradientBar = styled(FlexDiv)`
   justify-content:space-between; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
-  &.active{border-radius: 0px 5px 0px 0px; }
-  svg{font-size:28px; cursor:pointer; transition:0.3s ease all;
-    &.active{transform:rotate(180deg);}
+  &.active{border-radius: 0px 5px 0px 0px; 
+    ${Media.md} {
+      border-radius: 5px 5px 0px 0px; 
+    }
+  }
+  svg{font-size:28px; cursor:pointer; transition:0.3s ease all; 
+    &.active{transform:rotate(180deg);
+      ${Media.md} {
+        transform:rotate(90deg);
+      }
+    }
+    ${Media.md} {
+      transform:rotate(-90deg);
+    }
   }
   span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); width: 70px; height: 50px; display: flex; align-items: center; justify-content: center;
     &.active{background:none;}
+    ${Media.md} {
+      width:45px; height:auto; background:none;
+    }
+  }
+  ${Media.md} {
+    border-radius:2px;
   }
 `;
 
@@ -436,10 +477,54 @@ const Trending = styled(FlexDiv)`
   align-items:flex-start; justify-content:flex-start; margin:0px 16px;
   .item{margin:0px 5px 25px; width:calc(14.28% - 10px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
-    &.active{width:calc(16.66% - 10px);}
+    &.active{width:calc(16.66% - 10px);
+      ${Media.xl} {
+        width:calc(20% - 10px);
+      }
+      ${Media.lg} {
+        width:calc(25% - 10px);
+      }
+      ${Media.md2} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.md} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.sm} {
+        width:calc(50% - 10px);
+      }
+      ${Media.xs} {
+        width:100%;
+      }
+    }
+    ${Media.xl} {
+      width:calc(16.66% - 10px);
+    }
+    ${Media.lg} {
+      width:calc(20% - 10px);
+    }
+    ${Media.md2} {
+      width:calc(25% - 10px);
+    }
+    ${Media.md} {
+      width:calc(33.33% - 10px);
+    }
+    ${Media.sm} {
+      width:calc(50% - 10px);
+    }
+    ${Media.xs} {
+      width:100%;
+    }
   }
   &.comfy-view{ margin:0px 15px;
-    .item{margin:0px 5px 25px; width:calc(20% - 10px);}
+    .item{margin:0px 5px 25px; width:calc(20% - 10px);
+      ${Media.lg} {
+        width:calc(25% - 10px);
+      }
+      ${Media.md2} {
+        width:calc(33.33% - 10px);
+      }
+    }
   }
 `;
 
@@ -450,12 +535,26 @@ const ProfileMain = styled(FlexDiv)`
 const PLeftpanel = styled.div`
   width:340px; height:auto; background-color: #2F2F2F; margin-left:-270px;  
   border:1px solid #2F2F2F; border-left:0px; border-top:0px;
-  &.active{margin-left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
+  &.active{margin-left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;
+    ${Media.md} {
+      border-left:1px solid #0FBFFC; border-top:1px solid #0FBFFC; border-radius: 5px 5px 0px 0px;
+    }
+  }
+  ${Media.md} {
+    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto;
+  }
 `;
 
 const PRightpanel = styled.div`
   width:calc(100% - 71px);
-  &.active{width:calc(100% - 341px);}
+  &.active{width:calc(100% - 341px);
+    ${Media.md} {
+      width:100%;
+    }
+  }
+  ${Media.md} {
+    width:100%;
+  }
 `;
 
 const NFTlistLeft = styled.div`
@@ -465,14 +564,24 @@ const NFTlistLeft = styled.div`
 
 const LeftTitle = styled.div`
   font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; padding:13px 16px;
+  ${Media.md} {
+    font-size: 16px; padding:8px 16px;
+  }
 `;
 
 const CustomAccordian = styled.div`
   .Collapsible{
     .Collapsible__trigger{ position:relative; cursor:pointer; font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; background-color:#2F2F2F; padding:5px 0px 5px 20px; display:block;
-      :after{content:''; position:absolute; right:28px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;}
+      :after{content:''; position:absolute; right:28px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;
+        ${Media.md} {
+          right:15px;
+        }
+      }
       &.is-closed{
         :after{background: url(${ArrowUp}) no-repeat; transform:rotate(180deg);}
+      }
+      ${Media.md} {
+        font-size:16px;
       }
     }
     .Collapsible__contentInner{
@@ -491,6 +600,20 @@ const WhiteBorderBtn = styled.button`
   :hover{border-color:#0FBFFC;}
 `;
 
+const FilterTags = styled(FlexDiv)`
+  justify-content:flex-start;
+  a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; padding:1px; margin:0px 10px 10px 0px; box-sizing: border-box; border-radius: 20px;
+    background: #AEAEAE; display: flex; align-items: center; justify-content: center;
+    span{background-color:#1d1d1d; border-radius: 20px; padding: 6px 14px;}  
+    :hover{
+      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+    }
+    &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); color:#fff;
+      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);}
+    }
+  }
+`;
+
 const FormGroup = styled(FlexDiv)`
   justify-content:space-between; margin:20px 0px 0px; padding-bottom:10px;
   span{font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif;}
@@ -504,12 +627,18 @@ const FormGroup = styled(FlexDiv)`
 
 const RightTitle = styled.div`
   margin:0px 20px 35px; font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF;
+  ${Media.md} {
+    margin:0px 20px 20px;
+  }
 `;
 
 
 const ResultBar = styled(FlexDiv)`
   justify-content:space-between; margin:0px 20px 30px;
   p{margin:0px; font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF;}
+  ${Media.md} {
+    margin:0px 20px 20px;
+  }
 `;
 
 const NavSearch = styled.div`
