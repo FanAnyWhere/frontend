@@ -115,13 +115,13 @@ const Marketplace = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryFilter, collectionFilter, filters])
 
-  const fetchMore = async (page) => { 
+  const fetchMore = async (page) => {
     setPageNo(page)
     let prevfilter = filters.length ? filters.map(fil => fil.id) : []
     if (filter === 'lowToHight') prevfilter.push('lowToHigh')
     else if (filter === 'highToLow') prevfilter.push('highToLow')
     else if (filter === 'endingSoon') prevfilter.push('AUCTION')
-    props.getMoreNFTs({ 
+    props.getMoreNFTs({
       category: categoryFilter.length ? categoryFilter.map(cat => cat.id) : [],
       collection: collectionFilter.length ? collectionFilter.map(col => col.id) : [],
       filter: prevfilter,
@@ -131,7 +131,7 @@ const Marketplace = (props) => {
 
   const categorySelect = (e, name) => {
     if (e.target.checked) {
-      setCategoryList([...categoryFilter, { id: e.target.value, name: name } ])
+      setCategoryList([...categoryFilter, { id: e.target.value, name: name }])
       setIsFilter(true)
     } else {
       setCategoryList(categoryFilter.filter(cat => cat.id !== e.target.value))
@@ -140,7 +140,7 @@ const Marketplace = (props) => {
   }
 
   const filterSelect = (id, name) => {
-    if (filters && filters.some( obj => obj.id === id)) {
+    if (filters && filters.some(obj => obj.id === id)) {
       setFilters(filters.filter(fil => fil.id !== id))
       setIsFilter(false)
     } else {
@@ -150,24 +150,24 @@ const Marketplace = (props) => {
   }
 
   const collectionSelect = (id, name) => {
-    if (collectionFilter && collectionFilter.some( obj => obj.id === id)) {
-        setCollectionFilter(collectionFilter.filter(fil => fil.id !== id))
-        setIsFilter(false)
+    if (collectionFilter && collectionFilter.some(obj => obj.id === id)) {
+      setCollectionFilter(collectionFilter.filter(fil => fil.id !== id))
+      setIsFilter(false)
     } else {
-        setCollectionFilter([...collectionFilter, { id: id, name: name }])
-        setIsFilter(true)
+      setCollectionFilter([...collectionFilter, { id: id, name: name }])
+      setIsFilter(true)
     }
   }
 
   const clearFilter = (id) => {
-    if (collectionFilter && collectionFilter.some( obj => obj.id === id)) {
+    if (collectionFilter && collectionFilter.some(obj => obj.id === id)) {
       if (id && name) window.history.pushState({}, document.title, '/marketplace')
       setCollectionFilter(collectionFilter.filter(fil => fil.id !== id))
     }
-    if (filters && filters.some( obj => obj.id === id)) {
+    if (filters && filters.some(obj => obj.id === id)) {
       setFilters(filters.filter(fil => fil.id !== id))
     }
-    if (categoryFilter && categoryFilter.some( obj => obj.id === id)) {
+    if (categoryFilter && categoryFilter.some(obj => obj.id === id)) {
       setCategoryList(categoryFilter.filter(cat => cat.id !== id))
     }
   }
@@ -226,7 +226,7 @@ const Marketplace = (props) => {
                   <input type='text' placeholder='Max' />
                 </FormGroup>
               </Collapsible> */}
-              
+
               <Collapsible trigger="Category">
                 <CustomDropdown className='pb-10'>
                   <label onClick={() => setIsOpen4(state => !state)}>Choose  a Category <HiOutlineChevronDown /></label>
@@ -236,7 +236,7 @@ const Marketplace = (props) => {
                         {props.categories && props.categories.map((category, index) => {
                           return <label className="container" key={index}>
                             {category.categoryName.en}
-                            <input checked={categoryFilter.some(cat => cat.id === category.id)} type="checkbox" value={category.id} 
+                            <input checked={categoryFilter.some(cat => cat.id === category.id)} type="checkbox" value={category.id}
                               onChange={(e) => categorySelect(e, category.categoryName.en)} />
                             <span className="checkmark"></span>
                           </label>
@@ -275,11 +275,11 @@ const Marketplace = (props) => {
               <Collapsible trigger="Collections">
                 <FilterTags>
                   {props.collections && props.collections.map((collection, index) => {
-                    return <Link className={filters.some(obj => obj.id === collection.id) ? 'active': ''} 
+                    return <Link className={filters.some(obj => obj.id === collection.id) ? 'active' : ''}
                       key={index} to={'#'}
                       onClick={() => collectionSelect(collection.id, collection.name)}>
-                        <span>{collection.name}</span>
-                      </Link>
+                      <span>{collection.name}</span>
+                    </Link>
                   })}
                 </FilterTags>
               </Collapsible>
@@ -297,12 +297,11 @@ const Marketplace = (props) => {
 
             <ResultRight>
               <CustomDropdown ref={dropRef}>
-                <label onClick={() => setIsOpen2(state => !state)}>
-                    {!filter && 'Recently Added'}
-                    {filter === 'recently' && 'Recently Added'}
-                    {filter === 'lowToHight' && 'Price: Low to High'}
-                    {filter === 'highToLow' && 'Price: High to Low'}
-                    {filter === 'endingSoon' && 'Ending Soon'}
+                <label onClick={() => setIsOpen2(state => !state)}>{!filter && 'Recently Added'}
+                  {filter === 'recently' && 'Recently Added'}
+                  {filter === 'lowToHight' && 'Price: Low to High'}
+                  {filter === 'highToLow' && 'Price: High to Low'}
+                  {filter === 'endingSoon' && 'Ending Soon'}
                   <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
@@ -321,7 +320,7 @@ const Marketplace = (props) => {
           </ResultBar>
 
           <ProfilefilterBar>
-          <FilterBar>
+            <FilterBar>
               {categoryFilter.map((obj, key) => {
                 return <button key={key} >
                   <span>
@@ -346,8 +345,8 @@ const Marketplace = (props) => {
                   </span>
                 </button>
               })}
-              {collectionFilter.length > 0 || filters.length > 0 || categoryFilter.length > 0 ? 
-                <button className='c-all' onClick={() => clearFilters()}>Clear All</button>: ''}
+              {collectionFilter.length > 0 || filters.length > 0 || categoryFilter.length > 0 ?
+                <button className='c-all' onClick={() => clearFilters()}>Clear All</button> : ''}
             </FilterBar>
           </ProfilefilterBar>
 
@@ -392,12 +391,15 @@ const FlexDiv = styled.div`
 
 const FilterBar = styled(FlexDiv)`
   justify-content:flex-start;
-  button{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; box-sizing: border-box; border-radius: 4px; margin-right:15px;
+  button{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); text-transform:capitalize; padding:1px; font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; box-sizing: border-box; border-radius: 4px; margin-right:15px;
     svg{cursor:pointer; font-size:18px; margin-left:5px;}
     &.c-all{font-weight: bold; font-size: 12px; line-height: 16px; color: #824CF5; border:none; padding:0px; background:none; margin-left:15px;
       :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
     }
     span{display:flex; align-items:center; justify-content:center; background-color:#1d1d1d; border-radius: 4px; padding:3px 2px 3px 3px;}
+    ${Media.sm} {
+      margin-bottom:10px;
+    }
   }
 `;
 
@@ -556,6 +558,15 @@ const Trending = styled(FlexDiv)`
       }
       ${Media.md2} {
         width:calc(33.33% - 10px);
+      }
+      ${Media.md} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.sm} {
+        width:calc(50% - 10px);
+      }
+      ${Media.xs} {
+        width:100%;
       }
     }
   }

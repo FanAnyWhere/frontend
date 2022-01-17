@@ -6,6 +6,7 @@ import Gs from '../theme/globalStyles';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
 import { Link } from 'react-router-dom';
+import Media from '../theme/media-breackpoint';
 
 import RImg from '../assets/images/img1.jpg';
 import GreenIcon from '../assets/images/green-icon.png';
@@ -123,6 +124,9 @@ const CollectionMain = styled.div`
 
 const CDesc = styled(FlexDiv)`
   justify-content:flex-start; margin-bottom:45px;
+  ${Media.md} {
+    margin-bottom:20px;
+  }
 `;
 
 const ECTitle = styled.div`
@@ -131,6 +135,9 @@ const ECTitle = styled.div`
 
 const ECDesc = styled.div`
   font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; width:50%;
+  ${Media.md} {
+    width:100%;
+  }
 `;
 
 const NumberBox = styled.div`
@@ -148,6 +155,9 @@ const NumberTitle = styled.div`
 
 const NumberOuter = styled(FlexDiv)`
   justify-content:space-evenly; width:50%;
+  ${Media.md} {
+    width:100%; margin-top:30px;
+  }
 `;
 
 const ResultRight = styled(FlexDiv)`
@@ -159,9 +169,43 @@ const CollectionRow = styled(FlexDiv)`
   .item{background-color:#2F2F2F; border-radius: 5px; width:calc(14.28% - 20px); margin:0px 10px 20px;
     :nth-child(7n){margin-right:0px;}
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
+    ${Media.xl} {
+      width:calc(16.66% - 20px);
+    }
+    ${Media.lg} {
+      width:calc(20% - 20px);
+    }
+    ${Media.md2} {
+      width:calc(25% - 20px);
+    }
+    ${Media.md} {
+      width:calc(33.33% - 20px);
+    }
+    ${Media.sm} {
+      width:calc(50% - 20px);
+    }
+    ${Media.xs} {
+      width:100%;
+    }
   }
   &.comfy-view{ margin:0px -10px;
-    .item{margin:0px 10px 25px; width:calc(20% - 20px);}
+    .item{margin:0px 10px 25px; width:calc(20% - 20px);
+      ${Media.lg} {
+        width:calc(25% - 20px);
+      }
+      ${Media.md2} {
+        width:calc(33.33% - 20px);
+      }
+      ${Media.md} {
+        width:calc(33.33% - 20px);
+      }
+      ${Media.sm} {
+        width:calc(50% - 20px);
+      }
+      ${Media.xs} {
+        width:100%;
+      }
+    }
   }
 `;
 
@@ -256,6 +300,9 @@ const CustomSwitch = styled(FlexDiv)`
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
       :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
     }
+  }
+  ${Media.md} {
+    display:none;
   }
 `;
 
