@@ -275,7 +275,7 @@ const Marketplace = (props) => {
               <Collapsible trigger="Collections">
                 <FilterTags>
                   {props.collections && props.collections.map((collection, index) => {
-                    return <Link className={filters.some(obj => obj.id === collection.id) ? 'active' : ''}
+                    return <Link className={collectionFilter.some(obj => obj.id === collection.id) ? 'active' : ''}
                       key={index} to={'#'}
                       onClick={() => collectionSelect(collection.id, collection.name)}>
                       <span>{collection.name}</span>
