@@ -6,9 +6,9 @@ import CreatorPImg from '../assets/images/creator-profile.png';
 
 
 const creator = (props) => {
-  let { creator, key } = props
+  let { creator } = props
 
-  return <div className='item' key={key}>
+  return <div className='item' key={creator.id}>
     <Link to={'/celebrity/' + creator.id}>
       <CollectionCover>
         <img src={creator.cover ? creator.cover : null} alt='' />
@@ -34,7 +34,8 @@ const creator = (props) => {
             <p>FAW</p>
           </div>
         </FollowBoxRow>
-        <Link to='#'>Follow</Link>
+        Follow
+        {/* <Link to='#'>Follow</Link> */}
         <FollowNumber><span>{creator.followersCount}</span> followers</FollowNumber>
       </CollectionBottom>
     </Link>

@@ -45,7 +45,6 @@ function App() {
             <Route path="/nft-detail/:id"><NFTDetail /></Route>
             <Route path="/create-nft"><CreateNFT /></Route>
             <Route path="/collections"><Collections /></Route>
-            {/* <Route path="/collections/i:d"><Collections /></Route> */}
             <Route path="/celebrities"><Creators /></Route>
             <Route path="/celebrity/:id"><CelebrityDetails /></Route>
             <Route component={NotFound} />
