@@ -156,7 +156,7 @@ const FlexDiv = styled.div`
 const ConnectWallet = styled.div`
 position:relative;
   .collapse-css-transition{
-   height:calc(100vh - 56px); position:absolute; top:26px; right:-15px; width:460px; transition: height 1000ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
+   height:calc(100vh - 56px); position:absolute; top:8px; right:-15px; width:460px; transition: height 1000ms cubic-bezier(0.4, 0, 0.2, 1); padding:20px; background-color: #2F2F2F; box-shadow: -10px 0px 20px rgba(0, 0, 0, 0.25); 
   }
 `;
 
