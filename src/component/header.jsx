@@ -269,7 +269,7 @@ function Header(props) {
                         className={nav === 'activity' ? 'active' : ''}>
                         Activity
                       </NavLink></li>}
-                    <li><a onClick={() => setIsOpen3(state => !state)} >Help Center
+                    <li><button className='help-center' onClick={() => setIsOpen3(state => !state)} >Help Center
                       <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
                         <BiChevronDown />
                         <Collapse onInit={onInit} isOpen={isOpen3}>
@@ -282,7 +282,7 @@ function Header(props) {
                           <Link to=''>Terms & Conditions</Link>
                         </Collapse>
                       </HelpDropdown>
-                    </a></li>
+                    </button></li>
                   </div>
                 </nav>
               </Collapse>
@@ -308,7 +308,7 @@ function Header(props) {
                   className={nav === 'activity' ? 'active' : ''}>
                   Activity
                 </NavLink>}
-              <a onClick={() => setIsOpen3(state => !state)} >Help Center
+              <button className='help-center' onClick={() => setIsOpen3(state => !state)} >Help Center
                 <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
                   <BiChevronDown />
                   <Collapse onInit={onInit} isOpen={isOpen3}>
@@ -321,7 +321,7 @@ function Header(props) {
                     <Link to=''>Terms & Conditions</Link>
                   </Collapse>
                 </HelpDropdown>
-              </a>
+              </button>
             </nav>
 
             {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
@@ -403,7 +403,7 @@ const HeadLeft = styled.div`
 `;
 
 const HeadRight = styled(FlexDiv)`
-  a{ display:inline-flex; align-items:center; cursor:pointer; font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; margin:0px 12px; padding:0px; border-bottom:2px solid #1D1D1D;
+  a, .help-center{ display:inline-flex; align-items:center;text-align:left; cursor:pointer; font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; margin:0px 12px; padding:0px; border-bottom:2px solid #1D1D1D;
     &.active{color:#fff; border-color:#fff;}
     :hover{color:#aeaeae; border-color:#aeaeae;}
     svg{font-size:26px;}

@@ -109,21 +109,21 @@ const Landing = (props) => {
 
   const renderRow = (creators) => {
     const portions = creators.chunk(3);
-    const data =  portions.map((portion, key) => {
-        return (
-          <TCColumn key={key}>
-            { portion.map((creator, i) => { 
-              return(
-                  <TCBox key={creator.id}>
-                    <Link to={'/celebrity/' + creator.id} >
-                      {/* <TC1>{i + 1}</TC1> */}
-                      <TC2><img src={creator.profile} alt='' /></TC2>
-                      <TC3>
-                        <h4>{creator.name}</h4>
-                        <p>$10000.00</p>
-                      </TC3>
-                    </Link>
-                </TCBox> 
+    const data = portions.map((portion, key) => {
+      return (
+        <TCColumn key={key}>
+          {portion.map((creator, i) => {
+            return (
+              <TCBox key={creator.id}>
+                <Link to={'/celebrity/' + creator.id} >
+                  {/* <TC1>{i + 1}</TC1> */}
+                  <TC2><img src={creator.profile} alt='' /></TC2>
+                  <TC3>
+                    <h4>{creator.name}</h4>
+                    <p>$10000.00</p>
+                  </TC3>
+                </Link>
+              </TCBox>
             )
           })}
         </TCColumn>
@@ -154,7 +154,7 @@ const Landing = (props) => {
             </SiteLoader> :
             <Carousel responsive={responsive}>
               <div className='item'>
-                {props.TopNFTs.length > 0 && (props.TopNFTs[0]).nftId.isActive && 
+                {props.TopNFTs.length > 0 && (props.TopNFTs[0]).nftId.isActive &&
                   <W40>
                     <ImgOuter>
                       <Link to={'/nft-detail/' + (props.TopNFTs[0]).nftId._id}>
@@ -331,7 +331,7 @@ const Landing = (props) => {
         <GradientTitleRow>
           <h2>Top Celebrity</h2>
           <WhiteBorderBtn onClick={() => props.history.push('/celebrities')}>See all</WhiteBorderBtn>
-           
+
         </GradientTitleRow>
       </Gs.Container>
 
@@ -343,7 +343,7 @@ const Landing = (props) => {
           </div>
         </SiteLoader>}
         <TopCelebrities>
-          {props.TopCreators&&renderRow(props.TopCreators)}
+          {props.TopCreators && renderRow(props.TopCreators)}
           {props.TopCreators && props.TopCreators.length === 0 && 'No data available'}
         </TopCelebrities>
       </Gs.Container>
@@ -893,7 +893,7 @@ const TopCollections = styled(FlexDiv)`
 `;
 
 const TopCelebrities = styled(FlexDiv)`
-  justify-content: flex-start; margin-bottom:75px;
+  align-items: flex-start; justify-content: flex-start; margin-bottom:75px;
   ${Media.lg} {
     flex-wrap:nowrap; overflow-x: auto;
   }
