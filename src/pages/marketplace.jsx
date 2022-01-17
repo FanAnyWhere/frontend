@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import Collapse from '@kunukn/react-collapse';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapsible from 'react-collapsible';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -26,9 +26,10 @@ import { actions } from '../actions'
 
 const Marketplace = (props) => {
 
-  const id = props.location.pathname.replace('/marketplace/', '').replace('/marketplace', '')
-  window.history.pushState({}, document.title, '/marketplace')
   const dropRef = useRef();
+  const search = useLocation().search;
+  const name = new URLSearchParams(search).get('name')
+  const id = new URLSearchParams(search).get('collectionId')
 
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -49,9 +50,9 @@ const Marketplace = (props) => {
   const [pageNo, setPageNo] = useState(1)
   const [categoryFilter, setCategoryList] = useState([])
   const [filter, setFilter] = useState('')
-  const [applied, setApplied] = useState([])
   const [isFilter, setIsFilter] = useState(false)
-  const [selectCollection, setSelectCollection] = useState(false)
+  const [collectionFilter, setCollectionFilter] = useState([])
+  const [filters, setFilters] = useState([])
 
   useOutsideClick(dropRef, () => { setIsOpen2(false) })
 
@@ -62,14 +63,10 @@ const Marketplace = (props) => {
 
   useEffect(() => {
     if (!props.NFTs) {
-      if (id) {
-        setSelectCollection(id)
+      if (id && !isFilter) {
+        setCollectionFilter([...collectionFilter, { id: id, name: name }])
         setIsFilter(true)
-      }
-      else {
-        props.getNFTs()
-      }
-      // props.getNFTs()
+      } else props.getNFTs()
     }
     if (props.NFTs) setNFTs(props.NFTs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,85 +102,86 @@ const Marketplace = (props) => {
       setIsFilter(true)
       setIsOpen2(false)
     }
-    if (filter === 'AUCTION') {
-      props.getNFTs({ filter: ['AUCTION'] })
-      setIsFilter(true)
-      // setApplied([ ...applied, { name: 'On Auction', id: 'AUCTION', type: 'filter' } ])
-    }
-    if (filter === 'BUYNOW') {
-      props.getNFTs({ filter: ['BUYNOW'] })
-      setIsFilter(true)
-      // setApplied([ ...applied, { name: 'Buy Now', id: 'BUYNOW', type: 'filter' } ])
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
 
-  useEffect(() => {
-    if (categoryFilter.length) props.getNFTs({ category: categoryFilter })
+  useEffect( () => {
+    props.getNFTs({ 
+      category: categoryFilter.length ? categoryFilter.map(cat => cat.id) : [],
+      collection: collectionFilter.length ? collectionFilter.map(col => col.id) : [],
+      filter: filters.length ? filters.map(fil => fil.id) : [],
+    }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryFilter])
+  }, [categoryFilter, collectionFilter, filters])
 
-  useEffect(() => {
-    if (selectCollection) {
-      props.getNFTs({ collection: selectCollection })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectCollection])
-
-  const fetchMore = async (page) => {
+  const fetchMore = async (page) => { 
     setPageNo(page)
-    if (filter === 'lowToHight') props.getMoreNFTs({ page: page, filter: 'lowToHigh' }) // fetch more NFTs
-    else if (filter === 'highToLow') props.getMoreNFTs({ page: page, filter: 'highToLow' }) // fetch more NFTs
-    else if (filter === 'endingSoon') props.getMoreNFTs({ page: page, filter: ['AUCTION'] }) // fetch more NFTs
-    else if (categoryFilter.length) props.getNFTs({ page: page, category: categoryFilter }) // fetch more NFTs
-    else if (selectCollection) props.getNFTs({ page: page, collection: selectCollection }) // fetch more NFTs
-    else props.getMoreNFTs({ page: page }) // fetch more NFTs
+    let prevfilter = filters.length ? filters.map(fil => fil.id) : []
+    if (filter === 'lowToHight') prevfilter.push('lowToHigh')
+    else if (filter === 'highToLow') prevfilter.push('highToLow')
+    else if (filter === 'endingSoon') prevfilter.push('AUCTION')
+    props.getMoreNFTs({ 
+      category: categoryFilter.length ? categoryFilter.map(cat => cat.id) : [],
+      collection: collectionFilter.length ? collectionFilter.map(col => col.id) : [],
+      filter: prevfilter,
+      page: page,
+    })
   }
 
   const categorySelect = (e, name) => {
     if (e.target.checked) {
-      setCategoryList([...categoryFilter, e.target.value])
+      setCategoryList([...categoryFilter, { id: e.target.value, name: name } ])
       setIsFilter(true)
-      // setApplied([ ...applied, { name: name, id: e.target.value, type: 'category' } ])
     } else {
-      setCategoryList(categoryFilter.filter(cat => cat !== e.target.value))
+      setCategoryList(categoryFilter.filter(cat => cat.id !== e.target.value))
       setIsFilter(false)
-      // setApplied(applied.filter(appl => appl.id !== e.target.value))
     }
   }
 
-  const collectionSelect = (e, name) => {
-    setSelectCollection(e.target.value)
-    setIsFilter(true)
-    // setApplied([ ...applied, { name: name, id: e.target.value, type: 'collection' } ])
+  const filterSelect = (id, name) => {
+    if (filters && filters.some( obj => obj.id === id)) {
+      setFilters(filters.filter(fil => fil.id !== id))
+      setIsFilter(false)
+    } else {
+      setFilters([...filters, { id: id, name: name }])
+      setIsFilter(true)
+    }
   }
 
-  // const cancelFilter = (apply) => {
-  //   if (apply.type === 'filter') {
-  //     setApplied(applied.filter(appl => appl.type === apply.type && appl.id !== apply.id))
-  //     setFilter('recently')
-  //   }
-  //   if (apply.type === 'category') {
-  //     setApplied(applied.filter(appl => appl.type === apply.type && appl.id !== apply.id))
-  //     setCategoryList(categoryFilter.filter(cat => cat !== apply.id))
-  //   }
-  //   if (apply.type === 'collection') {
-  //     setApplied(applied.filter(appl => appl.type === apply.type && appl.id !== apply.id))
-  //     setSelectCollection(false)
-  //   }
-  // }
+  const collectionSelect = (id, name) => {
+    if (collectionFilter && collectionFilter.some( obj => obj.id === id)) {
+        setCollectionFilter(collectionFilter.filter(fil => fil.id !== id))
+        setIsFilter(false)
+    } else {
+        setCollectionFilter([...collectionFilter, { id: id, name: name }])
+        setIsFilter(true)
+    }
+  }
+
+  const clearFilter = (id) => {
+    if (collectionFilter && collectionFilter.some( obj => obj.id === id)) {
+      if (id && name) window.history.pushState({}, document.title, '/marketplace')
+      setCollectionFilter(collectionFilter.filter(fil => fil.id !== id))
+    }
+    if (filters && filters.some( obj => obj.id === id)) {
+      setFilters(filters.filter(fil => fil.id !== id))
+    }
+    if (categoryFilter && categoryFilter.some( obj => obj.id === id)) {
+      setCategoryList(categoryFilter.filter(cat => cat.id !== id))
+    }
+  }
 
   const clearFilters = () => {
+    window.history.pushState({}, document.title, '/marketplace')
     setFilter('recently')
-    setSelectCollection(false)
-    setCategoryList([])
     props.clearNFTs()
     props.clearPagination()
     setIsFilter(false)
-    setApplied([])
+    setFilters([])
+    setCategoryList([])
+    setCollectionFilter([])
   }
 
-  console.log('props.pagination ? ', props.pagination)
 
   return (
     <>
@@ -197,11 +195,11 @@ const Marketplace = (props) => {
           <NFTlistLeft className={filterOpen ? 'active' : ''}>
             <CustomAccordian>
               <Collapsible trigger="Status">
-                <WhiteBorderBtn onClick={() => setFilter('AUCTION')}>On Auction</WhiteBorderBtn>
-                <WhiteBorderBtn onClick={() => setFilter('BUYNOW')}>Buy Now</WhiteBorderBtn>
                 <FilterTags>
-                  <Link className='active' to='#'><span>On Auction</span></Link>
-                  <Link className='' to='#'><span>Buy Now</span></Link>
+                  <Link className={filters.some(obj => obj.id === 'AUCTION') ? 'active': ''}  to='#'
+                    onClick={() => filterSelect('AUCTION', 'AUCTION')} ><span>On Auction</span></Link>
+                  <Link className={filters.some(obj => obj.id === 'BUYNOW') ? 'active': ''}
+                    onClick={() => filterSelect('BUYNOW', 'BUYNOW')} to='#'><span>Buy Now</span></Link>
                 </FilterTags>
               </Collapsible>
 
@@ -227,6 +225,7 @@ const Marketplace = (props) => {
                   <input type='text' placeholder='Max' />
                 </FormGroup>
               </Collapsible> */}
+              
               <Collapsible trigger="Category">
                 <CustomDropdown className='pb-10'>
                   <label onClick={() => setIsOpen4(state => !state)}>Choose  a Category <HiOutlineChevronDown /></label>
@@ -236,7 +235,8 @@ const Marketplace = (props) => {
                         {props.categories && props.categories.map((category, index) => {
                           return <label className="container" key={index}>
                             {category.categoryName.en}
-                            <input checked={categoryFilter.includes(category.id)} type="checkbox" value={category.id} onChange={(e) => categorySelect(e, category.categoryName.en)} />
+                            <input checked={categoryFilter.some(cat => cat.id === category.id)} type="checkbox" value={category.id} 
+                              onChange={(e) => categorySelect(e, category.categoryName.en)} />
                             <span className="checkmark"></span>
                           </label>
                         })}
@@ -272,9 +272,15 @@ const Marketplace = (props) => {
               </Collapsible> */}
 
               <Collapsible trigger="Collections">
-                {props.collections && props.collections.map((collection, index) => {
-                  return <WhiteBorderBtn className='active' key={index} value={collection.id} onClick={(e) => collectionSelect(e, collection.name)}>{collection.name}</WhiteBorderBtn>
-                })}
+                <FilterTags>
+                  {props.collections && props.collections.map((collection, index) => {
+                    return <Link className={filters.some(obj => obj.id === collection.id) ? 'active': ''} 
+                      key={index} to={'#'}
+                      onClick={() => collectionSelect(collection.id, collection.name)}>
+                        <span>{collection.name}</span>
+                      </Link>
+                  })}
+                </FilterTags>
               </Collapsible>
             </CustomAccordian>
           </NFTlistLeft>
@@ -290,7 +296,11 @@ const Marketplace = (props) => {
 
             <ResultRight>
               <CustomDropdown ref={dropRef}>
-                <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
+                <label onClick={() => setIsOpen2(state => !state)}>{!filter && 'Recently Added'}
+                    {filter === 'lowToHight' && 'Price: Low to High'}
+                    {filter === 'highToLow' && 'Price: High to Low'}
+                    {filter === 'endingSoon' && 'Ending Soon'}
+                  <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
                     <Link to='#' onClick={() => setFilter('recently')} className={filter === 'recently' ? 'active' : ''}>Recently Added</Link>
@@ -308,13 +318,33 @@ const Marketplace = (props) => {
           </ResultBar>
 
           <ProfilefilterBar>
-            <FilterBar>
-              {applied.length > 0 && applied.map((apply) => {
-                return <button><span>{apply.name}
-                  {/* <IoCloseSharp onClick={() => cancelFilter(apply)}/> */}
-                </span></button>
+          <FilterBar>
+              {categoryFilter.map((obj, key) => {
+                return <button key={key} >
+                  <span>
+                    {obj.name}
+                    <IoCloseSharp onClick={() => clearFilter(obj.id)} />
+                  </span>
+                </button>
               })}
-              {applied.length > 0 && <button className='c-all' onClick={() => clearFilters()}>Clear All</button>}
+              {filters.map((obj, key) => {
+                return <button key={key} >
+                  <span>
+                    {obj.name}
+                    <IoCloseSharp onClick={() => clearFilter(obj.id)} />
+                  </span>
+                </button>
+              })}
+              {collectionFilter.map((obj, key) => {
+                return <button key={key} >
+                  <span>
+                    {obj.name}
+                    <IoCloseSharp onClick={() => clearFilter(obj.id)} />
+                  </span>
+                </button>
+              })}
+              {collectionFilter.length > 0 || filters.length > 0 || categoryFilter.length > 0 ? 
+                <button className='c-all' onClick={() => clearFilters()}>Clear All</button>: ''}
             </FilterBar>
           </ProfilefilterBar>
 
