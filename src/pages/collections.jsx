@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
 import { Link } from 'react-router-dom';
+import Media from '../theme/media-breackpoint';
 
 import GreenIcon from '../assets/images/green-icon.png';
 import GridIcon from '../assets/images/grid.png';
