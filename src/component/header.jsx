@@ -56,16 +56,20 @@ function Header(props) {
   useOutsideClick(notificationRef, () => { setOpenNotification(false) })
 
   useEffect(() => {
-    // set the location on initial load
-    if (!myRef.current.location) myRef.current.location = location
-    // then make sure dialog is closed on route change
-    else if (myRef.current.location !== location) {
-      setIsOpen1(false)
-      setOpenLogin(false)
-      setIsOpen3(false)
-      setOpenNotification(false)
-      myRef.current.location = location
+    const checkLocation = () => {
+      // set the location on initial load
+      if (!myRef.current.location) myRef.current.location = location
+      // then make sure dialog is closed on route change
+      else if (myRef.current.location !== location) {
+        setIsOpen1(false)
+        setOpenLogin(false)
+        setIsOpen3(false)
+        setOpenNotification(false)
+        myRef.current.location = location
+      }
     }
+    checkLocation()
+    // eslint-disable-next-line
   })
 
   useEffect(() => {

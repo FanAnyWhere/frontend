@@ -63,10 +63,11 @@ const Marketplace = (props) => {
 
   useEffect(() => {
     if (!props.NFTs) {
-      if (id && !isFilter) {
+      if (id && !filter) {
         setCollectionFilter([...collectionFilter, { id: id, name: name }])
-        setIsFilter(true)
-      } else props.getNFTs()
+      } else {
+        props.getNFTs()
+      }
     }
     if (props.NFTs) setNFTs(props.NFTs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,28 +90,28 @@ const Marketplace = (props) => {
     }
     if (filter === 'lowToHight') {
       props.getNFTs({ filter: 'lowToHigh' })
-      setIsFilter(true)
       setIsOpen2(false)
     }
     if (filter === 'highToLow') {
       props.getNFTs({ filter: 'highToLow' })
-      setIsFilter(true)
       setIsOpen2(false)
     }
     if (filter === 'endingSoon') {
       props.getNFTs({ filter: ['AUCTION'] })
-      setIsFilter(true)
       setIsOpen2(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
 
-  useEffect(() => {
-    props.getNFTs({
-      category: categoryFilter.length ? categoryFilter.map(cat => cat.id) : [],
-      collection: collectionFilter.length ? collectionFilter.map(col => col.id) : [],
-      filter: filters.length ? filters.map(fil => fil.id) : [],
-    })
+  useEffect( () => {
+    setIsFilter(true)
+    if (isFilter) {
+      props.getNFTs({ 
+        category: categoryFilter.length ? categoryFilter.map(cat => cat.id) : [],
+        collection: collectionFilter.length ? collectionFilter.map(col => col.id) : [],
+        filter: filters.length ? filters.map(fil => fil.id) : [],
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryFilter, collectionFilter, filters])
 
@@ -196,10 +197,10 @@ const Marketplace = (props) => {
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <FilterTags>
-                  <Link className={filters.some(obj => obj.id === 'AUCTION') ? 'active' : ''} to='#'
-                    onClick={() => filterSelect('AUCTION', 'AUCTION')} ><span>On Auction</span></Link>
-                  <Link className={filters.some(obj => obj.id === 'BUYNOW') ? 'active' : ''}
-                    onClick={() => filterSelect('BUYNOW', 'BUYNOW')} to='#'><span>Buy Now</span></Link>
+                  <Link className={filters.some(obj => obj.id === 'AUCTION') ? 'active': ''}  to='#'
+                    onClick={() => filterSelect('AUCTION', 'On Auction')} ><span>On Auction</span></Link>
+                  <Link className={filters.some(obj => obj.id === 'BUYNOW') ? 'active': ''}
+                    onClick={() => filterSelect('BUYNOW', 'Buy Now')} to='#'><span>Buy Now</span></Link>
                 </FilterTags>
               </Collapsible>
 
@@ -274,7 +275,7 @@ const Marketplace = (props) => {
               <Collapsible trigger="Collections">
                 <FilterTags>
                   {props.collections && props.collections.map((collection, index) => {
-                    return <Link className={filters.some(obj => obj.id === collection.id) ? 'active' : ''}
+                    return <Link className={collectionFilter.some(obj => obj.id === collection.id) ? 'active' : ''}
                       key={index} to={'#'}
                       onClick={() => collectionSelect(collection.id, collection.name)}>
                       <span>{collection.name}</span>
@@ -297,6 +298,7 @@ const Marketplace = (props) => {
             <ResultRight>
               <CustomDropdown ref={dropRef}>
                 <label onClick={() => setIsOpen2(state => !state)}>{!filter && 'Recently Added'}
+                  {filter === 'recently' && 'Recently Added'}
                   {filter === 'lowToHight' && 'Price: Low to High'}
                   {filter === 'highToLow' && 'Price: High to Low'}
                   {filter === 'endingSoon' && 'Ending Soon'}
