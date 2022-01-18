@@ -116,9 +116,9 @@ const EditProfile = (props) => {
     if (name) params.name = name
     if (bio) params.bio = bio
     if (email) params.email = email
-    if (website) params.portfolio = { ...params.portfolio, ['website']: {url : website} }
-    if (instagarm) params.portfolio = { ...params.portfolio, ['instagarm']: {url :instagarm} }
-    if (twitter) params.portfolio = { ...params.portfolio, ['twitter']: {url:twitter} }
+    if (website) params.portfolio = { ...params.portfolio, ['website']: { url: website } }
+    if (instagarm) params.portfolio = { ...params.portfolio, ['instagarm']: { url: instagarm } }
+    if (twitter) params.portfolio = { ...params.portfolio, ['twitter']: { url: twitter } }
     props.updateProfile(params); // update profile
   }
 
@@ -235,14 +235,26 @@ const EPTitle = styled.div`
 
 const EPDesc = styled.div`
   font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 50px;
+  ${Media.md} {
+    margin:0px 0px 30px;
+  }
 `;
 
 const EPOuter = styled(FlexDiv)`
   align-items:flex-start; justify-content:flex-start;
+  ${Media.md} {
+    flex-direction: column-reverse;
+  }
 `;
 
 const EPLeft = styled.div`
   width:calc(55% - 100px); margin-right:100px; 
+  ${Media.md2} {
+    width:calc(65% - 100px);
+  }
+  ${Media.md} {
+    width:100%; margin-right:0px;
+  }
 `;
 
 const FormBox = styled.div`
@@ -258,8 +270,18 @@ const AddressBar = styled(FlexDiv)`
   justify-content:flex-start;
   p{
     margin:0px; font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #F6F6F6; background: rgba(196, 196, 196, 0.15); border-radius: 10px; padding:2px 10px;
+    ${Media.xs} {
+      font-size: 14px; line-height: 22px;
+    }
+    ${Media.xxs} {
+      font-size: 11px; line-height: 18px;
+    }
   }
-  svg{margin-left:10px; cursor:pointer;}
+  svg{margin-left:10px; cursor:pointer;
+    ${Media.xxs} {
+      margin-left:5px;
+    }
+  }
 `;
 
 const CopyedText = styled.div`
@@ -298,6 +320,9 @@ const EPRight = styled.div`
 
 const NoteText = styled.div`
   font-weight: normal; font-size: 12px; line-height: 16px; color: #FFFFFF; margin:13px 0px 0px; max-width: 200px; text-align: center; width: 100%;
+  ${Media.md} {
+    margin-bottom:30px;
+  }
 `;
 
 const LabelRow = styled(FlexDiv)`
