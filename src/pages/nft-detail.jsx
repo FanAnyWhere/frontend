@@ -22,6 +22,7 @@ import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 import NFTdImg from '../assets/images/green-icon.png';
 import NoBid from '../assets/images/no-bid.png';
+import LoaderGIF from '../assets/images/loader.gif';
 
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
@@ -103,20 +104,19 @@ const NFTDetail = (props) => {
     setOpenConfirm(true)
   }
 
+  const Loading = () => {
+    return (<Loader>
+      <img src={LoaderGIF} alt='' />
+    </Loader>)
+  }
+
   return (
     <>
       <Gs.Container>
 
         {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)} />}
 
-        {!props.nft &&
-          <SiteLoader>
-            <div className='loader-inner'>
-              <div className="loader"></div>
-              <p>Loading</p>
-            </div>
-          </SiteLoader>
-        }
+        {!props.nft && <Loading />}
 
         {props.nft &&
           <EPOuter>
@@ -777,6 +777,10 @@ const NITitle = styled.div`
 
 const NIDesc = styled.div`
   font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 20px;
+`;
+
+const Loader = styled(FlexDiv)`
+  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);
 `;
 
 const mapDipatchToProps = (dispatch) => {
