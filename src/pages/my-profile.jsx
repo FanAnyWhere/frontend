@@ -31,6 +31,7 @@ import ListIcon from '../assets/images/list.png';
 import { actions } from '../actions'
 import { compressImage } from '../helper/functions'
 import { Toast } from '../helper/toastify.message'
+import useOutsideClick from '../helper/outside.click'
 import ipfs from '../config/ipfs'
 import NFT from '../modals/nft.card'
 
@@ -76,6 +77,11 @@ function MyProfile(props) {
 
   let profileInput = useRef()
   let profileCoverInput = useRef()
+  let accountShare = useRef()
+  let accountReport = useRef()
+
+  useOutsideClick(accountShare, () => { setIsOpen5(false) })
+  useOutsideClick(accountReport, () => { setIsOpen6(false) })
 
   useEffect(() => {
     return () => {
@@ -218,6 +224,7 @@ function MyProfile(props) {
     }, 3000);
   }
 
+
   return (
     <>
       <ProfileCover>
@@ -290,7 +297,8 @@ function MyProfile(props) {
               {/* <Link to='#' className="edit-profile">Unfollow</Link>
               <GradientBtn>Follow</GradientBtn> */}
               <Link to='/edit-profile' className="edit-profile">Edit Profile</Link>
-              <CustomDropdown className='custom-width'>
+
+              <CustomDropdown className='custom-width' ref={accountShare}>
                 <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                 <Collapse onInit={onInit} isOpen={isOpen5}>
                   <DDTitle>Share Options</DDTitle>
@@ -299,7 +307,8 @@ function MyProfile(props) {
                   <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
                 </Collapse>
               </CustomDropdown>
-              <CustomDropdown className='report-box'>
+
+              <CustomDropdown className='report-box' ref={accountReport}>
                 <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                 <Collapse onInit={onInit} isOpen={isOpen6}>
                   <p onClick={() => setOpenFirst(true)}>Report Profile</p>
@@ -354,18 +363,18 @@ function MyProfile(props) {
             </FollowBoxRow>
             <LinkBoxRow>
               <div className='link-box'>
-                <Link to='#' onClick={() => { window.open(props.user?.profile?.portfolio?.website?.url, '_blank') }}>
-                  {props.user?.profile?.portfolio?.website?.url ? props.user.profile.portfolio.website.url : 'www.faw.com'}
+                <Link to='#' onClick={() => { window.open(props.user?.portfolio?.website?.url, '_blank') }}>
+                  {props.user?.portfolio?.website?.url ? props.user.portfolio.website.url : 'www.faw.com'}
                 </Link>
               </div>
               <div className='link-box'>
-                <Link to='#' className='twitter' onClick={() => { window.open(props.user?.profile?.portfolio?.twitter?.url, '_blank') }}>
-                  {props.user?.profile?.portfolio?.twitter?.url ? props.user.profile.portfolio.twitter.url : 'www.twitter.com'}
+                <Link to='#' className='twitter' onClick={() => { window.open(props.user?.portfolio?.twitter?.url, '_blank') }}>
+                  {props.user?.portfolio?.twitter?.url ? props.user.portfolio.twitter.url : 'www.twitter.com'}
                 </Link>
               </div>
               <div className='link-box'>
-                <Link to='#' className='instagram-handle' onClick={() => { window.open(props.user?.profile?.portfolio?.instagram?.url, '_blank') }}>
-                  {props.user?.profile?.portfolio?.instagram?.url ? props.user.profile.portfolio.instagram.url : 'www.instagram.com'}
+                <Link to='#' className='instagram-handle' onClick={() => { window.open(props.user?.portfolio?.instagarm?.url, '_blank') }}>
+                  {props.user?.portfolio?.instagarm?.url ? props.user.portfolio.instagarm.url : 'www.instagram.com'}
                 </Link>
               </div>
             </LinkBoxRow>

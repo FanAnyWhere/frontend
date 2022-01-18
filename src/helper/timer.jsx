@@ -82,27 +82,48 @@ class Timer extends React.Component {
     }
   }
 
+  display = (time) => {
+    let days = 0
+    let hours = 0
+    let minutes = 0
+    let seconds = 0
+    if (time.d) days = Number(((time.d).toString()).split('-').pop())
+    if (time.h) hours = Number(time.h)
+    if (time.m) minutes = Number(((time.m).toString()).split('-').pop())
+    if (time.s) seconds = Number(((time.s).toString()).split('-').pop())
+    if (days > 0) return days+' days left'
+    else if (hours > 0) return hours+' hours left'
+    else if (minutes > 0) return minutes+' minutes left'
+    else if (seconds > 0) return seconds+' seconds left'
+    else return 'ending soon'
+  }
+
   render() {
-    return this.props.isDetailed ? (
+    return (
       <>
-        <div className='time-block'>
-          <h3>{this.state.time.h}</h3>
-          <p className='gray-t'>hours</p>
-        </div>
-        <div className='time-block'>
-          <h3>{this.state.time.m}</h3>
-          <p className='gray-t'>minutes</p>
-        </div>
-        <div className='time-block'>
-          <h3>{this.state.time.s}</h3>
-          <p className='gray-t'>seconds</p>
-        </div>
+        {this.display(this.state.time)}
       </>
-    ) : (
-      <>
-        {this.state.time.h}h {this.state.time.m}m {this.state.time.s}s
-      </>
-    );
+    )
+    // return this.props.isDetailed ? (
+    //   <>
+    //     <div className='time-block'>
+    //       <h3>{this.state.time.h}</h3>
+    //       <p className='gray-t'>hours</p>
+    //     </div>
+    //     <div className='time-block'>
+    //       <h3>{this.state.time.m}</h3>
+    //       <p className='gray-t'>minutes</p>
+    //     </div>
+    //     <div className='time-block'>
+    //       <h3>{this.state.time.s}</h3>
+    //       <p className='gray-t'>seconds</p>
+    //     </div>
+    //   </>
+    // ) : (
+    //   <>
+    //     {this.state.time.h}h {this.state.time.m}m {this.state.time.s}s
+    //   </>
+    // );
   }
 }
 
