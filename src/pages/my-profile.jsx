@@ -14,6 +14,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Modal } from 'react-responsive-modal';
 import dateFormat from 'dateformat';
 import copy from 'copy-to-clipboard';
+import Media from '../theme/media-breackpoint';
 
 import UpArrow from '../assets/images/up-arrow.png';
 import ArrowUp from '../assets/images/arrow-up.png';
@@ -638,7 +639,17 @@ const UPButton = styled.button`
 
 const PRBottom = styled(FlexDiv)`
   justify-content:flex-start; align-items:flex-start; 
-  .prb-left{margin-right:17px; max-width:530px; width:100%;}
+  .prb-left{margin-right:17px; max-width:530px; width:100%;
+    ${Media.xxl} {
+      max-width:430px;
+    }
+    ${Media.xl} {
+      max-width:100%; margin-right:0px; margin-bottom:15px;
+    }
+  }
+  ${Media.md2} {
+    display:block;
+  }
 `;
 
 const PDesc = styled.div`
@@ -658,6 +669,9 @@ const FollowBoxRow = styled(FlexDiv)`
     :last-child{
       :after{display:none;}
     }
+  }
+  ${Media.md2} {
+    margin-right:0px; margin-bottom:15px; width: fit-content;
   }
 `;
 
@@ -679,6 +693,9 @@ const LinkBoxRow = styled(FlexDiv)`
       &.instagram-handle{background: linear-gradient(88.63deg, #FF9900 0%, #CE1E92 66.79%, #7F00FD 124.84%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
       :hover{opacity:0.8;}
     }
+  }
+  ${Media.md2} {
+    width: fit-content;
   }
 `;
 
@@ -760,12 +777,29 @@ const ProfilefilterBar = styled(FlexDiv)`
 
 const GradientBar = styled(FlexDiv)`
   justify-content:space-between; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
-  &.active{border-radius: 0px 5px 0px 0px; }
+  &.active{border-radius: 0px 5px 0px 0px; 
+    ${Media.md} {
+      border-radius: 5px 5px 0px 0px; 
+    }
+  }
   svg{font-size:28px; cursor:pointer; transition:0.3s ease all;
-    &.active{transform:rotate(180deg);}
+    &.active{transform:rotate(180deg);
+      ${Media.md} {
+        transform:rotate(90deg);
+      }
+    }
+    ${Media.md} {
+      transform:rotate(-90deg);
+    }
   }
   span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); width: 70px; height: 50px; display: flex; align-items: center; justify-content: center;
     &.active{background:none;}
+    ${Media.md} {
+      width:45px; height:auto; background:none;
+    }
+  }
+  ${Media.md} {
+    border-radius:2px;
   }
 `;
 
@@ -773,10 +807,63 @@ const Trending = styled(FlexDiv)`
   align-items:flex-start; justify-content:flex-start; margin:0px 16px;
   .item{margin:0px 5px 25px; width:calc(14.28% - 10px); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
     :hover{box-shadow:0px 0px 10px 0px rgb(130 76 245 / 60%); transition:0.5s ease all; transform: translateY(-3px);}
-    &.active{width:calc(16.66% - 10px);}
+    &.active{width:calc(16.66% - 10px);
+      ${Media.xl} {
+        width:calc(20% - 10px);
+      }
+      ${Media.lg} {
+        width:calc(25% - 10px);
+      }
+      ${Media.md2} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.md} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.sm} {
+        width:calc(50% - 10px);
+      }
+      ${Media.xs} {
+        width:100%;
+      }
+    }
+    ${Media.xl} {
+      width:calc(16.66% - 10px);
+    }
+    ${Media.lg} {
+      width:calc(20% - 10px);
+    }
+    ${Media.md2} {
+      width:calc(25% - 10px);
+    }
+    ${Media.md} {
+      width:calc(33.33% - 10px);
+    }
+    ${Media.sm} {
+      width:calc(50% - 10px);
+    }
+    ${Media.xs} {
+      width:100%;
+    }
   }
   &.comfy-view{ margin:0px 15px;
-    .item{margin:0px 5px 25px; width:calc(20% - 10px);}
+    .item{margin:0px 5px 25px; width:calc(20% - 10px);
+      ${Media.lg} {
+        width:calc(25% - 10px);
+      }
+      ${Media.md2} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.md} {
+        width:calc(33.33% - 10px);
+      }
+      ${Media.sm} {
+        width:calc(50% - 10px);
+      }
+      ${Media.xs} {
+        width:100%;
+      }
+    }
   }
 `;
 
@@ -846,12 +933,26 @@ const ProfileMain = styled(FlexDiv)`
 const PLeftpanel = styled.div`
   width:340px; height:auto; background-color: #2F2F2F; margin-left:-270px;  
   border:1px solid #2F2F2F; border-left:0px; border-top:0px;
-  &.active{margin-left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;}
+  &.active{margin-left:0px; border:1px solid #0FBFFC; border-left:0px; border-top:0px; border-radius: 0px 5px 0px 0px;
+    ${Media.md} {
+      border-left:1px solid #0FBFFC; border-top:1px solid #0FBFFC; border-radius: 5px 5px 0px 0px;
+    }
+  }
+  ${Media.md} {
+    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto;
+  }
 `;
 
 const PRightpanel = styled.div`
   width:calc(100% - 71px);
-  &.active{width:calc(100% - 341px);}
+  &.active{width:calc(100% - 341px);
+    ${Media.md} {
+      width:100%;
+    }
+  }
+  ${Media.md} {
+    width:100%;
+  }
 `;
 
 const GradientBtn = styled.button`
@@ -866,14 +967,24 @@ const NFTlistLeft = styled.div`
 
 const LeftTitle = styled.div`
   font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; padding:13px 16px;
+  ${Media.md} {
+    font-size: 16px; padding:8px 16px;
+  }
 `;
 
 const CustomAccordian = styled.div`
   .Collapsible{
     .Collapsible__trigger{ position:relative; cursor:pointer; font-weight: bold; font-size: 18px; line-height: 24px; color: #FFFFFF; background-color:#2F2F2F; padding:5px 0px 5px 20px; display:block;
-      :after{content:''; position:absolute; right:28px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;}
+      :after{content:''; position:absolute; right:28px; top:13px; background: url(${ArrowUp}) no-repeat; width: 12px; height: 7px; transition:0.3s ease all;
+        ${Media.md} {
+          right:15px;
+        }
+      }
       &.is-closed{
         :after{background: url(${ArrowUp}) no-repeat; transform:rotate(180deg);}
+      }
+      ${Media.md} {
+        font-size:16px;
       }
     }
     .Collapsible__contentInner{
