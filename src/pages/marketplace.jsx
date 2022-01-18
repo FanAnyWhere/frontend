@@ -57,6 +57,19 @@ const Marketplace = (props) => {
   useOutsideClick(dropRef, () => { setIsOpen2(false) })
 
   useEffect(() => {
+    return () => {
+      setFilter('recently')
+      props.clearNFTs()
+      props.clearPagination()
+      setIsFilter(false)
+      setFilters([])
+      setCategoryList([])
+      setCollectionFilter([])
+    }
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
     if (!props.collections) props.getCollections()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.collections]) // fetch collections
