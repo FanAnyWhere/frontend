@@ -8,8 +8,6 @@ import CreatorPImg from '../assets/images/creator-profile.png';
 const creator = (props) => {
   let { creator } = props
 
-  console.log('creator  ? ', creator)
-
   return <div className='item' key={creator.id}>
     <Link to={'/celebrity/' + creator.id}>
       <CollectionCover>

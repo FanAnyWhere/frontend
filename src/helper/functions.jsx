@@ -40,10 +40,18 @@ export function getContractInstance(isEscrow) {
 }
 
 
-export function getNFTTime(timeline) {
-  let data = new Intl.DateTimeFormat('en-US', 
+export function getNFTTime(timeline, history=false) {
+  let data
+  if (!history) {
+    data = new Intl.DateTimeFormat('en-US', 
+      { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', 
+      // second: '2-digit' 
+    }).format(timeline)
+  } else {
+    data = new Intl.DateTimeFormat('en-US', 
     { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', 
     // second: '2-digit' 
-  }).format(timeline)
+  }).format(new Date(timeline))
+  }
   return data
 }
