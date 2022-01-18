@@ -26,7 +26,7 @@ import LoaderGIF from '../assets/images/loader.gif';
 
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
-import { getContractInstance } from '../helper/functions'
+import { getContractInstance, getNFTTime } from '../helper/functions'
 import { actions } from '../actions'
 
 
@@ -61,11 +61,14 @@ const NFTDetail = (props) => {
   const [txtStatus, setTxnStatus] = useState(false)
   const escrowContractInstance = getContractInstance(true)
 
+  console.log('nft ? ', props.nft.editions)
+
   useEffect(() => {
     if (!props.nft) {
       props.getNFT(id)
       props.getLikesCount(id)
       props.getIsLiked(id)
+      props.getHistory(id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nft]) // fetch the nft
@@ -207,9 +210,10 @@ const NFTDetail = (props) => {
                     <Tab>Details</Tab>
                     <Tab>Bids</Tab>
                     <Tab>Owners</Tab>
-                    {/* <Tab>History</Tab> */}
+                    <Tab>History</Tab>
                   </TabList>
-                  <TabPanel>
+
+                  <TabPanel> {/* nft details */}
                     <Scrollbars style={{ height: 431 }}>
                       <DeatTitle>Description</DeatTitle>
                       <DeatDesc>
@@ -225,7 +229,8 @@ const NFTDetail = (props) => {
                       <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
                     </Scrollbars>
                   </TabPanel>
-                  <TabPanel>
+
+                  <TabPanel> {/* nft bid */}
                     <NoItemBox>
                       <img src={NoBid} alt='' />
                       <NIDesc>No bids yet.  Be the first to place a bid</NIDesc>
@@ -266,29 +271,96 @@ const NFTDetail = (props) => {
                       </OwnerOuter>
                     </Scrollbars>
                   </TabPanel>
-                  <TabPanel>
-                    <Scrollbars style={{ height: 431 }}>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={props.nft.ownerId.profile} alt='' />
+                  
+                  <TabPanel> {/* nft owner */}
+                      {!props.history ? 
+                        <SiteLoader>
+                          <div className='loader-inner'>
+                            <div className="loader"></div>
+                            <p>Loading</p>
                           </div>
-                          <div>
-                            <OwnerName>{props.nft.ownerId.name}</OwnerName>
-                            <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                        {/* {props.authenticated.isLoggedIn &&
-                          <OwnerRight>
-                            <GradientBtn>Buy</GradientBtn>
-                          </OwnerRight>
-                        } */}
-                      </OwnerOuter>
-                    </Scrollbars>
+                        </SiteLoader> :
+                        <Scrollbars style={{ height: 431 }}>
+                          {props.nft.editions.map( (edition) => {
+                            return <OwnerOuter key={edition.id}>
+                                  <OwnerLeft>
+                                  <div className='img-outer'>
+                                    <img src={edition.ownerId.profile} alt='' />
+                                  </div>
+                                  <div>
+                                    <OwnerName>{edition.ownerId.name}</OwnerName>
+                                    <OwnerDesc>{edition.edition}/{props.nft.edition} 
+                                      {edition.isOpenForSale ? 'on sale for '+<span>${edition.price} FAW</span> +'each': ' not on sale' }
+                                    </OwnerDesc>
+                                  </div>
+                                </OwnerLeft>
+                                <OwnerRight>
+                                  {edition.isOpenForSale && 
+                                    <GradientBtn> Buy
+                                    </GradientBtn>
+                                  }
+                                </OwnerRight>
+                            </OwnerOuter>
+                          })}
+                          {/* <OwnerOuter>
+                            <OwnerLeft>
+                              <div className='img-outer'>
+                                <img src={props.nft.ownerId.profile} alt='' />
+                              </div>
+                              <div>
+                                <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                                <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
+                              </div>
+                            </OwnerLeft>
+                            {props.authenticated.isLoggedIn &&
+                              <OwnerRight>
+                                <GradientBtn>Buy</GradientBtn>
+                              </OwnerRight>
+                            }
+                          </OwnerOuter> */}
+                        </Scrollbars>
+                       }
                   </TabPanel>
-                  {/* <TabPanel>
-                    <Scrollbars style={{ height: 431 }}>
-                      <OwnerOuter>
+
+                  <TabPanel> {/* nft history */}
+                    
+                      {!props.history ? 
+                        <SiteLoader>
+                          <div className='loader-inner'>
+                            <div className="loader"></div>
+                            <p>Loading</p>
+                          </div>
+                        </SiteLoader> :
+                        <Scrollbars style={{ height: 431 }}>
+
+                          <OwnerOuter>
+                            <OwnerLeft>
+                              <div className='img-outer'>
+                                <img src={props.history.ownerId.profile} alt='' />
+                              </div>
+                              <div>
+                                <OwnerName><span>Minted by</span> {props.history.ownerId.name} </OwnerName>
+                                <OwnerDesc> {getNFTTime(props.history.timeline)}</OwnerDesc>
+                              </div>
+                            </OwnerLeft>
+                          </OwnerOuter>
+
+                          <OwnerOuter>
+                            <OwnerLeft>
+                              <div className='img-outer'>
+                                <img src={props.history.ownerId.profile} alt='' />
+                              </div>
+                              <div>
+                                <OwnerName><span>Listed {props.nft.edition} editions for </span> {'0.005'} FAW each</OwnerName>
+                                <OwnerDesc>by <span>{props.history.ownerId.name}</span> {getNFTTime(props.history.timeline)} hours ago</OwnerDesc>
+                              </div>
+                            </OwnerLeft>
+                          </OwnerOuter>
+                          
+                        </Scrollbars>
+                      }
+
+                      {/* <OwnerOuter>
                         <OwnerLeft>
                           <div className='img-outer'>
                             <img src={NFTdImg} alt='' />
@@ -364,9 +436,10 @@ const NFTDetail = (props) => {
                             <OwnerDesc>00 hours ago</OwnerDesc>
                           </div>
                         </OwnerLeft>
-                      </OwnerOuter>
-                    </Scrollbars>
-                  </TabPanel> */}
+                      </OwnerOuter> */}
+
+                  </TabPanel>
+
                 </Tabs>
               </ActFilterList>
               <EqualBtnList>
@@ -780,7 +853,7 @@ const NIDesc = styled.div`
 `;
 
 const Loader = styled(FlexDiv)`
-  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; backdrop-filter: blur(4px);
+  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);
 `;
 
 const mapDipatchToProps = (dispatch) => {
@@ -790,6 +863,7 @@ const mapDipatchToProps = (dispatch) => {
     likeToggler: (id) => dispatch(actions.likeToggler(id)),
     getLikesCount: (id) => dispatch(actions.getLikesCount(id)),
     clearNFT: () => dispatch({ type: 'FETCHED_NFT', data: false }),
+    getHistory: (id) => dispatch(actions.getNFTHistory(id)),
   }
 }
 const mapStateToProps = (state) => {
@@ -799,6 +873,7 @@ const mapStateToProps = (state) => {
     isLiked: state.fetchIsLiked,
     likesCount: state.fetchLikesCount,
     likeToggled: state.fetchLikeToggled,
+    history: state.fetchNFTHistory,
     authenticated: state.isAuthenticated,
   }
 }

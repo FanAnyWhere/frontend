@@ -29,6 +29,7 @@ export const userActions = {
     getSaleNFTs,
     getTotalMarketPlaceNFTs,
     getSignleUserDetails,
+    getNFTHistory,
     getNotificationFilters,
 }
 
@@ -419,6 +420,19 @@ function getSaleNFTs(params={}) {
     return response.then((promise) => {
       if (promise.data) {
         dispatch({ type: 'FETCHED_SALE_MARKETPLACE_NFTS', data: promise.data.pagination })
+      } else {
+        // console.log("error");
+      }
+    });
+  };
+}
+
+function getNFTHistory(nftId) {
+  return (dispatch) => {
+    const response = services.get('nft/history/'+nftId);
+    return response.then((promise) => {
+      if (promise.data) {
+        dispatch({ type: 'FETCHED_NFT_HISTORY', data: promise.data.data })
       } else {
         // console.log("error");
       }
