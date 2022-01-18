@@ -103,10 +103,10 @@ const Marketplace = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
 
-  useEffect( () => {
+  useEffect(() => {
     setIsFilter(true)
     if (isFilter) {
-      props.getNFTs({ 
+      props.getNFTs({
         category: categoryFilter.length ? categoryFilter.map(cat => cat.id) : [],
         collection: collectionFilter.length ? collectionFilter.map(col => col.id) : [],
         filter: filters.length ? filters.map(fil => fil.id) : [],
@@ -197,9 +197,9 @@ const Marketplace = (props) => {
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <FilterTags>
-                  <Link className={filters.some(obj => obj.id === 'AUCTION') ? 'active': ''}  to='#'
+                  <Link className={filters.some(obj => obj.id === 'AUCTION') ? 'active' : ''} to='#'
                     onClick={() => filterSelect('AUCTION', 'On Auction')} ><span>On Auction</span></Link>
-                  <Link className={filters.some(obj => obj.id === 'BUYNOW') ? 'active': ''}
+                  <Link className={filters.some(obj => obj.id === 'BUYNOW') ? 'active' : ''}
                     onClick={() => filterSelect('BUYNOW', 'Buy Now')} to='#'><span>Buy Now</span></Link>
                 </FilterTags>
               </Collapsible>
@@ -247,7 +247,7 @@ const Marketplace = (props) => {
                 </CustomDropdown>
               </Collapsible>
 
-              {/* <Collapsible trigger="Celebrity">
+              <Collapsible trigger="Celebrity">
                 <CustomDropdown className='pb-10'>
                   <NavSearch onClick={() => setIsOpen7(state => !state)}>
                     <input type="text" placeholder="Search for a Celebrity" />
@@ -270,7 +270,7 @@ const Marketplace = (props) => {
                     </Scrollbars>
                   </Collapse>
                 </CustomDropdown>
-              </Collapsible> */}
+              </Collapsible>
 
               <Collapsible trigger="Collections">
                 <FilterTags>
