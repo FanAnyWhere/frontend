@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Gs from '../theme/globalStyles';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import copy from 'copy-to-clipboard';
+import Media from '../theme/media-breackpoint';
 
 import EditIcon from '../assets/images/edit-icon.png';
 import { actions } from '../actions'
@@ -243,7 +244,7 @@ const FormBox = styled.div`
   margin-bottom:25px;
   label{display:block; font-weight: bold; font-size: 12px; line-height: 16px; color: #FFFFFF;  font-family: 'Roboto', sans-serif; margin:0px 0px 8px;}
   input{border: 1px solid #767676; box-sizing: border-box; border-radius: 2px; padding:8px; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF;  font-family: 'Roboto', sans-serif; width:100%; background-color:#1d1d1d;}
-  textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:148px; background-color:#1d1d1d; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676; font-family: 'Roboto', sans-serif; padding:8px;
+  textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:148px; background-color:#1d1d1d; font-weight: normal; font-size: 16px; line-height: 24px; color: #ffffff; font-family: 'Roboto', sans-serif; padding:8px;
     :focus{outline:none;}
   }
 `;
