@@ -8,6 +8,8 @@ import CreatorPImg from '../assets/images/creator-profile.png';
 const creator = (props) => {
   let { creator } = props
 
+  console.log('creator  ? ', creator)
+
   return <div className='item' key={creator.id}>
     <Link to={'/celebrity/' + creator.id}>
       <CollectionCover>
@@ -26,7 +28,7 @@ const creator = (props) => {
         </FollowerRow> */}
         <FollowBoxRow>
           <div className='follow-box'>
-            <FNumber>00</FNumber>
+            <FNumber>{creator.nftCreated}</FNumber>
             <p>Items</p>
           </div>
           <div className='follow-box'>

@@ -27,7 +27,6 @@ import MbSearchIcon from '../assets/images/mb-search.png'
 
 import LoginModal from '../modals/login'
 import Notifications from '../modals/notifications'
-import BecomeCelebrity from '../modals/become.celebrity'
 import useOutsideClick from '../helper/outside.click'
 import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../config'
 
