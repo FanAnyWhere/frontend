@@ -24,11 +24,16 @@ const EditProfile = (props) => {
   const [email, setEmail] = useState(false)
   const [website, setWebsite] = useState('')
   const [twitter, setTwitter] = useState('')
-  const [instagram, setInstagram] = useState('')
+  const [instagarm, setinstagarm] = useState('')
   const [loading, setLoading] = useState('')
   const [copied, setCopied] = useState('')
   const [errors, setErrors] = useState(false)
   const [profile, setProfile] = useState({ file: null, url: null, buffer: null })
+
+  useEffect(() => {
+    if (!props.user) props.getUserDetails()
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     const getUser = async () => {
@@ -55,9 +60,9 @@ const EditProfile = (props) => {
       setName(props.user.name)
       setBio(props.user.bio)
       setEmail(props.user.email)
-      setWebsite(props.user.portfolio?.website)
-      setTwitter(props.user.portfolio?.twitter)
-      setInstagram(props.user.portfolio?.instagarm)
+      setWebsite(props.user.portfolio?.website?.url)
+      setTwitter(props.user.portfolio?.twitter?.url)
+      setinstagarm(props.user.portfolio?.instagarm?.url)
     }
     // eslint-disable-next-line
   }, [props.user])
@@ -96,7 +101,7 @@ const EditProfile = (props) => {
       name: props.user.name,
       bio: props.user.bio,
       email: props.user.email,
-      profile: props.user.profile,
+      // profile: props.user.profile,
     }
     let ipfsHash = false
     if (profile.buffer) {
@@ -110,9 +115,9 @@ const EditProfile = (props) => {
     if (name) params.name = name
     if (bio) params.bio = bio
     if (email) params.email = email
-    if (website) params.portfolio.website = website
-    if (instagram) params.portfolio.instagarm = instagram
-    if (twitter) params.portfolio.twitter = twitter
+    if (website) params.portfolio = { ...params.portfolio, ['website']: {url : website} }
+    if (instagarm) params.portfolio = { ...params.portfolio, ['instagarm']: {url :instagarm} }
+    if (twitter) params.portfolio = { ...params.portfolio, ['twitter']: {url:twitter} }
     props.updateProfile(params); // update profile
   }
 
@@ -169,15 +174,15 @@ const EditProfile = (props) => {
             </FormBox>
             <FormBox>
               <label>Website</label>
-              <input type='text' placeholder='https://' onChange={(e) => setWebsite(e.target.value)} />
+              <input type='text' defaultValue={website === null ? '' : website} placeholder='https://' onChange={(e) => setWebsite(e.target.value)} />
             </FormBox>
             <FormBox>
               <label>Twitter</label>
-              <input type='text' placeholder='Your twitter handle' onChange={(e) => setTwitter(e.target.value)} />
+              <input type='text' defaultValue={twitter === null ? '' : twitter} placeholder='Your twitter handle' onChange={(e) => setTwitter(e.target.value)} />
             </FormBox>
             <FormBox>
-              <label>Instagram</label>
-              <input type='text' placeholder='Your instagram handle' onChange={(e) => setInstagram(e.target.value)} />
+              <label>instagarm</label>
+              <input type='text' defaultValue={instagarm === null ? '' : instagarm} placeholder='Your instagarm handle' onChange={(e) => setinstagarm(e.target.value)} />
             </FormBox>
             <FormBox>
               <label>Wallet Address</label>
