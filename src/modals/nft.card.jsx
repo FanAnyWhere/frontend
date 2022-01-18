@@ -62,11 +62,11 @@ const NFT = (props) => {
             </div>
           </PriceLine>
           <BidLike>
-            <Link to='#'> 
+            <Link to='#' className={nft.saleState === 'SOLD' ? 'disabled': ''}> 
               {nft.saleState === 'BUY' && 'Buy Now'}
+              {nft.saleState === 'SOLD' && 'Sold Out'}
               {nft.saleState === 'AUCTION' && 'Place a Bid'} 
             </Link>
-            {nft.saleState === 'SOLD' && <Link to='#' className='disabled'>Sold Out</Link>}
             <p><AiOutlineHeart /> { '0' }</p>
           </BidLike>
         </div>
