@@ -61,8 +61,6 @@ const NFTDetail = (props) => {
   const [txtStatus, setTxnStatus] = useState(false)
   const escrowContractInstance = getContractInstance(true)
 
-  console.log('nft ? ', props.nft.editions)
-
   useEffect(() => {
     if (!props.nft) {
       props.getNFT(id)
@@ -112,6 +110,8 @@ const NFTDetail = (props) => {
       <img src={LoaderGIF} alt='' />
     </Loader>)
   }
+
+  console.log('props.history ? ', props.history)
 
   return (
     <>
@@ -368,7 +368,7 @@ const NFTDetail = (props) => {
                               </div>
                               <div>
                                 <OwnerName><span>Listed {props.nft.edition} editions for </span> {'0.005'} FAW each</OwnerName>
-                                <OwnerDesc>by <span>{props.history.ownerId.name}</span> {getNFTTime(props.history.timeline)} hours ago</OwnerDesc>
+                                <OwnerDesc>by <span>{props.history.ownerId.name}</span> {getNFTTime(props.history.createdAt, true)} </OwnerDesc>
                               </div>
                             </OwnerLeft>
                           </OwnerOuter>
