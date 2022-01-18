@@ -281,6 +281,22 @@ const NFTDetail = (props) => {
                           </div>
                         </SiteLoader> :
                         <Scrollbars style={{ height: 431 }}>
+                          {props.nft.editions.length === 0 && 
+                            <OwnerOuter>
+                              <OwnerLeft>
+                                <div className='img-outer'>
+                                  <img src={props.nft.ownerId.profile} alt='' />
+                                </div>
+                                <div>
+                                  <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                                  <OwnerDesc>{props.nft.edition}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
+                                </div>
+                              </OwnerLeft>
+                              <OwnerRight>
+                                <GradientBtn>Buy</GradientBtn>
+                              </OwnerRight>
+                            </OwnerOuter>
+                          }
                           {props.nft.editions.map( (edition) => {
                             return <OwnerOuter key={edition.id}>
                                   <OwnerLeft>
