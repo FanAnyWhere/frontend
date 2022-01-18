@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker';
 import 'react-responsive-modal/styles.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import Media from '../theme/media-breackpoint';
 
 import RImg from '../assets/images/img1.jpg';
 import ExclaimIcon from '../assets/images/exclamation.png';
@@ -553,12 +554,21 @@ const FlexDiv = styled.div`
 
 const CNOuter = styled(FlexDiv)`
   align-items:flex-start; justify-content:flex-start;
+  ${Media.md} {
+    flex-direction: column-reverse;
+  }
 `;
 
 const CNLeft = styled.div`
   width:calc(55.5% - 100px); margin-right:100px; 
   .nft-d-outer{width:100%; height:750px; overflow:hidden;
     img{width:100%; height:100%; object-fit:cover; border-radius: 5px;}
+  }
+  ${Media.md2} {
+    width:calc(63% - 100px);
+  }
+  ${Media.md} {
+    width:100%; margin-right:0px;
   }
 `;
 
@@ -775,6 +785,7 @@ const MessageOuter = styled.div`
 `;
 
 const CustomSwitch = styled(FlexDiv)`
+  justify-content:flex-start;
   button{width:33.33%; font-weight: bold; font-size: 16px; line-height: 20px; color:#fff; padding:8px 0px; display:flex; align-items:center; justify-content:center; border: 2px solid #AEAEAE; box-sizing: border-box; border-radius: 2px; 
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); position:relative; z-index: 1; border-radius: 5px; 
       :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
@@ -793,6 +804,9 @@ const CustomSwitch = styled(FlexDiv)`
       &.active{
         :before{right:-2px;}
       }
+    }
+    ${Media.xs} {
+      width:50%;
     }
   }
 `;
