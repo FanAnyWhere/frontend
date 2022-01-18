@@ -36,7 +36,7 @@ const creator = (props) => {
             <p>FAW</p>
           </div>
         </FollowBoxRow>
-        Follow
+        <GradientLink>Follow</GradientLink>
         {/* <Link to='#'>Follow</Link> */}
         <FollowNumber><span>{creator.followersCount}</span> followers</FollowNumber>
       </CollectionBottom>
@@ -61,9 +61,11 @@ const ProfilePicture = styled.div`
 
 const CollectionBottom = styled.div`
   padding:17px 14px; text-align:center; position:relative;
-  a{font-weight: bold; font-size: 12px; line-height: 16px; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    :hover{opacity:0.9;}
-  }
+`;
+
+const GradientLink = styled.div`
+  margin-top:6px; font-weight: bold; font-size: 12px; line-height: 16px; background: linear-gradient(92.95deg, #824CF5 47%, #0FBFFC 53%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  :hover{opacity:0.9;}
 `;
 
 const CCName = styled.div`

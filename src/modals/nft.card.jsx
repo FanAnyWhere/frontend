@@ -62,12 +62,12 @@ const NFT = (props) => {
             </div>
           </PriceLine>
           <BidLike>
-            <Link to='#'> 
+            <ButtonLink>
               {nft.saleState === 'BUY' && 'Buy Now'}
-              {nft.saleState === 'AUCTION' && 'Place a Bid'} 
-            </Link>
-            {nft.saleState === 'SOLD' && <Link to='#' className='disabled'>Sold Out</Link>}
-            <p><AiOutlineHeart /> { '0' }</p>
+              {nft.saleState === 'AUCTION' && 'Place a Bid'}
+            </ButtonLink>
+            {nft.saleState === 'SOLD' && <ButtonLink className='disabled'>Sold Out</ButtonLink>}
+            <p><AiOutlineHeart /> {'0'}</p>
           </BidLike>
         </div>
       </LiveBox>
@@ -114,14 +114,16 @@ const LiveBox = styled.div`
 
 const BidLike = styled(FlexDiv)`
   justify-content:space-between; 
-  a{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Rubik', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; margin:0px;
-    &.disabled{background:none; color:#AEAEAE; -webkit-text-fill-color:#AEAEAE; pointer-events:none;}
-    :hover{color:#0FBFFC; -webkit-text-fill-color: #0FBFFC;}
-  }
   p{font-weight: bold; font-size: 10px; line-height: 16px; color: #5F5F5F; display:flex; align-items:center; margin:0px;
     svg{margin:0px 3px 0px 0px; font-size:14px; cursor:pointer;}
     &.ver2{margin-right:5px;}
   }
+`;
+
+const ButtonLink = styled.div`
+  background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Rubik', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; margin:0px;
+  &.disabled{background:none; color:#AEAEAE; -webkit-text-fill-color:#AEAEAE; pointer-events:none;}
+  :hover{opacity:0.9;}
 `;
 
 const PriceLine = styled(FlexDiv)`

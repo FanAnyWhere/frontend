@@ -780,7 +780,7 @@ const NIDesc = styled.div`
 `;
 
 const Loader = styled(FlexDiv)`
-  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px);
+  height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; backdrop-filter: blur(4px);
 `;
 
 const mapDipatchToProps = (dispatch) => {
