@@ -27,6 +27,7 @@ import LoaderGIF from '../assets/images/loader.gif';
 
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
+import { transactionLink } from '../config'
 import { getContractInstance, getNFTTime } from '../helper/functions'
 import { actions } from '../actions'
 
@@ -111,8 +112,6 @@ const NFTDetail = (props) => {
       <img src={LoaderGIF} alt='' />
     </Loader>)
   }
-
-  console.log('props.history ? ', props.history)
 
   return (
     <>
@@ -273,7 +272,7 @@ const NFTDetail = (props) => {
                     </Scrollbars>
                   </TabPanel>
 
-                  <TabPanel> {/* nft owner */}
+                  <TabPanel> {/* nft owners */}
                     {!props.history ?
                       <SiteLoader>
                         <div className='loader-inner'>
@@ -282,6 +281,22 @@ const NFTDetail = (props) => {
                         </div>
                       </SiteLoader> :
                       <Scrollbars style={{ height: 431 }}>
+                        {props.nft.editions.length === 0 && 
+                          <OwnerOuter>
+                            <OwnerLeft>
+                              <div className='img-outer'>
+                                <img src={props.nft.ownerId.profile} alt='' />
+                              </div>
+                              <div>
+                                <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                                <OwnerDesc>{props.nft.edition}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
+                              </div>
+                            </OwnerLeft>
+                            <OwnerRight>
+                              <GradientBtn>Buy</GradientBtn>
+                            </OwnerRight>
+                          </OwnerOuter>
+                        }
                         {props.nft.editions.map((edition) => {
                           return <OwnerOuter key={edition.id}>
                             <OwnerLeft>
@@ -291,34 +306,16 @@ const NFTDetail = (props) => {
                               <div>
                                 <OwnerName>{edition.ownerId.name}</OwnerName>
                                 <OwnerDesc>{edition.edition}/{props.nft.edition}
-                                  {edition.isOpenForSale ? 'on sale for ' + <span>${edition.price} FAW</span> + 'each' : ' not on sale'}
+                                  {edition.isOpenForSale ? 'on sale for ' + <span>${edition.price} FAW</span> + 'each ' : ' not on sale '}
+                                  {edition.transactionId && <Link onClick={()=> window.open(transactionLink+'/'+edition.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
                                 </OwnerDesc>
                               </div>
                             </OwnerLeft>
                             <OwnerRight>
-                              {edition.isOpenForSale &&
-                                <GradientBtn> Buy
-                                </GradientBtn>
-                              }
+                                {edition.isOpenForSale && <GradientBtn> Buy </GradientBtn>}
                             </OwnerRight>
                           </OwnerOuter>
                         })}
-                        {/* <OwnerOuter>
-                            <OwnerLeft>
-                              <div className='img-outer'>
-                                <img src={props.nft.ownerId.profile} alt='' />
-                              </div>
-                              <div>
-                                <OwnerName>{props.nft.ownerId.name}</OwnerName>
-                                <OwnerDesc>1/1 on sale for <span>0.00 FAW</span> each</OwnerDesc>
-                              </div>
-                            </OwnerLeft>
-                            {props.authenticated.isLoggedIn &&
-                              <OwnerRight>
-                                <GradientBtn>Buy</GradientBtn>
-                              </OwnerRight>
-                            }
-                          </OwnerOuter> */}
                       </Scrollbars>
                     }
                   </TabPanel>
@@ -352,8 +349,8 @@ const NFTDetail = (props) => {
                               <img src={props.history.ownerId.profile} alt='' />
                             </div>
                             <div>
-                              <OwnerName>Listed {props.nft.edition} editions for <span>{'0.005'} FAW </span> each</OwnerName>
-                              <OwnerDesc>by <span>{props.history.ownerId.name}</span> {getNFTTime(props.history.timeline)} hours ago <Link to='/'><FiExternalLink /></Link></OwnerDesc>
+                              <OwnerName>Listed {props.nft.edition} editions for <span>{props.history.price} FAW </span> each</OwnerName>
+                              <OwnerDesc>by <span>{props.history.ownerId.name}</span> {getNFTTime(props.history.createdAt, true)} </OwnerDesc>
                             </div>
                           </OwnerLeft>
                         </OwnerOuter>
