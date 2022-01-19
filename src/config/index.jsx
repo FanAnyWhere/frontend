@@ -12,3 +12,4 @@ export const chainIdHex = '0x13881';
 export const rpcUrls = 'https://rpc-mumbai.maticvigil.com';
 export const currency_symbol = 'MATIC';
 export const network_name = 'Polygon Testnet'
+export const transactionLink = 'https://mumbai.polygonscan.com/tx';
