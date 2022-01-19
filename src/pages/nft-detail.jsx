@@ -9,11 +9,13 @@ import { Link } from 'react-router-dom';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { AiOutlineHeart, AiTwotoneHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiTwotoneHeart,  } from 'react-icons/ai';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { FiExternalLink } from 'react-icons/fi';
+import { TailSpin } from  'react-loader-spinner';
+import copy from 'copy-to-clipboard';
 
 import UpArrow from '../assets/images/up-arrow.png';
 import CopyIcon from '../assets/images/copy.png';
@@ -21,6 +23,7 @@ import TwitterIcon from '../assets/images/twitter.png';
 import FacebookIcon from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
+import UserIcon from '../assets/images/user-img.png';
 import NFTdImg from '../assets/images/green-icon.png';
 import NoBid from '../assets/images/no-bid.png';
 import LoaderGIF from '../assets/images/loader.gif';
@@ -30,6 +33,7 @@ import { web3 } from '../web3'
 import { transactionLink } from '../config'
 import { getContractInstance, getNFTTime } from '../helper/functions'
 import { actions } from '../actions'
+import { Toast } from '../helper/toastify.message'
 
 
 const NFTDetail = (props) => {
@@ -61,6 +65,8 @@ const NFTDetail = (props) => {
 
   const [openConfirm, setOpenConfirm] = useState(false)
   const [txtStatus, setTxnStatus] = useState(false)
+  const [likeLoading, setLikeLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
   const escrowContractInstance = getContractInstance(true)
 
   useEffect(() => {
@@ -72,6 +78,11 @@ const NFTDetail = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nft]) // fetch the nft
+
+  useEffect(() => {
+    setLikeLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.isLiked])
 
   useEffect(() => {
     // Specify how to clean up after this effect
@@ -96,7 +107,7 @@ const NFTDetail = (props) => {
           // refresh the state
           props.getNFT(id)
           setTxnStatus('complete') // third step for transaction 
-        }, 5000);
+        }, 7000);
       })
       .on('error', (error) => {
         setTxnStatus('error') // four step for transaction 
@@ -111,6 +122,31 @@ const NFTDetail = (props) => {
     return (<Loader>
       <img src={LoaderGIF} alt='' />
     </Loader>)
+  }
+
+  const getCompactAddress = (address) => {
+    let compactAddress = address
+      ? address.substring(0, 5) +
+      '....' +
+      address.substring(address.length - 5, address.length)
+      : '00000000000'
+    return compactAddress
+  }
+
+  const likeNft = () => {
+    if (!props.authenticated) Toast.warning('Login First.!')
+    else {
+      setLikeLoading(true)
+      props.likeToggler(id)
+    }
+  }
+
+  const copyToClipboard = (address) => {
+    setCopied(true)
+    copy(address)
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000);
   }
 
   return (
@@ -137,16 +173,18 @@ const NFTDetail = (props) => {
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
-                    {props.nft.isLiked ? <AiTwotoneHeart disbaled={!props.authenticated && true} /> : <AiOutlineHeart />}
+                    {likeLoading ? <TailSpin color='#FFFFFF' height={20} width={20} />:
+                      props.isLiked.isFollowed ? <AiTwotoneHeart onClick={() => likeNft()} /> : <AiOutlineHeart onClick={() => likeNft()} />
+                    }
                     {' '}
-                    {!props.likesCount ? 0 : props.likesCount.count}
+                    {!props.likesCount ? ' 0 ' : props.likesCount.count}
                   </UPButton>
 
                   <CustomDropdown className='custom-width'>
                     <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen5}>
                       <DDTitle>Share Options</DDTitle>
-                      <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
+                      <Link to='#' onClick={() => copyToClipboard(window.location.href)}><span><img src={CopyIcon} alt='' /></span> {copied ? 'Copied!':'Copy link'}</Link>
                       <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
                       <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
                     </Collapse>
@@ -208,7 +246,7 @@ const NFTDetail = (props) => {
                 <Tabs>
                   <TabList>
                     <Tab>Details</Tab>
-                    <Tab>Bids</Tab>
+                    {/* <Tab>Bids</Tab> */}
                     <Tab>Owners</Tab>
                     <Tab>History</Tab>
                   </TabList>
@@ -221,8 +259,8 @@ const NFTDetail = (props) => {
                       </DeatDesc>
                       <DeatTitle>Category</DeatTitle>
                       <DeatDesc>
-                        {props.nft.category.map((category) => {
-                          return category.isActive && category.categoryName.en + ','
+                        {props.nft.category.map((category, index) => {
+                          return category.isActive && category.categoryName.en + (index !== props.nft.category.length - 1 ? ', ': '')
                         })}
                       </DeatDesc>
                       <DeatTitle>External Link</DeatTitle>
@@ -230,7 +268,8 @@ const NFTDetail = (props) => {
                     </Scrollbars>
                   </TabPanel>
 
-                  <TabPanel> {/* nft bid */}
+                  {/* nft bid */} 
+                  {/* <TabPanel>
                     <NoItemBox>
                       <img src={NoBid} alt='' />
                       <NIDesc>No bids yet.  Be the first to place a bid</NIDesc>
@@ -270,7 +309,7 @@ const NFTDetail = (props) => {
                         </OwnerLeft>
                       </OwnerOuter>
                     </Scrollbars>
-                  </TabPanel>
+                  </TabPanel> */}
 
                   <TabPanel> {/* nft owners */}
                     {!props.history ?
@@ -281,30 +320,14 @@ const NFTDetail = (props) => {
                         </div>
                       </SiteLoader> :
                       <Scrollbars style={{ height: 431 }}>
-                        {props.nft.editions.length === 0 && 
-                          <OwnerOuter>
-                            <OwnerLeft>
-                              <div className='img-outer'>
-                                <img src={props.nft.ownerId.profile} alt='' />
-                              </div>
-                              <div>
-                                <OwnerName>{props.nft.ownerId.name}</OwnerName>
-                                <OwnerDesc>{props.nft.edition}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
-                              </div>
-                            </OwnerLeft>
-                            <OwnerRight>
-                              <GradientBtn>Buy</GradientBtn>
-                            </OwnerRight>
-                          </OwnerOuter>
-                        }
                         {props.nft.editions.map((edition) => {
                           return <OwnerOuter key={edition.id}>
                             <OwnerLeft>
                               <div className='img-outer'>
-                                <img src={edition.ownerId.profile} alt='' />
+                                <img src={edition.ownerId.profile ? edition.ownerId.profile: UserIcon} alt='' />
                               </div>
                               <div>
-                                <OwnerName>{edition.ownerId.name}</OwnerName>
+                                <OwnerName>{edition.ownerId.name ? edition.ownerId.name: getCompactAddress(edition.walletAddress)}</OwnerName>
                                 <OwnerDesc>{edition.edition}/{props.nft.edition}
                                   {edition.isOpenForSale ? 'on sale for ' + <span>${edition.price} FAW</span> + 'each ' : ' not on sale '}
                                   {edition.transactionId && <Link onClick={()=> window.open(transactionLink+'/'+edition.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
@@ -316,6 +339,22 @@ const NFTDetail = (props) => {
                             </OwnerRight>
                           </OwnerOuter>
                         })}
+                        {props.nft.editions.length !== props.nft.edition && 
+                          <OwnerOuter>
+                            <OwnerLeft>
+                              <div className='img-outer'>
+                                <img src={props.nft.ownerId.profile} alt='' />
+                              </div>
+                              <div>
+                                <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                                <OwnerDesc>{props.nft.edition - props.nft.nftSold}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
+                              </div>
+                            </OwnerLeft>
+                            <OwnerRight>
+                              <GradientBtn>Buy</GradientBtn>
+                            </OwnerRight>
+                          </OwnerOuter>
+                        }
                       </Scrollbars>
                     }
                   </TabPanel>
@@ -457,7 +496,8 @@ const NFTDetail = (props) => {
                         if (!props.authenticated.isLoggedIn) setOpenForth(true)
                         else confirm()
                       }} className='full'>
-                        BUY NOW
+                        BUY NOW 
+                        {/* {Number(props.nft.edition) - Number(props.nft.nftSold)}/{props.nft.edition} */}
                       </GradientBtn>
                   : ''
                 }

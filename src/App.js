@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import styled from 'styled-components';
 import Gs from './theme/globalStyles'
 import LoaderGIF from './assets/images/loader.gif'

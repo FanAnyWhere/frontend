@@ -224,11 +224,11 @@ function Header(props) {
                       <BalanceBox>
                         <BalanceLeft>
                           <p> Balance</p>
-                          <CurrencyAmout>{accountBalance} MATIC</CurrencyAmout>
-                          <DollerAmout>${'0000.00'}</DollerAmout>
+                          <CurrencyAmout>{accountBalance} </CurrencyAmout>
+                          {/* <DollerAmout>${'0000.00'}</DollerAmout> */}
                         </BalanceLeft>
                         <BalanceRight>
-                          <GradientBtn>Add Funds</GradientBtn>
+                          {/* <GradientBtn>Add Funds</GradientBtn> */}
                         </BalanceRight>
                       </BalanceBox>
                     </UserBox>
@@ -368,11 +368,11 @@ function Header(props) {
                     <BalanceBox>
                       <BalanceLeft>
                         <p> Balance</p>
-                        <CurrencyAmout>{accountBalance} MATIC</CurrencyAmout>
-                        <DollerAmout>${'0000.00'}</DollerAmout>
+                        <CurrencyAmout>{accountBalance} </CurrencyAmout>
+                        {/* <DollerAmout>${'0000.00'}</DollerAmout> */}
                       </BalanceLeft>
                       <BalanceRight>
-                        <GradientBtn>Add Funds</GradientBtn>
+                        {/* <GradientBtn>Add Funds</GradientBtn> */}
                       </BalanceRight>
                     </BalanceBox>
                   </UserBox>
