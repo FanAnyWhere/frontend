@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Gs from '../theme/globalStyles';
@@ -39,6 +39,7 @@ import LoaderGIF from '../assets/images/loader.gif';
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
 import { transactionLink } from '../config'
+import useOutsideClick from '../helper/outside.click'
 import { getContractInstance, getNFTTime } from '../helper/functions'
 import { actions } from '../actions'
 import { Toast } from '../helper/toastify.message'
@@ -47,6 +48,11 @@ import { Toast } from '../helper/toastify.message'
 const NFTDetail = (props) => {
 
   const { id } = useParams()
+  const shareRef = useRef()
+  const reportRef = useRef()
+
+  useOutsideClick(shareRef, () => { setIsOpen5(false) })
+  useOutsideClick(reportRef, () => { setIsOpen6(false) })
 
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen6, setIsOpen6] = useState(false);
@@ -195,7 +201,7 @@ const NFTDetail = (props) => {
                     {!props.likesCount ? ' 0 ' : props.likesCount.count}
                   </UPButton>
 
-                  <CustomDropdown className='custom-width'>
+                  <CustomDropdown className='custom-width' ref={shareRef}>
                     <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen5}>
                       {/* <DDTitle>Share Options</DDTitle> */}
@@ -233,7 +239,7 @@ const NFTDetail = (props) => {
                       <Link to='#'>Mark as Not for Sale</Link>
                     </Collapse>
                   </CustomDropdown>
-                  <CustomDropdown className='report-box'>
+                  <CustomDropdown className='report-box' ref={reportRef}>
                     <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen6}>
                       <p onClick={() => setOpenFirst(true)}>Report Profile</p>
