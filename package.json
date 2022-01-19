@@ -28,6 +28,7 @@
     "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-loader-spinner": "^5.0.8",
     "react-loading-skeleton": "^3.0.2",
     "react-multi-carousel": "^2.6.5",
     "react-redux": "^7.2.6",
@@ -78,5 +79,9 @@
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1"
   },
-  "homepage": ""
+  "homepage": "",
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
+  }
 }
