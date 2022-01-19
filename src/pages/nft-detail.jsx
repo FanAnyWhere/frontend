@@ -14,7 +14,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { FiExternalLink } from 'react-icons/fi';
-import { TailSpin } from  'react-loader-spinner';
+import { TailSpin } from 'react-loader-spinner';
 import copy from 'copy-to-clipboard';
 import Media from '../theme/media-breackpoint';
 
