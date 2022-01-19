@@ -458,6 +458,12 @@ const CustomDropdown = styled.div`
           width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
         }
       }
+      ${Media.sm} {
+        left:0px; right:auto;
+      }
+      ${Media.xs} {
+        left: calc(50% - 100px); width: 200px;
+      }
     }
   }
   &.report-box{

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { AiOutlineHeart, AiTwotoneHeart,  } from 'react-icons/ai';
+import { AiOutlineHeart, AiTwotoneHeart, } from 'react-icons/ai';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -23,6 +23,7 @@ import { FacebookShareButton,
   LinkedinIcon,
 } from 'react-share';
 import copy from 'copy-to-clipboard';
+import Media from '../theme/media-breackpoint';
 
 import UpArrow from '../assets/images/up-arrow.png';
 import CopyIcon from '../assets/images/copy.png';
@@ -177,10 +178,17 @@ const NFTDetail = (props) => {
                   <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
                   <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}
                     {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
+                  <PriceLine>
+                    <div className='text-right'>
+                      <div className='timer'>
+                        {/* <p>00:02:10</p> */}
+                      </div>
+                    </div>
+                  </PriceLine>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
-                    {likeLoading ? <TailSpin color='#FFFFFF' height={20} width={20} />:
+                    {likeLoading ? <TailSpin color='#FFFFFF' height={20} width={20} /> :
                       props.isLiked.isFollowed ? <AiTwotoneHeart onClick={() => likeNft()} /> : <AiOutlineHeart onClick={() => likeNft()} />
                     }
                     {' '}
@@ -282,7 +290,7 @@ const NFTDetail = (props) => {
                   </TabList>
 
                   <TabPanel> {/* nft details */}
-                    <Scrollbars style={{ height: 431 }}>
+                    <Scrollbars style={{ height: 405 }}>
                       <DeatTitle>Description</DeatTitle>
                       <DeatDesc>
                         {props.nft.description}
@@ -290,21 +298,23 @@ const NFTDetail = (props) => {
                       <DeatTitle>Category</DeatTitle>
                       <DeatDesc>
                         {props.nft.category.map((category, index) => {
-                          return category.isActive && category.categoryName.en + (index !== props.nft.category.length - 1 ? ', ': '')
+                          return category.isActive && category.categoryName.en + (index !== props.nft.category.length - 1 ? ', ' : '')
                         })}
                       </DeatDesc>
                       <DeatTitle>External Link</DeatTitle>
                       <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
+                      <DeatTitle>Royalty</DeatTitle>
+                      <DeatDesc>00%</DeatDesc>
                     </Scrollbars>
                   </TabPanel>
 
-                  {/* nft bid */} 
+                  {/* nft bid */}
                   {/* <TabPanel>
                     <NoItemBox>
                       <img src={NoBid} alt='' />
                       <NIDesc>No bids yet.  Be the first to place a bid</NIDesc>
                     </NoItemBox>
-                    <Scrollbars style={{ height: 431 }}>
+                    <Scrollbars style={{ height: 405 }}>
                       <OwnerOuter>
                         <OwnerLeft>
                           <div className='img-outer'>
@@ -349,13 +359,13 @@ const NFTDetail = (props) => {
                           <p>Loading</p>
                         </div>
                       </SiteLoader> :
-                      <Scrollbars style={{ height: 431 }}>
+                      <Scrollbars style={{ height: 405 }}>
                         {props.nft.editions.map((edition) => {
                           console.log('edition.ownerId.profile ', edition.ownerId)
                           return <OwnerOuter key={edition.id}>
                             <OwnerLeft>
                               <div className='img-outer'>
-                                <img src={edition.ownerId.profile ? edition.ownerId.profile: UserIcon} alt='' />
+                                <img src={edition.ownerId.profile ? edition.ownerId.profile : UserIcon} alt='' />
                               </div>
                               <div>
                                 <OwnerName>{edition.ownerId.name ? edition.ownerId.name: getCompactAddress(edition.walletAddress)}</OwnerName>
@@ -380,7 +390,7 @@ const NFTDetail = (props) => {
                             </OwnerRight>
                           </OwnerOuter>
                         })}
-                        {props.nft.editions.length !== props.nft.edition && 
+                        {props.nft.editions.length !== props.nft.edition &&
                           <OwnerOuter>
                             <OwnerLeft>
                               <div className='img-outer'>
@@ -393,9 +403,9 @@ const NFTDetail = (props) => {
                             </OwnerLeft>
                             <OwnerRight>
                               <GradientBtn onClick={() => {
-                                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                                  else confirm()
-                                }}
+                                if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                else confirm()
+                              }}
                               >Buy</GradientBtn>
                             </OwnerRight>
                           </OwnerOuter>
@@ -413,7 +423,7 @@ const NFTDetail = (props) => {
                           <p>Loading</p>
                         </div>
                       </SiteLoader> :
-                      <Scrollbars style={{ height: 431 }}>
+                      <Scrollbars style={{ height: 405 }}>
 
                         <OwnerOuter>
                           <OwnerLeft>
@@ -541,7 +551,7 @@ const NFTDetail = (props) => {
                         if (!props.authenticated.isLoggedIn) setOpenForth(true)
                         else confirm()
                       }} className='full'>
-                        BUY NOW 
+                        BUY NOW
                         {/* {Number(props.nft.edition) - Number(props.nft.nftSold)}/{props.nft.edition} */}
                       </GradientBtn>
                   : ''
@@ -732,7 +742,7 @@ const ReportDesc = styled.div`
 `;
 
 const NDTop = styled(FlexDiv)`
-  align-items:flex-start; justify-content:space-between; margin-bottom:15px;
+  align-items:flex-start; justify-content:space-between;
 `;
 
 const NDLeft = styled.div`
@@ -884,6 +894,12 @@ const CustomDropdown = styled.div`
           width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
         }
       }
+      ${Media.sm} {
+        left:0px; right:auto;
+      }
+      ${Media.xs} {
+        left: calc(50% - 100px); width: 200px;
+      }
     }
   }
   &.custom-width-2{
@@ -926,6 +942,12 @@ const SiteLoader = styled(FlexDiv)`
 const NoItemBox = styled.div`
   background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
   img{margin-bottom:20px;}
+  ${Media.sm} {
+    max-width:400px;
+  }
+  ${Media.xs} {
+    max-width:300px; padding:35px 15px;
+  }
 `;
 
 const NITitle = styled.div`
@@ -934,6 +956,23 @@ const NITitle = styled.div`
 
 const NIDesc = styled.div`
   font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 20px;
+`;
+
+const PriceLine = styled(FlexDiv)`
+  justify-content:space-between; margin-bottom:15px; margin-top:7px;
+  &.ver2{margin-bottom:30px;}
+  p{font-weight: 400; font-size: 12px; line-height: 16px; color: #F6F6F6; margin:0px;
+    &.grey{color: #AEAEAE;
+      &.ver2{margin-bottom:5px;}
+    }
+  }
+  .text-right{text-align:right;}
+  .timer{ background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); padding:1px; border-radius:2px;
+    p{background-color:#1D1D1D; font-weight: 400; font-size: 12px; line-height: 16px; padding:1px 19px;}
+    &.ver2{background:none; padding:0px;
+      p{background-color:transparent; padding:0px;}
+    }
+  }
 `;
 
 const Loader = styled(FlexDiv)`
