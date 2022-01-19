@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Gs from '../theme/globalStyles';
@@ -9,19 +9,27 @@ import { Link } from 'react-router-dom';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { AiOutlineHeart, AiTwotoneHeart, } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { FiExternalLink } from 'react-icons/fi';
 import { TailSpin } from 'react-loader-spinner';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+} from 'react-share';
 import copy from 'copy-to-clipboard';
 import Media from '../theme/media-breackpoint';
 
 import UpArrow from '../assets/images/up-arrow.png';
 import CopyIcon from '../assets/images/copy.png';
-import TwitterIcon from '../assets/images/twitter.png';
-import FacebookIcon from '../assets/images/facebook.png';
+// import TwitterIcon from '../assets/images/twitter.png';
+// import FacebookIcon1 from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 import UserIcon from '../assets/images/user-img.png';
@@ -32,6 +40,7 @@ import LoaderGIF from '../assets/images/loader.gif';
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
 import { transactionLink } from '../config'
+import useOutsideClick from '../helper/outside.click'
 import { getContractInstance, getNFTTime } from '../helper/functions'
 import { actions } from '../actions'
 import { Toast } from '../helper/toastify.message'
@@ -40,6 +49,11 @@ import { Toast } from '../helper/toastify.message'
 const NFTDetail = (props) => {
 
   const { id } = useParams()
+  const shareRef = useRef()
+  const reportRef = useRef()
+
+  useOutsideClick(shareRef, () => { setIsOpen5(false) })
+  useOutsideClick(reportRef, () => { setIsOpen6(false) })
 
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen6, setIsOpen6] = useState(false);
@@ -57,9 +71,9 @@ const NFTDetail = (props) => {
   const [openFifth, setOpenFifth] = useState(false);
 
   const closeIcon = (
-    <svg fill="currentColor" viewBox="0 4 16 40" width={50} height={50}>
-      <line x1="15" y1="15" x2="25" y2="25" stroke="#767676" strokeWidth="2.6" strokeLinecap="round" strokeMiterlimitit="10"></line>
-      <line x1="25" y1="15" x2="15" y2="25" stroke="#767676" strokeWidth="2.6" strokeLinecap="round" strokeMiterlimitit="10"></line>
+    <svg fill='currentColor' viewBox='0 4 16 40' width={50} height={50}>
+      <line x1='15' y1='15' x2='25' y2='25' stroke='#767676' strokeWidth='2.6' strokeLinecap='round' strokeMiterlimitit='10'></line>
+      <line x1='25' y1='15' x2='15' y2='25' stroke='#767676' strokeWidth='2.6' strokeLinecap='round' strokeMiterlimitit='10'></line>
     </svg>
   );
 
@@ -142,9 +156,9 @@ const NFTDetail = (props) => {
     }
   }
 
-  const copyToClipboard = (address) => {
+  const copyToClipboard = (url) => {
     setCopied(true)
-    copy(address)
+    copy(url)
     setTimeout(() => {
       setCopied(false)
     }, 2000);
@@ -174,27 +188,50 @@ const NFTDetail = (props) => {
                   <PriceLine>
                     <div className='text-right'>
                       <div className='timer'>
-                        <p>00:02:10</p>
+                        {/* <p>00:02:10</p> */}
                       </div>
                     </div>
                   </PriceLine>
                 </NDLeft>
                 <NDRight>
                   <UPButton className='large'>
-                    {likeLoading ? <TailSpin color='#FFFFFF' height={20} width={20} /> :
-                      props.isLiked.isFollowed ? <AiTwotoneHeart onClick={() => likeNft()} /> : <AiOutlineHeart onClick={() => likeNft()} />
+                    {likeLoading ? <TailSpin color='#FFFFFF' height={16} width={16} /> :
+                      props.isLiked.isFollowed ? <AiFillHeart color='#DF5454' onClick={() => likeNft()} /> : <AiOutlineHeart onClick={() => likeNft()} />
                     }
                     {' '}
                     {!props.likesCount ? ' 0 ' : props.likesCount.count}
                   </UPButton>
 
-                  <CustomDropdown className='custom-width'>
+                  <CustomDropdown className='custom-width' ref={shareRef}>
                     <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen5}>
-                      <DDTitle>Share Options</DDTitle>
-                      <Link to='#' onClick={() => copyToClipboard(window.location.href)}><span><img src={CopyIcon} alt='' /></span> {copied ? 'Copied!' : 'Copy link'}</Link>
-                      <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
-                      <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                      {/* <DDTitle>Share Options</DDTitle> */}
+                      {/* <Link to='#' onClick={() => copyToClipboard(window.location.href)}><span><img src={CopyIcon} alt='' /></span> {copied ? 'Copied!':'Copy link'}</Link> */}
+
+                      <FacebookShareButton
+                        url={window.location.href}
+                        quote={'Check NFT on FAW'}
+                      // hashtag='#camperstribe'
+                      >
+                        <FacebookIcon size={36} round={true} />
+                      </FacebookShareButton>
+
+                      <TwitterShareButton
+                        url={window.location.href}
+                        title={'Check NFT on FAW'}
+                      >
+                        <TwitterIcon size={36} round={true} />
+                      </TwitterShareButton>
+
+                      <LinkedinShareButton
+                        url={window.location.href}
+                        title={'Check NFT on FAW'}
+                      >
+                        <LinkedinIcon size={36} round={true} />
+                      </LinkedinShareButton>
+
+                      {/* <Link to='#'><span><img src={FacebookIcon1} alt='' /></span>Share on Facebook</Link> */}
+                      {/* <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link> */}
                     </Collapse>
                   </CustomDropdown>
                   <CustomDropdown className='custom-width-2'>
@@ -203,7 +240,7 @@ const NFTDetail = (props) => {
                       <Link to='#'>Mark as Not for Sale</Link>
                     </Collapse>
                   </CustomDropdown>
-                  <CustomDropdown className='report-box'>
+                  <CustomDropdown className='report-box' ref={reportRef}>
                     <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen6}>
                       <p onClick={() => setOpenFirst(true)}>Report Profile</p>
@@ -325,12 +362,13 @@ const NFTDetail = (props) => {
                     {!props.history ?
                       <SiteLoader>
                         <div className='loader-inner'>
-                          <div className="loader"></div>
+                          <div className='loader'></div>
                           <p>Loading</p>
                         </div>
                       </SiteLoader> :
                       <Scrollbars style={{ height: 405 }}>
                         {props.nft.editions.map((edition) => {
+                          console.log('edition.ownerId.profile ', edition.ownerId)
                           return <OwnerOuter key={edition.id}>
                             <OwnerLeft>
                               <div className='img-outer'>
@@ -338,8 +376,8 @@ const NFTDetail = (props) => {
                               </div>
                               <div>
                                 <OwnerName>{edition.ownerId.name ? edition.ownerId.name : getCompactAddress(edition.walletAddress)}</OwnerName>
-                                <OwnerDesc>{edition.edition}/{props.nft.edition}
-                                  {edition.isOpenForSale ? 'on sale for ' + <span>${edition.price} FAW</span> + 'each ' : ' not on sale '}
+                                <OwnerDesc>{'1'}
+                                  {edition.isOpenForSale ? 'on sale for ' + <span>{edition.price} FAW</span> + 'each ' : ' not on sale '}
                                   {edition.transactionId && <Link onClick={() => window.open(transactionLink + '/' + edition.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
                                 </OwnerDesc>
                               </div>
@@ -351,6 +389,11 @@ const NFTDetail = (props) => {
                                   else confirm()
                                 }}
                               > Buy </GradientBtn>}
+                              {edition.ownerId.id === props.user.id && <GradientBtn
+                                onClick={() => {
+                                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                }}
+                              > Resale </GradientBtn>}
                             </OwnerRight>
                           </OwnerOuter>
                         })}
@@ -383,7 +426,7 @@ const NFTDetail = (props) => {
                     {!props.history ?
                       <SiteLoader>
                         <div className='loader-inner'>
-                          <div className="loader"></div>
+                          <div className='loader'></div>
                           <p>Loading</p>
                         </div>
                       </SiteLoader> :
@@ -396,7 +439,7 @@ const NFTDetail = (props) => {
                             </div>
                             <div>
                               <OwnerName>Minted by <span>{props.history.ownerId.name}</span> </OwnerName>
-                              <OwnerDesc> {getNFTTime(props.history.timeline)}</OwnerDesc>
+                              <OwnerDesc> {getNFTTime(props.history.createdAt, true)}</OwnerDesc>
                             </div>
                           </OwnerLeft>
                         </OwnerOuter>
@@ -407,7 +450,7 @@ const NFTDetail = (props) => {
                               <img src={props.history.ownerId.profile} alt='' />
                             </div>
                             <div>
-                              <OwnerName>Listed {props.nft.edition} editions for <span>{props.history.price} FAW </span> each</OwnerName>
+                              <OwnerName>Listed {props.nft.edition} editions for <span>{props.history.buyPrice} FAW </span> each</OwnerName>
                               <OwnerDesc>by <span>{props.history.ownerId.name}</span> {getNFTTime(props.history.createdAt, true)} </OwnerDesc>
                             </div>
                           </OwnerLeft>
@@ -521,7 +564,7 @@ const NFTDetail = (props) => {
                   : ''
                 }
 
-                {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>}
+                {/* {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>} */}
 
                 {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
                   props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
