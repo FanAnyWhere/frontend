@@ -24,13 +24,13 @@ const NotFound = () => {
                 <SmTitle>Something went Wrong.</SmTitle>
                 <SmDesc>That was on us. We are doing our best to fix the issue. Please Try again</SmDesc>
                 <GradientBtn onClick={() => routeChange()}>Go Back Home</GradientBtn>
-                <GradientBtn onClick={() => routeRefresh() }>Try Again</GradientBtn>
+                <GradientBtn onClick={() => routeRefresh()}>Try Again</GradientBtn>
 
                 {/* 404 page design */}
                 {/* <img src={FZF} alt='' className='mb-0' />
                 <SmTitle>Oops! Page not Found</SmTitle>
                 <SmDesc>The Page you are looking for does not exist.</SmDesc>
-                <GradientBtn>Go Back Home</GradientBtn> */}
+                <GradientBtn onClick={() => routeChange()}>Go Back Home</GradientBtn> */}
             </ErrorInner>
         </ErrorMain>
     )
@@ -41,17 +41,29 @@ const FlexDiv = styled.div`
 
 const ErrorMain = styled(FlexDiv)`
   margin-top:56px;
+  ${Media.sm} {
+    margin:56px 15px 0px;
+  }
 `;
 
 const ErrorInner = styled(FlexDiv)`
     text-align:center; margin:50px 0px;
     img{margin:0px 0px 30px;
         &.mb-0{margin-bottom:0px;}
+        ${Media.xs} {
+            width:300px;
+        }
     }
 `;
 
 const SmTitle = styled.div`
     width:100%; font-weight: normal; font-size: 48px; line-height: 72px; text-align: center; color:#fff; margin:0px 0px 12px;
+    ${Media.sm} {
+        font-size: 40px; line-height: 60px;
+    }
+    ${Media.xs} {
+        font-size: 32px; line-height: 40px;
+    }
 `;
 
 const SmDesc = styled.div`
