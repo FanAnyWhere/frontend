@@ -116,9 +116,9 @@ const EditProfile = (props) => {
     if (name) params.name = name
     if (bio) params.bio = bio
     if (email) params.email = email
-    if (website) params.portfolio = { ...params.portfolio, ['website']: { url: website } }
-    if (instagarm) params.portfolio = { ...params.portfolio, ['instagarm']: { url: instagarm } }
-    if (twitter) params.portfolio = { ...params.portfolio, ['twitter']: { url: twitter } }
+    if (website) params.portfolio = { ...params.portfolio, 'website': { url: website } }
+    if (instagarm) params.portfolio = { ...params.portfolio, 'instagarm': { url: instagarm } }
+    if (twitter) params.portfolio = { ...params.portfolio, 'twitter': { url: twitter } }
     props.updateProfile(params); // update profile
   }
 

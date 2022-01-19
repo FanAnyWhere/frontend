@@ -335,7 +335,12 @@ const NFTDetail = (props) => {
                               </div>
                             </OwnerLeft>
                             <OwnerRight>
-                                {edition.isOpenForSale && <GradientBtn> Buy </GradientBtn>}
+                                {edition.isOpenForSale && <GradientBtn
+                                  onClick={() => {
+                                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                    else confirm()
+                                  }}
+                                > Buy </GradientBtn>}
                             </OwnerRight>
                           </OwnerOuter>
                         })}
@@ -351,7 +356,11 @@ const NFTDetail = (props) => {
                               </div>
                             </OwnerLeft>
                             <OwnerRight>
-                              <GradientBtn>Buy</GradientBtn>
+                              <GradientBtn onClick={() => {
+                                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                  else confirm()
+                                }}
+                              >Buy</GradientBtn>
                             </OwnerRight>
                           </OwnerOuter>
                         }

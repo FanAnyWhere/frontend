@@ -40,9 +40,9 @@ const NFT = (props) => {
           <div className='sign-row'>
             {/* <p className='abs'>{nft.title}</p> */}
             <p className='abs'>{nft.ownerId.name}</p>
-            {/* <img src={FireIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Trending" /> */}
-            {/* <img src={TimerIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Live Auction" /> */}
-            {/* <img src={SendIcon} alt='' data-place="top" data-class="wallettooltip" data-tip="Featured" /> */}
+            {/* <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" /> */}
+            {/* <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" /> */}
+            {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
           </div>
           <h3 className='ver3 mb-0'>{nft.title}</h3>
           <p className='abs ver4'>{nft.collectionId?.name}</p>

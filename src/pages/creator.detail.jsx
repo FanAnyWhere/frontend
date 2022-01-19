@@ -198,7 +198,7 @@ function CelebrityDetails(props) {
 
                 <GradientBtn className={props.follow.isFollowed ? 'm0 white-border' : 'm0'}
                   onClick={() => followToggler(id)}>
-                  {loading ? <div class="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}
+                  {loading ? <div className="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}
                 </GradientBtn>
 
                 <CustomDropdown className='custom-width'>

@@ -129,7 +129,7 @@ const Login = (props) => {
           <ConnectDesc>Sign in with one of available wallet providers or create a new <br />
             <Link to='' className='wallet-link'>
               wallet.
-              <FiInfo data-place="bottom" data-class="wallettooltip" data-tip="A crypto wallet is an application or <br/>hardware device that allows individuals <br/> to store and retrieve digital items. <br/> <a class='t-link' href='https://www.google.com/'>Learn More.</a>" />
+              <FiInfo data-place="bottom" data-className="wallettooltip" data-tip="A crypto wallet is an application or <br/>hardware device that allows individuals <br/> to store and retrieve digital items. <br/> <a class='t-link' href='https://www.google.com/'>Learn More.</a>" />
             </Link>
           </ConnectDesc>
           <InfoBar>We do not own your private keys and cannot access your funds without your confirmation.</InfoBar>

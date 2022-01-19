@@ -393,6 +393,7 @@ function followToggler(id) {
     const response = services.get('follow/toggle/'+id);
     response.then((promise) => {
       if (promise.status === 200) {
+        dispatch(getSignleUserDetails(id));
         dispatch(getIsFollow(id));
       } else {
         // console.log("error");
