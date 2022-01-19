@@ -809,6 +809,12 @@ const NoItemOuter = styled(FlexDiv)`
 
 const NoItemBox = styled.div`
   background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
+  ${Media.sm} {
+    max-width:400px;
+  }
+  ${Media.xs} {
+    max-width:300px; padding:35px 15px;
+  }
 `;
 
 const NITitle = styled.div`

@@ -170,26 +170,33 @@ function CelebrityDetails(props) {
         </div>
       </ProfileCover>
       <ProfileRow>
-        <PRLeft>
+        <PRLeft className='desktop-profile'>
           <div className='image-outer'>
             <img src={props.user?.profile} alt='' />
           </div>
         </PRLeft>
         <PRRight>
           <PRTop>
-            <div>
-              <PTitle> {props.user?.name} </PTitle>
-              <AddressBar>
-                <p>{address}</p>
-                {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.user?.walletAddress)} />}
-                {copied && <CopyedText>Copied!</CopyedText>}
-              </AddressBar>
-            </div>
-
+            <MobileProfileOuter>
+              <PRLeft className='mobile-profile'>
+                <div className='image-outer'>
+                  <img src={props.user?.profile} alt='' />
+                  <div className='overlay'></div>
+                </div>
+              </PRLeft>
+              <div>
+                <PTitle> {props.user?.name} </PTitle>
+                <AddressBar>
+                  <p>{address}</p>
+                  {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.user?.walletAddress)} />}
+                  {copied && <CopyedText>Copied!</CopyedText>}
+                </AddressBar>
+              </div>
+            </MobileProfileOuter>
             {props.authenticated.isLoggedIn &&
               <div className='PTT-right'>
 
-                <GradientBtn className={props.follow.isFollowed && 'white-border'}
+                <GradientBtn className={props.follow.isFollowed ? 'm0 white-border' : 'm0'}
                   onClick={() => followToggler(id)}>
                   {loading ? <div class="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}
                 </GradientBtn>
@@ -482,21 +489,53 @@ const ProfileCover = styled.div`
       button{opacity:1;}
     }
   }
+  ${Media.md} {
+    margin:74px 20px 15px; 
+  }
 `;
 
 const ProfileRow = styled(FlexDiv)`
   justify-content:flex-start; margin:0px 20px 30px;
 `;
 
+const MobileProfileOuter = styled(FlexDiv)`
+  justify-content:flex-start;
+  ${Media.xs} {
+    align-items:flex-start; 
+  }
+`;
+
 const PRLeft = styled.div`
   margin-left:54px; margin-right:42px;
   .image-outer{width:200px; height:200px; overflow:hidden; border-radius:50%; background-color: #AEAEAE; position:relative;
+    ${Media.md} {
+      width:100px; height:100px;
+    }
+    ${Media.xs} {
+      width:50px; height:50px;
+    }
     img{width:100%; height:100%; object-fit:cover;}
     .overlay{width:100%; height:200px; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;
+      ${Media.md} {
+        height:100px;
+      }
+      ${Media.xs} {
+        height:50px;
+      }
       img{width:18px; height:18px; cursor:pointer; opacity:0;}
     }
     :hover{ background-color:#767676;
       img{opacity:1;}
+    }
+  }
+  &.desktop-profile{
+    ${Media.md} {
+      display:none;
+    }
+  }
+  &.mobile-profile{ display:none;
+    ${Media.md} {
+      display:block; margin-left:0px; margin-right:15px;
     }
   }
 `;
@@ -511,6 +550,9 @@ const AddressBar = styled(FlexDiv)`
 
 const PRRight = styled.div`
   width:calc(100% - 296px);
+  ${Media.md} {
+    width:100%;
+  }
 `;
 
 const PTitle = styled.div`
@@ -523,7 +565,17 @@ const PRTop = styled(FlexDiv)`
     font-size: 16px; line-height: 24px; color: #FFFFFF; 
     :hover{opacity:0.9;}
   }
-  .PTT-right{display:flex; align-items:flex-start;}
+  .PTT-right{display:flex; align-items:flex-start;
+    ${Media.sm} {
+      margin-top:30px;
+    }
+    button.m0{min-width:83px; height:40px;
+      &.white-border{min-width:102px;}
+    }
+  }
+  ${Media.sm} {
+    display:block;
+  }
 `;
 
 const UPButton = styled.button`
@@ -567,6 +619,9 @@ const FollowBoxRow = styled(FlexDiv)`
   ${Media.md2} {
     margin-right:0px; margin-bottom:15px; width: fit-content;
   }
+  ${Media.sm} {
+    width: auto;
+  }
 `;
 
 const FNumber = styled.div`
@@ -576,10 +631,21 @@ const FNumber = styled.div`
 const LinkBoxRow = styled(FlexDiv)`
   background: #2F2F2F; border-radius: 5px; padding:12px 12px 25px 12px; justify-content:flex-start;
   .link-box{padding:0px 33px; position:relative;
-    :after{content:''; background-color:rgb(118 118 118 / 25%); position:absolute; right:0px; top:0px; width:1px;  height:37px;}
-    :first-child{padding-left:0px;}
+    :after{content:''; background-color:rgb(118 118 118 / 25%); position:absolute; right:0px; top:0px; width:1px;  height:37px;
+      ${Media.sm} {
+        width:40px; height:1px; right:auto; left:0px; top:auto; bottom:0px;
+      }
+    }
+    :first-child{padding-left:0px;
+      ${Media.sm} {
+        padding-top:0px;
+      }
+    }
     :last-child{ padding-right:0px;
       :after{display:none;}
+      ${Media.sm} {
+        padding-bottom:0px;
+      }
     }
     a{
       font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px;line-height: 24px; color: #FFFFFF; 
@@ -587,9 +653,15 @@ const LinkBoxRow = styled(FlexDiv)`
       &.instagram-handle{background: linear-gradient(88.63deg, #FF9900 0%, #CE1E92 66.79%, #7F00FD 124.84%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
       :hover{opacity:0.8;}
     }
+    ${Media.sm} {
+      width: 100%; padding:10px 0px;
+    }
   }
   ${Media.md2} {
     width: fit-content;
+  }
+  ${Media.sm} {
+    width: auto; padding:12px;
   }
 `;
 
@@ -597,6 +669,9 @@ const ActFilterList = styled(FlexDiv)`
   a{font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; padding:0px 15px; border-bottom:2px solid #767676;
     &.active{color:#fff; border-color:#fff;}
     span{font-family: 'Roboto', sans-serif; font-weight:400; margin-left:10px;}
+  }
+  ${Media.md} {
+    flex-wrap:nowrap; overflow-x: auto; justify-content: flex-start;
   }
 `;
 
@@ -619,7 +694,17 @@ const CustomDropdown = styled.div`
   position:relative;
   &.pb-10{padding-bottom:10px;}
   label{display:flex; align-items:center; justify-content:space-between; font-family: 'Roboto', sans-serif; margin-right:11px; width: 218px; padding:7px 8px; border: 1px solid #767676; box-sizing: border-box; border-radius: 2px; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676;
-    svg{color:#fff; font-size:20px; cursor:pointer;}
+    svg{color:#fff; font-size:20px; cursor:pointer;
+      ${Media.sm} {
+        margin-left:10px;
+      }
+    }
+    ${Media.md} {
+      margin-right:0px;
+    }
+    ${Media.sm} {
+      width:auto;
+    }
   }
   &.short{
     label{width:121px;}
@@ -636,6 +721,12 @@ const CustomDropdown = styled.div`
         span{
           width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
         }
+      }
+      ${Media.sm} {
+        left:0px; right:auto;
+      }
+      ${Media.xs} {
+        left: calc(50% - 100px); width: 200px;
       }
     }
   }
@@ -662,6 +753,9 @@ const CustomSwitch = styled(FlexDiv)`
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
       :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
     }
+  }
+  ${Media.md} {
+    display:none;
   }
 `;
 
@@ -863,6 +957,7 @@ const GradientBtn = styled.button`
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  &.m0{margin:0px;}
 `;
 
 const NFTlistLeft = styled.div`
@@ -921,6 +1016,15 @@ const FormGroup = styled(FlexDiv)`
 
 const NoItemBox = styled.div`
   background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
+  ${Media.sm} {
+    max-width:400px;
+  }
+  ${Media.xs} {
+    max-width:300px; padding:35px 15px;
+  }
+  ${Media.xxs} {
+    max-width:260px;
+  }
 `;
 
 const NITitle = styled.div`
