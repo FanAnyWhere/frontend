@@ -560,7 +560,7 @@ function MyProfile(props) {
               </div>
             </SiteLoader> :
               props.NFTs.map((nft, key) => {
-                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} />
+                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} collected={tab === 'collected' ? true:false} authenticated={props.authenticated} />
               })
             }
 
