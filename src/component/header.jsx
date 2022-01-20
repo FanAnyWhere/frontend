@@ -403,6 +403,9 @@ const HeadLeft = styled.div`
   ${Media.xs} {
     img{width:130px;}
   }
+  :focus-visible{
+    outline:none;
+  }
 `;
 
 const HeadRight = styled(FlexDiv)`

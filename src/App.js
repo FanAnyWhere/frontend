@@ -22,6 +22,7 @@ const Collections = React.lazy(() => import('./pages/collections'))
 const Creators = React.lazy(() => import('./pages/creators'))
 const CelebrityDetails = React.lazy(() => import('./pages/creator.detail'))
 
+
 function App() {
 
   const Loading = () => {

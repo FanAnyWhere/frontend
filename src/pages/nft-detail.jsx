@@ -174,10 +174,13 @@ const NFTDetail = (props) => {
 
         {props.nft &&
           <EPOuter>
-            <EPLeft>
+            {/* <EPLeft>
               <div className='nft-d-outer'>
                 <img src={props.nft.image?.original} alt='' />
               </div>
+            </EPLeft> */}
+            <EPLeft>
+              <img src={props.nft.image?.original} alt='' />
             </EPLeft>
             <EPRight>
               <NDTop>
@@ -683,15 +686,40 @@ const FlexDiv = styled.div`
   display:flex; align-items: center; justify-content:center; flex-wrap:wrap;
 `;
 
-const EPOuter = styled(FlexDiv)`
-  align-items:flex-start; justify-content:flex-start; margin:140px 0px 90px;
+Gs.Container = styled(Gs.Container)`
+  height: calc(100vh - 88px); margin-top: 88px;
 `;
 
-const EPLeft = styled.div`
-  width:calc(50.5% - 50px); margin-right:50px; 
-  .nft-d-outer{width:100%; height:750px; overflow:hidden;
-    img{width:100%; height:100%; object-fit:cover; border-radius: 5px;}
-  }
+const EPOuter = styled(FlexDiv)`
+   align-items: stretch; flex-direction: column; height: 100%;
+`;
+
+const EPLeft = styled(FlexDiv)`
+    position: fixed;
+    top:88px;
+    bottom: 0px;
+    left: auto;
+    right: auto;
+    margin: 32px 0px;
+    z-index: 10;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch; 
+    width:32%;    
+    img{ 
+      border-radius: 5px;    
+      max-height: 100%;
+      position: relative;
+      position: absolute;
+      top: auto;
+      bottom: auto;
+      left: auto;
+      right: auto;
+    } 
+`;
+
+const EPRight = styled.div`
+  width:calc(100% - 53%); margin-left:auto; position: relative; height: 100%;
 `;
 
 const WhiteBorderBtn = styled.button`
@@ -707,14 +735,11 @@ const GradientBtn = styled.button`
 `;
 
 const EqualBtnList = styled(FlexDiv)`
+  position: absolute; bottom: 32px; z-index: 10; left: 0; right: 0; top: auto;
   button{
     width:calc(50% - 9px); margin-right:17px; margin-left:0px;
     :last-child{margin-right:0px;}
   }
-`;
-
-const EPRight = styled.div`
-  width:49.5%; 
 `;
 
 const CollectionName = styled.div`
