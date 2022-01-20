@@ -9,11 +9,14 @@ import Timer from '../helper/timer';
 import VerifiedIcon from '../assets/images/verified.png';
 import SendIcon from '../assets/images/send.png';
 import TimerIcon from '../assets/images/timer.png';
+import PutOnSaleModal from '../modals/putOnSale';
 
 
 const NFT = (props) => {
 
-  let { nft, filterOpen, index } = props
+  let { nft, filterOpen, authenticated } = props
+  let collected = props.collected ? true:false //check this nft card rendered in user's collected tab
+  const [isOpen, setIsOpen] = useState(false)
 
   // const [ext, setExt] = useState(nft.image.format)
   // useEffect(() => {
@@ -29,50 +32,108 @@ const NFT = (props) => {
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-  return <div className={`item ${filterOpen ? 'active' : ''}`} key={nft._id}>
-    <Link to={'/nft-detail/' + nft._id}>
-      <LiveBox>
-        <div className='img-outer ver3'>
-          <img src={nft.image.compressed} alt='' />
-          {/* <img src={NFT12} alt='' /> */}
-        </div>
-        <div className='box-content'>
-          <div className='sign-row'>
-            {/* <p className='abs'>{nft.title}</p> */}
-            <p className='abs'>{nft.ownerId.name}</p>
-            {/* <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" /> */}
-            {/* <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" /> */}
-            {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
-          </div>
-          <h3 className='ver3 mb-0'>{nft.title}</h3>
-          <p className='abs ver4'>{nft.collectionId?.name}</p>
-          <PriceLine>
-            <div>
-              <p className='grey'>Price</p>
-              <p>{nft.price} FAN</p>
-            </div>
-            <div className='text-right'>
-              <p className='grey'>{Number(props.nft.edition) - Number(props.nft.nftSold)}/{nft.edition}</p>
-              <div className='timer ver2'>
-                <p>
-                  {/* 2 days left */}
-                  {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
-                </p>
+  const renderHTML = () => {
+    if (collected) {
+      return (
+        <div className={`item ${filterOpen ? 'active' : ''}`} key={nft._id}>
+          <LiveBox>
+            <Link to={'/nft-detail/' + nft._id}>
+              <div className='img-outer ver3'>
+                <img src={nft.image.compressed} alt='' />
               </div>
+            </Link>
+            <div className='box-content'>
+              <div className='sign-row'>
+                <p className='abs'>{nft.ownerId.name}</p>
+                {nft.saleState === 'AUCTION' && 
+                  <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
+                {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
+              </div>
+              <h3 className='ver3 mb-0'>{nft.title}</h3>
+              <p className='abs ver4'>{nft.collectionId?.name}</p>
+              <PriceLine>
+                <div>
+                  <p className='grey'>Price</p>
+                  <p>{nft.price} FAN</p>
+                </div>
+                <div className='text-right'>
+                  <p className='grey'>
+                    {Number(props.nft.buyEdition)}/{nft.edition}
+                  </p>
+                  <div className='timer ver2'>
+                    <p>
+                      {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
+                    </p>
+                  </div>
+                </div>
+              </PriceLine>
+              <BidLike>
+                <ButtonLink onClick={() => setIsOpen(true)}>
+                  Put on sale
+                </ButtonLink>
+                <p><AiOutlineHeart /> {nft.likes}</p>
+              </BidLike>
             </div>
-          </PriceLine>
-          <BidLike>
-            <ButtonLink className={nft.saleState === 'SOLD' ? 'disabled' : ''}>
-              {nft.saleState === 'BUY' && 'Buy Now'}
-              {nft.saleState === 'SOLD' && 'Sold Out'}
-              {nft.saleState === 'AUCTION' && 'Place a Bid'}
-            </ButtonLink>
-            <p><AiOutlineHeart /> {'0'}</p>
-          </BidLike>
+          </LiveBox>
         </div>
-      </LiveBox>
-    </Link>
-  </div>
+      )
+    } else {
+      return (
+        <div className={`item ${filterOpen ? 'active' : ''}`} key={nft._id}>
+          <Link to={'/nft-detail/' + nft._id}>
+            <LiveBox>
+              <div className='img-outer ver3'>
+                <img src={nft.image.compressed} alt='' />
+              </div>
+              <div className='box-content'>
+                <div className='sign-row'>
+                  <p className='abs'>{nft.ownerId.name}</p>
+                  {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" />}
+                  {nft.saleState === 'AUCTION' && 
+                    <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
+                  {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
+                </div>
+                <h3 className='ver3 mb-0'>{nft.title}</h3>
+                <p className='abs ver4'>{nft.collectionId?.name}</p>
+                <PriceLine>
+                  <div>
+                    <p className='grey'>Price</p>
+                    <p>{nft.price} FAN</p>
+                  </div>
+                  <div className='text-right'>
+                    <p className='grey'>
+                      {Number(props.nft.edition) - Number(props.nft.nftSold)}/{nft.edition}
+                    </p>
+                    <div className='timer ver2'>
+                      <p>
+                        {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
+                      </p>
+                    </div>
+                  </div>
+                </PriceLine>
+
+                <BidLike>
+                  <ButtonLink className={nft.saleState === 'SOLD' ? 'disabled' : ''}>
+                    {nft.saleState === 'BUY' && 'Buy Now'}
+                    {nft.saleState === 'SOLD' && 'Sold Out'}
+                    {nft.saleState === 'AUCTION' && 'Place a Bid'}
+                  </ButtonLink> 
+                  <p><AiOutlineHeart /> {nft.likes}</p>
+                </BidLike>
+              </div>
+            </LiveBox>
+          </Link>
+        </div>
+      )
+    }
+  }
+
+  return ( 
+    <>
+      {renderHTML() }
+      {isOpen && <PutOnSaleModal close={() => setIsOpen(false)} nft={nft} isOpen={isOpen} authenticated={authenticated} />}
+    </>
+  )
 }
 
 // Common Style Div 
