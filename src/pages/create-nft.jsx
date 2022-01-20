@@ -493,10 +493,10 @@ const CreateNFT = (props) => {
 
           <CNRight>
             <BITitle className='mb-8'>Preview</BITitle>
-            <PreviewBox>
+            {/* <PreviewBox>
               <img src={DefaultImg} alt='' />
               <p>Upload item to Preview NFT</p>
-            </PreviewBox>
+            </PreviewBox> */}
             <Trending>
               <div className='item'>
                 <Link to='#'>
