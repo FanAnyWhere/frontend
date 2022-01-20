@@ -560,7 +560,7 @@ function MyProfile(props) {
               </div>
             </SiteLoader> :
               props.NFTs.map((nft, key) => {
-                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} collected={tab === 'collected' ? true:false} authenticated={props.authenticated} />
+                return nft.isActive && <NFT filterOpen={filterOpen} nft={nft} key={key} collected={tab === 'collected' ? true : false} authenticated={props.authenticated} />
               })
             }
 
@@ -821,10 +821,8 @@ const CustomDropdown = styled.div`
   }
   &.custom-width{ 
     .collapse-css-transition{width:262px; top:50px; right:0px; left:auto; padding:10px 13px; border-radius: 5px;
-      a{padding:6px 0px; display:flex; align-items:center;
-        span{
-          width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
-        }
+      button{margin:0px 4px;
+        :hover{opacity:0.9;}
       }
       ${Media.sm} {
         left:0px; right:auto;

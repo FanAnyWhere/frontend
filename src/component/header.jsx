@@ -497,7 +497,7 @@ const AfterLogin = styled(FlexDiv)`
 const AccountDropdown = styled.div`
   position:relative;
   .collapse-css-transition{
-    position:absolute; top:45px; right:0px; width:350px; transition: height 252ms cubic-bezier(0.4, 0, 0.2, 1); padding:14px 10px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;  
+    position:absolute; top:45px; right:0px; width:350px; transition: height 252ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;  
     ${Media.sm} {
       right:-50px; 
     }
@@ -506,13 +506,13 @@ const AccountDropdown = styled.div`
     }
   }
   a{
-    display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF; margin:0px;
+    display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF;
     :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
   }
 `;
 
 const UserBox = styled.div`
-  background: #393939; border-radius: 5px; padding:10px; margin-bottom:10px;
+  background: #393939; border-radius: 5px; padding:10px; margin:14px 10px 10px;
 `;
 
 const UserName = styled.div`
@@ -616,14 +616,12 @@ const MobileMenuDD = styled.div`
 const HelpDropdown = styled.div`
   position:relative; line-height:11px;
   .collapse-css-transition{
-    position:absolute; top:36px; right:0px; width:177px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:10px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
+    position:absolute; top:36px; right:0px; width:177px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
     ${Media.md} {
       height: auto; box-shadow: none; background:none; border-radius:0px; left:-90px; right:auto;
     }
   }
-  a{display:block; border-bottom:0px; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px; padding:10px 0px;
-    :last-child{padding-bottom:0px;}
-    :first-child{padding-top:0px;}
+  a{display:block; border-bottom:0px; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px; padding:10px;
     ${Media.md} {
       color: #767676;
     }
