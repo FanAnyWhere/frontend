@@ -69,6 +69,7 @@ const NFTDetail = (props) => {
   const [openThird, setOpenThird] = useState(false);
   const [openForth, setOpenForth] = useState(false);
   const [openFifth, setOpenFifth] = useState(false);
+  const [openSix, setOpenSix] = useState(false);
 
   const closeIcon = (
     <svg fill='currentColor' viewBox='0 4 16 40' width={50} height={50}>
@@ -166,7 +167,7 @@ const NFTDetail = (props) => {
 
   return (
     <>
-      <Gs.Container>
+      <Gs.Container className='ver2'>
 
         {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)} />}
 
@@ -643,7 +644,29 @@ const NFTDetail = (props) => {
                 </Modal>
                 {/* <WhiteBorderBtn className='full'>Remind me when Available</WhiteBorderBtn> */}
                 {/* <GradientBtn>Edit Item</GradientBtn>
-                <WhiteBorderBtn>List item for Sale</WhiteBorderBtn> */}
+                <WhiteBorderBtn onClick={() => setOpenSix(true)}>List item for Sale</WhiteBorderBtn> */}
+                <Modal open={openSix} onClose={() => setOpenSix(false)} center closeIcon={closeIcon} classNames={{
+                  overlay: 'customOverlay',
+                  modal: 'customModal',
+                }}>
+                  <ReportTitle>List Item For sale</ReportTitle>
+                  <FormBox>
+                    <LabelRow>
+                      <label>Price</label>
+                    </LabelRow>
+                    <InputOuter>
+                      <input type='text' placeholder='Enter Price for one Item' />
+                      <InputLabel>FAW</InputLabel>
+                    </InputOuter>
+                    <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo>
+                  </FormBox>
+                  <MessageOuter>
+                    <div className='button-list'>
+                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                      <GradientBtn>Confirm</GradientBtn>
+                    </div>
+                  </MessageOuter>
+                </Modal>
                 {/* <GradientBtn onClick={() => setOpenThird(true)}>Reject Bid</GradientBtn>
                 <WhiteBorderBtn onClick={() => setOpenSecond(true)}>Accept Bid for 000 FAW</WhiteBorderBtn> */}
                 <Modal open={openThird} onClose={() => setOpenThird(false)} center closeIcon={closeIcon} classNames={{
@@ -684,10 +707,6 @@ const NFTDetail = (props) => {
 // Common Style Div 
 const FlexDiv = styled.div`
   display:flex; align-items: center; justify-content:center; flex-wrap:wrap;
-`;
-
-Gs.Container = styled(Gs.Container)`
-  height: calc(100vh - 88px); margin-top: 88px;
 `;
 
 const EPOuter = styled(FlexDiv)`
@@ -1005,6 +1024,38 @@ const PriceLine = styled(FlexDiv)`
       p{background-color:transparent; padding:0px;}
     }
   }
+`;
+
+const FormBox = styled.div`
+  margin-bottom:25px;
+  label{display:block; font-weight: bold; font-size: 12px; line-height: 16px; color: #FFFFFF;  font-family: 'Roboto', sans-serif; margin:0px 0px 8px;}
+  input, select{border: 1px solid #767676; box-sizing: border-box; border-radius: 2px; padding:8px; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; width:100%; background-color:transparent; -webkit-appearance: none;
+    :focus{outline:none;}
+  }
+  textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:124px; background-color:#1d1d1d; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676; font-family: 'Roboto', sans-serif; padding:8px;
+    :focus{outline:none;}
+  }
+  &.custom-width{max-width:425px; width:100%;}
+  &.w50{width:calc(50% - 20px); }
+`;
+
+const InputOuter = styled.div`
+  position:relative;
+`;
+
+const InputLabel = styled.div`
+  position:absolute; right:15px; top:10px; font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; 
+  color: #FFFFFF;
+`;
+
+const LabelRow = styled(FlexDiv)`
+  justify-content:space-between; 
+  p{font-weight: normal; font-size: 12px; line-height: 16px; color: #AEAEAE; font-family: 'Roboto', sans-serif; margin:0px;}
+`;
+
+const GreyTextInfo = styled.div`
+  font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:8px 0px 0px;
+  span{color:#fff;}
 `;
 
 const Loader = styled(FlexDiv)`
