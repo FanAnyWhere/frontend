@@ -10,7 +10,6 @@ import Logo from '../../public/images/logo.png'
 const Footer = () => {
 
     const location = useLocation()
-    console.log(location.pathname.includes('nft-detail'))
 
     return (<>
         {!location.pathname.includes('nft-detail') &&
