@@ -84,7 +84,6 @@ const NFTDetail = (props) => {
   const [openConfirm, setOpenConfirm] = useState(false)
   const [txtStatus, setTxnStatus] = useState(false)
   const [likeLoading, setLikeLoading] = useState(false)
-  const [copied, setCopied] = useState(false)
   const escrowContractInstance = getContractInstance(true)
 
   useEffect(() => {
@@ -111,30 +110,28 @@ const NFTDetail = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const buyNFT = async () => {
-    setOpenConfirm(false) // close the confirm pop up
-    let val = props.nft.price.toString()
-    setTxnStatus('initiate') // first step for transaction 
-    let currentEdition = Number(props.nft.nftSold) + 1
-    await escrowContractInstance.methods['buyNow'](props.nft.nonce, currentEdition, 0)
-      .send({ from: props.authenticated.accounts[0], value: web3.utils.toWei(val) })
-      .on('transactionHash', (hash) => {
-        setTxnStatus('progress') // second step for transaction 
-      })
-      .on('receipt', (receipt) => {
-        setTimeout(() => {
-          // refresh the state
-          props.getNFT(id)
-          setTxnStatus('complete') // third step for transaction 
-        }, 7000);
-      })
-      .on('error', (error) => {
-        setTxnStatus('error') // four step for transaction 
-      });
-  }
-
-  const confirm = () => {
-    setOpenConfirm(true)
+  const buyNFT = async (nonce, editionNo, price) => {
+    if (props.nft.ownerId === props.user.id) Toast.error('Owner can not buy edition.')
+    else {
+      setOpenConfirm(false) // close the confirm pop up
+      let val = price.toString()
+      setTxnStatus('initiate') // first step for transaction 
+      await escrowContractInstance.methods['buyNow'](nonce, editionNo, 0)
+        .send({ from: props.authenticated.accounts[0], value: web3.utils.toWei(val) })
+        .on('transactionHash', (hash) => {
+          setTxnStatus('progress') // second step for transaction 
+        })
+        .on('receipt', (receipt) => {
+          setTimeout(() => {
+            // refresh the state
+            props.getNFT(id)
+            setTxnStatus('complete') // third step for transaction 
+          }, 7000);
+        })
+        .on('error', (error) => {
+          setTxnStatus('error') // four step for transaction 
+        });
+    }
   }
 
   const Loading = () => {
@@ -160,13 +157,6 @@ const NFTDetail = (props) => {
     }
   }
 
-  const copyToClipboard = (url) => {
-    setCopied(true)
-    copy(url)
-    setTimeout(() => {
-      setCopied(false)
-    }, 2000);
-  }
 
   return (
     <>
@@ -474,7 +464,7 @@ const NFTDetail = (props) => {
                               {props.nft.ownerId.id !== props.user.id && props.nft.auctionStartDate < new Date().getTime() / 1000 &&
                                 <GradientBtn onClick={() => {
                                   if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                                  else confirm()
+                                  else buyNFT(props.nft.nonce, Number(props.nft.nftSold + 1), props.nft.price)
                                 }}
                                 >Buy</GradientBtn>}
                             </OwnerRight>
@@ -498,7 +488,7 @@ const NFTDetail = (props) => {
                               {edition.isOpenForSale && edition.ownerId.id !== props.user.id && <GradientBtn
                                 onClick={() => {
                                   if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                                  else confirm()
+                                  else buyNFT(edition.nonce, edition.edition, edition.saleType.price)
                                 }}
                               > Buy </GradientBtn>}
                             </OwnerRight>
