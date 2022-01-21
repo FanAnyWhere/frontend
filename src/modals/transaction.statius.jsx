@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { Modal } from 'react-responsive-modal'
 import { IoMdCloseCircle } from 'react-icons/io';
 import { HiQuestionMarkCircle, HiCheckCircle } from 'react-icons/hi';
+import LoaderGIF from '../assets/images/loader.gif';
 
 
 const TransactionStatus = (props) => {
@@ -24,7 +25,11 @@ const TransactionStatus = (props) => {
         modal: 'customModal',
       }}>
 
-      <ReportTitle>Transaction Status</ReportTitle>
+      {/* <ReportTitle>Transaction Status</ReportTitle> */}
+      <ReportTitle>List For sale</ReportTitle>
+      <Loader>
+        <img src={LoaderGIF} alt='' />
+      </Loader>
       <ReportDesc>
         {props.status === 'initiate' && 'Transaction please confirm transaction'}
         {/* <HiQuestionMarkCircle className='yellow' /> */}
@@ -34,7 +39,7 @@ const TransactionStatus = (props) => {
         {props.status === 'error' && 'Transaction is failed'}
         {/* <IoMdCloseCircle className='red' /> */}
       </ReportDesc>
-
+      <ReportGreytext>This shouldn’t take long. </ReportGreytext>
       <MessageOuter>
         {props.status === 'complete' &&
           <div className='button-list'>
@@ -57,20 +62,27 @@ const FlexDiv = styled.div`
   display:flex; align-items: center; justify-content:center; flex-wrap:wrap;
 `;
 
+const Loader = styled(FlexDiv)`
+  width:48px; height:48px; margin:0 auto 16px;
+`;
+
 const ReportTitle = styled(FlexDiv)`
   justify-content:flex-start; font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 35px;
   img{margin-right:18px;}
 `;
 
 const ReportDesc = styled(FlexDiv)`
-  justify-content:flex-start;
-  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 16px;
+  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; text-align:center;
   b{font-weight:500;}
   svg{margin-left:5px; font-size:20px;
     &.red{color:#DF5454;}
     &.yellow{color:#F99807;}
     &.green{color:#10C061;}
   }
+`;
+
+const ReportGreytext = styled(FlexDiv)`
+  font-family: 'Roboto', sans-serif; font-size: 12px; line-height: 24px; color: #C4C4C4; margin:0px 0px 10px; text-align:center;
 `;
 
 const MessageOuter = styled.div`
