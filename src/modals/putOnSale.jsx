@@ -59,7 +59,7 @@ const PutOnSale = (props) => {
         )
         .send({ from: authenticated.accounts[0] })
             .on('transactionHash', (hash) => {
-                console.log('transactionHash ', hash)
+                // console.log('transactionHash ', hash)
             })
             .on('receipt', (receipt) => {
                 setTimeout(() => {
@@ -70,7 +70,6 @@ const PutOnSale = (props) => {
             })
             .on('error', (error) => {
               setLoading(false)  // hide loading..
-                console.log('error ? ', error)
                 props.onClose(false) // close model 
                 Toast.error(error.toString())
             });
@@ -102,7 +101,7 @@ const PutOnSale = (props) => {
                     }, 6000);
                 })
                 .on('error', (error) => {
-                    console.log('error ? ', error)
+
                     setLoading(false) // four step for transaction 
                     Toast.error('Transaction failed.')
                     props.onClose(false) // close model
