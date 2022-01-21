@@ -212,6 +212,8 @@ const NFTDetail = (props) => {
                     <Collapse onInit={onInit} isOpen={isOpen5}>
                       {/* <DDTitle>Share Options</DDTitle> */}
                       {/* <Link to='#' onClick={() => copyToClipboard(window.location.href)}><span><img src={CopyIcon} alt='' /></span> {copied ? 'Copied!':'Copy link'}</Link> */}
+                      {/* <Link to='#'><span><img src={FacebookIcon1} alt='' /></span>Share on Facebook</Link> */}
+                      {/* <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link> */}
 
                       <FacebookShareButton
                         url={window.location.href}
@@ -234,17 +236,16 @@ const NFTDetail = (props) => {
                       >
                         <LinkedinIcon size={36} round={true} />
                       </LinkedinShareButton>
-
-                      {/* <Link to='#'><span><img src={FacebookIcon1} alt='' /></span>Share on Facebook</Link> */}
-                      {/* <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link> */}
                     </Collapse>
                   </CustomDropdown>
+
                   <CustomDropdown className='custom-width-2'>
                     <Collapse onInit={onInit} isOpen={isOpen7}>
                       <Link to='#'>Edit</Link>
                       <Link to='#'>Mark as Not for Sale</Link>
                     </Collapse>
                   </CustomDropdown>
+                  
                   <CustomDropdown className='report-box' ref={reportRef}>
                     <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen6}>
@@ -448,112 +449,28 @@ const NFTDetail = (props) => {
                       </Scrollbars>
                     }
 
-                    {/* <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
-                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
-                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Transferred 1 editon to</span> CryptoID</OwnerName>
-                            <OwnerDesc>by <span>CryptoID</span> 00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Bid </span> 0.000 FAW</OwnerName>
-                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Unlisted by </span> Lorem Ipsum Name</OwnerName>
-                            <OwnerDesc>00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Listed for</span> 0.000 FAW</OwnerName>
-                            <OwnerDesc>by <span>Owner Name</span> 00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter>
-                      <OwnerOuter>
-                        <OwnerLeft>
-                          <div className='img-outer'>
-                            <img src={NFTdImg} alt='' />
-                          </div>
-                          <div>
-                            <OwnerName><span>Minted by</span> Lorem Ipsum Name</OwnerName>
-                            <OwnerDesc>00 hours ago</OwnerDesc>
-                          </div>
-                        </OwnerLeft>
-                      </OwnerOuter> */}
-
                   </TabPanel>
 
                 </Tabs>
               </ActFilterList>
               <EqualBtnList>
+
                 {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
                 <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
                 {/* <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
 
-                {/* {props.nft.saleState === 'BUY' && props.nft?.ownerId?.id !== props.user?.id ?
-                  props.nft.auctionEndDate &&
-                    props.nft.auctionEndDate > new Date().getTime() / 1000 ?
-                    <GradientBtn className='full'> Buy will start soon </GradientBtn>
-                    : props.nft.nftSold === props.nft.edition ?
-                      <GradientBtn className='full'> Sold </GradientBtn>
-                      :
-                      <GradientBtn onClick={() => {
-                        if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                        else confirm()
-                      }} className='full'>
-                        BUY NOW
-                      </GradientBtn>
-                  : ''
-                } */}
-
+                {props.nft.saleState === 'BUY' && props.nft?.ownerId?.id !== props.user?.id && props.nft.nftSold === props.nft.edition 
+                 && props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 
+                  ? <GradientBtn className='full'> Auction will start soon </GradientBtn>
+                  : props.nft.edition !== props.nft.nftSold && <GradientBtn onClick={() => {
+                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                    else confirm()
+                  }} className='full'>
+                    BUY NOW
+                  </GradientBtn>
+                }
                 {/* {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>} */}
-
                 {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
                   props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
                     <GradientBtn className='full'> Auction will start soon </GradientBtn>

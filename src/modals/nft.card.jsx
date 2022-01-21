@@ -58,7 +58,7 @@ const NFT = (props) => {
                 </div>
                 <div className='text-right'>
                   <p className='grey'>
-                    {Number(props.nft.buyEdition)}/{nft.edition}
+                    {Number(nft.buyEdition)}/{nft.edition}
                   </p>
                   <div className='timer ver2'>
                     <p>
@@ -102,7 +102,7 @@ const NFT = (props) => {
                   </div>
                   <div className='text-right'>
                     <p className='grey'>
-                      {Number(props.nft.edition) - Number(props.nft.nftSold)}/{nft.edition}
+                      {Number(nft.edition) - Number(nft.nftSold)}/{nft.edition}
                     </p>
                     <div className='timer ver2'>
                       <p>
