@@ -106,6 +106,14 @@ const Landing = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.LiveAuctionNFTs]) // fetch the Live Auctions NFTs
 
+  const getCompactAddress = (address) => {
+    let compactAddress = address
+      ? address.substring(0, 5) +
+      '....' +
+      address.substring(address.length - 5, address.length)
+      : '00000000000'
+    return compactAddress
+  }
 
   const renderRow = (creators) => {
     const portions = creators.chunk(3);
@@ -120,7 +128,7 @@ const Landing = (props) => {
                   <TC2><img src={creator.profile} alt='' /></TC2>
                   <TC3>
                     <h4>{creator.name}</h4>
-                    <p>$10000.00</p>
+                    <p>{getCompactAddress(creator.walletAddress)}</p>
                   </TC3>
                 </Link>
               </TCBox>
