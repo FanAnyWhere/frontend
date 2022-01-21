@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import { FaLinkedinIn, FaTwitter, FaTelegramPlane } from 'react-icons/fa';
@@ -7,8 +8,13 @@ import Media from '../theme/media-breackpoint';
 import Logo from '../../public/images/logo.png'
 
 const Footer = () => {
-    return (
-        <FooterSection>
+
+    const location = useLocation()
+    console.log(location.pathname.includes('nft-detail'))
+
+    return (<>
+        {!location.pathname.includes('nft-detail') &&
+            <FooterSection>
             <FooterTop>
                 <img src={Logo} alt='' />
                 <FooterLinks>
@@ -27,8 +33,8 @@ const Footer = () => {
                     <Link to='/' className='tg'><FaTelegramPlane /></Link>
                 </SocialLinks>
             </FooterBottom>
-        </FooterSection>
-    )
+        </FooterSection>}
+    </>)
 }
 
 const FlexDiv = styled.div`
