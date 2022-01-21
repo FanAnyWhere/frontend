@@ -16,14 +16,22 @@ import { Modal } from 'react-responsive-modal';
 import dateFormat from 'dateformat';
 import copy from 'copy-to-clipboard';
 import Media from '../theme/media-breackpoint';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+} from 'react-share';
 
 import UpArrow from '../assets/images/up-arrow.png';
 import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import EditIcon from '../assets/images/edit-icon.png';
-import CopyIcon from '../assets/images/copy.png';
-import TwitterIcon from '../assets/images/twitter.png';
-import FacebookIcon from '../assets/images/facebook.png';
+// import CopyIcon from '../assets/images/copy.png';
+// import TwitterIcon from '../assets/images/twitter.png';
+// import FacebookIcon from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 import UserIcon from '../assets/images/user-img.png';
@@ -32,6 +40,7 @@ import ListIcon from '../assets/images/list.png';
 
 import { actions } from '../actions'
 import LoaderGIF from '../assets/images/loader.gif'
+import useOutsideClick from '../helper/outside.click'
 import { compressImage } from '../helper/functions'
 import { Toast } from '../helper/toastify.message'
 import NFT from '../modals/nft.card'
@@ -40,6 +49,8 @@ import NFT from '../modals/nft.card'
 function CelebrityDetails(props) {
 
   const { id } = useParams()
+  const shareRef = useRef()
+  const reportRef = useRef()
 
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -75,6 +86,9 @@ function CelebrityDetails(props) {
   const [confyView, setConfyView] = useState(false)
   const [copied, setCopied] = useState(false)
   const [tab, setTab] = useState('created')
+
+  useOutsideClick(shareRef, () => { setIsOpen5(false) })
+  useOutsideClick(reportRef, () => { setIsOpen6(false) })
 
   useEffect(() => {
     // if (!props.NFTs) props.getUserNFTs(id)
@@ -201,16 +215,35 @@ function CelebrityDetails(props) {
                   {loading ? <div className="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}
                 </GradientBtn>
 
-                <CustomDropdown className='custom-width'>
+                <CustomDropdown className='custom-width' ref={shareRef}>
                   <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                   <Collapse onInit={onInit} isOpen={isOpen5}>
+
+                      <FacebookShareButton
+                        url={window.location.href}
+                        quote={'Check Celebrity Profile on FAW'} >
+                        <FacebookIcon size={36} round={true} />
+                      </FacebookShareButton>
+
+                      <TwitterShareButton
+                        url={window.location.href}
+                        title={'Check Celebrity Profile on FAW'}>
+                        <TwitterIcon size={36} round={true} />
+                      </TwitterShareButton>
+
+                      <LinkedinShareButton
+                        url={window.location.href}
+                        title={'Check Celebrity Profile on FAW'}>
+                        <LinkedinIcon size={36} round={true} />
+                      </LinkedinShareButton>
+{/*                     
                     <DDTitle>Share Options</DDTitle>
                     <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
                     <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
-                    <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                    <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link> */}
                   </Collapse>
                 </CustomDropdown>
-                <CustomDropdown className='report-box'>
+                <CustomDropdown className='report-box' ref={reportRef}>
                   <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                   <Collapse onInit={onInit} isOpen={isOpen6}>
                     <p onClick={() => setOpenFirst(true)}>Report Profile</p>
