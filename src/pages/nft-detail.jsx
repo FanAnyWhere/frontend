@@ -58,10 +58,12 @@ const NFTDetail = (props) => {
   const [isOpen5, setIsOpen5] = useState(false);
   const [isOpen6, setIsOpen6] = useState(false);
   const [isOpen7, setIsOpen7] = useState(false);
+  const [isOpen15, setIsOpen15] = useState(false);
   const onInit = ({ state, style, node }) => {
     setIsOpen5(false);
     setIsOpen6(false);
     setIsOpen7(false);
+    setIsOpen15(false);
   };
 
   const [openFirst, setOpenFirst] = useState(false);
@@ -176,15 +178,7 @@ const NFTDetail = (props) => {
 
         {props.nft &&
           <EPOuter>
-            {/* <EPLeft>
-              <div className='nft-d-outer'>
-                <img src={props.nft.image?.original} alt='' />
-              </div>
-            </EPLeft> */}
-            <EPLeft>
-              <img src={props.nft.image?.original} alt='' />
-            </EPLeft>
-            <EPRight>
+            <NDTopMobileBlock>
               <NDTop>
                 <NDLeft>
                   <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
@@ -195,6 +189,97 @@ const NFTDetail = (props) => {
                       <div className='timer'>
                         {/* <p>00:02:10</p> */}
                       </div>
+                    </div>
+                  </PriceLine>
+                </NDLeft>
+                <NDRight>
+                  <UPButton className='large'>
+                    {likeLoading ? <TailSpin color='#FFFFFF' height={16} width={16} /> :
+                      props.isLiked.isFollowed ? <AiFillHeart color='#DF5454' onClick={() => likeNft()} /> : <AiOutlineHeart onClick={() => likeNft()} />
+                    }
+                    {' '}
+                    {!props.likesCount ? ' 0 ' : props.likesCount.count}
+                  </UPButton>
+
+                  <CustomDropdown className='custom-width' ref={shareRef}>
+                    <UPButton onClick={() => setIsOpen15(state => !state)}><img src={UpArrow} alt='' /></UPButton>
+                    <Collapse onInit={onInit} isOpen={isOpen15}>
+                      {/* <DDTitle>Share Options</DDTitle> */}
+                      {/* <Link to='#' onClick={() => copyToClipboard(window.location.href)}><span><img src={CopyIcon} alt='' /></span> {copied ? 'Copied!':'Copy link'}</Link> */}
+                      {/* <Link to='#'><span><img src={FacebookIcon1} alt='' /></span>Share on Facebook</Link> */}
+                      {/* <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link> */}
+
+                      <FacebookShareButton
+                        url={window.location.href}
+                        quote={'Check NFT on FAW'}
+                      // hashtag='#camperstribe'
+                      >
+                        <FacebookIcon size={36} round={true} />
+                      </FacebookShareButton>
+
+                      <TwitterShareButton
+                        url={window.location.href}
+                        title={'Check NFT on FAW'}
+                      >
+                        <TwitterIcon size={36} round={true} />
+                      </TwitterShareButton>
+
+                      <LinkedinShareButton
+                        url={window.location.href}
+                        title={'Check NFT on FAW'}
+                      >
+                        <LinkedinIcon size={36} round={true} />
+                      </LinkedinShareButton>
+                    </Collapse>
+                  </CustomDropdown>
+
+                  {/* <CustomDropdown className='custom-width-2'>
+                    <Collapse onInit={onInit} isOpen={isOpen7}>
+                      <Link to='#'>Edit</Link>
+                      <Link to='#'>Mark as Not for Sale</Link>
+                    </Collapse>
+                  </CustomDropdown> */}
+
+                  <CustomDropdown className='report-box' ref={reportRef}>
+                    <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                    <Collapse onInit={onInit} isOpen={isOpen6}>
+                      <p onClick={() => setOpenFirst(true)}>Report Profile</p>
+                    </Collapse>
+
+                    <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
+                      overlay: 'customOverlay',
+                      modal: 'customModal',
+                    }}>
+                      <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
+                      <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
+                      <MessageOuter>
+                        <label>Message</label>
+                        <textarea>Gives us some details</textarea>
+                        <p>Please provide specific and clear message</p>
+                        <div className='button-list'>
+                          <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                          <GradientBtn>Report</GradientBtn>
+                        </div>
+                      </MessageOuter>
+                    </Modal>
+                  </CustomDropdown>
+                </NDRight>
+              </NDTop>
+            </NDTopMobileBlock>
+            <EPLeft>
+              <img src={props.nft.image?.original} alt='' />
+            </EPLeft>
+            <EPRight>
+              <NDTop className='desktop-block'>
+                <NDLeft>
+                  <CollectionName>{props.nft.collectionId ? props.nft.collectionId.name : 'Collection Name'}</CollectionName>
+                  <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}
+                    {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
+                  <PriceLine>
+                    <div className='text-right'>
+                      {/* <div className='timer'>
+                        <p>00:02:10</p>
+                      </div> */}
                     </div>
                   </PriceLine>
                 </NDLeft>
@@ -245,7 +330,7 @@ const NFTDetail = (props) => {
                       <Link to='#'>Mark as Not for Sale</Link>
                     </Collapse>
                   </CustomDropdown> */}
-                  
+
                   <CustomDropdown className='report-box' ref={reportRef}>
                     <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
                     <Collapse onInit={onInit} isOpen={isOpen6}>
@@ -287,7 +372,7 @@ const NFTDetail = (props) => {
                   </div>
                 </FollowBoxRow>
                 <FollowBoxRow>
-                  <div className='follow-box'>
+                  <div className='follow-box full'>
                     <p>Created by</p>
                     <FNumber>{props.nft.ownerId.name}</FNumber>
                   </div>
@@ -303,22 +388,22 @@ const NFTDetail = (props) => {
                   </TabList>
 
                   <TabPanel> {/* nft details */}
-                    <Scrollbars style={{ height: 405 }}>
-                      <DeatTitle>Description</DeatTitle>
-                      <DeatDesc>
-                        {props.nft.description}
-                      </DeatDesc>
-                      <DeatTitle>Category</DeatTitle>
-                      <DeatDesc>
-                        {props.nft.category.map((category, index) => {
-                          return category.isActive && category.categoryName.en + (index !== props.nft.category.length - 1 ? ', ' : '')
-                        })}
-                      </DeatDesc>
-                      <DeatTitle>External Link</DeatTitle>
-                      <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
-                      <DeatTitle>Royalty</DeatTitle>
-                      <DeatDesc>00%</DeatDesc>
-                    </Scrollbars>
+                    {/* <Scrollbars style={{ height: 405 }}> */}
+                    <DeatTitle>Description</DeatTitle>
+                    <DeatDesc>
+                      {props.nft.description}
+                    </DeatDesc>
+                    <DeatTitle>Category</DeatTitle>
+                    <DeatDesc>
+                      {props.nft.category.map((category, index) => {
+                        return category.isActive && category.categoryName.en + (index !== props.nft.category.length - 1 ? ', ' : '')
+                      })}
+                    </DeatDesc>
+                    <DeatTitle>External Link</DeatTitle>
+                    <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
+                    <DeatTitle>Royalty</DeatTitle>
+                    <DeatDesc>00%</DeatDesc>
+                    {/* </Scrollbars> */}
                   </TabPanel>
 
                   {/* nft bid */}
@@ -372,7 +457,8 @@ const NFTDetail = (props) => {
                           <p>Loading</p>
                         </div>
                       </SiteLoader> :
-                      <Scrollbars style={{ height: 405 }}>
+                      // <Scrollbars style={{ height: 405 }}>
+                      <div>
                         {props.nft.editions.length !== props.nft.edition &&
                           <OwnerOuter>
                             <OwnerLeft>
@@ -390,7 +476,7 @@ const NFTDetail = (props) => {
                                   if (!props.authenticated.isLoggedIn) setOpenForth(true)
                                   else confirm()
                                 }}
-                                >Buy</GradientBtn>} 
+                                >Buy</GradientBtn>}
                             </OwnerRight>
                           </OwnerOuter>
                         }
@@ -418,7 +504,8 @@ const NFTDetail = (props) => {
                             </OwnerRight>
                           </OwnerOuter>
                         })}
-                      </Scrollbars>
+                        {/* </Scrollbars> */}
+                      </div>
                     }
                   </TabPanel>
 
@@ -431,8 +518,8 @@ const NFTDetail = (props) => {
                           <p>Loading</p>
                         </div>
                       </SiteLoader> :
-                      <Scrollbars style={{ height: 405 }}>
-
+                      // <Scrollbars style={{ height: 405 }}>
+                      <div>
                         {props.history && props.history.map((history) => {
                           return <OwnerOuter key={history.id}>
                             <OwnerLeft>
@@ -447,7 +534,8 @@ const NFTDetail = (props) => {
                             </OwnerLeft>
                           </OwnerOuter>
                         })}
-                      </Scrollbars>
+                        {/* </Scrollbars> */}
+                      </div>
                     }
 
                   </TabPanel>
@@ -598,6 +686,9 @@ const FlexDiv = styled.div`
 
 const EPOuter = styled(FlexDiv)`
    align-items: stretch; flex-direction: column; height: 100%;
+   ${Media.md} {
+    display:block; height:auto;
+  }
 `;
 
 const EPLeft = styled(FlexDiv)`
@@ -606,10 +697,10 @@ const EPLeft = styled(FlexDiv)`
     bottom: 0px;
     left: auto;
     right: auto;
-    margin: 32px 0px;
+    margin:0px 0px 30px;
     z-index: 10;
     max-width: 100%;
-    flex-direction: column;
+    // flex-direction: column;
     align-items: stretch; 
     width:32%;     
     img{ 
@@ -621,12 +712,33 @@ const EPLeft = styled(FlexDiv)`
       bottom: auto;
       left: auto;
       right: auto;
-      // width:100%; height:100%; object-fit:cover;
+      width:100%; height:100%; object-fit:cover;
+      ${Media.md} {
+        position:initial; height:auto;
+      }
     } 
+    ${Media.xxl} {
+      width:37%;
+    }
+    ${Media.xl} {
+      width:40%;
+    }
+    ${Media.md} {
+      position:initial; width:100%; margin:0px 0px 10px; 
+    }
 `;
 
 const EPRight = styled.div`
   width:calc(100% - 53%); margin-left:auto; position: relative; height: 100%;
+  ${Media.lg} {
+    width:calc(100% - 50%);
+  }
+  ${Media.md2} {
+    width:calc(100% - 53%);
+  }
+  ${Media.md} {
+    width:100%; height:auto;
+  }
 `;
 
 const WhiteBorderBtn = styled.button`
@@ -663,6 +775,15 @@ const UPButton = styled.button`
  :hover{opacity:0.8;}
  &.large{width:75px; border-radius:20px; font-size:16px; line-height:24px; font-family: 'Roboto', sans-serif;
     svg{font-size:22px; line-height:24px;}
+    ${Media.md2} {
+      margin-left:0px;
+    }
+    ${Media.md} {
+      margin-left:10px;
+    }
+    ${Media.sm} {
+      margin-left:0px;
+    }
   }
 `;
 
@@ -682,13 +803,47 @@ const ReportDesc = styled.div`
 
 const NDTop = styled(FlexDiv)`
   align-items:flex-start; justify-content:space-between;
+  &.desktop-block{
+    ${Media.md} {
+      display:none;
+    }
+  }
+  ${Media.sm} {
+    display:block;
+  }
+`;
+
+const NDTopMobileBlock = styled.div`
+  display:none;
+  ${Media.md} {
+    display:block;
+  }
 `;
 
 const NDLeft = styled.div`
   width:65%;
+  ${Media.md2} {
+    width:100%;
+  }
+  ${Media.md} {
+    width:65%;
+  }
+  ${Media.sm} {
+    width:100%;
+  }
 `;
 
-const NDRight = styled(FlexDiv)``;
+const NDRight = styled(FlexDiv)`
+  ${Media.md2} {
+    justify-content:flex-start; margin-bottom:20px;
+  }
+  ${Media.md} {
+    justify-content:center; margin-bottom:0px;
+  }
+  ${Media.sm} {
+    justify-content:flex-start; margin-bottom:20px;
+  }
+`;
 
 const FNumber = styled.div`
   font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; text-transform:capitalize;
@@ -717,6 +872,7 @@ const FollowBoxRow = styled(FlexDiv)`
     :last-child{
       :after{display:none;}
     }
+    &.full{width:100%;}
   }
   :last-child{margin-right:0px;}
   // &.bigger{width:calc(51% - 4px);}
@@ -726,7 +882,11 @@ const FollowBoxRow = styled(FlexDiv)`
 const ActFilterList = styled(FlexDiv)`
   justify-content:flex-start; margin-bottom:20px;
   .react-tabs{width:100%;}
-  .react-tabs__tab-list{border:none; margin:0px 0px 40px;}
+  .react-tabs__tab-list{border:none; margin:0px 0px 40px;
+    ${Media.sm} {
+      display:flex; flex-wrap:nowrap; overflow-x:auto;
+    }
+  }
   .react-tabs__tab{font-weight: bold; background:none; border-radius:0px; font-size: 16px; line-height: 24px; color: #767676; padding:1px 18px; border:none; border-bottom:2px solid #767676;
     &.react-tabs__tab--selected{color:#fff; border-color:#fff;}
     :focus{box-shadow:none;
@@ -740,6 +900,7 @@ const OwnerOuter = styled(FlexDiv)`
 `;
 
 const OwnerLeft = styled(FlexDiv)`
+  flex-wrap:nowrap;
   .img-outer{width:40px; height:40px; overflow:hidden; border-radius:50%; margin-right:25px;
     img{width:100%; height:100%; object-fit:cover;}
   }
