@@ -25,21 +25,21 @@ const TransactionStatus = (props) => {
         modal: 'customModal',
       }}>
 
-      {/* <ReportTitle>Transaction Status</ReportTitle> */}
-      <ReportTitle>List For sale</ReportTitle>
-      <Loader>
-        <img src={LoaderGIF} alt='' />
-      </Loader>
+      <ReportTitle>Transaction Status</ReportTitle>
+      {props.status !== 'complete' &&
+        <Loader>
+          <img src={LoaderGIF} alt='' />
+        </Loader> }
       <ReportDesc>
         {props.status === 'initiate' && 'Transaction please confirm transaction'}
         {/* <HiQuestionMarkCircle className='yellow' /> */}
         {props.status === 'progress' && 'Transaction is in pending'}
-        {props.status === 'complete' && 'Transaction is completed'}
+        {props.status === 'complete' && 'Transaction has been completed but may take some time to get affected on system.'}
         {/* <HiCheckCircle className='green' /> */}
         {props.status === 'error' && 'Transaction is failed'}
         {/* <IoMdCloseCircle className='red' /> */}
       </ReportDesc>
-      <ReportGreytext>This shouldn’t take long. </ReportGreytext>
+      {props.status !== 'complete' && <ReportGreytext>This shouldn’t take long. </ReportGreytext>}
       <MessageOuter>
         {props.status === 'complete' &&
           <div className='button-list'>

@@ -239,12 +239,12 @@ const NFTDetail = (props) => {
                     </Collapse>
                   </CustomDropdown>
 
-                  <CustomDropdown className='custom-width-2'>
+                  {/* <CustomDropdown className='custom-width-2'>
                     <Collapse onInit={onInit} isOpen={isOpen7}>
                       <Link to='#'>Edit</Link>
                       <Link to='#'>Mark as Not for Sale</Link>
                     </Collapse>
-                  </CustomDropdown>
+                  </CustomDropdown> */}
                   
                   <CustomDropdown className='report-box' ref={reportRef}>
                     <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
@@ -385,12 +385,12 @@ const NFTDetail = (props) => {
                               </div>
                             </OwnerLeft>
                             <OwnerRight>
-                              {props.nft.ownerId.id !== props.user.id &&
+                              {props.nft.ownerId.id !== props.user.id && props.nft.auctionStartDate < new Date().getTime() / 1000 &&
                                 <GradientBtn onClick={() => {
                                   if (!props.authenticated.isLoggedIn) setOpenForth(true)
                                   else confirm()
                                 }}
-                                >Buy</GradientBtn>}
+                                >Buy</GradientBtn>} 
                             </OwnerRight>
                           </OwnerOuter>
                         }
@@ -461,22 +461,27 @@ const NFTDetail = (props) => {
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
                 {/* <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
 
-                {props.nft.saleState === 'BUY' && props.nft?.ownerId?.id !== props.user?.id && props.nft.nftSold === props.nft.edition 
-                 && props.nft.auctionStartDate &&  props.nft.auctionStartDate > new Date().getTime() / 1000 
-                  ? <GradientBtn className='full'> NFT buy will start soon </GradientBtn>
-                  : <GradientBtn onClick={() => {
+                {/* {props.nft.saleState === 'BUY' && props.nft.ownerId.id !== props.user.id && props.nft.nftSold === props.nft.edition && props.nft.auctionStartDate
+                  && props.nft.auctionStartDate < new Date().getTime() / 1000 ?
+                    <GradientBtn onClick={() => {
                       if (!props.authenticated.isLoggedIn) setOpenForth(true)
                       else confirm()
                     }} className='full'>
                       BUY NOW
-                    </GradientBtn> }
-                {/* {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>} */}
-                {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
-                  props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
-                    <GradientBtn className='full'> Auction will start soon </GradientBtn>
-                    : <GradientBtn className='full'> Place a Bid </GradientBtn>
-                  : ''
+                    </GradientBtn>
+                  :props.nft.saleState === 'BUY' && props.nft.auctionStartDate > new Date().getTime() / 1000 &&<GradientBtn className='full'> Buy will start soon </GradientBtn>
                 }
+                {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>}
+                {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id &&
+                  props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate ?
+                  <GradientBtn className='full'> Place a Bid </GradientBtn>
+                  : props.nft.auctionEndDate < new Date().getTime() / 1000 && props.nft.saleState === 'AUCTION' && <GradientBtn className='full'> Auction is over</GradientBtn>
+                }
+                {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id &&
+                  props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate ?
+                  <GradientBtn className='full'> Place a Bid </GradientBtn>
+                  : props.nft.auctionStartDate > new Date().getTime() / 1000 && props.nft.saleState === 'AUCTION' && <GradientBtn className='full'> Bid will start soon</GradientBtn>
+                } */}
 
                 <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',

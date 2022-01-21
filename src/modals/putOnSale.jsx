@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import { Modal } from 'react-responsive-modal';
 import { TailSpin } from 'react-loader-spinner';
+import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3';
 import { Toast } from '../helper/toastify.message';
 import getContractAddresses from '../contracts/addresses';
@@ -15,11 +16,22 @@ const PutOnSale = (props) => {
 
     const [loading, setLoading] = useState(false)
     const [isApprovalForAll, setIsApprovalForAll] = useState(false)
+    const [txtStatus, setTxnStatus] = useState(false)
     const [error, setError] = useState(false)
     const [price, setPrice] = useState(null)
     const { escrowContractAddres } = getContractAddresses();
     const escrowContractInstance = getContractInstance(true)
     const nftContractContractInstance = getContractInstance(false)
+    const [editionNo, setEditionNo] = useState(0)
+
+    useEffect( () => {
+      let available = nft.buyEditions.find(obj => !obj.isOpenForSale)
+      if (!available) {
+        props.onClose(false); // close model
+      } else {
+        setEditionNo(available.edition)
+      }
+    }, [])
 
     useEffect( () => {
       
@@ -39,7 +51,7 @@ const PutOnSale = (props) => {
         </svg>
     )
 
-    const firstConfirm = async () => {
+    const onApproval = async () => {
       setLoading(true)  // show loading..
       await nftContractContractInstance.methods['setApprovalForAll'](
           escrowContractAddres, 
@@ -59,7 +71,7 @@ const PutOnSale = (props) => {
             .on('error', (error) => {
               setLoading(false)  // hide loading..
                 console.log('error ? ', error)
-                props.close() // close model 
+                props.onClose(false) // close model 
                 Toast.error(error.toString())
             });
     }
@@ -67,10 +79,9 @@ const PutOnSale = (props) => {
     const onSale = async () => {
         if (!price) setError(true)
         else {
-            setError(false)
+            setError(false) // hide error
+            setTxnStatus('initiate') // first step for transaction 
             let tokenId = nft.tokenId
-            let editionNo = nft.buyEditions[0].edition
-            setLoading(true)  // show loading..
             await escrowContractInstance.methods['placeSecondHandOrder'](
                     tokenId,
                     editionNo,
@@ -80,39 +91,45 @@ const PutOnSale = (props) => {
                 )
                 .send({ from: authenticated.accounts[0] })
                 .on('transactionHash', (hash) => {
-                    console.log('transactionHash ', hash)
+                    setTxnStatus('progress') // second step for transaction 
                 })
                 .on('receipt', (receipt) => {
                     setTimeout(() => {
-                        setPrice(null)
-                        setLoading(false) // stop loader
-                        props.close() // close model
-                        Toast.success('Edition put on sale successfully.')
-                    }, 3000);
+                      setPrice(null)
+                      props.onClose(false) // close model
+                      setTxnStatus('complete') // third step for transaction
+                      Toast.success('Edition put on sale successfully.') 
+                    }, 6000);
                 })
                 .on('error', (error) => {
                     console.log('error ? ', error)
                     setLoading(false) // four step for transaction 
-                    Toast.error(error.toString())
-                    props.close() // close model
+                    Toast.error('Transaction failed.')
+                    props.onClose(false) // close model
                 });
         }
     }
 
-    return (
-        <Modal open={isOpen} onClose={() => props.close(false)} center closeIcon={closeIcon} classNames={{
+    return <>
+        <Modal open={isOpen} onClose={() => props.onClose(false)} center closeIcon={closeIcon} classNames={{
           overlay: 'customOverlay',
           modal: 'customModal',
         }}>
           {!isApprovalForAll ? <>
-            <ReportTitle>Approve The First Time </ReportTitle>
+            <ReportTitle>First Time Authentication </ReportTitle>
             <FormBox>
-              More description
+              We would require your authorization to access your wallet.
+              Authorization is mandatory to put your item on sale.
+            </FormBox>
+            <FormBox>
+              Authorization is required for the first time sale only. 
+              {/* <Link href='#'>Learn More</Link> */}
             </FormBox>
             <MessageOuter>
               <div className='button-list'>
-              {loading ? <GradientBtn><TailSpin color='#FFFFFF' height={26} width={26} /> loading...</GradientBtn>  
-              : <GradientBtn onClick={() => firstConfirm()}>Confirm </GradientBtn>}
+                {!loading && <WhiteBorderBtn onClick={() => props.onClose(false)}>Reject</WhiteBorderBtn>}
+                {!loading && <GradientBtn onClick={() => onApproval()}>Approve</GradientBtn>}
+                {loading && <GradientBtn><TailSpin color='#FFFFFF' height={26} width={26} /></GradientBtn>}
               </div>
             </MessageOuter>
           </>
@@ -122,25 +139,31 @@ const PutOnSale = (props) => {
               <LabelRow>
                 <label>Price</label>
               </LabelRow>
+
               <InputOuter>
                 <input type='text' className={error ? 'error': ''} 
                   placeholder='Enter Price for one Item' onChange={(e) => setPrice(e.target.value)} />
                 <InputLabel>FAW</InputLabel>
               </InputOuter>
               <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo>
+              <InputOuter>
+                <input type='number' value={editionNo} disabled={true} />
+              </InputOuter>
+              <GreyTextInfo>The number of copies that can be put on sale. No gas coast to you.</GreyTextInfo>
             </FormBox>
 
             <MessageOuter>
               <div className='button-list'>
-                {/* <WhiteBorderBtn>Cancel</WhiteBorderBtn> */}
-                {loading ? <GradientBtn><TailSpin color='#FFFFFF' height={26} width={26} /> loading...</GradientBtn> 
-                : <GradientBtn onClick={() => onSale()}>Confirm</GradientBtn>}
+                <WhiteBorderBtn onClick={() => props.onClose(false)}>Cancel</WhiteBorderBtn>
+                <GradientBtn onClick={() => onSale()}>Confirm</GradientBtn>
               </div>
             </MessageOuter>
           </>
         }
       </Modal>
-    )
+
+      {txtStatus && <TransactionStatus isOpen={true} status={txtStatus} onClose={() => setTxnStatus(false)} />}
+    </>
 
 }
 
