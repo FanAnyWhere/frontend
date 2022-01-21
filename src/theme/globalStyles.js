@@ -51,6 +51,9 @@ Gs.Container = styled.div`
   margin:0 auto; width: 100%; max-width:1276px;
   &.ver2{
     height: calc(100vh - 88px); margin-top: 88px;
+    ${Media.md} {
+      height:auto;
+    }
   }
   ${Media.lg} {
     max-width:1170px;
