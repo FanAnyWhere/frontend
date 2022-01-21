@@ -113,7 +113,7 @@ const NFTDetail = (props) => {
     setOpenConfirm(false) // close the confirm pop up
     let val = props.nft.price.toString()
     setTxnStatus('initiate') // first step for transaction 
-    let currentEdition = Number(props.nft.edition) - Number(props.nft.nftSold)
+    let currentEdition = Number(props.nft.nftSold) + 1
     await escrowContractInstance.methods['buyNow'](props.nft.nonce, currentEdition, 0)
       .send({ from: props.authenticated.accounts[0], value: web3.utils.toWei(val) })
       .on('transactionHash', (hash) => {
@@ -385,11 +385,12 @@ const NFTDetail = (props) => {
                               </div>
                             </OwnerLeft>
                             <OwnerRight>
-                              <GradientBtn onClick={() => {
-                                if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                                else confirm()
-                              }}
-                              >Buy</GradientBtn>
+                              {props.nft.ownerId.id !== props.user.id &&
+                                <GradientBtn onClick={() => {
+                                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                  else confirm()
+                                }}
+                                >Buy</GradientBtn>}
                             </OwnerRight>
                           </OwnerOuter>
                         }
@@ -408,7 +409,7 @@ const NFTDetail = (props) => {
                               </div>
                             </OwnerLeft>
                             <OwnerRight>
-                              {edition.isOpenForSale && <GradientBtn
+                              {edition.isOpenForSale && edition.ownerId.id !== props.user.id && <GradientBtn
                                 onClick={() => {
                                   if (!props.authenticated.isLoggedIn) setOpenForth(true)
                                   else confirm()
@@ -461,15 +462,14 @@ const NFTDetail = (props) => {
                 {/* <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
 
                 {props.nft.saleState === 'BUY' && props.nft?.ownerId?.id !== props.user?.id && props.nft.nftSold === props.nft.edition 
-                 && props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 
-                  ? <GradientBtn className='full'> Auction will start soon </GradientBtn>
-                  : props.nft.edition !== props.nft.nftSold && <GradientBtn onClick={() => {
-                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                    else confirm()
-                  }} className='full'>
-                    BUY NOW
-                  </GradientBtn>
-                }
+                 && props.nft.auctionStartDate &&  props.nft.auctionStartDate > new Date().getTime() / 1000 
+                  ? <GradientBtn className='full'> NFT buy will start soon </GradientBtn>
+                  : <GradientBtn onClick={() => {
+                      if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                      else confirm()
+                    }} className='full'>
+                      BUY NOW
+                    </GradientBtn> }
                 {/* {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>} */}
                 {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id ?
                   props.nft.auctionEndDate && props.nft.auctionEndDate > new Date().getTime() / 1000 ?
