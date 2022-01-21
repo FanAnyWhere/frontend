@@ -216,6 +216,11 @@ function Header(props) {
                     <span><div className='user-img'></div></span>
                   </button>
                   <Collapse onInit={onInit} isOpen={isOpen10}>
+                    <MBDiv>
+                      <BarOuter className='ver2'>
+                        <Bars className='menu-active' onClick={() => setIsOpen10(state => !state)} />
+                      </BarOuter>
+                    </MBDiv>
                     <UserBox>
                       <UserName>{props.user?.name}</UserName>
                       <AddressBar><p>{address}</p>
@@ -487,9 +492,12 @@ const AfterLogin = styled(FlexDiv)`
           .user-img{background: url(${UserIconGradient}) no-repeat;}
         }
       }
+      ${Media.md} {
+        margin:0px 5px;
+      }
     }
     ${Media.md2} {
-      margin:0px 4px;
+      margin:0px 5px;
     }
   }
 `;
@@ -498,15 +506,12 @@ const AccountDropdown = styled.div`
   position:relative;
   .collapse-css-transition{
     position:absolute; top:45px; right:0px; width:350px; transition: height 252ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;  
-    ${Media.sm} {
-      right:-50px; 
-    }
-    ${Media.xs} {
-      width:320px;
+    ${Media.md} {
+      position:fixed; top:0; left:0; right:0; bottom:0; z-index:9; width:100%; background-color: #1D1D1D;
     }
   }
   a{
-    display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF;
+    display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF; margin:0px 10px;
     :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
   }
 `;
@@ -552,14 +557,11 @@ const BalanceRight = styled.div`
 const NotificationDropdown = styled.div`
   position:relative; line-height:11px;
   .collapse-css-transition{
-    position:absolute; top:46px; right:0px; width:400px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:15px 0px 0px; background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
-    ${Media.sm} {
-      right:-90px;
+    position:absolute; top:46px; right:0px; width:400px; transition: height 500ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
+    ${Media.md} {
+      position:fixed; top:0; left:0; right:0; bottom:0; z-index:9; width:100%; background-color: #1D1D1D;
     }
-    ${Media.xs} {
-      width:360px;
-    }
-    .mobile-notifibox{width:auto !important;}
+    .mobile-notifibox{width:auto !important; height: calc(100% - 42px) !important;}
   }
   .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
 `;
@@ -583,9 +585,17 @@ const MobileMenu = styled.div`
 
 const IconLine = styled(FlexDiv)``;
 
+const MBDiv = styled.div`
+  display:none;
+  ${Media.md} {
+    display:block;
+  }
+`;
+
 const BarOuter = styled(FlexDiv)`
   width:40px; height:40px; border-radius:50%; border:1px solid #767676; margin:0px 5px;
   :last-child{margin-right:0px;}
+  &.ver2{margin:15px 14px 0px auto;}
 `;
 
 const Bars = styled.div`
@@ -601,7 +611,7 @@ const MobileSearch = styled.div`
 
 const MobileMenuDD = styled.div`
   .collapse-css-transition{
-    position:absolute; top:56px; left:0; right:0px; width:100%; height:calc(100vh - 56px); transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:0px; background-color: #1D1D1D; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    position:absolute; top:56px; left:0; right:0px; width:100%; height:calc(100vh - 56px); transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1); padding:0px; background-color: #1D1D1D; 
     nav{padding-top:24px;}
   }
   .MB-search-content{
