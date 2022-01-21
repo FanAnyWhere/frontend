@@ -271,7 +271,7 @@ const NFTDetail = (props) => {
                 </NDRight>
               </NDTop>
               <DFollowRow>
-                <FollowBoxRow className='bigger'>
+                <FollowBoxRow>
                   <div className='follow-box'>
                     <p>From</p>
                     <FNumber>{props.nft.price} FAW</FNumber>
@@ -285,7 +285,7 @@ const NFTDetail = (props) => {
                     <FNumber>{Number(props.nft.edition) - Number(props.nft.nftSold)} of {props.nft.edition}</FNumber>
                   </div>
                 </FollowBoxRow>
-                <FollowBoxRow className='smaller'>
+                <FollowBoxRow>
                   <div className='follow-box'>
                     <p>Created by</p>
                     <FNumber>{props.nft.ownerId.name}</FNumber>
@@ -430,15 +430,15 @@ const NFTDetail = (props) => {
                         </div>
                       </SiteLoader> :
                       <Scrollbars style={{ height: 405 }}>
-                        
+
                         {props.history && props.history.map((history) => {
                           return <OwnerOuter key={history.id}>
                             <OwnerLeft>
                               <div className='img-outer'>
-                                <img src={history.ownerId.profile ? history.ownerId.profile: UserIcon} alt='' />
+                                <img src={history.ownerId.profile ? history.ownerId.profile : UserIcon} alt='' />
                               </div>
                               <div>
-                                {<OwnerName>{history.text} by <span>{history.ownerId.name ? history.ownerId.name: getCompactAddress(history.ownerId.walletAddress)}</span> </OwnerName>}
+                                {<OwnerName>{history.text} by <span>{history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}</span> </OwnerName>}
                                 <OwnerDesc>{getNFTTime(history.createdAt, true)}</OwnerDesc>
                                 {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
                               </div>
@@ -689,7 +689,7 @@ const EPLeft = styled(FlexDiv)`
     max-width: 100%;
     flex-direction: column;
     align-items: stretch; 
-    width:32%;    
+    width:32%;     
     img{ 
       border-radius: 5px;    
       max-height: 100%;
@@ -699,6 +699,7 @@ const EPLeft = styled(FlexDiv)`
       bottom: auto;
       left: auto;
       right: auto;
+      // width:100%; height:100%; object-fit:cover;
     } 
 `;
 
@@ -771,8 +772,8 @@ const FNumber = styled.div`
   font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #FFFFFF; text-transform:capitalize;
 `;
 
-const DFollowRow = styled(FlexDiv)`
-  justify-content:flex-start; margin-bottom:40px;
+const DFollowRow = styled.div`
+  margin-bottom:40px;
 `;
 
 const HRrow = styled.div`
@@ -787,17 +788,17 @@ const GreenAlertRow = styled.div`
 `;
 
 const FollowBoxRow = styled(FlexDiv)`
-  background: #2F2F2F; border-radius: 5px; justify-content:flex-start; margin-right:7px;
+  background: #2F2F2F; border-radius: 5px; justify-content:flex-start; margin-bottom:7px;
   p{font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 12px; line-height: 16px; color: #767676; margin:0px;}
-  .follow-box{ padding:12px 15px; position:relative;
+  .follow-box{ padding:12px 15px; position:relative; width: calc(33.33% - 30px);
     :after{content:''; background-color:rgb(118 118 118 / 25%); position:absolute; right:0px; top:12px; width:1px; height:37px;}
     :last-child{
       :after{display:none;}
     }
   }
   :last-child{margin-right:0px;}
-  &.bigger{width:calc(51% - 4px);}
-  &.smaller{width:calc(49% - 3px);}
+  // &.bigger{width:calc(51% - 4px);}
+  // &.smaller{width:calc(49% - 3px);}
 `;
 
 const ActFilterList = styled(FlexDiv)`
@@ -905,10 +906,8 @@ const CustomDropdown = styled.div`
   }
   &.custom-width{ 
     .collapse-css-transition{width:262px; top:50px; right:0px; left:auto; padding:10px 13px; border-radius: 5px;
-      a{padding:6px 0px; display:flex; align-items:center;
-        span{
-          width: 20px; height: 20px; display: inline-block; text-align: center; margin-right: 10px;
-        }
+      button{margin:0px 4px;
+        :hover{opacity:0.9;}
       }
       ${Media.sm} {
         left:0px; right:auto;
