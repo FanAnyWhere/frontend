@@ -15,7 +15,7 @@ import PutOnSaleModal from '../modals/putOnSale';
 const NFT = (props) => {
 
   let { nft, filterOpen, authenticated } = props
-  let collected = props.collected ? true:false //check this nft card rendered in user's collected tab
+  let collected = props.collected ? true : false //check this nft card rendered in user's collected tab
   const [isOpen, setIsOpen] = useState(false)
 
   // const [ext, setExt] = useState(nft.image.format)
@@ -45,7 +45,7 @@ const NFT = (props) => {
             <div className='box-content'>
               <div className='sign-row'>
                 <p className='abs'>{nft.ownerId.name}</p>
-                {nft.saleState === 'AUCTION' && 
+                {nft.saleState === 'AUCTION' &&
                   <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
                 {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
               </div>
@@ -88,10 +88,13 @@ const NFT = (props) => {
               <div className='box-content'>
                 <div className='sign-row'>
                   <p className='abs'>{nft.ownerId.name}</p>
-                  {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" />}
-                  {nft.saleState === 'AUCTION' && 
-                    <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
-                  {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
+                  <div>
+                    {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" />}
+                    {nft.saleState === 'AUCTION' &&
+                      <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
+                    {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
+                  </div>
+
                 </div>
                 <h3 className='ver3 mb-0'>{nft.title}</h3>
                 <p className='abs ver4'>{nft.collectionId?.name}</p>
@@ -117,20 +120,21 @@ const NFT = (props) => {
                     {nft.saleState === 'BUY' && 'Buy Now'}
                     {nft.saleState === 'SOLD' && 'Sold Out'}
                     {nft.saleState === 'AUCTION' && 'Place a Bid'}
-                  </ButtonLink> 
+                  </ButtonLink>
                   <p><AiOutlineHeart /> {nft.likes}</p>
                 </BidLike>
               </div>
             </LiveBox>
           </Link>
+          <ReactTooltip html={true} data-multiline={true} effect="solid" />
         </div>
       )
     }
   }
 
-  return ( 
+  return (
     <>
-      {renderHTML() }
+      {renderHTML()}
       {isOpen && <PutOnSaleModal onClose={() => setIsOpen(false)} nft={nft} isOpen={isOpen} authenticated={authenticated} />}
     </>
   )
@@ -168,7 +172,11 @@ const LiveBox = styled.div`
       &.ver3{white-space: nowrap; width: 100%; overflow: hidden; text-overflow: ellipsis;}
       &.mb-0{margin-bottom:0px;}
     }
-    .sign-row{display:flex; align-items:center; justify-content:space-between;}
+    .sign-row{display:flex; align-items:center; justify-content:space-between;
+      img{margin:0px 3px;
+        :last-child{margin-right:0px;}
+      }
+    }
   }
 `;
 
