@@ -196,9 +196,6 @@ const NFTDetail = (props) => {
   }
 
   // console.log('nft : ', props.nft)
-  console.log('reSaleEdition : ', reSaleEdition)
-  // console.log('buyEdition : ', buyEdition)
-  console.log('user ', props.user)
   return (
     <>
       <Gs.Container className='ver2'>
