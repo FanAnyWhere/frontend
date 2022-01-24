@@ -45,7 +45,7 @@ const NFT = (props) => {
             <div className='box-content'>
               <div className='sign-row'>
                 <p className='abs'>{nft.ownerId.name}</p>
-                {nft.saleState === 'AUCTION' &&
+                {nft.saleState === 'AUCTION' && nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate &&
                   <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
                 {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
               </div>
@@ -62,7 +62,8 @@ const NFT = (props) => {
                   </p>
                   <div className='timer ver2'>
                     <p>
-                      {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
+                      {nft.auctionStartDate > new Date().getTime() / 1000 ? <Timer timeLeft={nft.auctionStartDate} />: ''}
+                      {nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} />:''}
                     </p>
                   </div>
                 </div>
@@ -90,7 +91,7 @@ const NFT = (props) => {
                   <p className='abs'>{nft.ownerId.name}</p>
                   <div>
                     {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" />}
-                    {nft.saleState === 'AUCTION' &&
+                    {nft.saleState === 'AUCTION' && nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate &&
                       <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
                     {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
                   </div>
@@ -109,7 +110,8 @@ const NFT = (props) => {
                     </p>
                     <div className='timer ver2'>
                       <p>
-                        {nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
+                        {nft.auctionStartDate > new Date().getTime() / 1000 ? <Timer timeLeft={nft.auctionStartDate} />: ''}
+                        {nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} />:''}
                       </p>
                     </div>
                   </div>

@@ -41,6 +41,7 @@ import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
 import { transactionLink } from '../config'
 import useOutsideClick from '../helper/outside.click'
+import Timer from '../helper/timer'
 import { getContractInstance, getNFTTime } from '../helper/functions'
 import { actions } from '../actions'
 import { Toast } from '../helper/toastify.message'
@@ -175,11 +176,18 @@ const NFTDetail = (props) => {
                   <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}
                     {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
                   <PriceLine>
-                    <div className='text-right'>
-                      <div className='timer'>
-                        {/* <p>00:02:10</p> */}
-                      </div>
-                    </div>
+                    {props.nft.auctionStartDate > new Date().getTime() / 1000 &&
+                      <div className='text-right'>
+                        <div className='timer'>
+                          <p><Timer timeLeft={props.nft.auctionStartDate} /> </p>
+                        </div>
+                    </div>}
+                    {props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate && 
+                      <div className='text-right'>
+                        <div className='timer'>
+                          <p><Timer timeLeft={props.nft.auctionEndDate} /> </p>
+                        </div>
+                    </div>}
                   </PriceLine>
                 </NDLeft>
                 <NDRight>
@@ -267,11 +275,18 @@ const NFTDetail = (props) => {
                     <NTitleName onClick={() => setIsOpen7(state => !state)}>{props.nft.title}
                       {props.nft?.saleState === 'SOLD' && <span>Sold Out</span>}</NTitleName>
                     <PriceLine>
-                      <div className='text-right'>
-                        {/* <div className='timer'>
-                        <p>00:02:10</p>
-                      </div> */}
-                      </div>
+                      {props.nft.auctionStartDate > new Date().getTime() / 1000 &&
+                        <div className='text-right'>
+                          <div className='timer'>
+                            <p><Timer timeLeft={props.nft.auctionStartDate} /> </p>
+                          </div>
+                      </div>}
+                      {props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate && props.nft.auctionEndDate &&
+                        <div className='text-right'>
+                          <div className='timer'>
+                            <p><Timer timeLeft={props.nft.auctionEndDate} /> </p>
+                          </div>
+                      </div>}
                     </PriceLine>
                   </NDLeft>
                   <NDRight>
