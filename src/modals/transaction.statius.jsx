@@ -26,7 +26,7 @@ const TransactionStatus = (props) => {
       }}>
 
       <ReportTitle>Transaction Status</ReportTitle>
-      {props.status !== 'complete' &&
+      {props.status !== 'complete' && props.status !== 'error' &&
         <Loader>
           <img src={LoaderGIF} alt='' />
         </Loader> }

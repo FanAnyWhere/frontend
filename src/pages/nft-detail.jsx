@@ -174,13 +174,17 @@ const NFTDetail = (props) => {
   }
 
   const getBuyNFT = (nft) => {
-    let availableEdition = nft.editions.find(obj => obj.isOpenForSale) 
+    let editions = nft.editions.sort((a, b) => a.saleType.price - b.saleType.price)
+    let availableEdition = editions.find(obj => obj.isOpenForSale) 
     if (availableEdition) {
       setBuyEdition({ edition: availableEdition.edition, nonce: availableEdition.nonce, 
           price: availableEdition.saleType.price, ownerId: availableEdition.ownerId.id})
     } else setBuyEdition({ edition: Number(nft.nftSold)+1, nonce: nft.nonce, price: nft.price, ownerId: nft.ownerId.id })
   }
 
+  // console.log('nft : ', props.nft)
+  // console.log('reSaleEdition : ', reSaleEdition)
+  // console.log('buyEdition : ', buyEdition)
   return (
     <>
       <Gs.Container className='ver2'>
