@@ -100,6 +100,7 @@ const PutOnSale = (props) => {
                 .on('receipt', (receipt) => {
                     setTimeout(() => {
                       setPrice(null)
+                      props.onSuccess() // refresh NFT details
                       props.onClose(false) // close model
                       setTxnStatus('complete') // third step for transaction
                       Toast.success('Edition put on sale successfully.') 

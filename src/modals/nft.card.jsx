@@ -137,7 +137,7 @@ const NFT = (props) => {
   return (
     <>
       {renderHTML()}
-      {isOpen && <PutOnSaleModal onClose={() => setIsOpen(false)} nft={nft} user={props.user} isOpen={isOpen} authenticated={authenticated} />}
+      {isOpen && <PutOnSaleModal onSuccess={() => setIsOpen(false)} onClose={() => setIsOpen(false)} nft={nft} user={props.user} isOpen={isOpen} authenticated={authenticated} />}
     </>
   )
 }

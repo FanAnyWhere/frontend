@@ -141,8 +141,7 @@ const NFTDetail = (props) => {
         })
         .on('receipt', (receipt) => {
           setTimeout(() => {
-            // refresh the state
-            props.getNFT(id)
+            onSuccess() // refresh the state
             setTxnStatus('complete') // third step for transaction 
           }, 7000);
         })
@@ -183,6 +182,13 @@ const NFTDetail = (props) => {
       setBuyEdition({ edition: availableEdition.edition, nonce: availableEdition.nonce, 
           price: availableEdition.saleType.price, ownerId: availableEdition.ownerId.id})
     } else setBuyEdition({ edition: Number(nft.nftSold)+1, nonce: nft.nonce, price: nft.price, ownerId: nft.ownerId.id })
+  }
+
+  const onSuccess = () => {
+    props.getNFT(id)
+    props.getLikesCount(id)
+    props.getIsLiked(id)
+    props.getHistory(id)
   }
 
   // console.log('nft : ', props.nft)
@@ -574,7 +580,7 @@ const NFTDetail = (props) => {
                   && <WhiteBorderBtn onClick={() => setIsListItem(true)}>List item for sale</WhiteBorderBtn>}
                 {props.nft?.saleState !== 'SOLD' && !reSaleEdition && <WhiteBorderBtn>Place a bid</WhiteBorderBtn>}
                 
-                {isListItem && <PutOnSaleModal onClose={() => setIsListItem(false)} user={props.user} nft={props.nft} isOpen={true} authenticated={props.authenticated} />}
+                {isListItem && <PutOnSaleModal onSuccess={() => onSuccess()} onClose={() => setIsListItem(false)} user={props.user} nft={props.nft} isOpen={true} authenticated={props.authenticated} />}
 
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow>
                 <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
