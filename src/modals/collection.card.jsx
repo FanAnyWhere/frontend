@@ -15,7 +15,7 @@ const collection = (props) => {
           <img src={collection.ownerId.profile} alt='' />
         </ProfilePicture>
         <CCName>{collection.name}</CCName>
-        <CCBy>by 
+        <CCBy>by  {' '}
           {collection.ownerId.name}
           {/* <Link to={'/celebrity/' + collection.ownerId.id}></Link> */}
         </CCBy>

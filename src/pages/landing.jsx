@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import FeatureIcon from '../assets/images/feature-icon.png';
 import CreatorUser from '../assets/images/creator-user.png'
+import UserIcon from '../assets/images/user-img.png';
 import Media from '../theme/media-breackpoint';
 import { AiOutlineHeart } from 'react-icons/ai'
 import FireIcon from '../assets/images/fire.png'
@@ -125,7 +126,7 @@ const Landing = (props) => {
               <TCBox key={creator.id}>
                 <Link to={'/celebrity/' + creator.id} >
                   {/* <TC1>{i + 1}</TC1> */}
-                  <TC2><img src={creator.profile} alt='' /></TC2>
+                  <TC2><img src={creator.profile?creator.profile:UserIcon} alt='' /></TC2>
                   <TC3>
                     <h4>{creator.name}</h4>
                     <p>{getCompactAddress(creator.walletAddress)}</p>

@@ -94,6 +94,10 @@ const NFTDetail = (props) => {
   const [isListItem, setIsListItem] = useState(false)
   const [isOwnerNFT, setIsOwnerNFT] = useState(false)
 
+  useEffect(() => {
+    if (props.authenticated.isLoggedIn) props.getUserDetails() // fetch user details 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (!props.nft) {
@@ -192,8 +196,9 @@ const NFTDetail = (props) => {
   }
 
   // console.log('nft : ', props.nft)
-  // console.log('reSaleEdition : ', reSaleEdition)
+  console.log('reSaleEdition : ', reSaleEdition)
   // console.log('buyEdition : ', buyEdition)
+  console.log('user ', props.user)
   return (
     <>
       <Gs.Container className='ver2'>
@@ -1141,6 +1146,7 @@ const Loader = styled(FlexDiv)`
 const mapDipatchToProps = (dispatch) => {
   return {
     getNFT: (id) => dispatch(actions.getNFT(id)),
+    getUserDetails: () => dispatch(actions.getUserDetails()),
     getIsLiked: (id) => dispatch(actions.getIsLiked(id)),
     likeToggler: (id) => dispatch(actions.likeToggler(id)),
     getLikesCount: (id) => dispatch(actions.getLikesCount(id)),
