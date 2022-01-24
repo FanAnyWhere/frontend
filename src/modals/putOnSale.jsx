@@ -76,7 +76,7 @@ const PutOnSale = (props) => {
             .on('error', (error) => {
               setLoading(false)  // hide loading..
                 props.onClose(false) // close model 
-                Toast.error(error.toString())
+                Toast.error(error.message?error.message:'Something Went Wrong. Please try after sometime.')
             });
     }
 
@@ -106,9 +106,8 @@ const PutOnSale = (props) => {
                     }, 6000);
                 })
                 .on('error', (error) => {
-
                     setLoading(false) // four step for transaction 
-                    Toast.error('Transaction failed.')
+                    Toast.error(error.message?error.message:'Something Went Wrong. Please try after sometime.')
                     props.onClose(false) // close model
                 });
         }

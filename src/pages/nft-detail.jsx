@@ -146,6 +146,7 @@ const NFTDetail = (props) => {
         })
         .on('error', (error) => {
           setTxnStatus('error') // four step for transaction 
+          Toast.error(error.message?error.message:'Something Went Wrong. Please try after sometime.')
         });
     }
   }
@@ -610,7 +611,7 @@ const NFTDetail = (props) => {
                     </div>
                   </MessageOuter>
                 </Modal>
-                {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
+                {/* {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />} */}
 
                 <Modal open={openConfirm} onClose={() => setOpenConfirm(!openConfirm)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
