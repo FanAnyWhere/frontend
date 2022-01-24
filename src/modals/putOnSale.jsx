@@ -12,7 +12,7 @@ import { getContractInstance } from '../helper/functions';
 
 const PutOnSale = (props) => {
     
-    let { isOpen, nft, authenticated } = props
+    let { isOpen, nft, authenticated, user } = props
 
     const [loading, setLoading] = useState(false)
     const [isApprovalForAll, setIsApprovalForAll] = useState(false)
@@ -25,7 +25,12 @@ const PutOnSale = (props) => {
     const [editionNo, setEditionNo] = useState(0)
 
     useEffect( () => {
-      let available = nft.buyEditions.find(obj => !obj.isOpenForSale)
+      let available;
+      if (user) {
+        available = nft.editions.find(obj => !obj.isOpenForSale && obj.ownerId.id === user.id)
+      } else {
+        available = nft.buyEditions.find(obj => !obj.isOpenForSale)
+      }
       if (!available) {
         props.onClose(false); // close model
       } else {

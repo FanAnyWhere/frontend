@@ -39,6 +39,8 @@ import LoaderGIF from '../assets/images/loader.gif';
 
 import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
+import LoginModal from '../modals/login'
+import PutOnSaleModal from '../modals/putOnSale';
 import { transactionLink } from '../config'
 import useOutsideClick from '../helper/outside.click'
 import Timer from '../helper/timer'
@@ -86,6 +88,11 @@ const NFTDetail = (props) => {
   const [txtStatus, setTxnStatus] = useState(false)
   const [likeLoading, setLikeLoading] = useState(false)
   const escrowContractInstance = getContractInstance(true)
+  const [openLogin, setOpenLogin] = useState(false)
+  const [buyEdition, setBuyEdition] = useState({ edition: '', nonce: '', price: '', ownerId: ''})
+  const [reSaleEdition, setReSaleEdition] = useState(false)
+  const [isListItem, setIsListItem] = useState(false)
+
 
   useEffect(() => {
     if (!props.nft) {
@@ -94,8 +101,16 @@ const NFTDetail = (props) => {
       props.getIsLiked(id)
       props.getHistory(id)
     }
+    if (props.nft) getBuyNFT(props.nft)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nft]) // fetch the nft
+
+  useEffect(() => {
+    if (props.nft && props.user) {
+      let boughtEditions = props.nft.editions.find(obj => obj.ownerId.id === props.user.id)
+      if (boughtEditions) setReSaleEdition({ edition: boughtEditions.edition, nonce: boughtEditions.nonce })
+    }
+  }, [props.nft, props.user])
 
   useEffect(() => {
     setLikeLoading(false)
@@ -112,7 +127,7 @@ const NFTDetail = (props) => {
   }, [])
 
   const buyNFT = async (nonce, editionNo, price) => {
-    if (props.nft.ownerId === props.user.id) Toast.error('Owner can not buy edition.')
+    if (buyEdition.ownerId === props.user.id) Toast.warning('Owner can not buy edition.')
     else {
       setOpenConfirm(false) // close the confirm pop up
       let val = price.toString()
@@ -158,6 +173,13 @@ const NFTDetail = (props) => {
     }
   }
 
+  const getBuyNFT = (nft) => {
+    let availableEdition = nft.editions.find(obj => obj.isOpenForSale) 
+    if (availableEdition) {
+      setBuyEdition({ edition: availableEdition.edition, nonce: availableEdition.nonce, 
+          price: availableEdition.saleType.price, ownerId: availableEdition.ownerId.id})
+    } else setBuyEdition({ edition: Number(nft.nftSold)+1, nonce: nft.nonce, price: nft.price, ownerId: nft.ownerId.id })
+  }
 
   return (
     <>
@@ -501,7 +523,7 @@ const NFTDetail = (props) => {
                                 </div>
                               </OwnerLeft>
                               <OwnerRight>
-                                {edition.isOpenForSale && edition.ownerId.id !== props.user.id && <GradientBtn
+                                {edition.isOpenForSale && <GradientBtn
                                   onClick={() => {
                                     if (!props.authenticated.isLoggedIn) setOpenForth(true)
                                     else buyNFT(edition.nonce, edition.edition, edition.saleType.price)
@@ -551,32 +573,25 @@ const NFTDetail = (props) => {
               </div>
               <EqualBtnList>
 
-                {/* <GradientBtn>Buy for 0.00 FAW</GradientBtn>
-                <WhiteBorderBtn>Place a Bid</WhiteBorderBtn> */}
-                {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow> */}
-                {/* <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
+                {/* NFT Action Buttons */}
+                {props.nft?.saleState === 'SOLD' && <GradientBtn disabled={true}>Sold Out</GradientBtn>}
+                
+                {props.nft?.saleState !== 'SOLD' &&
+                  <GradientBtn onClick={() => {
+                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                    else buyNFT(buyEdition.nonce, buyEdition.edition, buyEdition.price)
+                  }}>Buy for {buyEdition.price} FAW</GradientBtn> }
 
-                {/* {props.nft.saleState === 'BUY' && props.nft.ownerId.id !== props.user.id && props.nft.nftSold === props.nft.edition && props.nft.auctionStartDate
-                  && props.nft.auctionStartDate < new Date().getTime() / 1000 ?
-                    <GradientBtn onClick={() => {
-                      if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                      else confirm()
-                    }} className='full'>
-                      BUY NOW
-                    </GradientBtn>
-                  :props.nft.saleState === 'BUY' && props.nft.auctionStartDate > new Date().getTime() / 1000 &&<GradientBtn className='full'> Buy will start soon </GradientBtn>
-                }
-                {props.nft?.saleState === 'SOLD' && <GradientBtn className='full'> SOLD OUT </GradientBtn>}
-                {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id &&
-                  props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate ?
-                  <GradientBtn className='full'> Place a Bid </GradientBtn>
-                  : props.nft.auctionEndDate < new Date().getTime() / 1000 && props.nft.saleState === 'AUCTION' && <GradientBtn className='full'> Auction is over</GradientBtn>
-                }
-                {props.nft.saleState === 'AUCTION' && props.nft?.ownerId?.id !== props.user?.id &&
-                  props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate ?
-                  <GradientBtn className='full'> Place a Bid </GradientBtn>
-                  : props.nft.auctionStartDate > new Date().getTime() / 1000 && props.nft.saleState === 'AUCTION' && <GradientBtn className='full'> Bid will start soon</GradientBtn>
-                } */}
+                {reSaleEdition 
+                  && <WhiteBorderBtn onClick={() => setIsListItem(true)}>List item for sale</WhiteBorderBtn>}
+                {props.nft?.saleState !== 'SOLD' && !reSaleEdition && <WhiteBorderBtn>Place a bid</WhiteBorderBtn>}
+                
+                {isListItem && <PutOnSaleModal onClose={() => setIsListItem(false)} user={props.user} nft={props.nft} isOpen={true} authenticated={props.authenticated} />}
+
+                {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow>
+                <GreenAlertRow className='red-alert-text'>Please fill all mandatory information before listing for sale.</GreenAlertRow> */}
+
+
 
                 <Modal open={openForth} onClose={() => setOpenForth(false)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
@@ -586,11 +601,12 @@ const NFTDetail = (props) => {
                   <ReportDesc>Please Sign in with wallet to place a bid for this item. </ReportDesc>
                   <MessageOuter>
                     <div className='button-list'>
-                      {/* <WhiteBorderBtn>Cancel</WhiteBorderBtn> */}
-                      {/* <GradientBtn onClick={() => setOpenFifth(true)}>Sign in with Wallet</GradientBtn> */}
+                      <WhiteBorderBtn onClick={() => setOpenForth(false)}>Cancel</WhiteBorderBtn>
+                      <GradientBtn onClick={() => {setOpenForth(false); setOpenLogin(true)}}>Sign in with Wallet</GradientBtn>
                     </div>
                   </MessageOuter>
                 </Modal>
+                {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
 
                 <Modal open={openConfirm} onClose={() => setOpenConfirm(!openConfirm)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
