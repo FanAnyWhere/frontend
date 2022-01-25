@@ -238,8 +238,8 @@ function Header(props) {
                         </BalanceRight>
                       </BalanceBox>
                     </UserBox>
-                    <Link to='/my-profile'>Profile</Link>
-                    <Link to='#' onClick={() => disconnect()}>Disconnect</Link>
+                    <div><Link to='/my-profile'>My Profile</Link></div>
+                    <div><Link to='#' onClick={() => disconnect()}>Disconnect</Link></div>
                   </Collapse>
                 </AccountDropdown>
               </AfterLogin>
@@ -389,8 +389,8 @@ function Header(props) {
                       </BalanceRight>
                     </BalanceBox>
                   </UserBox>
-                  <Link to='/my-profile'>Profile</Link>
-                  <Link to='#' onClick={() => disconnect()}>Disconnect</Link>
+                  <div><Link to='/my-profile'>My Profile</Link></div>
+                  <div><Link to='#' onClick={() => disconnect()}>Disconnect</Link></div>
                 </Collapse>
               </AccountDropdown>
             </AfterLogin>}
@@ -511,7 +511,7 @@ const AccountDropdown = styled.div`
     }
   }
   a{
-    display:block; padding:11px 0px; border-bottom:0px; color:#FFFFFF; margin:0px 10px;
+    padding:11px 0px; border-bottom:0px; color:#FFFFFF; margin:0px 10px;
     :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
   }
 `;

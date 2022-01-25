@@ -46,8 +46,8 @@ const NFT = (props) => {
               <div className='sign-row'>
                 <p className='abs'>{nft.ownerId.name}</p>
                 {nft.saleState === 'AUCTION' && nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate &&
-                  <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
-                {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
+                  <img src={TimerIcon} alt='' data-place="top" data-tip="LiveAuction" />}
+                {/* <img src={SendIcon} alt='' data-place="top" data-tip="Featured" /> */}
               </div>
               <h3 className='ver3 mb-0'>{nft.title}</h3>
               <p className='abs ver4'>{nft.collectionId?.name}</p>
@@ -62,8 +62,8 @@ const NFT = (props) => {
                   </p>
                   <div className='timer ver2'>
                     <p>
-                      {nft.auctionStartDate > new Date().getTime() / 1000 ? <Timer timeLeft={nft.auctionStartDate} />: ''}
-                      {nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} />:''}
+                      {nft.auctionStartDate > new Date().getTime() / 1000 ? <Timer timeLeft={nft.auctionStartDate} /> : ''}
+                      {nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
                     </p>
                   </div>
                 </div>
@@ -90,10 +90,10 @@ const NFT = (props) => {
                 <div className='sign-row'>
                   <p className='abs'>{nft.ownerId.name}</p>
                   <div>
-                    {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" />}
+                    {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-tip="Trending" />}
                     {nft.saleState === 'AUCTION' && nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate &&
-                      <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="LiveAuction" />}
-                    {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
+                      <img src={TimerIcon} alt='' data-place="top" data-tip="LiveAuction" />}
+                    {/* <img src={SendIcon} alt='' data-place="top" data-tip="Featured" /> */}
                   </div>
 
                 </div>
@@ -110,8 +110,8 @@ const NFT = (props) => {
                     </p>
                     <div className='timer ver2'>
                       <p>
-                        {nft.auctionStartDate > new Date().getTime() / 1000 ? <Timer timeLeft={nft.auctionStartDate} />: ''}
-                        {nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} />:''}
+                        {nft.auctionStartDate > new Date().getTime() / 1000 ? <Timer timeLeft={nft.auctionStartDate} /> : ''}
+                        {nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate ? <Timer timeLeft={nft.auctionEndDate} /> : ''}
                       </p>
                     </div>
                   </div>
