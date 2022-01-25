@@ -336,7 +336,7 @@ function MyProfile(props) {
                     title={'Check Celebrity Profile on FAW'}>
                     <LinkedinIcon size={36} round={true} />
                   </LinkedinShareButton>
-                  
+
                   {/* <DDTitle>Share Options</DDTitle>
                   <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
                   <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
@@ -799,6 +799,7 @@ const LinkBoxRow = styled(FlexDiv)`
 const ActFilterList = styled(FlexDiv)`
   a{font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; padding:0px 15px; border-bottom:2px solid #767676;
     &.active{color:#fff; border-color:#fff;}
+    :hover{color:#824CF5; border-color:#824CF5;}
     span{font-family: 'Roboto', sans-serif; font-weight:400; margin-left:10px;}
   }
   ${Media.md} {
@@ -861,7 +862,9 @@ const CustomDropdown = styled.div`
   }
   &.report-box{
     .collapse-css-transition{width:131px; top:50px; right:0px; left:auto; padding:10px; border-radius: 5px;
-      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;}
+      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;
+      :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }
     }
   }
   .priceList{
@@ -1056,7 +1059,7 @@ const PLeftpanel = styled.div`
     }
   }
   ${Media.md} {
-    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto;
+    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto; z-index:9;
   }
 `;
 

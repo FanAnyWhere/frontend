@@ -29,8 +29,8 @@ import UpArrow from '../assets/images/up-arrow.png';
 import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import EditIcon from '../assets/images/edit-icon.png';
-import CreatorCImg from '../assets/images/creator-cover.jpg';
-import CreatorPImg from '../assets/images/creator-profile.png';
+import CreatorDCImg from '../assets/images/creator-detail-cover.jpg';
+import CreatorDPImg from '../assets/images/creator-detail-profile.jpg';
 // import CopyIcon from '../assets/images/copy.png';
 // import TwitterIcon from '../assets/images/twitter.png';
 // import FacebookIcon from '../assets/images/facebook.png';
@@ -182,13 +182,13 @@ function CelebrityDetails(props) {
 
       <ProfileCover>
         <div className='img-outer'>
-          <img src={props.user?.cover ? props.user.cover : CreatorCImg} alt='' />
+          <img src={props.user?.cover ? props.user.cover : CreatorDCImg} alt='' />
         </div>
       </ProfileCover>
       <ProfileRow>
         <PRLeft className='desktop-profile'>
           <div className='image-outer'>
-            <img src={props.user?.profile ? props.user.profile : CreatorPImg} alt='' />
+            <img src={props.user?.profile ? props.user.profile : CreatorDPImg} alt='' />
           </div>
         </PRLeft>
         <PRRight>
@@ -196,7 +196,7 @@ function CelebrityDetails(props) {
             <MobileProfileOuter>
               <PRLeft className='mobile-profile'>
                 <div className='image-outer'>
-                  <img src={props.user?.profile ? props.user.profile : CreatorPImg} alt='' />
+                  <img src={props.user?.profile ? props.user.profile : CreatorDPImg} alt='' />
                   <div className='overlay'></div>
                 </div>
               </PRLeft>
@@ -703,6 +703,7 @@ const LinkBoxRow = styled(FlexDiv)`
 const ActFilterList = styled(FlexDiv)`
   a{font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; padding:0px 15px; border-bottom:2px solid #767676;
     &.active{color:#fff; border-color:#fff;}
+    :hover{color:#824CF5; border-color:#824CF5;}
     span{font-family: 'Roboto', sans-serif; font-weight:400; margin-left:10px;}
   }
   ${Media.md} {
@@ -765,7 +766,9 @@ const CustomDropdown = styled.div`
   }
   &.report-box{
     .collapse-css-transition{width:131px; top:50px; right:0px; left:auto; padding:10px; border-radius: 5px;
-      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;}
+      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;
+      :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }
     }
   }
   .priceList{
@@ -960,7 +963,7 @@ const PLeftpanel = styled.div`
     }
   }
   ${Media.md} {
-    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto;
+    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto; z-index:9;
   }
 `;
 

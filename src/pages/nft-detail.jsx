@@ -272,8 +272,8 @@ const NFTDetail = (props) => {
 
                   {/* <CustomDropdown className='custom-width-2'>
                     <Collapse onInit={onInit} isOpen={isOpen7}>
-                      <Link to='#'>Edit</Link>
-                      <Link to='#'>Mark as Not for Sale</Link>
+                      <div><Link to='#'>Edit</Link></div>
+                      <div><Link to='#'>Mark as Not for Sale</Link></div>
                     </Collapse>
                   </CustomDropdown> */}
 
@@ -371,11 +371,11 @@ const NFTDetail = (props) => {
                     </CustomDropdown>
 
                     {/* <CustomDropdown className='custom-width-2'>
-                    <Collapse onInit={onInit} isOpen={isOpen7}>
-                      <Link to='#'>Edit</Link>
-                      <Link to='#'>Mark as Not for Sale</Link>
-                    </Collapse>
-                  </CustomDropdown> */}
+                      <Collapse onInit={onInit} isOpen={isOpen7}>
+                        <div><Link to='#'>Edit</Link></div>
+                        <div><Link to='#'>Mark as Not for Sale</Link></div>
+                      </Collapse>
+                    </CustomDropdown> */}
 
                     {!isOwnerNFT && props.authenticated.isLoggedIn &&
                       <CustomDropdown className='report-box' ref={reportRef}>
@@ -1044,12 +1044,16 @@ const CustomDropdown = styled.div`
   }
   &.custom-width-2{
     .collapse-css-transition{width:186px; top:50px; right:0px; left:auto; padding:10px 13px; border-radius: 5px; padding:0px 10px;
-      a{font-family: 'Rubik', sans-serif; font-weight: bold; padding:10px 0px;}
+      a{font-family: 'Rubik', sans-serif; font-weight: bold; padding:10px 0px; display:inline-block;
+        :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }
     }
   }
   &.report-box{
     .collapse-css-transition{width:131px; top:50px; right:0px; left:auto; padding:10px; border-radius: 5px;
-      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;}
+      p{font-weight: bold; font-size: 16px; line-height: 24px; text-align:center; margin:0px; cursor:pointer;
+        :hover{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }
     }
   }
   .priceList{
