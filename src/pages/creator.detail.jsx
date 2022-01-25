@@ -219,24 +219,24 @@ function CelebrityDetails(props) {
                   <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                   <Collapse onInit={onInit} isOpen={isOpen5}>
 
-                      <FacebookShareButton
-                        url={window.location.href}
-                        quote={'Check Celebrity Profile on FAW'} >
-                        <FacebookIcon size={36} round={true} />
-                      </FacebookShareButton>
+                    <FacebookShareButton
+                      url={window.location.href}
+                      quote={'Check Celebrity Profile on FAW'} >
+                      <FacebookIcon size={36} round={true} />
+                    </FacebookShareButton>
 
-                      <TwitterShareButton
-                        url={window.location.href}
-                        title={'Check Celebrity Profile on FAW'}>
-                        <TwitterIcon size={36} round={true} />
-                      </TwitterShareButton>
+                    <TwitterShareButton
+                      url={window.location.href}
+                      title={'Check Celebrity Profile on FAW'}>
+                      <TwitterIcon size={36} round={true} />
+                    </TwitterShareButton>
 
-                      <LinkedinShareButton
-                        url={window.location.href}
-                        title={'Check Celebrity Profile on FAW'}>
-                        <LinkedinIcon size={36} round={true} />
-                      </LinkedinShareButton>
-{/*                     
+                    <LinkedinShareButton
+                      url={window.location.href}
+                      title={'Check Celebrity Profile on FAW'}>
+                      <LinkedinIcon size={36} round={true} />
+                    </LinkedinShareButton>
+                    {/*                     
                     <DDTitle>Share Options</DDTitle>
                     <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
                     <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
@@ -518,7 +518,7 @@ const ProfileCover = styled.div`
     .overlay{ width:100%; height:250px; position:absolute; left:0px; top:0px;
       button{position:absolute; right:20px; bottom:20px; margin:0px; opacity:0;}
     }
-    :hover{ background-color:#1A1A1A;
+    :hover{ background-color:#2F2F2F;
       button{opacity:1;}
     }
   }
