@@ -5,17 +5,18 @@ import CreatorCImg from '../assets/images/creator-cover.jpg';
 import CreatorPImg from '../assets/images/creator-profile.png';
 
 
+
 const creator = (props) => {
   let { creator } = props
 
   return <div className='item' key={creator.id}>
     <Link to={'/celebrity/' + creator.id}>
       <CollectionCover>
-        <img src={creator.cover ? creator.cover : null} alt='' />
+        <img src={creator.cover ? creator.cover : CreatorCImg} alt='' />
       </CollectionCover>
       <CollectionBottom>
         <ProfilePicture>
-          <img src={creator.profile ? creator.profile : null} alt='' />
+          <img src={creator.profile ? creator.profile : CreatorPImg} alt='' />
         </ProfilePicture>
         <CCName>{creator.name}</CCName>
         {/* <CCBy>$10000.00</CCBy> */}

@@ -124,7 +124,7 @@ const CreateNFT = (props) => {
         }, 5000);
       })
       .on('error', (error) => {
-        Toast.error(error.message?error.message:'Something Went Wrong. Please try after sometime.')
+        Toast.error(error.message ? error.message : 'Something Went Wrong. Please try after sometime.')
         // console.log('on error ', error); // error.code===4001 user reject the metamask transaction
         setTxnStatus('error') // four step for transaction 
       });
