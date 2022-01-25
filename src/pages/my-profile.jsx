@@ -10,6 +10,14 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 import Collapse from '@kunukn/react-collapse';
 import { BiRightArrowAlt, BiDotsHorizontalRounded } from 'react-icons/bi';
 import Collapsible from 'react-collapsible';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+} from 'react-share';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Modal } from 'react-responsive-modal';
 import dateFormat from 'dateformat';
@@ -21,8 +29,8 @@ import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import EditIcon from '../assets/images/edit-icon.png';
 import CopyIcon from '../assets/images/copy.png';
-import TwitterIcon from '../assets/images/twitter.png';
-import FacebookIcon from '../assets/images/facebook.png';
+import TwitterIcon1 from '../assets/images/twitter.png';
+import FacebookIcon1 from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
 import GreenIcon from '../assets/images/green-icon.png';
 import UserIcon from '../assets/images/user-img.png';
@@ -310,10 +318,29 @@ function MyProfile(props) {
               <CustomDropdown className='custom-width' ref={accountShare}>
                 <UPButton onClick={() => setIsOpen5(state => !state)}><img src={UpArrow} alt='' /></UPButton>
                 <Collapse onInit={onInit} isOpen={isOpen5}>
-                  <DDTitle>Share Options</DDTitle>
+
+                  <FacebookShareButton
+                    url={window.location.href}
+                    quote={'Check Celebrity Profile on FAW'} >
+                    <FacebookIcon size={36} round={true} />
+                  </FacebookShareButton>
+
+                  <TwitterShareButton
+                    url={window.location.href}
+                    title={'Check Celebrity Profile on FAW'}>
+                    <TwitterIcon size={36} round={true} />
+                  </TwitterShareButton>
+
+                  <LinkedinShareButton
+                    url={window.location.href}
+                    title={'Check Celebrity Profile on FAW'}>
+                    <LinkedinIcon size={36} round={true} />
+                  </LinkedinShareButton>
+                  
+                  {/* <DDTitle>Share Options</DDTitle>
                   <Link to='#'><span><img src={CopyIcon} alt='' /></span>Copy link</Link>
                   <Link to='#'><span><img src={FacebookIcon} alt='' /></span>Share on Facebook</Link>
-                  <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link>
+                  <Link to='#'><span><img src={TwitterIcon} alt='' /></span>Share to Twitter</Link> */}
                 </Collapse>
               </CustomDropdown>
 
