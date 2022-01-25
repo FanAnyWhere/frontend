@@ -89,7 +89,7 @@ const NFTDetail = (props) => {
   const [likeLoading, setLikeLoading] = useState(false)
   const escrowContractInstance = getContractInstance(true)
   const [openLogin, setOpenLogin] = useState(false)
-  const [buyEdition, setBuyEdition] = useState({ edition: '', nonce: '', price: '', ownerId: ''})
+  const [buyEdition, setBuyEdition] = useState({ edition: '', nonce: '', price: '', ownerId: '' })
   const [reSaleEdition, setReSaleEdition] = useState(false)
   const [isListItem, setIsListItem] = useState(false)
   const [isOwnerNFT, setIsOwnerNFT] = useState(false)
@@ -151,7 +151,7 @@ const NFTDetail = (props) => {
         })
         .on('error', (error) => {
           setTxnStatus('error') // four step for transaction 
-          Toast.error(error.message?error.message:'Something Went Wrong. Please try after sometime.')
+          Toast.error(error.message ? error.message : 'Something Went Wrong. Please try after sometime.')
         });
     }
   }
@@ -181,11 +181,13 @@ const NFTDetail = (props) => {
 
   const getBuyNFT = (nft) => {
     let editions = nft.editions.sort((a, b) => a.saleType.price - b.saleType.price)
-    let availableEdition = editions.find(obj => obj.isOpenForSale) 
+    let availableEdition = editions.find(obj => obj.isOpenForSale)
     if (availableEdition) {
-      setBuyEdition({ edition: availableEdition.edition, nonce: availableEdition.nonce, 
-          price: availableEdition.saleType.price, ownerId: availableEdition.ownerId.id})
-    } else setBuyEdition({ edition: Number(nft.nftSold)+1, nonce: nft.nonce, price: nft.price, ownerId: nft.ownerId.id })
+      setBuyEdition({
+        edition: availableEdition.edition, nonce: availableEdition.nonce,
+        price: availableEdition.saleType.price, ownerId: availableEdition.ownerId.id
+      })
+    } else setBuyEdition({ edition: Number(nft.nftSold) + 1, nonce: nft.nonce, price: nft.price, ownerId: nft.ownerId.id })
   }
 
   const onSuccess = () => {
@@ -218,13 +220,13 @@ const NFTDetail = (props) => {
                         <div className='timer'>
                           <p><Timer timeLeft={props.nft.auctionStartDate} /> </p>
                         </div>
-                    </div>}
-                    {props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate && 
+                      </div>}
+                    {props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate &&
                       <div className='text-right'>
                         <div className='timer'>
                           <p><Timer timeLeft={props.nft.auctionEndDate} /> </p>
                         </div>
-                    </div>}
+                      </div>}
                   </PriceLine>
                 </NDLeft>
                 <NDRight>
@@ -297,7 +299,7 @@ const NFTDetail = (props) => {
                         </div>
                       </MessageOuter>
                     </Modal>
-                  </CustomDropdown> }
+                  </CustomDropdown>}
 
                 </NDRight>
               </NDTop>
@@ -315,16 +317,16 @@ const NFTDetail = (props) => {
                     <PriceLine>
                       {props.nft.auctionStartDate > new Date().getTime() / 1000 &&
                         <div className='text-right'>
-                          <div className='timer'>
+                          <div className='timer ver2'>
                             <p><Timer timeLeft={props.nft.auctionStartDate} /> </p>
                           </div>
-                      </div>}
+                        </div>}
                       {props.nft.auctionStartDate < new Date().getTime() / 1000 > props.nft.auctionEndDate && props.nft.auctionEndDate &&
                         <div className='text-right'>
                           <div className='timer'>
                             <p><Timer timeLeft={props.nft.auctionEndDate} /> </p>
                           </div>
-                      </div>}
+                        </div>}
                     </PriceLine>
                   </NDLeft>
                   <NDRight>
@@ -375,30 +377,30 @@ const NFTDetail = (props) => {
                     </Collapse>
                   </CustomDropdown> */}
 
-                  {!isOwnerNFT && props.authenticated.isLoggedIn &&
-                    <CustomDropdown className='report-box' ref={reportRef}>
-                      <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
-                      <Collapse onInit={onInit} isOpen={isOpen6}>
-                        <p onClick={() => setOpenFirst(true)}>Report Profile</p>
-                      </Collapse>
+                    {!isOwnerNFT && props.authenticated.isLoggedIn &&
+                      <CustomDropdown className='report-box' ref={reportRef}>
+                        <UPButton onClick={() => setIsOpen6(state => !state)}><BiDotsHorizontalRounded /></UPButton>
+                        <Collapse onInit={onInit} isOpen={isOpen6}>
+                          <p onClick={() => setOpenFirst(true)}>Report Profile</p>
+                        </Collapse>
 
-                      <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
-                        overlay: 'customOverlay',
-                        modal: 'customModal',
-                      }}>
-                        <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
-                        <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
-                        <MessageOuter>
-                          <label>Message</label>
-                          <textarea>Gives us some details</textarea>
-                          <p>Please provide specific and clear message</p>
-                          <div className='button-list'>
-                            <WhiteBorderBtn>Cancel</WhiteBorderBtn>
-                            <GradientBtn>Report</GradientBtn>
-                          </div>
-                        </MessageOuter>
-                      </Modal>
-                    </CustomDropdown>}
+                        <Modal open={openFirst} onClose={() => setOpenFirst(false)} center closeIcon={closeIcon} classNames={{
+                          overlay: 'customOverlay',
+                          modal: 'customModal',
+                        }}>
+                          <ReportTitle><img src={ExclaimIcon} alt='' />Report User</ReportTitle>
+                          <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
+                          <MessageOuter>
+                            <label>Message</label>
+                            <textarea>Gives us some details</textarea>
+                            <p>Please provide specific and clear message</p>
+                            <div className='button-list'>
+                              <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                              <GradientBtn>Report</GradientBtn>
+                            </div>
+                          </MessageOuter>
+                        </Modal>
+                      </CustomDropdown>}
 
                   </NDRight>
                 </NDTop>
@@ -454,11 +456,11 @@ const NFTDetail = (props) => {
 
                     {/* nft bid */}
                     <TabPanel>
-                    <NoItemBox>
-                      <img src={NoBid} alt='' />
-                      <NIDesc>No bids yet.  Be the first to place a bid</NIDesc>
-                    </NoItemBox>
-                    {/* <Scrollbars style={{ height: 405 }}>
+                      <NoItemBox>
+                        <img src={NoBid} alt='' />
+                        <NIDesc>No bids yet.  Be the first to place a bid</NIDesc>
+                      </NoItemBox>
+                      {/* <Scrollbars style={{ height: 405 }}>
                       <OwnerOuter>
                         <OwnerLeft>
                           <div className='img-outer'>
@@ -471,98 +473,98 @@ const NFTDetail = (props) => {
                         </OwnerLeft>
                       </OwnerOuter>
                     </Scrollbars> */}
-                  </TabPanel>
+                    </TabPanel>
 
-                  <TabPanel> {/* nft owners */}
-                    {!props.nft ?
-                      <SiteLoader>
-                        <div className='loader-inner'>
-                          <div className='loader'></div>
-                          <p>Loading</p>
+                    <TabPanel> {/* nft owners */}
+                      {!props.nft ?
+                        <SiteLoader>
+                          <div className='loader-inner'>
+                            <div className='loader'></div>
+                            <p>Loading</p>
+                          </div>
+                        </SiteLoader> :
+                        // <Scrollbars style={{ height: 405 }}>
+                        <div>
+                          {props.nft.editions.length !== props.nft.edition &&
+                            <OwnerOuter>
+                              <OwnerLeft>
+                                <div className='img-outer'>
+                                  <img src={props.nft.ownerId.profile ? props.nft.ownerId.profile : UserIcon} alt='' />
+                                </div>
+                                <div>
+                                  <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                                  <OwnerDesc>{props.nft.edition - props.nft.nftSold}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
+                                </div>
+                              </OwnerLeft>
+                              <OwnerRight>
+                                {props.nft.ownerId.id !== props.user.id && props.nft.auctionStartDate < new Date().getTime() / 1000 &&
+                                  <GradientBtn onClick={() => {
+                                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                    else buyNFT(props.nft.nonce, Number(props.nft.nftSold + 1), props.nft.price)
+                                  }}
+                                  >Buy</GradientBtn>}
+                              </OwnerRight>
+                            </OwnerOuter>
+                          }
+                          {props.nft.editions.map((edition) => {
+                            return <OwnerOuter key={edition.id}>
+                              <OwnerLeft>
+                                <div className='img-outer'>
+                                  <img src={edition.ownerId.profile ? edition.ownerId.profile : UserIcon} alt='' />
+                                </div>
+                                <div>
+                                  <OwnerName>{edition.ownerId.name ? edition.ownerId.name : getCompactAddress(edition.walletAddress)}</OwnerName>
+                                  <OwnerDesc>
+                                    {edition.isOpenForSale ? <>{'1 on sale for '} <span>{edition.saleType.price} {'FAW '}</span></> : '1 not on sale '}
+                                    {edition.transactionId && <Link onClick={() => window.open(transactionLink + '/' + edition.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
+                                  </OwnerDesc>
+                                </div>
+                              </OwnerLeft>
+                              <OwnerRight>
+                                {edition.isOpenForSale && <GradientBtn
+                                  onClick={() => {
+                                    if (!props.authenticated.isLoggedIn) setOpenForth(true)
+                                    else buyNFT(edition.nonce, edition.edition, edition.saleType.price)
+                                  }}
+                                > Buy </GradientBtn>}
+                              </OwnerRight>
+                            </OwnerOuter>
+                          })}
+                          {/* </Scrollbars> */}
                         </div>
-                      </SiteLoader> :
-                      // <Scrollbars style={{ height: 405 }}>
-                      <div>
-                        {props.nft.editions.length !== props.nft.edition &&
-                          <OwnerOuter>
-                            <OwnerLeft>
-                              <div className='img-outer'>
-                                <img src={props.nft.ownerId.profile ? props.nft.ownerId.profile : UserIcon} alt='' />
-                              </div>
-                              <div>
-                                <OwnerName>{props.nft.ownerId.name}</OwnerName>
-                                <OwnerDesc>{props.nft.edition - props.nft.nftSold}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
-                              </div>
-                            </OwnerLeft>
-                            <OwnerRight>
-                              {props.nft.ownerId.id !== props.user.id && props.nft.auctionStartDate < new Date().getTime() / 1000 &&
-                                <GradientBtn onClick={() => {
-                                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                                  else buyNFT(props.nft.nonce, Number(props.nft.nftSold + 1), props.nft.price)
-                                }}
-                                >Buy</GradientBtn>}
-                            </OwnerRight>
-                          </OwnerOuter>
-                        }
-                        {props.nft.editions.map((edition) => {
-                          return <OwnerOuter key={edition.id}>
-                            <OwnerLeft>
-                              <div className='img-outer'>
-                                <img src={edition.ownerId.profile ? edition.ownerId.profile : UserIcon} alt='' />
-                              </div>
-                              <div>
-                                <OwnerName>{edition.ownerId.name ? edition.ownerId.name : getCompactAddress(edition.walletAddress)}</OwnerName>
-                                <OwnerDesc>
-                                  {edition.isOpenForSale ? <>{'1 on sale for '} <span>{edition.saleType.price} {'FAW '}</span></> : '1 not on sale '}
-                                  {edition.transactionId && <Link onClick={() => window.open(transactionLink + '/' + edition.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
-                                </OwnerDesc>
-                              </div>
-                            </OwnerLeft>
-                            <OwnerRight>
-                              {edition.isOpenForSale && <GradientBtn
-                                onClick={() => {
-                                  if (!props.authenticated.isLoggedIn) setOpenForth(true)
-                                  else buyNFT(edition.nonce, edition.edition, edition.saleType.price)
-                                }}
-                              > Buy </GradientBtn>}
-                            </OwnerRight>
-                          </OwnerOuter>
-                        })}
-                        {/* </Scrollbars> */}
-                      </div>
-                    }
-                  </TabPanel>
+                      }
+                    </TabPanel>
 
-                  <TabPanel> {/* nft history */}
+                    <TabPanel> {/* nft history */}
 
-                    {!props.history ?
-                      <SiteLoader>
-                        <div className='loader-inner'>
-                          <div className='loader'></div>
-                          <p>Loading</p>
+                      {!props.history ?
+                        <SiteLoader>
+                          <div className='loader-inner'>
+                            <div className='loader'></div>
+                            <p>Loading</p>
+                          </div>
+                        </SiteLoader> :
+                        // <Scrollbars style={{ height: 405 }}>
+                        <div>
+                          {props.history && props.history.map((history) => {
+                            return <OwnerOuter key={history.id}>
+                              <OwnerLeft>
+                                <div className='img-outer'>
+                                  <img src={history.ownerId.profile ? history.ownerId.profile : UserIcon} alt='' />
+                                </div>
+                                <div>
+                                  {<OwnerName>{history.text} by <span>{history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}</span> </OwnerName>}
+                                  <OwnerDesc>{getNFTTime(history.createdAt, true)}</OwnerDesc>
+                                  {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
+                                </div>
+                              </OwnerLeft>
+                            </OwnerOuter>
+                          })}
+                          {/* </Scrollbars> */}
                         </div>
-                      </SiteLoader> :
-                      // <Scrollbars style={{ height: 405 }}>
-                      <div>
-                        {props.history && props.history.map((history) => {
-                          return <OwnerOuter key={history.id}>
-                            <OwnerLeft>
-                              <div className='img-outer'>
-                                <img src={history.ownerId.profile ? history.ownerId.profile : UserIcon} alt='' />
-                              </div>
-                              <div>
-                                {<OwnerName>{history.text} by <span>{history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}</span> </OwnerName>}
-                                <OwnerDesc>{getNFTTime(history.createdAt, true)}</OwnerDesc>
-                                {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
-                              </div>
-                            </OwnerLeft>
-                          </OwnerOuter>
-                        })}
-                        {/* </Scrollbars> */}
-                      </div>
-                    }
+                      }
 
-                  </TabPanel>
+                    </TabPanel>
 
                   </Tabs>
                 </ActFilterList>
@@ -571,17 +573,17 @@ const NFTDetail = (props) => {
 
                 {/* NFT Action Buttons */}
                 {/* {props.nft?.saleState === 'SOLD' && <GradientB  tn disabled={true}>Sold Out</GradientBtn>} */}
-                
+
                 {props.nft?.saleState !== 'SOLD' &&
                   <GradientBtn onClick={() => {
                     if (!props.authenticated.isLoggedIn) setOpenForth(true)
                     else buyNFT(buyEdition.nonce, buyEdition.edition, buyEdition.price)
-                  }}>Buy for {buyEdition.price} FAW</GradientBtn> }
+                  }}>Buy for {buyEdition.price} FAW</GradientBtn>}
 
-                {reSaleEdition 
+                {reSaleEdition
                   && <WhiteBorderBtn onClick={() => setIsListItem(true)}>List item for sale</WhiteBorderBtn>}
                 {props.nft?.saleState !== 'SOLD' && !reSaleEdition && <WhiteBorderBtn>Place a bid</WhiteBorderBtn>}
-                
+
                 {isListItem && <PutOnSaleModal onSuccess={() => onSuccess()} onClose={() => setIsListItem(false)} user={props.user} nft={props.nft} isOpen={true} authenticated={props.authenticated} />}
 
                 {/* <GreenAlertRow className='blue-alert-text'>No bids recieved yet</GreenAlertRow>
@@ -598,11 +600,11 @@ const NFTDetail = (props) => {
                   <MessageOuter>
                     <div className='button-list'>
                       <WhiteBorderBtn onClick={() => setOpenForth(false)}>Cancel</WhiteBorderBtn>
-                      <GradientBtn onClick={() => {setOpenForth(false); setOpenLogin(true)}}>Sign in with Wallet</GradientBtn>
+                      <GradientBtn onClick={() => { setOpenForth(false); setOpenLogin(true) }}>Sign in with Wallet</GradientBtn>
                     </div>
                   </MessageOuter>
                 </Modal>
-                {/* {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />} */}
+
 
                 <Modal open={openConfirm} onClose={() => setOpenConfirm(!openConfirm)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
@@ -694,6 +696,7 @@ const NFTDetail = (props) => {
           </EPOuter>
         }
       </Gs.Container>
+      {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
     </>
   );
 }
@@ -909,7 +912,7 @@ const ActFilterList = styled(FlexDiv)`
   .react-tabs{width:100%;}
   .react-tabs__tab-list{border:none; margin:0px 0px 40px;
     ${Media.sm} {
-      display:flex; flex-wrap:nowrap; overflow-x:auto;
+      display:flex; flex-wrap:nowrap; overflow-x:auto; overflow-y: hidden;
     }
   }
   .react-tabs__tab{font-weight: bold; background:none; border-radius:0px; font-size: 16px; line-height: 24px; color: #767676; padding:1px 18px; border:none; border-bottom:2px solid #767676;
@@ -934,6 +937,9 @@ const OwnerLeft = styled(FlexDiv)`
   flex-wrap:nowrap;
   .img-outer{width:40px; height:40px; overflow:hidden; border-radius:50%; margin-right:25px;
     img{width:100%; height:100%; object-fit:cover;}
+    ${Media.xs} {
+      margin-right:10px;
+    }
   }
 `;
 
@@ -999,7 +1005,12 @@ const MessageOuter = styled.div`
   }
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 32px;}
   .button-list{text-align:right; margin-top:32px;
-    button:last-child{margin-right:0px;}
+    button{
+      ${Media.xs} {
+        margin:0px 3px; padding-left: 10px; padding-right:10px;
+      }
+      :last-child{margin-right:0px;}
+    }  
   }
 `;
 
@@ -1069,7 +1080,7 @@ const SiteLoader = styled(FlexDiv)`
 `;
 
 const NoItemBox = styled.div`
-  background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center;
+  background: #2F2F2F; border-radius: 5px; padding:35px; max-width:483px; width:100%; margin:70px auto; text-align:center; box-sizing: border-box;
   img{margin-bottom:20px;}
   ${Media.sm} {
     max-width:400px;
