@@ -29,6 +29,8 @@ import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import EditIcon from '../assets/images/edit-icon.png';
 import CopyIcon from '../assets/images/copy.png';
+import CreatorCImg from '../assets/images/creator-cover.jpg';
+import CreatorPImg from '../assets/images/creator-profile.png';
 import TwitterIcon1 from '../assets/images/twitter.png';
 import FacebookIcon1 from '../assets/images/facebook.png';
 import ExclaimIcon from '../assets/images/exclamation.png';
@@ -238,7 +240,7 @@ function MyProfile(props) {
     <>
       <ProfileCover>
         <div className='img-outer'>
-          <img src={props.user?.cover} alt='' />
+          <img src={props.user?.cover ? props.user.cover: CreatorCImg} alt='' />
           <div className='overlay'>
             {loading && <SiteLoader>
               <div className='loader-inner'>
@@ -269,7 +271,7 @@ function MyProfile(props) {
       <ProfileRow>
         <PRLeft className='desktop-profile'>
           <div className='image-outer'>
-            <img src={props.user?.profile} alt='' />
+            <img src={props.user?.profile ? props.user.profile: CreatorPImg} alt='' />
             <div className='overlay'>
               {/* <SiteLoader>
                 <div className='loader-inner'>
