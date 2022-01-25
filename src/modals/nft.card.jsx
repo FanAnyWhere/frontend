@@ -92,7 +92,7 @@ const NFT = (props) => {
                   <div>
                     {nft.popular > 0 && <img src={FireIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Trending" />}
                     {nft.saleState === 'AUCTION' && nft.auctionStartDate < new Date().getTime() / 1000 > nft.auctionEndDate && nft.auctionEndDate &&
-                      <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Live Auction" />}
+                      <img src={TimerIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="LiveAuction" />}
                     {/* <img src={SendIcon} alt='' data-place="top" data-className="wallettooltip" data-tip="Featured" /> */}
                   </div>
 
