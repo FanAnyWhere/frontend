@@ -802,7 +802,7 @@ const UPButton = styled.button`
  border: 1px solid #767676; box-sizing: border-box; border-radius: 50%; height: 40px; width: 40px; margin-left:10px; cursor:pointer; color:#fff; font-size:22px; display:flex; align-items:center; justify-content:center;
  :hover{opacity:0.8;}
  &.large{width:75px; border-radius:20px; font-size:16px; line-height:24px; font-family: 'Roboto', sans-serif;
-    svg{font-size:22px; line-height:24px;}
+    svg{font-size:22px; line-height:24px; margin-right:2px;}
     ${Media.md2} {
       margin-left:0px;
     }
@@ -917,6 +917,7 @@ const ActFilterList = styled(FlexDiv)`
   }
   .react-tabs__tab{font-weight: bold; background:none; border-radius:0px; font-size: 16px; line-height: 24px; color: #767676; padding:1px 18px; border:none; border-bottom:2px solid #767676;
     &.react-tabs__tab--selected{color:#fff; border-color:#fff;}
+    :hover{color:#824CF5; border-color:#824CF5;}
     :focus{box-shadow:none;
       :after{display:none;}
     }

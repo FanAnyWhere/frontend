@@ -158,6 +158,7 @@ const ActFilterList = styled(FlexDiv)`
   justify-content:flex-start; margin-bottom:54px;
   a{font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; padding:1px 18px; border-bottom:2px solid #767676;
     &.active{color:#fff; border-color:#fff;}
+    :hover{color:#824CF5; border-color:#824CF5;}
     ${Media.md} {
       padding:1px 15px;
     }
