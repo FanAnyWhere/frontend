@@ -29,6 +29,8 @@ import UpArrow from '../assets/images/up-arrow.png';
 import ArrowUp from '../assets/images/arrow-up.png';
 import SearchWhiteIcon from '../assets/images/search-white.png';
 import EditIcon from '../assets/images/edit-icon.png';
+import CreatorCImg from '../assets/images/creator-cover.jpg';
+import CreatorPImg from '../assets/images/creator-profile.png';
 // import CopyIcon from '../assets/images/copy.png';
 // import TwitterIcon from '../assets/images/twitter.png';
 // import FacebookIcon from '../assets/images/facebook.png';
@@ -180,13 +182,13 @@ function CelebrityDetails(props) {
 
       <ProfileCover>
         <div className='img-outer'>
-          <img src={props.user?.cover} alt='' />
+          <img src={props.user?.cover ? props.user.cover : CreatorCImg} alt='' />
         </div>
       </ProfileCover>
       <ProfileRow>
         <PRLeft className='desktop-profile'>
           <div className='image-outer'>
-            <img src={props.user?.profile} alt='' />
+            <img src={props.user?.profile ? props.user.profile : CreatorPImg} alt='' />
           </div>
         </PRLeft>
         <PRRight>
@@ -194,7 +196,7 @@ function CelebrityDetails(props) {
             <MobileProfileOuter>
               <PRLeft className='mobile-profile'>
                 <div className='image-outer'>
-                  <img src={props.user?.profile} alt='' />
+                  <img src={props.user?.profile ? props.user.profile : CreatorPImg} alt='' />
                   <div className='overlay'></div>
                 </div>
               </PRLeft>
