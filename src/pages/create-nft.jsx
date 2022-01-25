@@ -376,7 +376,7 @@ const CreateNFT = (props) => {
                     <input type='text' alt='' placeholder='e.g. awesome collection' />
                   </FormBox>
                   <div className='button-list'>
-                    <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                    <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
                     <GradientBtn>Report</GradientBtn>
                   </div>
                 </MessageOuter>
@@ -487,7 +487,7 @@ const CreateNFT = (props) => {
               <GreyTextInfo>Suggested: 0%, 10%, 20%, 30%. Maximum is 50%</GreyTextInfo>
             </FormBox> */}
             <EqualBtnList>
-              <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+              <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
               <GradientBtn onClick={() => onSubmit()}>Create Item</GradientBtn>
             </EqualBtnList>
           </CNLeft>
@@ -605,8 +605,12 @@ const GradientBtn = styled.button`
 `;
 
 const WhiteBorderBtn = styled.button`
-  border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
-  :hover{border-color:#0FBFFC;}
+  background: #FFFFFF; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:2px;  box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  span{background-color:#1d1d1d; border-radius: 2px; padding:6px 14px; width:100%;}  
+  :hover{
+    background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+  }
 `;
 
 const UploadBox = styled(FlexDiv)`

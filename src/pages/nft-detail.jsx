@@ -294,7 +294,7 @@ const NFTDetail = (props) => {
                         <textarea>Gives us some details</textarea>
                         <p>Please provide specific and clear message</p>
                         <div className='button-list'>
-                          <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                          <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
                           <GradientBtn>Report</GradientBtn>
                         </div>
                       </MessageOuter>
@@ -395,7 +395,7 @@ const NFTDetail = (props) => {
                             <textarea>Gives us some details</textarea>
                             <p>Please provide specific and clear message</p>
                             <div className='button-list'>
-                              <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                              <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
                               <GradientBtn>Report</GradientBtn>
                             </div>
                           </MessageOuter>
@@ -581,8 +581,8 @@ const NFTDetail = (props) => {
                   }}>Buy for {buyEdition.price} FAW</GradientBtn>}
 
                 {reSaleEdition
-                  && <WhiteBorderBtn onClick={() => setIsListItem(true)}>List item for sale</WhiteBorderBtn>}
-                {props.nft?.saleState !== 'SOLD' && !reSaleEdition && <WhiteBorderBtn>Place a bid</WhiteBorderBtn>}
+                  && <WhiteBorderBtn onClick={() => setIsListItem(true)}><span>List item for sale</span></WhiteBorderBtn>}
+                {props.nft?.saleState !== 'SOLD' && !reSaleEdition && <WhiteBorderBtn><span>Place a bid</span></WhiteBorderBtn>}
 
                 {isListItem && <PutOnSaleModal onSuccess={() => onSuccess()} onClose={() => setIsListItem(false)} user={props.user} nft={props.nft} isOpen={true} authenticated={props.authenticated} />}
 
@@ -599,7 +599,7 @@ const NFTDetail = (props) => {
                   <ReportDesc>Please Sign in with wallet to place a bid for this item. </ReportDesc>
                   <MessageOuter>
                     <div className='button-list'>
-                      <WhiteBorderBtn onClick={() => setOpenForth(false)}>Cancel</WhiteBorderBtn>
+                      <WhiteBorderBtn onClick={() => setOpenForth(false)}><span>Cancel</span></WhiteBorderBtn>
                       <GradientBtn onClick={() => { setOpenForth(false); setOpenLogin(true) }}>Sign in with Wallet</GradientBtn>
                     </div>
                   </MessageOuter>
@@ -614,7 +614,7 @@ const NFTDetail = (props) => {
                   <ReportDesc>Do you confirm the transaction ? </ReportDesc>
                   <MessageOuter>
                     <div className='button-list'>
-                      <WhiteBorderBtn onClick={() => setOpenConfirm(!openConfirm)}>Cancel</WhiteBorderBtn>
+                      <WhiteBorderBtn onClick={() => setOpenConfirm(!openConfirm)}><span>Cancel</span></WhiteBorderBtn>
                       <GradientBtn onClick={() => buyNFT()}>Buy</GradientBtn>
                     </div>
                   </MessageOuter>
@@ -658,12 +658,12 @@ const NFTDetail = (props) => {
                   <GradientBtn className='full'>Make Payment</GradientBtn>
                 </Modal>
 
-                {/* <WhiteBorderBtn className='full'>Remind me when Available</WhiteBorderBtn> */}
+                {/* <WhiteBorderBtn className='full'><span>Remind me when Available</span></WhiteBorderBtn> */}
                 {/* <GradientBtn>Edit Item</GradientBtn>
-                <WhiteBorderBtn onClick={() => setOpenSix(true)}>List item for Sale</WhiteBorderBtn> */}
+                <WhiteBorderBtn onClick={() => setOpenSix(true)}><span>List item for Sale</span></WhiteBorderBtn> */}
 
                 {/* <GradientBtn onClick={() => setOpenThird(true)}>Reject Bid</GradientBtn>
-                <WhiteBorderBtn onClick={() => setOpenSecond(true)}>Accept Bid for 000 FAW</WhiteBorderBtn> */}
+                <WhiteBorderBtn onClick={() => setOpenSecond(true)}><span>Accept Bid for 000 FAW</span></WhiteBorderBtn> */}
 
                 <Modal open={openThird} onClose={() => setOpenThird(false)} center closeIcon={closeIcon} classNames={{
                   overlay: 'customOverlay',
@@ -673,7 +673,7 @@ const NFTDetail = (props) => {
                   <ReportDesc>Reject bid of <b>00 FAW</b> from <b>Bidder name Lorem</b> for the <b>Art Name Lorem Ipsum</b>. </ReportDesc>
                   <MessageOuter>
                     <div className='button-list'>
-                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                      <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
                       <GradientBtn>Confirm</GradientBtn>
                     </div>
                   </MessageOuter>
@@ -686,7 +686,7 @@ const NFTDetail = (props) => {
                   <ReportDesc>Accept bid of <b>00 FAW</b> from <b>Bidder name Lorem</b> for the <b>Art Name Lorem Ipsum</b>. </ReportDesc>
                   <MessageOuter>
                     <div className='button-list'>
-                      <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                      <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
                       <GradientBtn>Confirm</GradientBtn>
                     </div>
                   </MessageOuter>
@@ -764,8 +764,12 @@ const EPRight = styled.div`
 `;
 
 const WhiteBorderBtn = styled.button`
-  border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
-  :hover{border-color:#0FBFFC;}
+  background: #FFFFFF; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:2px;  box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  span{background-color:#1d1d1d; border-radius: 2px; padding:6px 14px; width:100%;}  
+  :hover{
+    background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+  }
   &.full{width:100%; margin:0px;}
 `;
 
@@ -1005,12 +1009,16 @@ const MessageOuter = styled.div`
     :focus{outline:none;}
   }
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 32px;}
-  .button-list{text-align:right; margin-top:32px;
+  .button-list{text-align:right; margin-top:32px; display:flex; align-items:center; justify-content:flex-end;
+    ${Media.xs} {
+      display:block;
+    }
     button{
       ${Media.xs} {
-        margin:0px 3px; padding-left: 10px; padding-right:10px;
+        margin:5px 0px; width:100%;
       }
       :last-child{margin-right:0px;}
+      span{background:#2f2f2f;}
     }  
   }
 `;

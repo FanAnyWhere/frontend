@@ -660,8 +660,15 @@ const CustomAccordian = styled.div`
 `;
 
 const WhiteBorderBtn = styled.button`
-  border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
+  background: #FFFFFF; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:2px;  box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  span{background-color:#1d1d1d; border-radius: 2px; padding:6px 14px; width:100%;}  
+  :hover{
+    background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+  }
+  &.ver2{background: transparent; border:2px solid #fff; margin:0 auto; padding:6px 14px;
   :hover{border-color:#0FBFFC;}
+  }
 `;
 
 const FilterTags = styled(FlexDiv)`

@@ -214,7 +214,7 @@ function CelebrityDetails(props) {
 
                 <GradientBtn className={props.follow.isFollowed ? 'm0 white-border' : 'm0'}
                   onClick={() => followToggler(id)}>
-                  {loading ? <div className="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}
+                  <span>{loading ? <div className="btn-loader"></div> : props.follow.isFollowed ? 'Unfollow' : 'Follow'}</span>
                 </GradientBtn>
 
                 <CustomDropdown className='custom-width' ref={shareRef}>
@@ -261,7 +261,7 @@ function CelebrityDetails(props) {
                       <textarea>Gives us some details</textarea>
                       <p>Please provide specific and clear message</p>
                       <div className='button-list'>
-                        <WhiteBorderBtn>Cancel</WhiteBorderBtn>
+                        <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
                         <GradientBtn>Report</GradientBtn>
                       </div>
                     </MessageOuter>
@@ -346,11 +346,10 @@ function CelebrityDetails(props) {
           <NFTlistLeft className={filterOpen ? 'active' : ''}>
             <CustomAccordian>
               <Collapsible trigger="Status">
-                <WhiteBorderBtn>On Auction</WhiteBorderBtn>
-                <WhiteBorderBtn>Buy Now</WhiteBorderBtn>
-                <WhiteBorderBtn>New</WhiteBorderBtn>
-                <WhiteBorderBtn>Ending Soon</WhiteBorderBtn>
-                <WhiteBorderBtn>Has Offers</WhiteBorderBtn>
+                <FilterTags>
+                  <Link className='active' to='#'><span>On Auction</span></Link>
+                  <Link className='' to='#'><span>Buy Now</span></Link>
+                </FilterTags>
               </Collapsible>
               <Collapsible trigger="Price">
                 <CustomDropdown>
@@ -442,11 +441,13 @@ function CelebrityDetails(props) {
                 </CustomDropdown>
               </Collapsible>
               <Collapsible trigger="Collections">
-                <WhiteBorderBtn>Collection 1</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 2</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 3</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 4</WhiteBorderBtn>
-                <WhiteBorderBtn>Collection 5</WhiteBorderBtn>
+                <FilterTags>
+                  <Link className='active' to='#'><span>Collection 1</span></Link>
+                  <Link className='' to='#'><span>Collection 2</span></Link>
+                  <Link className='' to='#'><span>Collection 3</span></Link>
+                  <Link className='' to='#'><span>Collection 4</span></Link>
+                  <Link className='' to='#'><span>Collection 5</span></Link>
+                </FilterTags>
               </Collapsible>
             </CustomAccordian>
           </NFTlistLeft>
@@ -596,9 +597,12 @@ const PTitle = styled.div`
 
 const PRTop = styled(FlexDiv)`
   align-items:flex-start; justify-content:space-between; margin-bottom:25px;
-  a.edit-profile{border: 2px solid #fff; box-sizing: border-box; border-radius: 2px; padding:7px 16px; font-weight: bold; 
+  a.edit-profile{background: #FFFFFF; box-sizing: border-box; border-radius: 2px; padding:2px; font-weight: bold; display: flex; align-items: center; justify-content: center;
     font-size: 16px; line-height: 24px; color: #FFFFFF; 
-    :hover{opacity:0.9;}
+    span{background-color:#1d1d1d; border-radius: 2px; padding:7px 16px; width:100%;}  
+    :hover{
+      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+    }
   }
   .PTT-right{display:flex; align-items:flex-start;
     ${Media.sm} {
@@ -982,8 +986,12 @@ const PRightpanel = styled.div`
 const GradientBtn = styled.button`
   background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:8px 16px;
   :hover{background: linear-gradient(89.77deg, #824CF5 -92.5%, #0FBFFC 103.7%);}
-  &.white-border{border: 2px solid #fff; background:none; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
-    :hover{border-color:#0FBFFC;}
+  &.white-border{background: #FFFFFF !important; background:none; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:2px;
+    display: flex; align-items: center; justify-content: center;
+    span{background-color:#1d1d1d; border-radius: 2px; padding:6px 14px; width:100%; height: -webkit-fill-available; display: flex; align-items: center; justify-content: center;}  
+    :hover{
+      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%) !important;   
+    }
   }
   .btn-loader {
     border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; margin:0 auto; width: 10px; height: 10px; animation: spin 0.5s linear infinite;
@@ -1035,8 +1043,13 @@ const CustomAccordian = styled.div`
 `;
 
 const WhiteBorderBtn = styled.button`
-  border: 2px solid #fff; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:6px 14px;
-  :hover{border-color:#0FBFFC;}
+  background: #FFFFFF; border-radius: 2px; margin:0px 8px; font-weight: bold; font-size: 16px; line-height: 24px; color:#fff; padding:2px; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  span{background-color:#1d1d1d; border-radius: 2px; padding:6px 14px; width:100%;}  
+  :hover{
+    background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+  }
+  &.full{width:100%; margin:0px;}
 `;
 
 const FormGroup = styled(FlexDiv)`
@@ -1094,8 +1107,31 @@ const MessageOuter = styled.div`
     :focus{outline:none;}
   }
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 32px;}
-  .button-list{text-align:right;
-    button:last-child{margin-right:0px;}
+  .button-list{text-align:right; margin-top:32px; display:flex; align-items:center; justify-content:flex-end;
+    ${Media.xs} {
+      display:block;
+    }
+    button{
+      ${Media.xs} {
+        margin:5px 0px; width:100%;
+      }
+      :last-child{margin-right:0px;}
+      span{background:#2f2f2f;}
+    }  
+  }
+`;
+
+const FilterTags = styled(FlexDiv)`
+  justify-content:flex-start;
+  a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; padding:1px; margin:0px 10px 10px 0px; box-sizing: border-box; border-radius: 20px;
+    background: #AEAEAE; display: flex; align-items: center; justify-content: center;
+    span{background-color:#1d1d1d; border-radius: 20px; padding: 6px 14px;}  
+    :hover{
+      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+    }
+    &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); color:#fff;
+      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);}
+    }
   }
 `;
 
