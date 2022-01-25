@@ -8,15 +8,15 @@ import CreatorPImg from '../assets/images/creator-profile.png';
 const collection = (props) => {
 
   let { collection } = props
-  
+
   return <div className='item' key={collection.id}>
-    <Link to={'/marketplace?collectionId='+collection.id+'&name='+collection.name}>
+    <Link to={'/marketplace?collectionId=' + collection.id + '&name=' + collection.name}>
       <CollectionCover>
-        <img src={collection.logo ? collection.logo: CreatorPImg} alt='' />
+        <img src={collection.logo ? collection.logo : CreatorCImg} alt='' />
       </CollectionCover>
       <CollectionBottom>
         <ProfilePicture>
-          <img src={collection.ownerId.profile ? collection.ownerId.profile : CreatorCImg} alt='' />
+          <img src={collection.ownerId.profile ? collection.ownerId.profile : CreatorPImg} alt='' />
         </ProfilePicture>
         <CCName>{collection.name}</CCName>
         <CCBy>by  {' '}
@@ -62,7 +62,8 @@ const CCBy = styled.div`
 `;
 
 const CCText = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; min-height:48px; overflow:hidden;
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; min-height:48px; overflow:hidden; display: -webkit-box;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 `;
 
 const CollectionRow = styled(FlexDiv)`

@@ -518,9 +518,9 @@ const ProfileCover = styled.div`
     .overlay{ width:100%; height:250px; position:absolute; left:0px; top:0px;
       button{position:absolute; right:20px; bottom:20px; margin:0px; opacity:0;}
     }
-    :hover{ background-color:#2F2F2F;
-      button{opacity:1;}
-    }
+    // :hover{ background-color:#2F2F2F;
+    //   button{opacity:1;}
+    // }
   }
   ${Media.md} {
     margin:74px 20px 15px; 
@@ -557,9 +557,9 @@ const PRLeft = styled.div`
       }
       img{width:18px; height:18px; cursor:pointer; opacity:0;}
     }
-    :hover{ background-color:#767676;
-      img{opacity:1;}
-    }
+    // :hover{ background-color:#767676;
+    //   img{opacity:1;}
+    // }
   }
   &.desktop-profile{
     ${Media.md} {
