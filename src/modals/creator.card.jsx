@@ -64,7 +64,7 @@ const CollectionBottom = styled.div`
 
 const GradientLink = styled.div`
   margin-top:6px; font-weight: bold; font-size: 12px; line-height: 16px; background: linear-gradient(92.95deg, #824CF5 47%, #0FBFFC 53%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  :hover{opacity:0.9;}
+  :hover{background: linear-gradient(92.95deg, #0FBFFC 47%, #0FBFFC 53%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
 `;
 
 const CCName = styled.div`
