@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import CreatorCImg from '../assets/images/creator-cover.jpg';
+import CreatorPImg from '../assets/images/creator-profile.png';
+
+
 const collection = (props) => {
+
   let { collection } = props
   
-
   return <div className='item' key={collection.id}>
     <Link to={'/marketplace?collectionId='+collection.id+'&name='+collection.name}>
       <CollectionCover>
-        <img src={collection.logo} alt='' />
+        <img src={collection.logo ? collection.logo: CreatorPImg} alt='' />
       </CollectionCover>
       <CollectionBottom>
         <ProfilePicture>
-          <img src={collection.ownerId.profile} alt='' />
+          <img src={collection.ownerId.profile ? collection.ownerId.profile : CreatorCImg} alt='' />
         </ProfilePicture>
         <CCName>{collection.name}</CCName>
         <CCBy>by  {' '}

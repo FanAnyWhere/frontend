@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import FeatureIcon from '../assets/images/feature-icon.png';
 import CreatorUser from '../assets/images/creator-user.png'
-import UserIcon from '../assets/images/user-img.png';
+import UserIcon from '../assets/images/creator-profile.png';
 import Media from '../theme/media-breackpoint';
 import { AiOutlineHeart } from 'react-icons/ai'
 import FireIcon from '../assets/images/fire.png'
