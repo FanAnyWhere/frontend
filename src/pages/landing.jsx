@@ -17,6 +17,7 @@ import Timer from '../helper/timer';
 import VerifiedIcon from '../assets/images/verified.png';
 import SendIcon from '../assets/images/send.png';
 import TimerIcon from '../assets/images/timer.png';
+import LoaderGIF from '../assets/images/loader.gif';
 
 import NFT from '../modals/nft.card';
 import Collection from '../modals/collection.card';
@@ -126,7 +127,7 @@ const Landing = (props) => {
               <TCBox key={creator.id}>
                 <Link to={'/celebrity/' + creator.id} >
                   {/* <TC1>{i + 1}</TC1> */}
-                  <TC2><img src={creator.profile?creator.profile:UserIcon} alt='' /></TC2>
+                  <TC2><img src={creator.profile ? creator.profile : UserIcon} alt='' /></TC2>
                   <TC3>
                     <h4>{creator.name}</h4>
                     <p>{getCompactAddress(creator.walletAddress)}</p>
@@ -149,7 +150,7 @@ const Landing = (props) => {
           {/* For Loading... */}
           {/* <SiteLoader>
             <div className='loader-inner'>
-              <div className="loader"></div>
+              <img src={LoaderGIF} alt='' />
               <p>Loading</p>
             </div>
           </SiteLoader> */}
@@ -157,7 +158,7 @@ const Landing = (props) => {
           {!props.TopNFTs ?
             <SiteLoader>
               <div className='loader-inner'>
-                <div className="loader"></div>
+                <img src={LoaderGIF} alt='' />
                 <p>Loading</p>
               </div>
             </SiteLoader> :
@@ -204,7 +205,7 @@ const Landing = (props) => {
           {!props.LiveAuctionNFTs ?
             <SiteLoader>
               <div className='loader-inner'>
-                <div className="loader"></div>
+                <img src={LoaderGIF} alt='' />
                 <p>Loading</p>
               </div>
             </SiteLoader> :
@@ -228,7 +229,7 @@ const Landing = (props) => {
       <Gs.Container>
         {!props.TopCollections && <SiteLoader>
           <div className='loader-inner'>
-            <div className="loader"></div>
+            <img src={LoaderGIF} alt='' />
             <p>Loading</p>
           </div>
         </SiteLoader>}
@@ -347,7 +348,7 @@ const Landing = (props) => {
       <Gs.Container>
         {!props.TopCreators && <SiteLoader>
           <div className='loader-inner'>
-            <div className="loader"></div>
+            <img src={LoaderGIF} alt='' />
             <p>Loading</p>
           </div>
         </SiteLoader>}
@@ -368,7 +369,7 @@ const Landing = (props) => {
           <NDA> No data available</NDA>
           {/* <SiteLoader>
             <div className='loader-inner'>
-              <div className="loader"></div>
+              <img src={LoaderGIF} alt='' />
               <p>Loading</p>
             </div>
           </SiteLoader> */}
@@ -1136,13 +1137,14 @@ const SiteLoader = styled(FlexDiv)`
   margin:30px 0px;
   .loader-inner{
     text-align:center;
-    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
-      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    img{width:50px; height:50px;}
+    // .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
+    //   height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+    // }
+    // @keyframes spin {
+    //   0% { transform: rotate(0deg); }
+    //   100% { transform: rotate(360deg); }
+    // }
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
 `;

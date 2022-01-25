@@ -68,6 +68,7 @@ const FlexDiv = styled.div`
 
 const Loader = styled(FlexDiv)`
   height:100vh;
+  img{width:64px; height:64px;}
 `;
 
 

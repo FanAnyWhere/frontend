@@ -12,6 +12,7 @@ import RImg from '../assets/images/img1.jpg';
 import GreenIcon from '../assets/images/green-icon.png';
 import GridIcon from '../assets/images/grid.png';
 import ListIcon from '../assets/images/list.png';
+import LoaderGIF from '../assets/images/loader.gif';
 
 
 import Creator from '../modals/creator.card';
@@ -88,7 +89,7 @@ const Creators = (props) => {
 
         {!props.creators && <SiteLoader>
           <div className='loader-inner'>
-            <div className="loader"></div>
+            <img src={LoaderGIF} alt='' />
             <p>Loading</p>
           </div>
         </SiteLoader>}
@@ -310,13 +311,7 @@ const SiteLoader = styled(FlexDiv)`
   height:calc(100vh - 650px);
   .loader-inner{
     text-align:center;
-    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
-      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    img{width:50px; height:50px;}
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
 `;

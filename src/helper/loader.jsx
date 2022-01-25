@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import LoaderGIF from '../assets/images/loader.gif'
 
 const Loader = () => {
-    return (
-        <Loading>
-          <img src={LoaderGIF} alt='' />
-        </Loading>
-    )
+  return (
+    <Loading>
+      <img src={LoaderGIF} alt='' />
+    </Loading>
+  )
 }
 
 const FlexDiv = styled.div`
@@ -15,6 +15,7 @@ const FlexDiv = styled.div`
 
 const Loading = styled(FlexDiv)`
   height:100vh;
+  img{width:64px; height:64px;}
 `;
 
 export default Loader

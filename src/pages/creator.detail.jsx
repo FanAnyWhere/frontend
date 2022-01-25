@@ -483,7 +483,7 @@ function CelebrityDetails(props) {
 
             {!props.NFTs ? <SiteLoader>
               <div className='loader-inner'>
-                <div className="loader"></div>
+                <img src={LoaderGIF} alt='' />
                 <p>Loading</p>
               </div>
             </SiteLoader> :
@@ -1179,13 +1179,7 @@ const SiteLoader = styled(FlexDiv)`
   height:calc(100vh - 650px);
   .loader-inner{
     text-align:center;
-    .loader{margin:0 auto; border: 2px dotted #f3f3f3; border-top: 2px dotted #824CF5; border-left: 2px dotted #824CF5; border-radius: 50%; width: 30px;
-      height: 30px; animation: spin 0.5s linear infinite; background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    img{width:50px; height:50px;}
     p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
   }
 `;
@@ -1193,7 +1187,7 @@ const SiteLoader = styled(FlexDiv)`
 
 const Loader = styled(FlexDiv)`
   height:100vh; position:fixed; top:0; left:0; right:0; z-index:99; background-color: #2F2F2F; 
-  // opacity: 0.75; backdrop-filter: blur(4px);
+  img{width:64px; height:64px;}
 `;
 
 
