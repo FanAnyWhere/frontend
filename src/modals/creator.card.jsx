@@ -72,7 +72,7 @@ const CCName = styled.div`
 `;
 
 const CCBy = styled.div`
-  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 6px;  display: -webkit-box;
+  font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 6px; display: -webkit-box;
   -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   a{color: #F6F6F6; text-decoration:underline;}
 `;
