@@ -347,8 +347,8 @@ function CelebrityDetails(props) {
             <CustomAccordian>
               <Collapsible trigger="Status">
                 <FilterTags>
-                  <Link className='active' to='#'><span>On Auction</span></Link>
-                  <Link className='' to='#'><span>Buy Now</span></Link>
+                  <Link className='active' to='#'><span><span className='g-text'>On Auction</span></span></Link>
+                  <Link className='' to='#'><span><span className='g-text'>Buy Now</span></span></Link>
                 </FilterTags>
               </Collapsible>
               <Collapsible trigger="Price">
@@ -442,11 +442,11 @@ function CelebrityDetails(props) {
               </Collapsible>
               <Collapsible trigger="Collections">
                 <FilterTags>
-                  <Link className='active' to='#'><span>Collection 1</span></Link>
-                  <Link className='' to='#'><span>Collection 2</span></Link>
-                  <Link className='' to='#'><span>Collection 3</span></Link>
-                  <Link className='' to='#'><span>Collection 4</span></Link>
-                  <Link className='' to='#'><span>Collection 5</span></Link>
+                  <Link className='active' to='#'><span><span className='g-text'>Collection 1</span></span></Link>
+                  <Link className='' to='#'><span><span className='g-text'>Collection 2</span></span></Link>
+                  <Link className='' to='#'><span><span className='g-text'>Collection 3</span></span></Link>
+                  <Link className='' to='#'><span><span className='g-text'>Collection 4</span></span></Link>
+                  <Link className='' to='#'><span><span className='g-text'>Collection 5</span></span></Link>
                 </FilterTags>
               </Collapsible>
             </CustomAccordian>
@@ -1125,12 +1125,19 @@ const FilterTags = styled(FlexDiv)`
   justify-content:flex-start;
   a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; padding:1px; margin:0px 10px 10px 0px; box-sizing: border-box; border-radius: 20px;
     background: #AEAEAE; display: flex; align-items: center; justify-content: center;
-    span{background-color:#1d1d1d; border-radius: 20px; padding: 6px 14px;}  
+    span{background-color:#1d1d1d; border-radius: 20px; padding: 6px 14px;
+      &.g-text{padding:0px; background:none; border-radius:0px;}
+    }  
     :hover{
-      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+      background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); 
+      span{ 
+        &.g-text{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }  
     }
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); color:#fff;
-      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);}
+      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
+        &.g-text{-webkit-text-fill-color: #fff;}
+      }
     }
   }
 `;

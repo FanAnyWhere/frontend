@@ -212,9 +212,9 @@ const Marketplace = (props) => {
               <Collapsible trigger="Status">
                 <FilterTags>
                   <Link className={filters.some(obj => obj.id === 'AUCTION') ? 'active' : ''} to='#'
-                    onClick={() => filterSelect('AUCTION', 'On Auction')} ><span>On Auction</span></Link>
+                    onClick={() => filterSelect('AUCTION', 'On Auction')} ><span><span className='g-text'>On Auction</span></span></Link>
                   <Link className={filters.some(obj => obj.id === 'BUYNOW') ? 'active' : ''}
-                    onClick={() => filterSelect('BUYNOW', 'Buy Now')} to='#'><span>Buy Now</span></Link>
+                    onClick={() => filterSelect('BUYNOW', 'Buy Now')} to='#'><span><span className='g-text'>Buy Now</span></span></Link>
                 </FilterTags>
               </Collapsible>
 
@@ -292,7 +292,7 @@ const Marketplace = (props) => {
                     return <Link className={collectionFilter.some(obj => obj.id === collection.id) ? 'active' : ''}
                       key={index} to={'#'}
                       onClick={() => collectionSelect(collection.id, collection.name)}>
-                      <span>{collection.name}</span>
+                      <span><span className='g-text'>{collection.name}</span></span>
                     </Link>
                   })}
                 </FilterTags>
@@ -675,12 +675,19 @@ const FilterTags = styled(FlexDiv)`
   justify-content:flex-start;
   a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; padding:1px; margin:0px 10px 10px 0px; box-sizing: border-box; border-radius: 20px;
     background: #AEAEAE; display: flex; align-items: center; justify-content: center;
-    span{background-color:#1d1d1d; border-radius: 20px; padding: 6px 14px;}  
+    span{background-color:#1d1d1d; border-radius: 20px; padding: 6px 14px;
+      &.g-text{padding:0px; background:none; border-radius:0px;}
+    }  
     :hover{
       background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+      span{ 
+        &.g-text{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }
     }
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); color:#fff;
-      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);}
+      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
+        &.g-text{-webkit-text-fill-color: #fff;}
+      }
     }
   }
 `;

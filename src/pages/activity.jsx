@@ -113,7 +113,7 @@ const Activity = (props) => {
 
             <FilterTags>
               {filters?.map((filter, key) =>
-                <Link className='' to='#' key={key}><span>{filter.key}</span></Link>
+                <Link className='' to='#' key={key}><span><span className='g-text'>{filter.key}</span></span></Link>
               )}
             </FilterTags>
           </ActRight>
@@ -156,12 +156,15 @@ const ActRight = styled.div`
 
 const ActFilterList = styled(FlexDiv)`
   justify-content:flex-start; margin-bottom:54px;
-  a{font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; padding:1px 18px; border-bottom:2px solid #767676;
+  a{font-weight: bold; font-size: 16px; line-height: 24px; color: #767676; padding:1px 18px; border-bottom:2px solid #767676; white-space: nowrap;
     &.active{color:#fff; border-color:#fff;}
     :hover{color:#824CF5; border-color:#824CF5;}
     ${Media.md} {
       padding:1px 15px;
     }
+  }
+  ${Media.md} {
+    flex-wrap:nowrap; overflow-x: auto;
   }
 `;
 
@@ -209,12 +212,19 @@ const FilterTags = styled(FlexDiv)`
   justify-content:flex-start;
   a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #AEAEAE; padding:1px; margin:0px 10px 10px 0px; box-sizing: border-box; border-radius: 20px;
     background: #AEAEAE; display: flex; align-items: center; justify-content: center;
-    span{background-color:#1d1d1d; border-radius: 20px; padding: 8px 16px;}  
+    span{background-color:#1d1d1d; border-radius: 20px; padding: 8px 16px;
+      &.g-text{padding:0px; background:none; border-radius:0px;}
+    }  
     :hover{
       background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);   
+      span{ 
+        &.g-text{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+      }
     }
     &.active{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%); color:#fff;
-      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);}
+      span{background: linear-gradient(92.95deg, #824CF5 0.8%, #0FBFFC 103.91%);
+        &.g-text{-webkit-text-fill-color: #fff;}
+      }
     }
   }
   ${Media.md} {
