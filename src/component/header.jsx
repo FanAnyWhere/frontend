@@ -257,7 +257,7 @@ function Header(props) {
                     onKeyUp={(e) => onSearchKeyUp(e)} />
                   <img src={SearchIcon} alt='' />
                 </NavSearch>
-                <BarOuter>
+                <BarOuter className='search-close'>
                   <Bars className='menu-active'
                     onClick={() => setIsOpen6(state => !state)}
                   />
@@ -499,9 +499,15 @@ const AfterLogin = styled(FlexDiv)`
       ${Media.md} {
         margin:0px 5px;
       }
+      ${Media.xxxs} {
+        margin:0px 3px;
+      }
     }
     ${Media.md2} {
       margin:0px 5px;
+    }
+    ${Media.xxxs} {
+      margin:0px 3px; width:30px; height:30px;
     }
   }
 `;
@@ -600,6 +606,10 @@ const BarOuter = styled(FlexDiv)`
   width:40px; height:40px; border-radius:50%; border:1px solid #767676; margin:0px 5px;
   :last-child{margin-right:0px;}
   &.ver2{margin:15px 14px 0px auto;}
+  &.search-close{width:40px; height:40px; margin:0px 5px;}
+  ${Media.xxxs} {
+    margin:0px 3px; width:30px; height:30px;
+  }
 `;
 
 const Bars = styled.div`

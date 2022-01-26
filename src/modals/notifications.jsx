@@ -99,6 +99,9 @@ const MBDiv = styled.div`
 
 const BarOuter = styled(FlexDiv)`
   width:40px; height:40px; border-radius:50%; border:1px solid #767676; margin:15px 14px 0px auto;
+  ${Media.xxxs} {
+   width:30px; height:30px;
+  }
 `;
 
 const Bars = styled.div`
