@@ -595,7 +595,17 @@ const FormBox = styled.div`
   textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:124px; background-color:#1d1d1d; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676; font-family: 'Roboto', sans-serif; padding:8px;
     :focus{outline:none;}
   }
-  &.custom-width{max-width:425px; width:100%;}
+  &.custom-width{width:72%;
+    ${Media.lg} {
+      width:69%;
+    }
+    ${Media.md2} {
+      width:66%;
+    }
+    ${Media.md} {
+      width:100%;
+    }
+  }
   &.w50{width:calc(50% - 20px); }
 `;
 
@@ -649,7 +659,12 @@ const DownArrow = styled.div`
 
 const CRow = styled(FlexDiv)`
   justify-content:flex-start; margin:0px 0px 15px;
-  p.or{margin:0px 15px;}
+  p.or{margin:0px 15px;
+    ${Media.md} {
+      margin: 0px 0px 25px;
+      width: 100%;
+    }
+  }
   button{margin:0px;}
 `;
 
@@ -756,7 +771,7 @@ const DateRow = styled(FlexDiv)`
 `;
 
 const ReportTitle = styled(FlexDiv)`
-  justify-content:flex-start; font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 35px;
+  flex-wrap: nowrap; justify-content:flex-start; font-weight: bold; font-size: 24px; line-height: 24px; color: #FFFFFF; margin:0px 0px 35px;
   img{margin-right:18px;}
 `;
 
@@ -780,8 +795,17 @@ const MessageOuter = styled.div`
     :focus{outline:none;}
   }
   p{font-weight: normal; font-size: 12px; line-height: 16px; color: #767676; margin:0px 0px 32px;}
-  .button-list{text-align:right; margin-top:32px;
-    button:last-child{margin-right:0px;}
+  .button-list{text-align:right; margin-top:32px; display:flex; align-items:center; justify-content:flex-end;
+    ${Media.xs} {
+      display:block;
+    }
+    button{
+      ${Media.xs} {
+        margin:5px 0px; width:100%;
+      }
+      :last-child{margin-right:0px;}
+      span{background:#2f2f2f;}
+    }  
   }
 `;
 
