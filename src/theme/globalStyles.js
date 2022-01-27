@@ -13,6 +13,7 @@ Gs.GlobalStyle = createGlobalStyle`
     font-family: 'Rubik', sans-serif;
   }
   a{text-decoration:none;}
+  a:focus, a:focus-visible{outline:none;}
 
   .wallettooltip{pointer-events: auto !important; font-weight: normal !important; font-size: 12px; line-height: 16px; color: #FFFFFF !important; padding:4px 8px !important; background-color: #2F2F2F !important; opacity:1 !important; border-radius: 4px !important; margin-top:7px !important;}
   .wallettooltip .t-link{font-weight:bold; color:#0FBFFC; border-bottom:0px; font-size: 12px; line-height: 16px; margin:0px;}

@@ -123,14 +123,14 @@ const PutOnSale = (props) => {
     }}>
       {!isApprovalForAll ? <>
         <ReportTitle>First Time Authentication </ReportTitle>
-        <FormBox>
+        <ReportDesc>
           We would require your authorization to access your wallet.
           Authorization is mandatory to put your item on sale.
-        </FormBox>
-        <FormBox>
+        </ReportDesc>
+        <ReportDesc>
           Authorization is required for the first time sale only.
           {/* <Link href='#'>Learn More</Link> */}
-        </FormBox>
+        </ReportDesc>
         <MessageOuter>
           <div className='button-list'>
             {!loading && <WhiteBorderBtn onClick={() => props.onClose(false)}><span>Reject</span></WhiteBorderBtn>}
@@ -192,6 +192,11 @@ const ReportTitle = styled(FlexDiv)`
   img{margin-right:18px;}
 `;
 
+const ReportDesc = styled.div`
+  font-weight: normal; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #FFFFFF; margin:0px 0px 16px;
+  b{font-weight:500;}
+  a{color:#0FBFFC;}
+`;
 
 const FormBox = styled.div`
   margin-bottom:25px;
