@@ -31,16 +31,17 @@ const TransactionStatus = (props) => {
           <img src={LoaderGIF} alt='' />
         </Loader>}
       <ReportDesc>
-        {props.status === 'initiate' && 'Transaction please confirm transaction'}
+        {props.status === 'initiate' && 'Please confirm Transaction'}
         {/* <HiQuestionMarkCircle className='yellow' /> */}
         {props.status === 'progress' && 'Transaction is in pending'}
         {props.status === 'complete' && 'Transaction has been completed but may take some time to get affected on system.'}
         {/* <HiCheckCircle className='green' /> */}
-        {props.status === 'error' && 'Transaction is failed'}
+        {props.status === 'error' && <div className='red'>Something went wrong. Please try again!</div>}
         {/* <IoMdCloseCircle className='red' /> */}
       </ReportDesc>
-      {props.status !== 'complete' && <ReportGreytext>This shouldn’t take long. </ReportGreytext>}
+      {props.status !== 'complete' && <ReportGreytext>Your items is listed for sale successfully. </ReportGreytext>}
       <MessageOuter>
+        {/* <GradientBtn>Try Again</GradientBtn> */}
         {props.status === 'complete' &&
           <div className='button-list'>
             <GradientBtn onClick={() => {
@@ -79,6 +80,9 @@ const ReportDesc = styled(FlexDiv)`
     &.yellow{color:#F99807;}
     &.green{color:#10C061;}
   }
+  .red{color:#FF3D00;}
+  .yellow{color:#F99807;}
+  .green{color:#10C061;}
 `;
 
 const ReportGreytext = styled(FlexDiv)`
@@ -86,6 +90,7 @@ const ReportGreytext = styled(FlexDiv)`
 `;
 
 const MessageOuter = styled.div`
+  text-align:center; margin-top:30px;
   label{font-weight: bold; font-size: 12px; line-height: 16px; color: #FFFFFF; font-family: 'Roboto', sans-serif; margin:0px 0px 5px; display:block;}
   textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:107px; background-color: #2F2F2F; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676; font-family: 'Roboto', sans-serif;
     :focus{outline:none;}

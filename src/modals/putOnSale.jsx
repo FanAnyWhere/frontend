@@ -9,6 +9,7 @@ import { Toast } from '../helper/toastify.message';
 import getContractAddresses from '../contracts/addresses';
 import { getContractInstance } from '../helper/functions';
 import Media from '../theme/media-breackpoint';
+import { Link } from 'react-router-dom';
 
 
 const PutOnSale = (props) => {
@@ -158,6 +159,12 @@ const PutOnSale = (props) => {
               <input type='number' value={editionNo} disabled={true} />
             </InputOuter>
             <GreyTextInfo>The number of copies that can be put on sale. No gas coast to you.</GreyTextInfo>
+            {/* <CustomcheckBox>
+              <label className="container"> I agree to provide authorization to access my wallet. <Link to='#'>Learn more.</Link>
+                <input type="checkbox" value='' />
+                <span className="checkmark"></span>
+              </label>
+            </CustomcheckBox> */}
           </FormBox>
 
           <MessageOuter>
@@ -255,5 +262,74 @@ const GradientBtn = styled.button`
   &.full{width:100%; margin:0px;}
 `;
 
+const CustomcheckBox = styled.div`
+.container {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  padding:10px 10px 10px 30px;
+  border:0px;
+  margin:0px;
+}
+
+.container a{
+  color:#0FBFFC;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 12px;
+  left: 0px;
+  height: 14px;
+  width: 14px;
+  border:2px solid #fff;
+  border-radius:2px;
+}
+
+.checkmark:after,.checkmark:before {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after,
+.container input:checked ~ .checkmark:before {
+  display: block;
+}
+.container .checkmark:before {
+  content:'';
+  background-color:#2f2f2f;
+  width:4px;
+  height:8px;
+  position:absolute;
+  right:-2px;
+  top:-2px;
+}
+.container .checkmark:after {
+  left: 6px;
+  top: -4px;
+  width: 4px;
+  height: 13px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+`;
 
 export default withRouter(PutOnSale)
