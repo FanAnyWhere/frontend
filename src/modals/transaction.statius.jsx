@@ -39,7 +39,7 @@ const TransactionStatus = (props) => {
         {props.status === 'error' && <div className='red'>Something went wrong. Please try again!</div>}
         {/* <IoMdCloseCircle className='red' /> */}
       </ReportDesc>
-      {props.status !== 'complete' && <ReportGreytext>Your items is listed for sale successfully. </ReportGreytext>}
+      {/* {props.status !== 'complete' && <ReportGreytext>Your items is listed for sale successfully. </ReportGreytext>} */}
       <MessageOuter>
         {/* <GradientBtn>Try Again</GradientBtn> */}
         {props.status === 'complete' &&
