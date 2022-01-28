@@ -129,7 +129,7 @@ const Login = (props) => {
       <ConnectWallet>
         <Collapse isOpen={props.isOpen}>
           <MBDiv>
-            <BarOuter>
+            <BarOuter onClick={() => props.onClose()}>
               <Bars className='menu-active' />
             </BarOuter>
           </MBDiv>

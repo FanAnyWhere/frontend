@@ -27,21 +27,25 @@ const Notifications = (props) => {
     <Collapse isOpen={props.isOpen}>
       <MBDiv>
         <BarOuter>
-          <Bars className='menu-active' />
+          <Bars className='menu-active' onClick={() => props.onClose()}/>
         </BarOuter>
       </MBDiv>
       <NotifiTitleBar>
         <NTitle>Notification</NTitle>
-        <Link to='/activity' className='see-all'>See All</Link>
+        <Link to='/activity' onClick={()=>props.onClose()} className='see-all'>See All</Link>
       </NotifiTitleBar>
       <Scrollbars style={{ width: 400, height: 266 }} className='mobile-notifibox'>
 
         {props.notifications?.map((notification, key) => {
-          return <NotifiList>
+          console.log('notification ? ', notification.notification_type)
+          return <NotifiList key={notification.id}>
             <img src={PlusIcon} alt='' />
             <div>
-              <TTitle>Toast Title</TTitle>
-              <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
+              <TTitle>
+                {notification.notification_type === 'sold_nft' ? 'Edition Sold Out':''}
+                {notification.notification_type === 'bought_nft' ? 'Edition Bought Out':''}
+              </TTitle>
+              <TDesc>{notification.text.en}</TDesc>
             </div>
             <IoCloseSharp />
           </NotifiList>

@@ -44,6 +44,7 @@ function Header(props) {
   const pathname = location.pathname.replace('/', '')
   const [openLogin, setOpenLogin] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
+  const [openNotificationMob, setOpenNotificationMob] = useState(false)
   const [address, setAddress] = useState('00000000000')
   const [copied, setCopied] = useState(false)
   const [accountBalance, setAccountBalance] = useState('000.00')
@@ -203,13 +204,13 @@ function Header(props) {
                   onClick={() => setIsOpen6(state => !state)}
                 />
               </BarOuter>
-              <AfterLogin>
-                <NotificationDropdown ref={notificationRef}>
-                  <button onClick={() => setOpenNotification(!openNotification)}>
+              {props.authenticated.isLoggedIn && <AfterLogin>
+                <NotificationDropdown >
+                  <button onClick={() => setOpenNotificationMob(!openNotificationMob)}>
                     <img src={BellIcon} alt='' />
                     {/* <div className='red-dot'></div> */}
                   </button>
-                  {openNotification && <Notifications isOpen={openNotification} />}
+                  {openNotificationMob && <Notifications isOpen={true} onClose={() => setOpenNotificationMob(false)} />}
                 </NotificationDropdown>
                 <AccountDropdown ref={accountRef}>
                   <button className={`acc-btn ${isOpen10 ? 'active' : ''}`} onClick={() => setIsOpen10(state => !state)}>
@@ -242,7 +243,8 @@ function Header(props) {
                     <div><Link to='#' onClick={() => disconnect()}>Disconnect</Link></div>
                   </Collapse>
                 </AccountDropdown>
-              </AfterLogin>
+              </AfterLogin> }
+              
               <BarOuter>
                 <Bars
                   className={isOpen5 ? 'menu-active' : null}
@@ -268,13 +270,14 @@ function Header(props) {
                   {navTabs.map((tab, key) => <li key={key}><NavLink
                     to={`/${(tab.replace(/ /g, '')).toLowerCase()}`}
                     activeClassName={tab.replace(/ /g, '').toLowerCase() === nav ? 'active' : ''}
-                    onClick={() => setNav(tab.replace(/ /g, '').toLowerCase())}
+                    onClick={() => {setNav(tab.replace(/ /g, '').toLowerCase()); setIsOpen5(false)}}
                   >
                     {tab}
                   </NavLink></li>)}
                   <div ref={helpCenterRef} >
                     {props.authenticated.isLoggedIn &&
                       <li><NavLink to='/activity'
+                        onClick={() => setIsOpen5(false)}
                         className={nav === 'activity' ? 'active' : ''}>
                         Activity
                       </NavLink></li>}
@@ -282,23 +285,34 @@ function Header(props) {
                       <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
                         <BiChevronDown />
                         <Collapse onInit={onInit} isOpen={isOpen3}>
-                          <Link to=''>How to?</Link>
-                          <Link to=''>FAQs</Link>
-                          <Link to=''>Contact Us</Link>
-                          <Link to=''>Chat with Us</Link>
+                          <Link to='#'  onClick={() => setIsOpen5(false)}>How to?</Link>
+                          <Link to='#'  onClick={() => setIsOpen5(false)}>FAQs</Link>
+                          <Link to='#'  onClick={() => setIsOpen5(false)}>Contact Us</Link>
+                          <Link to='#'  onClick={() => setIsOpen5(false)}>Chat with Us</Link>
                           <hr />
-                          <Link to=''>Privacy</Link>
-                          <Link to=''>Terms & Conditions</Link>
+                          <Link to='#'  onClick={() => setIsOpen5(false)}>Privacy</Link>
+                          <Link to='#'  onClick={() => setIsOpen5(false)}>Terms & Conditions</Link>
                         </Collapse>
                       </HelpDropdown>
                     </button></li>
                   </div>
                 </nav>
                 <MobileBottomButtons>
-                  <GradientBtn>Create</GradientBtn>
-                  <WhiteBorderBtn className='active'>
-                    <span>Connect Wallet</span>
-                  </WhiteBorderBtn>
+                  {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
+                    && props.user?.status === 'APPROVED' &&
+                    <GradientBtn onClick={() => props.history.push('/create-nft')} >Create</GradientBtn>}
+                  {props.user?.role?.roleName === 'CELEBRITY' && props.authenticated?.isLoggedIn
+                    && props.user?.status === 'PENDING' && <GradientBtn>Pending</GradientBtn>}
+                  {!props.authenticated.isLoggedIn && <WhiteBorderBtn className='active'
+                    onClick={() => {
+                      setIsOpen5(false);
+                      // setOpenLogin(true);
+                      setTimeout(() => {
+                        setOpenLogin(true)
+                      }, 500);
+                    }}>
+                      <span>Connect Wallet</span>
+                    </WhiteBorderBtn>}
                 </MobileBottomButtons>
               </Collapse>
             </MobileMenuDD>
@@ -356,7 +370,6 @@ function Header(props) {
                   </WhiteBorderBtn>
                 </div>
               }
-              {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
             </div>
 
             {props.authenticated.isLoggedIn && <AfterLogin>
@@ -399,6 +412,8 @@ function Header(props) {
       </HeaderSection>
 
       <ReactTooltip html={true} data-multiline={true} effect="solid" />
+
+      {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
     </>
   );
 }
