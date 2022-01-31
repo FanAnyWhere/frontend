@@ -741,8 +741,9 @@ const EPLeft = styled(FlexDiv)`
     z-index: 10;
     max-width: 100%;
     // flex-direction: column;
-    align-items: stretch; 
-    width:32%;     
+    align-items: center; 
+    // width:32%;    
+    width:600px; 
     img{ 
       border-radius: 5px;    
       max-height: 100%;
@@ -752,15 +753,15 @@ const EPLeft = styled(FlexDiv)`
       bottom: auto;
       left: auto;
       right: auto;
-      width:100%; height:100%; object-fit:cover;
+      // width:100%; height:100%; object-fit:cover;
       ${Media.md} {
         position:initial; height:auto;
       }
     } 
-    ${Media.xxl} {
-      width:37%;
-    }
-    ${Media.xl} {
+    // ${Media.xxl} {
+    //   width:37%;
+    // }
+    ${Media.lg} {
       width:40%;
     }
     ${Media.md} {
@@ -968,7 +969,10 @@ const OwnerLeft = styled(FlexDiv)`
 
 const OwnerName = styled.div`
   font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px; line-height: 24px; color: #767676;
-  span{color: #FFFFFF;}
+  span{color: #FFFFFF;
+    a{color: #FFFFFF;}
+  }
+  a{color: #767676;}
 `;
 
 const OwnerDesc = styled.div`

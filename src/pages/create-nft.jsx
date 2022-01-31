@@ -592,8 +592,10 @@ const FormBox = styled.div`
   input, select{border: 1px solid #767676; box-sizing: border-box; border-radius: 2px; padding:8px; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; font-family: 'Roboto', sans-serif; width:100%; background-color:transparent; -webkit-appearance: none;
     :focus{outline:none;}
     ::-webkit-outer-spin-button, ::-webkit-inner-spin-button{
-      -webkit-appearance: none;
-      margin: 0;
+      // -webkit-appearance: none;
+      // margin: 0;
+      // -moz-appearance: textfield;
+      opacity: 1;
     }
   }
   textarea{width:100%; border:1px solid #767676; box-sizing: border-box; border-radius: 2px; resize:none; height:124px; background-color:#1d1d1d; font-weight: normal; font-size: 16px; line-height: 24px; color: #767676; font-family: 'Roboto', sans-serif; padding:8px;
@@ -766,7 +768,7 @@ const InputOuter = styled.div`
 `;
 
 const InputLabel = styled.div`
-  position:absolute; right:15px; top:10px; font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; 
+  position:absolute; right:30px; top:10px; font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; 
   color: #FFFFFF;
 `;
 
