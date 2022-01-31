@@ -6,7 +6,8 @@ export const api = axios.create({
   baseURL: 'http://ec2-18-191-95-183.us-east-2.compute.amazonaws.com:4000/api/v1', // Server url 
 });
 
-// web3 data for polygon(mumbai) testnet
+// web3 data for polygon(mumbai) testnet & contract details
+export const contract_type = 'ERC 115';
 export const chainId = 80001;
 export const chainIdHex = '0x13881';
 export const rpcUrls = 'https://matic-mumbai.chainstacklabs.com';

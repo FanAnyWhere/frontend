@@ -41,7 +41,7 @@ import TransactionStatus from '../modals/transaction.statius'
 import { web3 } from '../web3'
 import LoginModal from '../modals/login'
 import PutOnSaleModal from '../modals/putOnSale';
-import { transactionLink } from '../config'
+import { transactionLink, chainId, network_name, contract_type } from '../config'
 import useOutsideClick from '../helper/outside.click'
 import Timer from '../helper/timer'
 import { getContractInstance, getNFTTime } from '../helper/functions'
@@ -447,10 +447,16 @@ const NFTDetail = (props) => {
                           return category.isActive && category.categoryName.en + (index !== props.nft.category.length - 1 ? ', ' : '')
                         })}
                       </DeatDesc>
+                      <DeatTitle>Royalty</DeatTitle>
+                      <DeatDesc>7%</DeatDesc>
+                      <DeatTitle>Chain Id</DeatTitle>
+                      <DeatDesc>{chainId}</DeatDesc>
+                      <DeatTitle>Network Name</DeatTitle>
+                      <DeatDesc>{network_name}</DeatDesc>
+                      <DeatTitle>Contract Type</DeatTitle>
+                      <DeatDesc>{contract_type}</DeatDesc>
                       <DeatTitle>External Link</DeatTitle>
                       <DeatDesc><Link to='#'> {window.location.href} </Link></DeatDesc>
-                      <DeatTitle>Royalty</DeatTitle>
-                      <DeatDesc>00%</DeatDesc>
                       {/* </Scrollbars> */}
                     </TabPanel>
 
@@ -561,7 +567,7 @@ const NFTDetail = (props) => {
                                   <img src={history.ownerId.profile ? history.ownerId.profile : UserIcon} alt='' />
                                 </div>
                                 <div>
-                                  {<OwnerName>{history.text} by <span>
+                                  {<OwnerName>{history.text} <span>
                                       <Link to={'/celebrity/' + history.ownerId.id}>
                                         {history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}
                                       </Link> </span> 
