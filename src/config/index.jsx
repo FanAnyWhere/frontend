@@ -9,10 +9,11 @@ export const api = axios.create({
 // web3 data for polygon(mumbai) testnet
 export const chainId = 80001;
 export const chainIdHex = '0x13881';
-export const rpcUrls = 'https://rpc-mumbai.maticvigil.com';
+export const rpcUrls = 'https://matic-mumbai.chainstacklabs.com';
 export const currency_symbol = 'MATIC';
 export const network_name = 'Polygon Testnet'
 export const transactionLink = 'https://mumbai.polygonscan.com/tx';
+export const explorerLinks = 'https://mumbai.polygonscan.com';
 
 // share on social media content 
 export const socialText = 'Check profile with FAW'

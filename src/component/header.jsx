@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
 import Collapse from '@kunukn/react-collapse'
-import { MdOutlineContentCopy } from 'react-icons/md'
+import { MdOutlineContentCopy, MdOutlineDepartureBoard } from 'react-icons/md'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTooltip from 'react-tooltip'
@@ -28,7 +28,7 @@ import MbSearchIcon from '../assets/images/mb-search.png'
 import LoginModal from '../modals/login'
 import Notifications from '../modals/notifications'
 import useOutsideClick from '../helper/outside.click'
-import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../config'
+import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls, explorerLinks } from '../config'
 
 
 function Header(props) {
@@ -48,6 +48,8 @@ function Header(props) {
   const [address, setAddress] = useState('00000000000')
   const [copied, setCopied] = useState(false)
   const [accountBalance, setAccountBalance] = useState('000.00')
+  const [usdtBalance, setUSDTBalance] = useState('00.00')
+  const [usdtPrice, setUSDTPrice] = useState(0)
   const [nav, setNav] = useState(location.pathname.replace('/', ''))
 
   useOutsideClick(accountRef, () => { setIsOpen1(false) })
@@ -88,6 +90,7 @@ function Header(props) {
                 decimals: 18
               },
               rpcUrls: [rpcUrls],
+              blockExplorerUrls: [explorerLinks],
             },
           ],
         })
@@ -126,6 +129,12 @@ function Header(props) {
     window.location.reload()
   }
 
+  useEffect( () => {
+    if (usdtPrice && accountBalance) {
+      setUSDTBalance(Number(accountBalance) * Number(usdtPrice))
+    }
+  }, [usdtPrice, accountBalance])
+
   useEffect(() => {
     const getBalance = async (account) => {
       let balance = Number(
@@ -147,7 +156,18 @@ function Header(props) {
       props.getUserDetails() // fetch user details
     }
 
+    const fetchUSDTPrice = async () => {
+      const string = 
+        'https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd%2Ctry'
+      await fetch(string)
+        .then((resp) => resp.json())
+        .then(async (data) => {
+          setUSDTPrice(data['matic-network'].usd)
+        });
+    }
+
     if (props.authenticated.isLoggedIn) {
+      fetchUSDTPrice()
       getCompactAddress(props.authenticated.accounts[0])
       getBalance(props.authenticated.accounts[0])
       getUser()
@@ -231,11 +251,11 @@ function Header(props) {
                       <BalanceBox>
                         <BalanceLeft>
                           <p> Balance</p>
-                          <CurrencyAmout>{accountBalance} </CurrencyAmout>
-                          {/* <DollerAmout>${'0000.00'}</DollerAmout> */}
+                          <CurrencyAmout>{accountBalance} MATIC </CurrencyAmout>
+                          <DollerAmout>${usdtBalance} USD</DollerAmout>
                         </BalanceLeft>
                         <BalanceRight>
-                          {/* <GradientBtn>Add Funds</GradientBtn> */}
+                          <GradientBtn>Add Funds</GradientBtn>
                         </BalanceRight>
                       </BalanceBox>
                     </UserBox>
@@ -394,11 +414,11 @@ function Header(props) {
                     <BalanceBox>
                       <BalanceLeft>
                         <p> Balance</p>
-                        <CurrencyAmout>{accountBalance} </CurrencyAmout>
-                        {/* <DollerAmout>${'0000.00'}</DollerAmout> */}
+                        <CurrencyAmout>{accountBalance} MATIC</CurrencyAmout>
+                        <DollerAmout>${usdtBalance} USD</DollerAmout>
                       </BalanceLeft>
                       <BalanceRight>
-                        {/* <GradientBtn>Add Funds</GradientBtn> */}
+                        <GradientBtn>Add Funds</GradientBtn>
                       </BalanceRight>
                     </BalanceBox>
                   </UserBox>
