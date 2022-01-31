@@ -17,7 +17,7 @@ import CloseIcon from '../assets/images/close-icon.png'
 import { actions } from '../actions'
 import { Toast } from '../helper/toastify.message'
 import { web3, walletConnectProvider } from '../web3'
-import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls } from '../config'
+import { chainId, chainIdHex, currency_symbol, network_name, rpcUrls, explorerLinks } from '../config'
 
 
 const Login = (props) => {
@@ -107,6 +107,7 @@ const Login = (props) => {
               decimals: 18
             },
             rpcUrls: [rpcUrls],
+            blockExplorerUrls: [explorerLinks],
           },
         ],
       })
