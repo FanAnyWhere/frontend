@@ -132,7 +132,7 @@ const CreateNFT = (props) => {
   }
 
   const handleDateChange = (date) => {
-    if (date > startDate) {
+    if (date > new Date()) {
       setStartDate(date)
       setNFTObj({ ...nftObj, startDate: new Date(date).getTime() / 1000 })
     }
@@ -404,7 +404,7 @@ const CreateNFT = (props) => {
                 {errors && errors.includes('sale_type') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <CustomSwitch>
-                <button className={nftObj.saleState === 'AUCTION' ? 'active' : ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'AUCTION' })}>Timed Auction</button>
+                {/* <button className={nftObj.saleState === 'AUCTION' ? 'active' : ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'AUCTION' })}>Timed Auction</button> */}
                 <button className={nftObj.saleState === 'BUY' ? 'active' : ''} onClick={() => setNFTObj({ ...nftObj, saleState: 'BUY' })}>Buy Now</button>
                 {/* <button>Open for bids</button> */}
               </CustomSwitch>
@@ -455,10 +455,10 @@ const CreateNFT = (props) => {
                 {errors && errors.includes('price') && <p style={{ color: 'red' }}>required</p>}
               </LabelRow>
               <InputOuter>
-                <input type='number' placeholder='Enter Price for one Item' onChange={(e) => setNFTObj({ ...nftObj, price: e.target.value })} />
-                <InputLabel>FAW</InputLabel>
+                <input type='number' min='0' placeholder='Enter Price for one Item' onChange={(e) => setNFTObj({ ...nftObj, price: e.target.value })} />
+                <InputLabel>MATIC</InputLabel>
               </InputOuter>
-              <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo>
+              {/* <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo> */}
             </FormBox>
 
             {/* <FormBox>
