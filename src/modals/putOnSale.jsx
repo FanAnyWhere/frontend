@@ -148,9 +148,9 @@ const PutOnSale = (props) => {
             <InputOuter>
               <input type='text' className={error ? 'error' : ''}
                 placeholder='Enter Price for one Item' onChange={(e) => setPrice(e.target.value)} />
-              <InputLabel>FAW</InputLabel>
+              <InputLabel>MATIC</InputLabel>
             </InputOuter>
-            <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo>
+            {/* <GreyTextInfo>Service fee <span>0.0%</span>. You will recieve <span>0000FAW</span></GreyTextInfo> */}
             <br />
             <LabelRow>
               <label>Edition No.</label>

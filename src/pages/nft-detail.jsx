@@ -503,7 +503,7 @@ const NFTDetail = (props) => {
                                       {props.nft.ownerId.name}
                                     </Link>
                                   </OwnerName>
-                                  <OwnerDesc>{props.nft.edition - props.nft.nftSold}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
+                                  <OwnerDesc>{props.nft.edition - props.nft.editions.length}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
                                 </div>
                               </OwnerLeft>
                               <OwnerRight>
