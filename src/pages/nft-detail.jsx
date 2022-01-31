@@ -492,7 +492,11 @@ const NFTDetail = (props) => {
                                   <img src={props.nft.ownerId.profile ? props.nft.ownerId.profile : UserIcon} alt='' />
                                 </div>
                                 <div>
-                                  <OwnerName>{props.nft.ownerId.name}</OwnerName>
+                                  <OwnerName>
+                                    <Link to={'/celebrity/' + props.nft.ownerId.id}>
+                                      {props.nft.ownerId.name}
+                                    </Link>
+                                  </OwnerName>
                                   <OwnerDesc>{props.nft.edition - props.nft.nftSold}/{props.nft.edition} on sale for <span>{props.nft.price} FAW</span> each</OwnerDesc>
                                 </div>
                               </OwnerLeft>
@@ -513,7 +517,11 @@ const NFTDetail = (props) => {
                                   <img src={edition.ownerId.profile ? edition.ownerId.profile : UserIcon} alt='' />
                                 </div>
                                 <div>
-                                  <OwnerName>{edition.ownerId.name ? edition.ownerId.name : getCompactAddress(edition.walletAddress)}</OwnerName>
+                                  <OwnerName>
+                                    <Link to={'/celebrity/' + edition.ownerId.id}>
+                                      {edition.ownerId.name ? edition.ownerId.name : getCompactAddress(edition.walletAddress)}
+                                    </Link>
+                                  </OwnerName>
                                   <OwnerDesc>
                                     {edition.isOpenForSale ? <>{'1 on sale for '} <span>{edition.saleType.price} {'FAW '}</span></> : '1 not on sale '}
                                     {edition.transactionId && <Link onClick={() => window.open(transactionLink + '/' + edition.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
@@ -553,7 +561,11 @@ const NFTDetail = (props) => {
                                   <img src={history.ownerId.profile ? history.ownerId.profile : UserIcon} alt='' />
                                 </div>
                                 <div>
-                                  {<OwnerName>{history.text} by <span>{history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}</span> </OwnerName>}
+                                  {<OwnerName>{history.text} by <span>
+                                      <Link to={'/celebrity/' + history.ownerId.id}>
+                                        {history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}
+                                      </Link> </span> 
+                                  </OwnerName>}
                                   <OwnerDesc>{getNFTTime(history.createdAt, true)}</OwnerDesc>
                                   {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
                                 </div>
