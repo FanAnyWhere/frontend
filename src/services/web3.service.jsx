@@ -54,7 +54,7 @@ const enabledWalletConnect = async () => {
 
 const enableMetamask = async () => {
   try {
-    await window.ethereum.send('eth_requestAccounts')
+    await window.ethereum.request({ method: 'eth_requestAccounts'})
     localStorage.setItem('isDisconnect', '0')
     const resp = await getWeb3()
     return resp

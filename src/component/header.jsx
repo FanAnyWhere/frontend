@@ -326,10 +326,6 @@ function Header(props) {
                   {!props.authenticated.isLoggedIn && <WhiteBorderBtn className='active'
                     onClick={() => {
                       setIsOpen5(false);
-                      // setOpenLogin(true);
-                      setTimeout(() => {
-                        setOpenLogin(true)
-                      }, 500);
                     }}>
                       <span>Connect Wallet</span>
                     </WhiteBorderBtn>}
@@ -390,6 +386,7 @@ function Header(props) {
                   </WhiteBorderBtn>
                 </div>
               }
+              {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
             </div>
 
             {props.authenticated.isLoggedIn && <AfterLogin>
@@ -432,8 +429,6 @@ function Header(props) {
       </HeaderSection>
 
       <ReactTooltip html={true} data-multiline={true} effect="solid" />
-
-      {openLogin && <LoginModal isOpen={true} onClose={() => setOpenLogin(false)} />}
     </>
   );
 }
