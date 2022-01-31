@@ -34,7 +34,7 @@ const TransactionStatus = (props) => {
         {props.status === 'initiate' && 'Please confirm Transaction'}
         {/* <HiQuestionMarkCircle className='yellow' /> */}
         {props.status === 'progress' && 'Transaction is in pending'}
-        {props.status === 'complete' && 'Transaction has been completed but may take some time to get affected on system.'}
+        {props.status === 'complete' && 'Transaction has been completed'}
         {/* <HiCheckCircle className='green' /> */}
         {props.status === 'error' && <div className='red'>Something went wrong. Please try again!</div>}
         {/* <IoMdCloseCircle className='red' /> */}

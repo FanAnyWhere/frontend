@@ -131,7 +131,7 @@ function Header(props) {
 
   useEffect( () => {
     if (usdtPrice && accountBalance) {
-      setUSDTBalance(Number(accountBalance) * Number(usdtPrice))
+      setUSDTBalance((Number(accountBalance) * Number(usdtPrice)).toFixed(3))
     }
   }, [usdtPrice, accountBalance])
 
