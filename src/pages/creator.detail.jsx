@@ -258,7 +258,7 @@ function CelebrityDetails(props) {
                     <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
                     <MessageOuter>
                       <label>Message</label>
-                      <textarea>Gives us some details</textarea>
+                      <textarea placeholder='Gives us some details'></textarea>
                       <p>Please provide specific and clear message</p>
                       <div className='button-list'>
                         <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
@@ -276,6 +276,7 @@ function CelebrityDetails(props) {
                 {props.user?.bio}
               </PDesc>
               <JMYear>
+                Joined on&nbsp;
                 {props.user?.createdAt
                   ? dateFormat(
                     new Date(props.user?.createdAt).toString(),
@@ -687,10 +688,16 @@ const LinkBoxRow = styled(FlexDiv)`
       }
     }
     a{
-      font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px;line-height: 24px; color: #FFFFFF; 
+      font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 16px;line-height: 24px; color: #FFFFFF; white-space: nowrap; width: 123px; overflow: hidden; text-overflow: ellipsis; display: block;
       &.twitter{color: #0FBFFC;}
       &.instagram-handle{background: linear-gradient(88.63deg, #FF9900 0%, #CE1E92 66.79%, #7F00FD 124.84%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
       :hover{opacity:0.8;}
+      ${Media.xxl} {
+        width:120px;
+      }
+      ${Media.sm} {
+        width:auto;
+      }
     }
     ${Media.sm} {
       width: 100%; padding:10px 0px;
