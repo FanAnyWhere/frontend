@@ -335,7 +335,7 @@ function CelebrityDetails(props) {
       </ActFilterList>
 
       <ProfileMain>
-        <PLeftpanel className={filterOpen ? 'active' : ''}>
+        {/* <PLeftpanel className={filterOpen ? 'active' : ''}>
           <GradientBar className={filterOpen ? 'active' : ''}>
             <LeftTitle>Filters</LeftTitle>
             <span className={filterOpen ? 'active' : ''}><BiRightArrowAlt className={filterOpen ? 'active' : ''} onClick={() => {
@@ -451,7 +451,7 @@ function CelebrityDetails(props) {
               </Collapsible>
             </CustomAccordian>
           </NFTlistLeft>
-        </PLeftpanel>
+        </PLeftpanel> */}
         <PRightpanel className={filterOpen ? 'active' : ''}>
           <ProfilefilterBar>
             {/* <FilterBar>
@@ -972,7 +972,7 @@ const PLeftpanel = styled.div`
 `;
 
 const PRightpanel = styled.div`
-  width:calc(100% - 71px);
+  width:100%; // width:calc(100% - 71px);
   &.active{width:calc(100% - 341px);
     ${Media.md} {
       width:100%;
