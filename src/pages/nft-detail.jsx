@@ -291,7 +291,7 @@ const NFTDetail = (props) => {
                       <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
                       <MessageOuter>
                         <label>Message</label>
-                        <textarea>Gives us some details</textarea>
+                        <textarea placeholder='Gives us some details'></textarea>
                         <p>Please provide specific and clear message</p>
                         <div className='button-list'>
                           <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
@@ -392,7 +392,7 @@ const NFTDetail = (props) => {
                           <ReportDesc>Tell us why you are reporting this user and how they are violating the rules of the site.</ReportDesc>
                           <MessageOuter>
                             <label>Message</label>
-                            <textarea>Gives us some details</textarea>
+                            <textarea placeholder='Gives us some details'></textarea>
                             <p>Please provide specific and clear message</p>
                             <div className='button-list'>
                               <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
@@ -562,9 +562,9 @@ const NFTDetail = (props) => {
                                 </div>
                                 <div>
                                   {<OwnerName>{history.text} by <span>
-                                      <Link to={'/celebrity/' + history.ownerId.id}>
-                                        {history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}
-                                      </Link> </span> 
+                                    <Link to={'/celebrity/' + history.ownerId.id}>
+                                      {history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}
+                                    </Link> </span>
                                   </OwnerName>}
                                   <OwnerDesc>{getNFTTime(history.createdAt, true)}</OwnerDesc>
                                   {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}

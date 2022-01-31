@@ -162,7 +162,7 @@ const EditProfile = (props) => {
                 <label>Bio</label>
                 <p>Optional</p>
               </LabelRow>
-              <textarea defaultValue={bio === null ? '' : bio} onChange={(e) => setBio(e.target.value)}></textarea>
+              <textarea placeholder={bio === null ? '' : bio} defaultValue={bio === null ? '' : bio} onChange={(e) => setBio(e.target.value)}></textarea>
             </FormBox>
             <FormBox>
               <LabelRow>
