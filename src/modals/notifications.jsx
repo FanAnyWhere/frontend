@@ -37,7 +37,6 @@ const Notifications = (props) => {
       <Scrollbars style={{ width: 400, height: 266 }} className='mobile-notifibox'>
 
         {props.notifications?.map((notification, key) => {
-          console.log('notification ? ', notification.notification_type)
           return <NotifiList key={notification.id}>
             <img src={PlusIcon} alt='' />
             <div>
