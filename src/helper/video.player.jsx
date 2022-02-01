@@ -7,7 +7,6 @@ const VideoPlayer = (props) => {
     const { url, image } = props
 
     const stopVideo = (e) => {
-        console.log('Off')
         e.target.pause();
         e.target.currentTime = 0;
     }
