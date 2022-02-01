@@ -109,7 +109,7 @@ const NFTDetail = (props) => {
     }
     if (props.nft) {
       getBuyNFT(props.nft)
-      setExt(props.nft.image.format?props.nft.image.format:'image')
+      setExt(props.nft.image.format ? props.nft.image.format : 'image')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nft]) // fetch the nft
@@ -312,12 +312,12 @@ const NFTDetail = (props) => {
             <EPLeft>
               {/* <img src={props.nft.image?.original} alt='' /> */}
               {ext && ext === 'image' && <img src={props.nft.image?.original} alt='' />}
-              {ext && ext === 'video' && <video src={props.nft.image?.original} 
+              {ext && ext === 'video' && <video src={props.nft.image?.original}
                 autoPlay={true}
-                style={{height: '100%', width: '100%'}}
+                style={{ height: '100%', width: '100%' }}
                 controls controlsList="nodownload" />}
             </EPLeft>
-            
+
             <EPRight>
               <div>
                 <NDTop className='desktop-block'>
@@ -583,8 +583,9 @@ const NFTDetail = (props) => {
                                       {history.ownerId.name ? history.ownerId.name : getCompactAddress(history.ownerId.walletAddress)}
                                     </Link> </span>
                                   </OwnerName>}
-                                  <OwnerDesc>{getNFTTime(history.createdAt, true)}</OwnerDesc>
-                                  {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' ><FiExternalLink /></Link>}
+                                  <OwnerDesc>{getNFTTime(history.createdAt, true)}
+                                    {history.transactionId && <Link onClick={() => window.open(transactionLink + '/' + history.transactionId, '_blank')} to='#' > <FiExternalLink /></Link>}
+                                  </OwnerDesc>
                                 </div>
                               </OwnerLeft>
                             </OwnerOuter>
