@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip'
 
 import FireIcon from '../assets/images/fire.png'
 import Timer from '../helper/timer';
+import VideoPlayer from '../helper/video.player';
 import VerifiedIcon from '../assets/images/verified.png';
 import SendIcon from '../assets/images/send.png';
 import TimerIcon from '../assets/images/timer.png';
@@ -17,20 +18,7 @@ const NFT = (props) => {
   let { nft, filterOpen, authenticated } = props
   let collected = props.collected ? true : false //check this nft card rendered in user's collected tab
   const [isOpen, setIsOpen] = useState(false)
-
-  // const [ext, setExt] = useState(nft.image.format)
-  // useEffect(() => {
-  //     const getExtenstion = () => {
-  //         if (!nft.image.format) {
-  //             let ext = getFileType(nft.image.compressed);
-  //                 ext.then(function (result) {
-  //                 setExt(result);
-  //             })
-  //         }
-  //     }
-  //     getExtenstion();
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const [ext, setExt] = useState(nft.image.format?nft.image.format:'image')
 
   const renderHTML = () => {
     if (collected) {
@@ -39,7 +27,8 @@ const NFT = (props) => {
           <LiveBox>
             <Link to={'/nft-detail/' + nft._id}>
               <div className='img-outer ver3'>
-                <img src={nft.image.compressed} alt='' />
+                {ext && ext === 'image' && <img src={nft.image.compressed} alt='' />}
+                {ext && ext === 'video' && <VideoPlayer url={nft.image.compressed} />}
               </div>
             </Link>
             <div className='box-content'>
@@ -91,7 +80,8 @@ const NFT = (props) => {
           <Link to={'/nft-detail/' + nft._id}>
             <LiveBox>
               <div className='img-outer ver3'>
-                <img src={nft.image.compressed} alt='' />
+                {ext && ext === 'image' && <img src={nft.image.compressed} alt='' />}
+                {ext && ext === 'video' && <VideoPlayer url={nft.image.compressed} />}
               </div>
               <div className='box-content'>
                 <div className='sign-row'>

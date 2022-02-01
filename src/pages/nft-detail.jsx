@@ -93,6 +93,7 @@ const NFTDetail = (props) => {
   const [reSaleEdition, setReSaleEdition] = useState(false)
   const [isListItem, setIsListItem] = useState(false)
   const [isOwnerNFT, setIsOwnerNFT] = useState(false)
+  const [ext, setExt] = useState(false)
 
   useEffect(() => {
     if (props.authenticated.isLoggedIn) props.getUserDetails() // fetch user details 
@@ -106,7 +107,10 @@ const NFTDetail = (props) => {
       props.getIsLiked(id)
       props.getHistory(id)
     }
-    if (props.nft) getBuyNFT(props.nft)
+    if (props.nft) {
+      getBuyNFT(props.nft)
+      setExt(props.nft.image.format?props.nft.image.format:'image')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nft]) // fetch the nft
 
@@ -304,9 +308,16 @@ const NFTDetail = (props) => {
                 </NDRight>
               </NDTop>
             </NDTopMobileBlock>
+
             <EPLeft>
-              <img src={props.nft.image?.original} alt='' />
+              {/* <img src={props.nft.image?.original} alt='' /> */}
+              {ext && ext === 'image' && <img src={props.nft.image?.original} alt='' />}
+              {ext && ext === 'video' && <video src={props.nft.image?.original} 
+                autoPlay={true}
+                style={{height: '100%', width: '100%'}}
+                controls controlsList="nodownload" />}
             </EPLeft>
+            
             <EPRight>
               <div>
                 <NDTop className='desktop-block'>

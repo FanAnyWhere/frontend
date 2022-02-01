@@ -172,7 +172,7 @@ const CreateNFT = (props) => {
           setUploadRatio(Math.floor((bytes * 100) / fileSize.original))
         },
       })
-      hash.compressed = await ipfs.add(this.state.image.compressed, {
+      hash.compressed = await ipfs.add(nftObj.image.compressed, {
         pin: true,
         progress: (bytes) => {
           // console.log('Compressed File upload progress ', Math.floor(bytes * 100 / (fileSize.compressed)))
@@ -189,7 +189,7 @@ const CreateNFT = (props) => {
       })
       hash.compressed = hash.original
     }
-    let ipfsH = { original: hash.original.path, compressed: hash.compressed.path }
+    let ipfsH = { original: hash.original.path, compressed: hash.compressed.path, format: fileType, }
     let params = {
       title: nftObj.title,
       image: ipfsH,
@@ -201,7 +201,6 @@ const CreateNFT = (props) => {
       edition: nftObj.edition,
       unlockContent: false,
       collectionId: nftObj.collectionId,
-      format: fileType,
     }
     setParams(params)
     props.addNFT(params)
@@ -216,17 +215,17 @@ const CreateNFT = (props) => {
     let fileURL = URL.createObjectURL(fileInput.current.files[0])
     setImageURL(fileURL)
     if (!fileType.search('image')) setFileType('image')
-    if (!fileType.search('video')) setFileType({ fileType: 'video', videoFile: fileURL })
+    if (!fileType.search('video')) setFileType('video')
     if (!fileType.search('audio')) setFileType('audio')
-    if (file.size > 1572864) {
+    if (file.size > 1572864 && !fileType.search('image') && !fileType.includes('gif')) {
+      let reader = new window.FileReader()
+      reader.readAsArrayBuffer(file)
+      reader.onloadend = () => convertToBuffer(reader)
+
       let compressedNFTFile = await compressImage(file)
       let compReader = new window.FileReader()
       compReader.readAsArrayBuffer(compressedNFTFile)
       compReader.onloadend = () => convertToCompBuffer(compReader)
-
-      let reader = new window.FileReader()
-      reader.readAsArrayBuffer(file)
-      reader.onloadend = () => convertToBuffer(reader)
     } else {
       let reader = new window.FileReader()
       reader.readAsArrayBuffer(file)
@@ -238,7 +237,7 @@ const CreateNFT = (props) => {
     //file is converted to a buffer to prepare for uploading to IPFS`
     const buffer = await Buffer.from(reader.result);
     //set this buffer -using es6 syntax
-    setNFTObj({ ...nftObj, image: { original: buffer, compressed: buffer } })
+    setNFTObj({ ...nftObj, image: { compressed: buffer, original: buffer} })
   }
 
   const convertToCompBuffer = async (reader) => {
@@ -274,8 +273,8 @@ const CreateNFT = (props) => {
                     type='file'
                     name='nftFile'
                     hidden
+                    accept='video/*, image/*'
                     // accept='video/*, image/*, audio/*'
-                    accept='image/*'
                     onChange={(e) => {
                       fileChange(e)
                     }}
@@ -504,7 +503,15 @@ const CreateNFT = (props) => {
                 <Link to='#'>
                   <LiveBox>
                     <div className='img-outer ver4'>
-                      <img src={imageURL ? imageURL : DefaultImg} alt='' />
+                      {fileType === 'video' ? 
+                        <video
+                          id='video'
+                          src={imageURL}
+                          controls={true}
+                          width={'100%'}
+                          height={'100%'}
+                        ></video>
+                      : <img src={imageURL ? imageURL : DefaultImg} alt='' />}
                     </div>
                     <div className='box-content'>
                       <div className='sign-row'>

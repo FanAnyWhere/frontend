@@ -22,6 +22,7 @@ import LoaderGIF from '../assets/images/loader.gif';
 import NFT from '../modals/nft.card';
 import Collection from '../modals/collection.card';
 import { actions } from '../actions';
+import VideoPlayer from '../helper/video.player';
 
 import NFT12 from '../assets/images/nft-12.jpg';
 import NFT13 from '../assets/images/nft-12.jpg';
@@ -168,7 +169,9 @@ const Landing = (props) => {
                   <W40>
                     <ImgOuter>
                       <Link to={'/nft-detail/' + (props.TopNFTs[0]).nftId._id}>
-                        <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />
+                        {/* <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' /> */}
+                          {(props.TopNFTs[0]).nftId.image.format === 'image' && <img src={(props.TopNFTs[0]).nftId.image.compressed} alt='' />}
+                          {(props.TopNFTs[0]).nftId.image.format === 'video' && <VideoPlayer url={(props.TopNFTs[0]).nftId.image.compressed} />}
                       </Link>
                       <p>{(props.TopNFTs[0]).nftId.title}</p>
                     </ImgOuter>
@@ -180,7 +183,9 @@ const Landing = (props) => {
                       return nft.isActive && key !== 0 && key < 7 &&
                         <ImgOuter className='light-bg' key={key}>
                           <Link to={'/nft-detail/' + nft.nftId._id}>
-                            <img src={nft.nftId.image.compressed} alt='' />
+                            {nft.nftId.image.format === 'image' && <img src={nft.nftId.image.compressed} alt='' />}
+                            {nft.nftId.image.format === 'video' && <VideoPlayer url={nft.nftId.image.compressed} />}
+                            {/* <img src={nft.nftId.image.compressed} alt='' /> */}
                           </Link>
                           <p>{nft.nftId.title}</p>
                         </ImgOuter>
