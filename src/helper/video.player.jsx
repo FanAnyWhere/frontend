@@ -19,9 +19,10 @@ const VideoPlayer = (props) => {
             src={url}
             // poster={image}
             // playsInline={true}
-            // autoPlay={true}
-            muted={true}
+            autoPlay={true}
             loop
+            preload="auto" 
+            muted={true}
         />
     )
 }
