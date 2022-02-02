@@ -36,7 +36,7 @@ const Notifications = (props) => {
       </NotifiTitleBar>
       <Scrollbars style={{ width: 400, height: 266 }} className='mobile-notifibox'>
 
-        {props.notifications?.map((notification, key) => {
+        {props.notifications && props.notifications.map((notification, key) => {
           return key < 6 && <NotifiList key={notification.id}>
             <img src={PlusIcon} alt='' />
             <div>
@@ -50,7 +50,7 @@ const Notifications = (props) => {
           </NotifiList>
         })}
 
-        {props.notifications.length === 0 && <NotifiList>No Notification Available</NotifiList>}
+        {props.notifications && props.notifications.length === 0 && <NotifiList>No Notification Available</NotifiList>}
 
       </Scrollbars>
     </Collapse>
