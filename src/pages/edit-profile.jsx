@@ -140,6 +140,15 @@ const EditProfile = (props) => {
     </Loader>)
   }
 
+  const getCompactAddress = (address) => {
+    let compactAddress = address
+      ? address.substring(0, 5) +
+      '....' +
+      address.substring(address.length - 5, address.length)
+      : '00000000000'
+    return compactAddress
+  }
+
   return (
     <>
       <Gs.Container>
@@ -188,7 +197,7 @@ const EditProfile = (props) => {
             <FormBox>
               <label>Wallet Address</label>
               <AddressBar>
-                <p>{props.user?.walletAddress}</p>
+                <p>{props.user?.walletAddress && getCompactAddress(props.user.walletAddress)}</p>
                 {!copied && <MdOutlineContentCopy onClick={() => copyToClipboard(props.user?.walletAddress)} />}
                 {copied && <CopyedText>Copied!</CopyedText>}
               </AddressBar>
