@@ -19,3 +19,9 @@ export const explorerLinks = 'https://mumbai.polygonscan.com';
 // share on social media content 
 export const socialText = 'Check profile with FAW'
 export const hashTag = '#FanAnyWhere'
+
+
+// notifications types for title
+export const nftSold = 'sold_nft'
+export const nftBought = 'bought_nft'
+export const userAccepted = 'user_as_creator'

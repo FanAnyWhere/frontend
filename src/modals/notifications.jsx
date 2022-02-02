@@ -37,12 +37,12 @@ const Notifications = (props) => {
       <Scrollbars style={{ width: 400, height: 266 }} className='mobile-notifibox'>
 
         {props.notifications?.map((notification, key) => {
-          return <NotifiList key={notification.id}>
+          return key < 6 && <NotifiList key={notification.id}>
             <img src={PlusIcon} alt='' />
             <div>
               <TTitle>
                 {notification.notification_type === 'sold_nft' ? 'Edition Sold Out':''}
-                {notification.notification_type === 'bought_nft' ? 'Edition Bought Out':''}
+                {notification.notification_type === 'bought_nft' ? 'Edition Bought':''}
               </TTitle>
               <TDesc>{notification.text.en}</TDesc>
             </div>

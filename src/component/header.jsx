@@ -395,7 +395,7 @@ function Header(props) {
                   <img src={BellIcon} alt='' />
                   {/* <div className='red-dot'></div> */}
                 </button>
-                {openNotification && <Notifications isOpen={openNotification} />}
+                {openNotification && <Notifications isOpen={openNotification} onClose={() => setOpenNotification(false)} />}
               </NotificationDropdown>
               <AccountDropdown ref={accountRef}>
                 <button className={`acc-btn ${isOpen1 ? 'active' : ''}`} onClick={() => setIsOpen1(state => !state)}>

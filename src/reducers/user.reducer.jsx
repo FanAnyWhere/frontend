@@ -1,4 +1,4 @@
-export function fetchNotifications(state = [], action) {
+export function fetchNotifications(state = false, action) {
     switch (action.type) {
       case 'FETCHED_NOTIFICATIONS':
         return action.data;

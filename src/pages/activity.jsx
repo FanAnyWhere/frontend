@@ -11,29 +11,40 @@ import Media from '../theme/media-breackpoint';
 import User1 from '../assets/images/user-1.png'
 import User2 from '../assets/images/user-2.png'
 import User3 from '../assets/images/user-3.png'
-import Loader from '../helper/loader'
+import LoaderGIF from '../assets/images/loader.gif';
 import { Toast } from '../helper/toastify.message'
 import { actions } from '../actions'
+import { nftSold, nftBought, userAccepted} from '../config'
 
 
 const Activity = (props) => {
 
   const [filters, setFilters] = useState([
-    { key: 'Listing' },
-    { key: 'Following' },
-    { key: 'Bids' },
-    { key: 'Favourite' },
-    { key: 'Purchased' },
-    { key: 'Transfered' },
-    { key: 'Sales' },
+    { key: 'Listing', value: ['over_bid', 'new_offer_nft', 
+        'bid_won', 'transfer_nft', 'burned_nft', 'sold_nft',
+        'bought_nft', 'user_as_creator']},
+    { key: 'Bids', value: ['bid_won', 'over_bid'] },
+    { key: 'Offers', value: ['new_offer_nft'] },
+    { key: 'Transfers', value: ['transfer_nft'] },
+    { key: 'Burned', value: ['burned_nft'] },
+    { key: 'Sold', value: ['sold_nft'] },
+    { key: 'Bought', value: ['bought_nft'] },
   ])
+  const [notifications, setNotifications] = useState([])
+  const [currentFilter, setCurrentFilter] = useState('all')
+
+
+  useEffect(() => {
+    if (props.notifications) setNotifications(props.notifications)
+    // eslint-disable-next-line
+  }, [props.notifications])
 
   useEffect(() => {
     const getNotifications = async () => {
       await props.getNotifications() // fetch notifications
       // await props.getNotificationFilters() // fetch notifications filters
     }
-    if (props.authenticated.isLoggedIn) {
+    if (localStorage.getItem('fawToken')) {
       getNotifications()
     } else {
       Toast.warning('Frist Connect with wallet')
@@ -42,81 +53,95 @@ const Activity = (props) => {
     // eslint-disable-next-line
   }, [])
 
+  const getNotificationTitle = (nftType) => {
+    if (nftType === nftSold) return 'Sold NFT'
+    else if (nftType === nftBought) return 'Buy NFT'
+    else if (nftType === userAccepted) return 'Celebrity Request'
+    else return 'Title '
+  }
+
+  const filterNotifications = (array) => {
+    let new_notifications = props.notifications.filter(notification => 
+      array.includes(notification.notification_type))
+    setNotifications(new_notifications)
+  }
+
+  const Loading = () => {
+    return (<SiteLoader>
+      <div className='loader-inner'>
+        <img src={LoaderGIF} alt='' />
+        <p>Loading</p>
+      </div>
+    </SiteLoader>)
+  }
+
   return (
     <>
       <Gs.Container>
 
         <ActTitle>Notifications</ActTitle>
+        
         <ActOuter>
 
           <ActLeft>
 
             <ActFilterList>
-              <Link to='' className='active'>All</Link>
-              <Link to=''>Following</Link>
-              <Link to=''>Bids</Link>
-              <Link to=''>My Stuffs</Link>
+              <Link to='#' className={currentFilter === 'all' ? 'active': ''} onClick={() => {filterNotifications(['over_bid', 'new_offer_nft', 
+                'bid_won', 'transfer_nft', 'burned_nft', 'sold_nft',
+                'bought_nft', 'user_as_creator']); setCurrentFilter('all')}}>All</Link>
+              <Link to='#' className={currentFilter === 'Following' ? 'active': ''}
+                onClick={() => {setCurrentFilter('Following'); filterNotifications('following')}}>Following</Link>
+              <Link to='#' className={currentFilter === 'Bought' ? 'active': ''}
+                onClick={() => {
+                  filterNotifications(['bought_nft']);
+                  setCurrentFilter('Bought')}}>Bought</Link>
+              <Link to='#' className={currentFilter === 'Bids' ? 'active': ''}
+                onClick={() => {
+                  filterNotifications(['bid_won', 'over_bid']);
+                  setCurrentFilter('Bids')}}>Bids</Link>
+              <Link to='#' className={currentFilter === 'my_stuffs' ? 'active': ''}
+                onClick={() => {setCurrentFilter('my_stuffs'); filterNotifications('my_stuffs')}}>My Stuffs</Link>
             </ActFilterList>
 
-            {props.notifications?.map((notification, key) => {
-              return <>
-                <NotifiList>
-                  <img src={User1} alt='' />
-                  <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                  </div>
-                  <IoCloseSharp />
-                </NotifiList>
+            {!props.notifications ? <Loading /> : 
+              <>
+                {notifications?.map((notification, key) => {
+                  return <Link to={notification.route ?notification.route:'/my-profile'} key={key}>
+                      <NotifiList>
+                        <img src={User1} alt='' />
+                        <div>
+                          <TTitle>
+                            {getNotificationTitle(notification.notification_type)}
+                          </TTitle>
+                          <TDesc>{notification.text.en}</TDesc>
+                        </div>
+                        {/* <IoCloseSharp /> */}
+                      </NotifiList>
+                    </Link>
+                })}    
+                {notifications.length === 0 && <>
+                  <NotifiList>
+                    <TDesc>No Notifications Available</TDesc>
+                  </NotifiList>
+                </>}
               </>
-            })}
-
-            {props.notifications.length === 0 && <>
-              <NotifiList>
-                <TDesc>No Notifications Available</TDesc>
-              </NotifiList>
-            </>}
-
-            {/* <NotifiList>
-                  <img src={User1} alt='' />
-                  <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum Dolor. <Link to='/'>Link goes Here</Link></TDesc>
-                  </div>
-                  <IoCloseSharp />
-                </NotifiList>
-                <NotifiList>
-                  <img src={User2} alt='' />
-                  <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                    <TBid><Link to='/'>Place a Bid</Link></TBid>
-                  </div>
-                  <IoCloseSharp />
-                </NotifiList>
-                <NotifiList>
-                  <img src={User3} alt='' />
-                  <div>
-                    <TTitle>Toast Title</TTitle>
-                    <TDesc>Toast message goes here. Lorem ipsum.</TDesc>
-                  </div>
-                  <IoCloseSharp />
-                </NotifiList> */}
-
+            }
           </ActLeft>
 
           <ActRight>
-            <NotifiTitleBar>
-              <NTitle>Filters</NTitle>
-              <Link to='/'>Clear All Filters</Link>
-            </NotifiTitleBar>
+              <NotifiTitleBar>
+                <NTitle>Filters</NTitle>
+                <Link to='/'>Clear All Filters</Link>
+              </NotifiTitleBar>
 
-            <FilterTags>
-              {filters?.map((filter, key) =>
-                <Link className='' to='#' key={key}><span><span className='g-text'>{filter.key}</span></span></Link>
-              )}
-            </FilterTags>
-          </ActRight>
+              <FilterTags>
+                {filters?.map((filter, key) =>
+                  <Link className='' to='#' key={key}
+                    onClick={() => filterNotifications(filter.value)}>
+                    <span><span className='g-text'>{filter.key}</span></span></Link>
+                )}
+              </FilterTags>
+            </ActRight>
         </ActOuter>
 
       </Gs.Container>
@@ -231,6 +256,16 @@ const FilterTags = styled(FlexDiv)`
     margin-bottom:30px;
   }
 `;
+
+const SiteLoader = styled(FlexDiv)`
+  height:calc(100vh - 550px); width:100%;
+  .loader-inner{
+    text-align:center;
+    img{width:50px; height:50px;}
+    p{font-size:14px; margin:10px 0px 0px; color:#ddd;}
+  }
+`;
+
 
 const mapDipatchToProps = (dispatch) => {
   return {
