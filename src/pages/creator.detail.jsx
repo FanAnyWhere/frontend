@@ -467,10 +467,10 @@ function CelebrityDetails(props) {
                 <label onClick={() => setIsOpen2(state => !state)}>Recently Added <HiOutlineChevronDown /></label>
                 <Collapse onInit={onInit} isOpen={isOpen2}>
                   <div className='priceList'>
-                    <Link to='/' className='active'>Recently Added</Link>
-                    <Link to='/'>Price: Low to High</Link>
-                    <Link to='/'>Price: High to Low</Link>
-                    <Link to='/'>Ending Soon</Link>
+                    <Link to='#' className='active'>Recently Added</Link>
+                    <Link to='#'>Price: Low to High</Link>
+                    <Link to='#'>Price: High to Low</Link>
+                    <Link to='#'>Ending Soon</Link>
                   </div>
                 </Collapse>
               </CustomDropdown>
@@ -757,9 +757,15 @@ const CustomDropdown = styled.div`
     label{width:121px;}
   }
   .collapse-css-transition{
-    position:absolute; top:40px; left:0px; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); z-index:9;
+    position:absolute; top:40px; left:0px; z-index:9999; width:calc(100% - 11px); transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); z-index:9;
     a{font-family: 'Roboto', sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #FFFFFF; padding:6px 15px; display:block;
       :hover{opacity:0.8;}
+      ${Media.sm} {
+        font-size:14px;
+      }
+    }
+    ${Media.md} {
+      width:100%;
     }
   }
   &.custom-width{ 
