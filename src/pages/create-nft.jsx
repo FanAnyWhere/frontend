@@ -12,7 +12,6 @@ import 'react-responsive-modal/styles.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import Media from '../theme/media-breackpoint';
-import Progress from 'react-progressbar';
 
 import RImg from '../assets/images/img1.jpg';
 import ExclaimIcon from '../assets/images/exclamation.png';
@@ -20,6 +19,7 @@ import NFT12 from '../assets/images/nft-12.jpg';
 import DefaultImg from '../assets/images/default-img.jpg';
 
 import TransactionStatus from '../modals/transaction.statius';
+import ProgressBar from '../modals/progress.bar';
 import { getContractInstance } from '../helper/functions';
 import { compressImage } from '../helper/functions';
 import { Toast } from '../helper/toastify.message';
@@ -52,7 +52,7 @@ const CreateNFT = (props) => {
   const [fileType, setFileType] = useState(null)
   const [fileSize, setFileSize] = useState({ original: null, compressed: null })
   const [errors, setErrors] = useState(false)
-  const [uploadRatio, setUploadRatio] = useState(0)
+  const [uploadRatio, setUploadRatio] = useState(1)
   const [nftObj, setNFTObj] = useState({
     title: false,
     description: false,
@@ -488,21 +488,10 @@ const CreateNFT = (props) => {
               <GreyTextInfo>Suggested: 0%, 10%, 20%, 30%. Maximum is 50%</GreyTextInfo>
             </FormBox> */}
             <EqualBtnList>
-              <WhiteBorderBtn className="button" onClick={() => setOpenSecond(true)}><span>Cancel</span></WhiteBorderBtn>
+              <WhiteBorderBtn className="button" ><span>Cancel</span></WhiteBorderBtn>
               <GradientBtn onClick={() => onSubmit()}>Create Item</GradientBtn>
             </EqualBtnList>
           </CNLeft>
-
-          <Modal open={openSecond} onClose={() => setOpenSecond(false)} center closeIcon={closeIcon} classNames={{
-            overlay: 'customOverlay',
-            modal: 'customModal',
-          }}>
-            <CustomProgressBar>
-              <p>Uploading...</p>
-              <Progress completed={75} />
-              <ErrorText>File upload failed. Try Again!</ErrorText>
-            </CustomProgressBar>
-          </Modal>
 
           <CNRight>
             <BITitle className='mb-8'>Preview</BITitle>
@@ -556,12 +545,7 @@ const CreateNFT = (props) => {
           </CNRight>
         </CNOuter>
 
-        {loading && <SiteLoader>
-          <div className='loader-inner'>
-            <img src={LoaderGIF} alt='' />
-            <p>Updating..</p>
-          </div>
-        </SiteLoader>}
+        {loading && <ProgressBar uploadRatio={uploadRatio} />}
 
       </Gs.Container>
     </>
