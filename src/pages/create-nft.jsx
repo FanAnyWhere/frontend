@@ -12,6 +12,7 @@ import 'react-responsive-modal/styles.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import Media from '../theme/media-breackpoint';
+import Progress from 'react-progressbar';
 
 import RImg from '../assets/images/img1.jpg';
 import ExclaimIcon from '../assets/images/exclamation.png';
@@ -31,6 +32,7 @@ import LoaderGIF from '../assets/images/loader.gif'
 const CreateNFT = (props) => {
 
   const [openFirst, setOpenFirst] = useState(false);
+  const [openSecond, setOpenSecond] = useState(false);
 
   const closeIcon = (
     <svg fill='currentColor' viewBox='0 4 16 40' width={50} height={50}>
@@ -237,7 +239,7 @@ const CreateNFT = (props) => {
     //file is converted to a buffer to prepare for uploading to IPFS`
     const buffer = await Buffer.from(reader.result);
     //set this buffer -using es6 syntax
-    setNFTObj({ ...nftObj, image: { compressed: buffer, original: buffer} })
+    setNFTObj({ ...nftObj, image: { compressed: buffer, original: buffer } })
   }
 
   const convertToCompBuffer = async (reader) => {
@@ -486,11 +488,21 @@ const CreateNFT = (props) => {
               <GreyTextInfo>Suggested: 0%, 10%, 20%, 30%. Maximum is 50%</GreyTextInfo>
             </FormBox> */}
             <EqualBtnList>
-              <WhiteBorderBtn><span>Cancel</span></WhiteBorderBtn>
+              <WhiteBorderBtn className="button" onClick={() => setOpenSecond(true)}><span>Cancel</span></WhiteBorderBtn>
               <GradientBtn onClick={() => onSubmit()}>Create Item</GradientBtn>
             </EqualBtnList>
           </CNLeft>
 
+          <Modal open={openSecond} onClose={() => setOpenSecond(false)} center closeIcon={closeIcon} classNames={{
+            overlay: 'customOverlay',
+            modal: 'customModal',
+          }}>
+            <CustomProgressBar>
+              <p>Uploading...</p>
+              <Progress completed={75} />
+              <ErrorText>File upload failed. Try Again!</ErrorText>
+            </CustomProgressBar>
+          </Modal>
 
           <CNRight>
             <BITitle className='mb-8'>Preview</BITitle>
@@ -503,7 +515,7 @@ const CreateNFT = (props) => {
                 <Link to='#'>
                   <LiveBox>
                     <div className='img-outer ver4'>
-                      {fileType === 'video' ? 
+                      {fileType === 'video' ?
                         <video
                           id='video'
                           src={imageURL}
@@ -511,7 +523,7 @@ const CreateNFT = (props) => {
                           width={'100%'}
                           height={'100%'}
                         ></video>
-                      : <img src={imageURL ? imageURL : DefaultImg} alt='' />}
+                        : <img src={imageURL ? imageURL : DefaultImg} alt='' />}
                     </div>
                     <div className='box-content'>
                       <div className='sign-row'>
@@ -547,7 +559,7 @@ const CreateNFT = (props) => {
         {loading && <SiteLoader>
           <div className='loader-inner'>
             <img src={LoaderGIF} alt='' />
-            <p>adding..</p>
+            <p>Updating..</p>
           </div>
         </SiteLoader>}
 
@@ -559,6 +571,18 @@ const CreateNFT = (props) => {
 // Common Style Div 
 const FlexDiv = styled.div`
   display:flex; align-items: center; justify-content:center; flex-wrap:wrap;
+`;
+
+const CustomProgressBar = styled.div`
+  padding:30px 0px;
+  p{font-size: 12px; line-height: 16px; color:#fff; text-align:center; margin:0px 0px 10px;}
+  .progressbar-container{background: rgba(130, 76, 245, 0.25); border-radius: 5px;
+    .progressbar-progress{background-color: #824CF5 !important; border-radius: 5px;}
+  }
+`;
+
+const ErrorText = styled.div`
+  font-size: 12px; line-height: 16px; color:#FF3D00; text-align:center; margin:10px 0px 0px;
 `;
 
 const CNOuter = styled(FlexDiv)`
@@ -794,7 +818,7 @@ const ReportDesc = styled.div`
 `;
 
 const SiteLoader = styled(FlexDiv)`
-  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0;
+  width:100%; height:100%; background-color: #2F2F2F; opacity: 0.75; backdrop-filter: blur(4px); position:fixed; top:0; left:0; right:0; z-index:9999;
   .loader-inner{
     text-align:center;
     img{width:50px; height:50px;}
