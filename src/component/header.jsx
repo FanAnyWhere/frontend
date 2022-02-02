@@ -129,7 +129,7 @@ function Header(props) {
     window.location.reload()
   }
 
-  useEffect( () => {
+  useEffect(() => {
     if (usdtPrice && accountBalance) {
       setUSDTBalance((Number(accountBalance) * Number(usdtPrice)).toFixed(3))
     }
@@ -157,7 +157,7 @@ function Header(props) {
     }
 
     const fetchUSDTPrice = async () => {
-      const string = 
+      const string =
         'https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd%2Ctry'
       await fetch(string)
         .then((resp) => resp.json())
@@ -263,8 +263,8 @@ function Header(props) {
                     <div><Link to='#' onClick={() => disconnect()}>Disconnect</Link></div>
                   </Collapse>
                 </AccountDropdown>
-              </AfterLogin> }
-              
+              </AfterLogin>}
+
               <BarOuter>
                 <Bars
                   className={isOpen5 ? 'menu-active' : null}
@@ -290,7 +290,7 @@ function Header(props) {
                   {navTabs.map((tab, key) => <li key={key}><NavLink
                     to={`/${(tab.replace(/ /g, '')).toLowerCase()}`}
                     activeClassName={tab.replace(/ /g, '').toLowerCase() === nav ? 'active' : ''}
-                    onClick={() => {setNav(tab.replace(/ /g, '').toLowerCase()); setIsOpen5(false)}}
+                    onClick={() => { setNav(tab.replace(/ /g, '').toLowerCase()); setIsOpen5(false) }}
                   >
                     {tab}
                   </NavLink></li>)}
@@ -305,13 +305,13 @@ function Header(props) {
                       <HelpDropdown className={`${isOpen3 ? 'active' : ''}`}>
                         <BiChevronDown />
                         <Collapse onInit={onInit} isOpen={isOpen3}>
-                          <Link to='#'  onClick={() => setIsOpen5(false)}>How to?</Link>
-                          <Link to='#'  onClick={() => setIsOpen5(false)}>FAQs</Link>
-                          <Link to='#'  onClick={() => setIsOpen5(false)}>Contact Us</Link>
-                          <Link to='#'  onClick={() => setIsOpen5(false)}>Chat with Us</Link>
+                          <Link to='#' onClick={() => setIsOpen5(false)}>How to?</Link>
+                          <Link to='#' onClick={() => setIsOpen5(false)}>FAQs</Link>
+                          <Link to='#' onClick={() => setIsOpen5(false)}>Contact Us</Link>
+                          <Link to='#' onClick={() => setIsOpen5(false)}>Chat with Us</Link>
                           <hr />
-                          <Link to='#'  onClick={() => setIsOpen5(false)}>Privacy</Link>
-                          <Link to='#'  onClick={() => setIsOpen5(false)}>Terms & Conditions</Link>
+                          <Link to='#' onClick={() => setIsOpen5(false)}>Privacy</Link>
+                          <Link to='#' onClick={() => setIsOpen5(false)}>Terms & Conditions</Link>
                         </Collapse>
                       </HelpDropdown>
                     </button></li>
@@ -327,8 +327,8 @@ function Header(props) {
                     onClick={() => {
                       setIsOpen5(false);
                     }}>
-                      <span>Connect Wallet</span>
-                    </WhiteBorderBtn>}
+                    <span>Connect Wallet</span>
+                  </WhiteBorderBtn>}
                 </MobileBottomButtons>
               </Collapse>
             </MobileMenuDD>
@@ -600,8 +600,10 @@ const NotificationDropdown = styled.div`
     position:absolute; top:46px; right:0px; width:400px; transition: height 500ms cubic-bezier(0.4, 0, 0.2, 1); background-color: #2F2F2F; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25); border-radius: 5px;
     ${Media.md} {
       position:fixed; top:0; left:0; right:0; bottom:0; z-index:9; width:100%; background-color: #1D1D1D;
+      .mobile-notifibox{
+        width:auto !important; height: calc(100% - 42px) !important;
+      }
     }
-    .mobile-notifibox{width:auto !important; height: calc(100% - 42px) !important;}
   }
   .red-dot{width: 15px; height: 15px; background: #DF5454; border-radius:50%; position:absolute; right:8px; top:-4px; margin:0px;}
 `;
