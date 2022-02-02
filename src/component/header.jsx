@@ -691,7 +691,7 @@ const HelpDropdown = styled.div`
 
 const MobileBottomButtons = styled.div`
   position: absolute; left: 0; right: 0; bottom: 16px; top: auto; display:flex; justify-content:space-evenly;
-  button{width:calc(50% - 16px); margin:0px;}
+  button{width:calc(100% - 16px); margin:0px;}
 `;
 
 const mapDipatchToProps = (dispatch) => {
