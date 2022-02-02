@@ -270,16 +270,16 @@ const Marketplace = (props) => {
                   <Collapse onInit={onInit} isOpen={isOpen7}>
                     <Scrollbars style={{ height: 244 }}>
                       <div className='priceList search-list'>
-                        <Link to='/' className={filterOpen ? 'active' : ''}><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
-                        <Link to='/'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#' className={filterOpen ? 'active' : ''}><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
+                        <Link to='#'><img src={UserIcon} alt='' />Placeholder Text</Link>
                       </div>
                     </Scrollbars>
                   </Collapse>
@@ -605,7 +605,7 @@ const PLeftpanel = styled.div`
     }
   }
   ${Media.md} {
-    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto;
+    position: fixed; left: 20px; bottom: 20px; right: 20px; width: calc(100% - 40px); margin: 0 auto; z-index:9;
   }
 `;
 
